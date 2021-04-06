@@ -1,0 +1,128 @@
+<?php
+
+/*
+|-------------------------------------------------------------------------------------.,.
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+// Namespace Prefix
+$namespacePrefix = '\\'.config('faturcms.controllers.namespace').'\\';
+
+// Guest Capabilities
+Route::group(['middleware' => ['faturcms.guest']], function() use ($namespacePrefix){
+	// Welcome
+	Route::get('/', function(){
+		return view('welcome');
+	})->name('site.home');
+
+	// Login
+	Route::get('/login', $namespacePrefix.'LoginController@showLoginForm')->name('auth.login');
+	Route::post('/login', $namespacePrefix.'LoginController@login')->name('auth.postlogin');
+});
+
+// Admin Capabilities
+Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePrefix){
+	// Logout
+	Route::post('/logout', $namespacePrefix.'LoginController@logout')->name('auth.logout');
+
+	// Dashboard
+	Route::get('/admin', $namespacePrefix.'DashboardController@admin')->name('admin.dashboard');
+
+	// Profil
+	Route::get('/admin/profile', $namespacePrefix.'UserController@profile')->name('admin.profile');
+
+	// AJAX
+	Route::get('/admin/ajax/count-visitor', $namespacePrefix.'DashboardController@countVisitor')->name('admin.ajax.countvisitor');
+
+	// User
+	Route::get('/admin/user', $namespacePrefix.'UserController@index')->name('admin.user.index');
+	Route::get('/admin/user/create', $namespacePrefix.'UserController@create')->name('admin.user.create');
+	Route::post('/admin/user/store', $namespacePrefix.'UserController@store')->name('admin.user.store');
+	Route::get('/admin/user/detail/{id}', $namespacePrefix.'UserController@detail')->name('admin.user.detail');
+	Route::get('/admin/user/edit/{id}', $namespacePrefix.'UserController@edit')->name('admin.user.edit');
+	Route::post('/admin/user/update', $namespacePrefix.'UserController@update')->name('admin.user.update');
+	Route::post('/admin/user/delete', $namespacePrefix.'UserController@delete')->name('admin.user.delete');
+	Route::get('/admin/user/export', $namespacePrefix.'UserController@export')->name('admin.user.export');
+	Route::post('/admin/user/update-photo', $namespacePrefix.'UserController@updatePhoto')->name('admin.user.updatephoto');
+	Route::get('/admin/user/images', $namespacePrefix.'UserController@showImages')->name('admin.user.images');
+
+	// Rekening
+	Route::get('/admin/rekening', $namespacePrefix.'RekeningController@index')->name('admin.rekening.index');
+	Route::get('/admin/rekening/create', $namespacePrefix.'RekeningController@create')->name('admin.rekening.create');
+	Route::post('/admin/rekening/store', $namespacePrefix.'RekeningController@store')->name('admin.rekening.store');
+	Route::get('/admin/rekening/edit/{id}', $namespacePrefix.'RekeningController@edit')->name('admin.rekening.edit');
+	Route::post('/admin/rekening/update', $namespacePrefix.'RekeningController@update')->name('admin.rekening.update');
+	Route::post('/admin/rekening/delete', $namespacePrefix.'RekeningController@delete')->name('admin.rekening.delete');
+
+	// Transaksi Komisi
+	Route::get('/admin/transaksi/komisi', $namespacePrefix.'KomisiController@index')->name('admin.komisi.index');
+	Route::post('/admin/transaksi/komisi/verify', $namespacePrefix.'KomisiController@verify')->name('admin.komisi.verify');
+	Route::post('/admin/transaksi/komisi/confirm', $namespacePrefix.'KomisiController@confirm')->name('admin.komisi.confirm');
+
+	// Transaksi Withdrawal
+	Route::get('/admin/transaksi/withdrawal', $namespacePrefix.'WithdrawalController@index')->name('admin.withdrawal.index');
+	Route::post('/admin/transaksi/withdrawal/send', $namespacePrefix.'WithdrawalController@send')->name('admin.withdrawal.send');
+
+	// Transaksi Pelatihan
+	Route::get('/admin/transaksi/pelatihan', $namespacePrefix.'PelatihanController@transaction')->name('admin.pelatihan.transaction');
+	Route::post('/admin/transaksi/pelatihan/verify', $namespacePrefix.'PelatihanController@verify')->name('admin.pelatihan.verify');
+
+	// Email
+	Route::get('/admin/email', $namespacePrefix.'EmailController@index')->name('admin.email.index');
+	Route::get('/admin/email/create', $namespacePrefix.'EmailController@create')->name('admin.email.create');
+	Route::post('/admin/email/store', $namespacePrefix.'EmailController@store')->name('admin.email.store');
+	Route::get('/admin/email/detail/{id}', $namespacePrefix.'EmailController@detail')->name('admin.email.detail');
+	Route::post('/admin/email/delete', $namespacePrefix.'EmailController@delete')->name('admin.email.delete');
+	Route::post('/admin/email/import', $namespacePrefix.'EmailController@import')->name('admin.email.import');
+
+	// Pelatihan
+	Route::get('/admin/pelatihan', $namespacePrefix.'PelatihanController@index')->name('admin.pelatihan.index');
+	Route::get('/admin/pelatihan/create', $namespacePrefix.'PelatihanController@create')->name('admin.pelatihan.create');
+	Route::post('/admin/pelatihan/store', $namespacePrefix.'PelatihanController@store')->name('admin.pelatihan.store');
+	Route::get('/admin/pelatihan/detail/{id}', $namespacePrefix.'PelatihanController@detail')->name('admin.pelatihan.detail');
+	Route::get('/admin/pelatihan/edit/{id}', $namespacePrefix.'PelatihanController@edit')->name('admin.pelatihan.edit');
+	Route::post('/admin/pelatihan/update', $namespacePrefix.'PelatihanController@update')->name('admin.pelatihan.update');
+	Route::post('/admin/pelatihan/delete', $namespacePrefix.'PelatihanController@delete')->name('admin.pelatihan.delete');
+	Route::get('/admin/pelatihan/peserta/{id}', $namespacePrefix.'PelatihanController@participant')->name('admin.pelatihan.participant');
+	Route::post('/admin/pelatihan/update-status', $namespacePrefix.'PelatihanController@updateStatus')->name('admin.pelatihan.updatestatus');
+	Route::get('/admin/pelatihan/images', $namespacePrefix.'PelatihanController@showImages')->name('admin.pelatihan.images');
+});
+
+// Member Capabilities
+Route::group(['middleware' => ['faturcms.member']], function() use ($namespacePrefix){
+	// Logout
+	Route::post('/logout', $namespacePrefix.'LoginController@logout')->name('auth.logout');
+
+	// Dashboard
+	Route::get('/member', $namespacePrefix.'DashboardController@member')->name('member.dashboard');
+
+	// Profil
+	Route::get('/member/profile', $namespacePrefix.'UserController@profile')->name('member.profile');
+
+	// Rekening
+	Route::get('/member/rekening', $namespacePrefix.'RekeningController@index')->name('member.rekening.index');
+	Route::get('/member/rekening/create', $namespacePrefix.'RekeningController@create')->name('member.rekening.create');
+	Route::post('/member/rekening/store', $namespacePrefix.'RekeningController@store')->name('member.rekening.store');
+	Route::get('/member/rekening/edit/{id}', $namespacePrefix.'RekeningController@edit')->name('member.rekening.edit');
+	Route::post('/member/rekening/update', $namespacePrefix.'RekeningController@update')->name('member.rekening.update');
+	Route::post('/member/rekening/delete', $namespacePrefix.'RekeningController@delete')->name('member.rekening.delete');
+
+	// Cara Jualan
+	Route::get('/member/afiliasi/cara-jualan', function(){
+		return view('faturcms::member.afiliasi.cara-jualan');
+	})->name('member.afiliasi.carajualan');
+
+	// Komisi
+	Route::get('/member/transaksi/komisi', $namespacePrefix.'KomisiController@index')->name('member.komisi.index');
+	Route::post('/member/transaksi/komisi/confirm', $namespacePrefix.'KomisiController@verify')->name('member.komisi.confirm');
+	Route::post('/member/transaksi/komisi/withdraw', $namespacePrefix.'KomisiController@withdraw')->name('member.komisi.withdraw');
+
+	// Withdrawal
+	Route::get('/member/transaksi/withdrawal', $namespacePrefix.'WithdrawalController@index')->name('member.withdrawal.index');
+});

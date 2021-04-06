@@ -1,0 +1,52 @@
+:root{
+	--color-1: #FB8312;
+	--color-2: #34495e;
+	--shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+	--shadow-sm: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+	--shadow-sm-hover: 0 .225rem .45rem rgba(0,0,0,.1)!important;
+	--transition: .25s ease;
+}
+.btn-theme-1{background-color: var(--color-1); color: var(--white); transition: var(--transition)}
+.bg-theme-1{background-color: var(--color-1)}
+.bg-theme-2{background-color: var(--color-2)}
+.transition{transition: var(--transition)}
+.rounded-1{border-radius: .5em}
+.rounded-2{border-radius: 1em}
+.rounded-3{border-radius: 1.5em}
+.rounded-4{border-radius: 2em}
+html {scroll-behavior: smooth;}
+header>nav{height: unset; box-shadow: unset;}
+#sidebar{overflow: hidden;}
+.section-block{box-shadow: var(--shadow-sm); background-color: var(--light); }
+.card-view2 .card-item {box-shadow: var(--shadow-sm); transition: var(--transition)}
+.card-view2 .card-item:hover{box-shadow: var(--shadow-sm-hover)}
+.card-img-top{border-radius: 1em 1em 0 0}
+.scroll-horizontal {overflow: auto; white-space: nowrap;}
+#category a img{transition: var(--transition); width: 40px;}
+#category a:hover img{transform: scale(1.1)}
+#category a:hover{color: var(--color-1)}
+.stick{top: 5em}
+.sticky-top{z-index: 998}
+.sticky-sidebar{position: sticky; top: 5em; height: fit-content}
+/*#sidebar{z-index: 10000}
+.main-overlay{z-index: 9999}*/
+section#main-slide-top>div{background-image:  url('../../assets/images/background/1015399630.jpg'); box-shadow: var(--shadow-sm);}
+#main-slide-top .title{background: rgba(0,0,0,.5); border-radius: .75em}
+
+@media (max-width: 767.98px) {
+	header>nav .navbar-brand {margin: 0 auto}
+	#category .font-weight-bold{font-weight: normal!important}
+}
+@media (max-width: 991.98px) {
+	header>nav .navbar-brand {margin: 0 auto}
+	header>nav .navbar-toggler#sidebarCollapse {display: block}
+	.stick{top: unset;}
+	.sticky-top{position: unset!important; height: unset!important}
+	.sticky-sidebar{position: unset; top: unset; height: unset;}
+}
+@media (min-width: 768px){#category a img{width: 60px}}
+
+tambah menu kategori icon = assesmen, rekruitmen dan seleksi
+menu navbar = psikolog ganti HRD tambah psikolog{content: kategori = psikolog, konsultan; contoh = mshglow our seller}
+
+list bug : register bisa masuk walau sudah login

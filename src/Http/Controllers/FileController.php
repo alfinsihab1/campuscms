@@ -50,7 +50,7 @@ class FileController extends Controller
 				// Get file dalam direktori
 				$files = Files::where('id_folder','=',$directory->id_folder)->where('file_kategori','=',$kategori->id_fk)->orderBy('file_nama','asc')->get();
 				// Redirect
-				return redirect('/admin/file-manager/'.generate_permalink($kategori->folder_kategori).'?dir=/');
+				return redirect()->route('admin.filemanager.index', ['kategori' => $kategori->slug_kategori, 'dir' => '/']);
 			}
 			// Jika direktori != null
 			else{
@@ -70,7 +70,7 @@ class FileController extends Controller
 					// Get file dalam direktori
 					$files = Files::where('id_folder','=',$directory->id_folder)->where('file_kategori','=',$kategori->id_fk)->orderBy('file_nama','asc')->get();
 					// Redirect
-					return redirect('/admin/file-manager/'.generate_permalink($kategori->folder_kategori).'?dir=/');
+					return redirect()->route('admin.filemanager.index', ['kategori' => $kategori->slug_kategori, 'dir' => '/']);
 				}
 				// Jika direktori ditemukan
 				else{
@@ -82,7 +82,7 @@ class FileController extends Controller
 				}
 			}
 
-			// Breadcrumb
+			// Breadcrumb direktori
 			$breadcrumb = [$directory];
 			$d = $directory;
 			while($d->folder_parent != 0){
@@ -90,20 +90,12 @@ class FileController extends Controller
 				array_push($breadcrumb, $d);
 			}
 			
-			// Folder icon
-			// $folder_icon = FolderIcon::all();
-			
-			// File Thumbnail
-			// $file_thumbnail = FileThumbnail::all();
-			
 			// Folder tersedia
 			$available_folders = Folder::where('folder_kategori','=',$kategori->id_fk)->orWhere('folder_kategori','=',0)->orderBy('folder_parent','asc')->orderBy('folder_nama','asc')->get();
 			
             return view('faturcms::admin.file.index', [
 				'available_folders' => $available_folders,
 				'directory' => $directory,
-				// 'file_thumbnail' => $file_thumbnail,
-				// 'folder_icon' => $folder_icon,
                 'folders' => $folders,
 				'files' => $files,
 				'kategori' => $kategori,

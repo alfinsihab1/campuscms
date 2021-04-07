@@ -22,6 +22,7 @@ return [
     */
 
     'images' => [
+        'blog' => 'blog.png',
         'user' => 'user.jpg',
         'pelatihan' => 'pelatihan.png',
     ]

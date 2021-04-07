@@ -29,7 +29,7 @@ Route::group(['middleware' => ['faturcms.guest']], function() use ($namespacePre
 // Admin Capabilities
 Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePrefix){
 	// Logout
-	Route::post('/logout', $namespacePrefix.'LoginController@logout')->name('auth.logout');
+	Route::post('/admin/logout', $namespacePrefix.'LoginController@logout')->name('admin.logout');
 
 	// Dashboard
 	Route::get('/admin', $namespacePrefix.'DashboardController@admin')->name('admin.dashboard');
@@ -81,6 +81,34 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::post('/admin/email/delete', $namespacePrefix.'EmailController@delete')->name('admin.email.delete');
 	Route::post('/admin/email/import', $namespacePrefix.'EmailController@import')->name('admin.email.import');
 
+	// Artikel
+	Route::get('/admin/blog', $namespacePrefix.'BlogController@index')->name('admin.blog.index');
+	Route::get('/admin/blog/create', $namespacePrefix.'BlogController@create')->name('admin.blog.create');
+	Route::post('/admin/blog/store', $namespacePrefix.'BlogController@store')->name('admin.blog.store');
+	Route::get('/admin/blog/edit/{id}', $namespacePrefix.'BlogController@edit')->name('admin.blog.edit');
+	Route::post('/admin/blog/update', $namespacePrefix.'BlogController@update')->name('admin.blog.update');
+	Route::post('/admin/blog/delete', $namespacePrefix.'BlogController@delete')->name('admin.blog.delete');
+	Route::get('/admin/blog/images', $namespacePrefix.'BlogController@showImages')->name('admin.blog.images');
+
+	// Kategori Artikel
+	Route::get('/admin/blog/kategori', $namespacePrefix.'KategoriArtikelController@index')->name('admin.blog.kategori.index');
+	Route::get('/admin/blog/kategori/create', $namespacePrefix.'KategoriArtikelController@create')->name('admin.blog.kategori.create');
+	Route::post('/admin/blog/kategori/store', $namespacePrefix.'KategoriArtikelController@store')->name('admin.blog.kategori.store');
+	Route::get('/admin/blog/kategori/edit/{id}', $namespacePrefix.'KategoriArtikelController@edit')->name('admin.blog.kategori.edit');
+	Route::post('/admin/blog/kategori/update', $namespacePrefix.'KategoriArtikelController@update')->name('admin.blog.kategori.update');
+	Route::post('/admin/blog/kategori/delete', $namespacePrefix.'KategoriArtikelController@delete')->name('admin.blog.kategori.delete');
+
+	// Tag Artikel
+	Route::get('/admin/blog/tag', $namespacePrefix.'TagController@index')->name('admin.blog.tag.index');
+	Route::get('/admin/blog/tag/create', $namespacePrefix.'TagController@create')->name('admin.blog.tag.create');
+	Route::post('/admin/blog/tag/store', $namespacePrefix.'TagController@store')->name('admin.blog.tag.store');
+	Route::get('/admin/blog/tag/edit/{id}', $namespacePrefix.'TagController@edit')->name('admin.blog.tag.edit');
+	Route::post('/admin/blog/tag/update', $namespacePrefix.'TagController@update')->name('admin.blog.tag.update');
+	Route::post('/admin/blog/tag/delete', $namespacePrefix.'TagController@delete')->name('admin.blog.tag.delete');
+
+	// File Manager
+	Route::get('/admin/file-manager/{kategori}', $namespacePrefix.'FileController@index')->name('admin.filemanager.index');
+
 	// Pelatihan
 	Route::get('/admin/pelatihan', $namespacePrefix.'PelatihanController@index')->name('admin.pelatihan.index');
 	Route::get('/admin/pelatihan/create', $namespacePrefix.'PelatihanController@create')->name('admin.pelatihan.create');
@@ -97,7 +125,7 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 // Member Capabilities
 Route::group(['middleware' => ['faturcms.member']], function() use ($namespacePrefix){
 	// Logout
-	Route::post('/logout', $namespacePrefix.'LoginController@logout')->name('auth.logout');
+	Route::post('/member/logout', $namespacePrefix.'LoginController@logout')->name('member.logout');
 
 	// Dashboard
 	Route::get('/member', $namespacePrefix.'DashboardController@member')->name('member.dashboard');

@@ -2,6 +2,10 @@
     /* Breadcrumb */
     .app-title {padding: 20px;}
 
+    /* Sidebar */
+    .app-menu__item {padding: .5rem;}
+    .treeview.is-expanded .treeview-menu {margin-bottom: .5rem;}
+
     /* Button */
     .btn-theme-1 {background-color: {{ setting('site.primary_color') }}!important; border-color: background: {{ setting('site.primary_color') }}!important; color: #fff;}
     .btn-theme-1:hover {background-color: #e0852f!important; border-color: #e0852f!important; color: #fff;}

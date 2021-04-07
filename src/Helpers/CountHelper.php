@@ -5,6 +5,21 @@ use Ajifatur\FaturCMS\Models\PelatihanMember;
 
 /**
  *
+ * Count Data
+ * 
+ */
+
+// Menghitung jumlah data duplikat
+if(!function_exists('count_existing_data')){
+    function count_existing_data($table, $field, $keyword, $primaryKey, $id = null){
+        if($id == null) $data = DB::table($table)->where($field,'=',$keyword)->get();
+        else $data = DB::table($table)->where($field,'=',$keyword)->where($primaryKey,'!=',$id)->get();
+        return count($data);
+    }
+}
+
+/**
+ *
  * Count by User
  * 
  */
@@ -24,6 +39,12 @@ if(!function_exists('count_refer_aktif')){
         return $data;
     }
 }
+
+/**
+ *
+ * Count by Pelatihan
+ * 
+ */
 
 // Menghitung peserta pelatihan
 if(!function_exists('count_peserta_pelatihan')){

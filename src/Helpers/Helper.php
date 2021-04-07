@@ -4,10 +4,11 @@ use Ajifatur\FaturCMS\Models\KategoriMateri;
 use Ajifatur\FaturCMS\Models\KategoriPelatihan;
 use Ajifatur\FaturCMS\Models\Role;
 use Ajifatur\FaturCMS\Models\Setting;
+use Ajifatur\FaturCMS\Models\Tag;
 
 /**
  *
- * Roles
+ * Main Helpers
  * 
  */
 
@@ -30,12 +31,6 @@ if(!function_exists('role')){
     }
 }
 
-/**
- *
- * Settings
- * 
- */
-
 // Get setting
 if(!function_exists('setting')){
     function setting($key){
@@ -43,12 +38,6 @@ if(!function_exists('setting')){
         return $setting ? $setting->setting_value : '';
     }
 }
-
-/**
- *
- * Images
- * 
- */
 
 // Get image
 if(!function_exists('image')){
@@ -60,12 +49,6 @@ if(!function_exists('image')){
     }
 }
 
-/**
- *
- * Status
- * 
- */
-
 // Get status
 if(!function_exists('status')){
     function status($status){
@@ -75,13 +58,7 @@ if(!function_exists('status')){
     }
 }
 
-/**
- *
- * Jenis Kelamin
- * 
- */
-
-// Get status
+// Get gender
 if(!function_exists('gender')){
     function gender($gender){
         if($gender == 'L') return 'Laki-Laki';
@@ -90,13 +67,7 @@ if(!function_exists('gender')){
     }
 }
 
-/**
- *
- * Kategori Pelatihan
- * 
- */
-
-// Get status
+// Get kategori pelatihan
 if(!function_exists('kategori_pelatihan')){
     function kategori_pelatihan($id){
         $data = KategoriPelatihan::find($id);
@@ -104,13 +75,7 @@ if(!function_exists('kategori_pelatihan')){
     }
 }
 
-/**
- *
- * Message
- * 
- */
-
-// Get status
+// Get message
 if(!function_exists('message')){
     function message($key){
         if($key == 'unpaid') return 'Anda belum melakukan pembayaran';
@@ -165,6 +130,33 @@ if(!function_exists('array_receivers')){
         $data = Setting::where('setting_key','=','site.receivers')->first();
         $array = $data ? explode(',', $data->setting_value) : [];
         return $array; 
+    }
+}
+
+// Array tag
+if(!function_exists('array_tag')){
+    function array_tag(){
+        $tag = Tag::orderBy('tag','asc')->get()->pluck('tag');
+        return $tag;
+    }
+}
+
+/**
+ *
+ * Slugify
+ * 
+ */
+
+// Slugify
+if(!function_exists('slugify')){
+    function slugify($text, $table, $field, $primaryKey, $id = null){
+        $permalink = generate_permalink($text);
+        $i = 1;
+        while(count_existing_data($table, $field, $permalink, $primaryKey, $id) > 0){
+            $permalink = rename_permalink(generate_permalink($text), $i);
+            $i++;
+        }
+        return $permalink;
     }
 }
 
@@ -223,5 +215,18 @@ if(!function_exists('upload_quill_image')){
         
         // Return
         return $dom->saveHTML();
+    }
+}
+
+/**
+ *
+ * Other Helpers
+ * 
+ */
+
+// Mengganti nama permalink jika ada yang sama
+if(!function_exists('rename_permalink')){
+    function rename_permalink($permalink, $count = 0){
+        return $permalink."-".($count+1);
     }
 }

@@ -4,6 +4,7 @@ namespace Ajifatur\FaturCMS\Http\Controllers;
 
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\User;
 use Ajifatur\FaturCMS\Models\Visitor;
@@ -125,22 +126,5 @@ class LoginController extends Controller
         elseif($user->is_admin == 0){
             return redirect('/member');
         }
-    }
-
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
     }
 }

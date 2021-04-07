@@ -4,21 +4,21 @@ namespace Ajifatur\FaturCMS\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Files2 extends Model
+class Tag extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'file2';
+    protected $table = 'tag';
 
     /**
      * The primary key for the model.
      *
      * @var string
      */
-    protected $primaryKey = 'id_file';
+    protected $primaryKey = 'id_tag';
 
     /**
      * The attributes that are mass assignable.
@@ -26,7 +26,7 @@ class Files2 extends Model
      * @var array
      */
     protected $fillable = [
-        'id_folder', 'id_user', 'file_nama', 'file_kategori', 'file_deskripsi', 'file_konten', 'file_keterangan', 'file_thumbnail', 'file_at', 'file_up',
+        'tag', 'slug'
     ];
 
     /**

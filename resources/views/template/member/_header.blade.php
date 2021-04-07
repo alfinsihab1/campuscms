@@ -12,7 +12,7 @@
       <ul class="dropdown-menu settings-menu dropdown-menu-right">
         <li><a class="dropdown-item" href="{{ route('member.profile') }}"><i class="fa fa-cog fa-lg"></i> Profil</a></li>
         <li><a class="dropdown-item" href="javascript:void(0)" onclick="event.preventDefault(); document.getElementById('form-logout').submit();"><i class="fa fa-sign-out fa-lg"></i> Logout</a></li>
-        <form id="form-logout" method="post" action="{{ route('auth.logout') }}">
+        <form id="form-logout" method="post" action="{{ route('member.logout') }}">
             {{ csrf_field() }}
         </form>
       </ul>

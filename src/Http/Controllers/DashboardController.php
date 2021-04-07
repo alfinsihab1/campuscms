@@ -8,7 +8,7 @@ use App\User;
 use Ajifatur\FaturCMS\Models\Blog;
 use Ajifatur\FaturCMS\Models\Deskripsi;
 use Ajifatur\FaturCMS\Models\DefaultRekening;
-use Ajifatur\FaturCMS\Models\Files2;
+use Ajifatur\FaturCMS\Models\Files;
 use Ajifatur\FaturCMS\Models\Fitur;
 use Ajifatur\FaturCMS\Models\FolderKategori;
 use Ajifatur\FaturCMS\Models\Komisi;
@@ -40,12 +40,12 @@ class DashboardController extends Controller
         // Array Push Data Materi
         $kategori_materi = FolderKategori::where('id_fk','>=',4)->get();
         foreach($kategori_materi as $data){
-            $file = Files2::where('file_kategori','=',$data->id_fk)->get();
+            $file = Files::where('file_kategori','=',$data->id_fk)->get();
             array_push($array, ['data' => 'Materi '.$data->folder_kategori, 'total' => count($file), 'url' => '/admin/file-manager/'.$data->slug_kategori]);
         }
         
         // Array Push Data Course, Data Artikel, Data Pelatihan
-        $data_course = Files2::where('file_kategori','=',1)->count();
+        $data_course = Files::where('file_kategori','=',1)->count();
         $data_artikel = Blog::join('kategori_artikel','blog.blog_kategori','=','kategori_artikel.id_ka')->count();
         $data_pelatihan = Pelatihan::join('kategori_pelatihan','pelatihan.kategori_pelatihan','=','kategori_pelatihan.id_kp')->count();
         array_push($array, 

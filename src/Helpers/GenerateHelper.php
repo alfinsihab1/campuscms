@@ -1,6 +1,7 @@
 <?php
 
 use Ajifatur\FaturCMS\Models\Pelatihan;
+use Ajifatur\FaturCMS\Models\Tag;
 
 // Generate umur / usia
 if(!function_exists('generate_age')){
@@ -222,5 +223,65 @@ if(!function_exists('generate_nomor_pelatihan')){
 
         // Return
         return $num.'/'.kategori_pelatihan($kategori).'/'.setting('site.kode_sertifikat').'/'.date('Y', strtotime(generate_date_range('explode', $tanggal_pelatihan)['from']));
+    }
+}
+
+// Generate tag by name
+if(!function_exists('generate_tag_by_name')){
+    function generate_tag_by_name($tags){
+        // Define empty array
+        $array = [];
+
+        // Explode and filter array
+        $array_tag = explode(",", $tags);
+        $array_tag = array_filter($array_tag);
+
+        // Convert tag to ID
+        if(count($array_tag)>0){
+            foreach($array_tag as $key=>$tag){
+                // Get data tag
+                $data = Tag::where('tag','=',$tag)->first();
+                // If not exist, add new tag
+                if(!$data){
+                    $new = new Tag;
+                    $new->tag = $tag;
+                    $new->slug = slugify($tag, 'tag', 'slug', 'id_tag', null);
+                    $new->save();
+
+                    // Push latest data
+                    $newest = Tag::latest('id_tag')->first();
+                    array_push($array, $newest->id_tag);
+                }
+                else{
+                    array_push($array, $data->id_tag);
+                }
+            }
+        }
+
+        // Return
+        return implode(",", $array);
+    }
+}
+
+// Generate tag by id
+if(!function_exists('generate_tag_by_id')){
+    function generate_tag_by_id($tags){
+        if($tags != ''){
+            // Explode and filter array
+            $array_tag = explode(",", $tags);
+            $array_tag = array_filter($array_tag);
+
+            if(count($array_tag)>0){
+                foreach($array_tag as $key=>$tag){
+                    // Custom data
+                    $data = Tag::find($tag);
+                    $array_tag[$key] = $data ? $data->tag : '';
+                }
+                return implode(",", $array_tag);
+            }
+        }
+        else{
+            return '';
+        }
     }
 }

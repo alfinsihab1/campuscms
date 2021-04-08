@@ -112,6 +112,10 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	// File
 	Route::get('/admin/file-manager/{kategori}/file/create', $namespacePrefix.'FileController@create')->name('admin.file.create');
 	Route::post('/admin/file-manager/{kategori}/file/store', $namespacePrefix.'FileController@store')->name('admin.file.store');
+	Route::get('/admin/file-manager/{kategori}/file/edit/{id}', $namespacePrefix.'FileController@edit')->name('admin.file.edit');
+	Route::post('/admin/file-manager/{kategori}/file/update', $namespacePrefix.'FileController@update')->name('admin.file.update');
+	Route::post('/admin/file-manager/{kategori}/file/delete', $namespacePrefix.'FileController@delete')->name('admin.file.delete');
+	Route::post('/admin/file-manager/{kategori}/file/move', $namespacePrefix.'FileController@move')->name('admin.file.move');
 	Route::post('/admin/file-manager/{kategori}/file/upload-pdf', $namespacePrefix.'FileController@uploadPDF')->name('admin.file.uploadpdf');
 	Route::get('/admin/file/images', $namespacePrefix.'FileController@showImages')->name('admin.file.images');
 
@@ -121,7 +125,9 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::get('/admin/file-manager/{kategori}/folder/edit/{id}', $namespacePrefix.'FolderController@edit')->name('admin.folder.edit');
 	Route::post('/admin/file-manager/{kategori}/folder/update', $namespacePrefix.'FolderController@update')->name('admin.folder.update');
 	Route::post('/admin/file-manager/{kategori}/folder/delete', $namespacePrefix.'FolderController@delete')->name('admin.folder.delete');
+	Route::post('/admin/file-manager/{kategori}/folder/move', $namespacePrefix.'FolderController@move')->name('admin.folder.move');
 	Route::get('/admin/folder/images', $namespacePrefix.'FolderController@showImages')->name('admin.folder.images');
+	Route::get('/admin/folder/hierarchy', $namespacePrefix.'FolderController@hierarchy')->name('admin.folder.hierarchy');
 
 	// Pelatihan
 	Route::get('/admin/pelatihan', $namespacePrefix.'PelatihanController@index')->name('admin.pelatihan.index');

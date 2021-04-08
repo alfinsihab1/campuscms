@@ -78,7 +78,7 @@
                                     <td>
                                         <div class="btn-group">
                                             <a href="{{ asset('assets/images/folder/'.$data->folder_icon) }}" class="btn btn-sm btn-info btn-magnify-popup" data-toggle="tooltip" title="Icon"><i class="fa fa-image"></i></a>
-                                            <a href="#" class="btn btn-sm btn-success" data-toggle="tooltip" title="Pindah"><i class="fa fa-arrow-right"></i></a>
+                                            <a href="#" class="btn btn-sm btn-success btn-move" data-id="{{ $data->id_folder }}" data-type="folder" data-toggle="tooltip" title="Pindah"><i class="fa fa-arrow-right"></i></a>
                                             <a href="{{ route('admin.folder.edit', ['kategori' => $kategori->slug_kategori, 'id' => $data->id_folder, 'dir' => $directory->folder_dir]) }}" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>
                                             <a href="#" class="btn btn-sm btn-danger btn-delete-folder" data-id="{{ $data->id_folder }}" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>
                                         </div>
@@ -99,8 +99,8 @@
                                     <td>
                                         <div class="btn-group">
                                             <a href="{{ asset('assets/images/file/'.$data->file_thumbnail) }}" class="btn btn-sm btn-info btn-magnify-popup" data-toggle="tooltip" title="Thumbnail"><i class="fa fa-image"></i></a>
-                                            <a href="#" class="btn btn-sm btn-success" data-toggle="tooltip" title="Pindah"><i class="fa fa-arrow-right"></i></a>
-                                            <a href="#" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>
+                                            <a href="#" class="btn btn-sm btn-success btn-move" data-id="{{ $data->id_file }}" data-type="file" data-toggle="tooltip" title="Pindah"><i class="fa fa-arrow-right"></i></a>
+                                            <a href="{{ route('admin.file.edit', ['kategori' => $kategori->slug_kategori, 'id' => $data->id_file, 'dir' => $directory->folder_dir]) }}" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>
                                             <a href="#" class="btn btn-sm btn-danger btn-delete-file" data-id="{{ $data->id_file }}" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>
                                         </div>
                                     </td>
@@ -109,6 +109,10 @@
                             </tbody>
                         </table>
                         <form id="form-delete-folder" class="d-none" method="post" action="{{ route('admin.folder.delete', ['kategori' => $kategori->slug_kategori]) }}">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="id">
+                        </form>
+                        <form id="form-delete-file" class="d-none" method="post" action="{{ route('admin.file.delete', ['kategori' => $kategori->slug_kategori]) }}">
                             {{ csrf_field() }}
                             <input type="hidden" name="id">
                         </form>
@@ -124,6 +128,44 @@
 </main>
 <!-- /Main -->
 
+<!-- Modal Pindah Folder -->
+<div class="modal fade" id="modal-move" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Pindahkan ke...</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="form-move" method="post" action="#">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="id">
+                    <input type="hidden" name="type">
+                    <input type="hidden" name="destination">
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <table class="table table-hovered" id="table-available-folders">
+                                @foreach($available_folders as $available_folder)
+                                <tr>
+                                    <td class="btn-available-folder" data-id="{{ $available_folder['id'] }}" style="{{ $available_folder['parent'] != 0 ? 'padding-left:'.$available_folder['level'].'rem!important' : '' }}"><i class="fa fa-folder mr-2"></i> {{ $available_folder['nama'] }}</td>
+                                </tr>
+                                @endforeach
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btn-submit-move" disabled>Pilih</button>
+                <button type="button" class="btn btn-danger"data-dismiss="modal">Batal</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Modal Pindah Folder -->
+
 @endsection
 
 @section('js-extra')
@@ -133,6 +175,56 @@
 <script type="text/javascript">
     // DataTable
     generate_datatable("#dataTable");
+
+    // Button Move
+    $(document).on("click", ".btn-move", function(e){
+        e.preventDefault();
+        var id = $(this).data("id");
+        var type = $(this).data("type");
+        $("#form-move input[name=id]").val(id);
+        $("#form-move input[name=type]").val(type);
+        $("#modal-move").modal("show");
+    });
+    
+    // Button Click Available Folder
+    $(document).on("click", ".btn-available-folder", function(e){
+        e.preventDefault();
+        var id = $(this).data("id");
+        $(this).addClass("bg-warning");
+        $("#form-move input[name=destination]").val(id);
+        $(".btn-available-folder").each(function(key,elem){
+            var elemId = $(elem).data("id");
+            if(elemId != id) $(elem).removeClass("bg-warning");
+        });
+        $("#btn-submit-move").removeAttr("disabled");
+    });
+
+    // Button Submit Move
+    $(document).on("click", "#btn-submit-move", function(e){
+        var action = "";
+        var type = $("#form-move input[name=type]").val();
+        if(type == "file") action = "{{ route('admin.file.move', ['kategori' => $kategori->slug_kategori]) }}";
+        else if(type == "folder") action = "{{ route('admin.folder.move', ['kategori' => $kategori->slug_kategori]) }}";
+        $("#form-move").attr("action", action).submit();
+    });
+
+    // Close Modal Move
+    $("#modal-move").on('hidden.bs.modal', function(e){
+        $("#form-move input[name=id]").val(null);
+        $("#form-move input[name=type]").val(null);
+        $("#form-move input[name=destination]").val(null);
+        $(".btn-available-folder").removeClass("bg-warning");
+        $("#btn-submit-move").attr("disabled","disabled");
+    });
 </script>
+
+@endsection
+
+@section('css-extra')
+
+<style type="text/css">
+    #table-available-folders tr td {padding: .5rem;}
+    #table-available-folders tr td:hover {background-color: #eee; cursor: pointer;}
+</style>
 
 @endsection

@@ -32,13 +32,26 @@
         }
     });
 
+    // Button Delete Folder
+    $(document).on("click", ".btn-delete-folder", function(e){
+        e.preventDefault();
+        // var url = $(this).data("url");
+        var id = $(this).data("id");
+        var ask = confirm("Anda yakin ingin menghapus data ini?");
+        if(ask){
+            $("#form-delete-folder input[name=id]").val(id);
+            $("#form-delete-folder").submit();
+        }
+    });
+
     // Button Delete File
     $(document).on("click", ".btn-delete-file", function(e){
         e.preventDefault();
-        var url = $(this).data("url");
+        // var url = $(this).data("url");
+        var id = $(this).data("id");
         var ask = confirm("Anda yakin ingin menghapus data ini?");
         if(ask){
-            $("#form-delete-file input[name=url]").val(url);
+            $("#form-delete-file input[name=id]").val(id);
             $("#form-delete-file").submit();
         }
     });
@@ -107,5 +120,27 @@
      
         rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
         return rupiah;
+    }
+
+    // Get file extension
+    function getFileExtension(filename){
+        var split = filename.split(".");
+        var extension = split[split.length - 1];
+        return extension;
+    }
+
+    // Validate extension
+    function validateExtension(filename, filetype){
+        var extensions = {
+            'pdf': ['pdf'],
+            'image': ['jpg', 'jpeg', 'png', 'bmp', 'svg']
+        };
+
+        var ext = getFileExtension(filename);
+        var allowedExtensions = extensions['pdf'];
+        for(var i in allowedExtensions){
+            if(ext == allowedExtensions[i]) return true;
+        }
+        return false;
     }
 </script>

@@ -73,7 +73,8 @@
     $(document).on("click", "#pills-galeri-tab", function(){
         $.ajax({
             type: "get",
-            url: "/admin/{{ $imageType }}/images{{ isset($id) ? '?id='.$id : '' }}",
+            url: "{{ route('admin.'.$imageType.'.images', ['id' => isset($id) ? $id : '']) }}",
+            // url: "/admin/{{ $imageType }}/images{{ isset($id) ? '?id='.$id : '' }}",
             success: function(response){
                 var result = JSON.parse(response);
                 var html = '';

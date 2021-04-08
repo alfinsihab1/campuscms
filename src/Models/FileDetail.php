@@ -4,21 +4,21 @@ namespace Ajifatur\FaturCMS\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class FolderKategori extends Model
+class FileDetail extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'folder_kategori';
+    protected $table = 'file_detail';
 
     /**
      * The primary key for the model.
      *
      * @var string
      */
-    protected $primaryKey = 'id_fk';
+    protected $primaryKey = 'id_fd';
 
     /**
      * The attributes that are mass assignable.
@@ -26,7 +26,7 @@ class FolderKategori extends Model
      * @var array
      */
     protected $fillable = [
-        'folder_kategori', 'slug_kategori', 'tipe_kategori'
+        'id_file', 'nama_fd',
     ];
 
     /**

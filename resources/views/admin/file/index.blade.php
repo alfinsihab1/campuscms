@@ -27,8 +27,8 @@
                 <div class="tile-title-w-btn">
                     <!-- Breadcrumb Direktori -->
                     <ol class="breadcrumb bg-white p-0 mb-0">
-                        @foreach($breadcrumb as $key=>$data)
-                            @if($key + 1 == count($breadcrumb))
+                        @foreach(file_breadcrumb($directory) as $key=>$data)
+                            @if($key + 1 == count(file_breadcrumb($directory)))
                             <li class="breadcrumb-item active" aria-current="page">{{ $data->folder_nama == '/' ? 'Home' : $data->folder_nama }}</li>
                             @else
                             <li class="breadcrumb-item"><a href="{{ route('admin.filemanager.index', ['kategori' => $kategori->slug_kategori, 'dir' => $data->folder_dir]) }}">{{ $data->folder_nama == '/' ? 'Home' : $data->folder_nama }}</a></li>
@@ -37,8 +37,8 @@
                     </ol>
                     <!-- /Breadcrumb Direktori -->
                     <div class="btn-group">
-                        <a href="{{ route('admin.blog.tag.create') }}" class="btn btn-sm btn-theme-1"><i class="fa fa-plus mr-2"></i> Tambah Folder</a>
-                        <a href="{{ route('admin.blog.tag.create') }}" class="btn btn-sm btn-secondary"><i class="fa fa-plus mr-2"></i> Tambah File</a>
+                        <a href="{{ route('admin.folder.create', ['kategori' => $kategori->slug_kategori, 'dir' => $data->folder_dir]) }}" class="btn btn-sm btn-theme-1"><i class="fa fa-plus mr-2"></i> Tambah Folder</a>
+                        <a href="{{ route('admin.file.create', ['kategori' => $kategori->slug_kategori, 'dir' => $data->folder_dir]) }}" class="btn btn-sm btn-secondary"><i class="fa fa-plus mr-2"></i> Tambah File</a>
                     </div>
                 </div>
                 <!-- /Tile Title -->
@@ -79,8 +79,8 @@
                                         <div class="btn-group">
                                             <a href="{{ asset('assets/images/folder/'.$data->folder_icon) }}" class="btn btn-sm btn-info btn-magnify-popup" data-toggle="tooltip" title="Icon"><i class="fa fa-image"></i></a>
                                             <a href="#" class="btn btn-sm btn-success" data-toggle="tooltip" title="Pindah"><i class="fa fa-arrow-right"></i></a>
-                                            <a href="#" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>
-                                            <a href="#" class="btn btn-sm btn-danger btn-delete" data-id="{{ $data->id_folder }}" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>
+                                            <a href="{{ route('admin.folder.edit', ['kategori' => $kategori->slug_kategori, 'id' => $data->id_folder, 'dir' => $directory->folder_dir]) }}" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>
+                                            <a href="#" class="btn btn-sm btn-danger btn-delete-folder" data-id="{{ $data->id_folder }}" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>
                                         </div>
                                     </td>
                                 </tr>
@@ -101,14 +101,14 @@
                                             <a href="{{ asset('assets/images/file/'.$data->file_thumbnail) }}" class="btn btn-sm btn-info btn-magnify-popup" data-toggle="tooltip" title="Thumbnail"><i class="fa fa-image"></i></a>
                                             <a href="#" class="btn btn-sm btn-success" data-toggle="tooltip" title="Pindah"><i class="fa fa-arrow-right"></i></a>
                                             <a href="#" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>
-                                            <a href="#" class="btn btn-sm btn-danger btn-delete" data-id="{{ $data->id_file }}" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>
+                                            <a href="#" class="btn btn-sm btn-danger btn-delete-file" data-id="{{ $data->id_file }}" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>
                                         </div>
                                     </td>
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                        <form id="form-delete" class="d-none" method="post" action="{{ route('admin.blog.tag.delete') }}">
+                        <form id="form-delete-folder" class="d-none" method="post" action="{{ route('admin.folder.delete', ['kategori' => $kategori->slug_kategori]) }}">
                             {{ csrf_field() }}
                             <input type="hidden" name="id">
                         </form>

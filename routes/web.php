@@ -109,6 +109,20 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	// File Manager
 	Route::get('/admin/file-manager/{kategori}', $namespacePrefix.'FileController@index')->name('admin.filemanager.index');
 
+	// File
+	Route::get('/admin/file-manager/{kategori}/file/create', $namespacePrefix.'FileController@create')->name('admin.file.create');
+	Route::post('/admin/file-manager/{kategori}/file/store', $namespacePrefix.'FileController@store')->name('admin.file.store');
+	Route::post('/admin/file-manager/{kategori}/file/upload-pdf', $namespacePrefix.'FileController@uploadPDF')->name('admin.file.uploadpdf');
+	Route::get('/admin/file/images', $namespacePrefix.'FileController@showImages')->name('admin.file.images');
+
+	// Folder
+	Route::get('/admin/file-manager/{kategori}/folder/create', $namespacePrefix.'FolderController@create')->name('admin.folder.create');
+	Route::post('/admin/file-manager/{kategori}/folder/store', $namespacePrefix.'FolderController@store')->name('admin.folder.store');
+	Route::get('/admin/file-manager/{kategori}/folder/edit/{id}', $namespacePrefix.'FolderController@edit')->name('admin.folder.edit');
+	Route::post('/admin/file-manager/{kategori}/folder/update', $namespacePrefix.'FolderController@update')->name('admin.folder.update');
+	Route::post('/admin/file-manager/{kategori}/folder/delete', $namespacePrefix.'FolderController@delete')->name('admin.folder.delete');
+	Route::get('/admin/folder/images', $namespacePrefix.'FolderController@showImages')->name('admin.folder.images');
+
 	// Pelatihan
 	Route::get('/admin/pelatihan', $namespacePrefix.'PelatihanController@index')->name('admin.pelatihan.index');
 	Route::get('/admin/pelatihan/create', $namespacePrefix.'PelatihanController@create')->name('admin.pelatihan.create');

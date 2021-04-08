@@ -237,7 +237,7 @@
                 $("#btn-submit-send").attr("disabled","disabled");
             }
             // jika ekstensi tidak diizinkan
-            else if(!validateExtension(this.files[0].name)){
+            else if(!validateExtension(this.files[0].name, "image")){
                 alert("Ekstensi file tidak diizinkan!");
                 $("#file").val(null);
                 $("#btn-submit-send").attr("disabled","disabled");
@@ -256,22 +256,22 @@
         $("#form-confirm")[0].submit();
     });
 
-    function getFileExtension(filename){
-        var split = filename.split(".");
-        var extension = split[split.length - 1];
-        return extension;
-    }
+    // function getFileExtension(filename){
+    //     var split = filename.split(".");
+    //     var extension = split[split.length - 1];
+    //     return extension;
+    // }
 
-    function validateExtension(filename){
-        var ext = getFileExtension(filename);
+    // function validateExtension(filename){
+    //     var ext = getFileExtension(filename);
 
-        // ekstensi yang diizinkan
-        var extensions = ['jpg', 'jpeg', 'png', 'bmp', 'svg'];
-        for(var i in extensions){
-            if(ext == extensions[i]) return true;
-        }
-        return false;
-    }
+    //     // ekstensi yang diizinkan
+    //     var extensions = ['jpg', 'jpeg', 'png', 'bmp', 'svg'];
+    //     for(var i in extensions){
+    //         if(ext == extensions[i]) return true;
+    //     }
+    //     return false;
+    // }
 
     function readURL(input){
         if(input.files && input.files[0]){

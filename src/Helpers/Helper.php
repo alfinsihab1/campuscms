@@ -100,6 +100,7 @@ if(!function_exists('array_validation_messages')){
             'max' => 'Harus diisi maksimal :max karakter!',
             'min' => 'Harus diisi minimal :min karakter!',
             'numeric' => 'Harus diisi dengan nomor atau angka!',
+            'regex' => 'Format penulisan tidak valid!',
             'required' => 'Harus diisi!',
             'same' => 'Harus sama!',
             'unique' => 'Sudah terdaftar!',
@@ -143,7 +144,7 @@ if(!function_exists('array_tag')){
 
 /**
  *
- * Slugify
+ * Slugify and Generate file name
  * 
  */
 

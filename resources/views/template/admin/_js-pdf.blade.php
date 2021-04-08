@@ -1,4 +1,4 @@
-<div id="result-pdf" class="d-none"></div>
+<div class="result-pdf d-none"></div>
 
 <!-- Modal Loader -->
 <div class="modal fade" id="modal-loader" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -16,8 +16,8 @@
 <!-- End Loader -->
 
 <!-- PDF JS -->
-<script type="text/javascript" src="{{ asset('assets/plugins/pdf.js/pdf.js') }}"></script>
-<script type="text/javascript" src="{{ asset('assets/plugins/pdf.js/pdf.worker.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/plugins/pdf.js/pdf.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/plugins/pdf.js/pdf.min.worker.js') }}"></script>
 
 <script type="text/javascript">
 	// Disable button submit when load page
@@ -108,9 +108,9 @@
 		page.render({canvasContext: context, viewport: viewport});
 
 		// Add it to the web page
-		$("#result-pdf").append(canvas);
+		$(".result-pdf").append(canvas);
+        $(".progress-pdf .total-page").text(currPage);
 		// $("canvas").addClass("mb-2 mx-auto").css("width", "100%");
-		$(".progress-pdf #page-total").text(currPage);
 
 		progressHandler(currPage, numPages);
 
@@ -137,8 +137,8 @@
 			$(".progress-pdf .progress-bar").addClass("bg-success");
             $(".btn-file-pdf").attr("disabled","disabled");
             $("button[type=submit]").removeAttr("disabled");
-            // $("#btn-upload").removeAttr("disabled");
 			$("#file-pdf").val(null);
+            // $("#btn-upload").removeAttr("disabled");
 		}
 		else{
             // $("#btn-upload").attr("disabled","disabled");
@@ -157,7 +157,9 @@
             var d = new Date();
             var n = d.getTime();
             var i = 1;
-            canvases = $("#result-pdf canvas");
+            var total = $(".progress-pdf .total-page").text();
+            // total = total.parseInt();
+            canvases = $(".result-pdf canvas");
             canvases.each(function(key,elem){
                 var code = $(elem).get(0).toDataURL();
                 $.ajax({
@@ -174,6 +176,8 @@
                             $("input[name=file_konten]").val(n);
                             $("#form").submit();
                         }
+                        var percentage = Math.round((i / total) * 100);
+                        $("#modal-loader .progress-bar").text(percentage + "%").css("width", percentage + "%");
                         i++;
                     }
                 });

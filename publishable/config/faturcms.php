@@ -23,6 +23,8 @@ return [
 
     'images' => [
         'blog' => 'blog.png',
+        'file' => 'file.jpg',
+        'folder' => 'folder.png',
         'user' => 'user.jpg',
         'pelatihan' => 'pelatihan.png',
     ]

@@ -1,6 +1,6 @@
 @extends('faturcms::template.admin.main')
 
-@section('title', 'Tambah File')
+@section('title', 'Edit File')
 
 @section('content')
 
@@ -9,11 +9,11 @@
 
     <!-- Breadcrumb -->
     @include('faturcms::template.admin._breadcrumb', ['breadcrumb' => [
-        'title' => 'Tambah File',
+        'title' => 'Edit File',
         'items' => [
             ['text' => 'File Manager', 'url' => '#'],
             ['text' => 'Materi '.$kategori->folder_kategori, 'url' => route('admin.filemanager.index', ['kategori' => $kategori->slug_kategori])],
-            ['text' => 'Tambah File', 'url' => '#'],
+            ['text' => 'Edit File', 'url' => '#'],
         ]
     ]])
     <!-- /Breadcrumb -->
@@ -41,15 +41,16 @@
                 <!-- /Tile Title -->
                 <!-- Tile Body -->
                 <div class="tile-body">
-                    <form id="form" method="post" action="{{ route('admin.file.store', ['kategori' => $kategori->slug_kategori]) }}" enctype="multipart/form-data">
+                    <form id="form" method="post" action="{{ route('admin.file.update', ['kategori' => $kategori->slug_kategori]) }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
-                        <input type="hidden" name="file_kategori" value="{{ $kategori->id_fk }}">
+                        <input type="hidden" name="id" value="{{ $file->id_file }}">
                         <input type="hidden" name="id_folder" value="{{ $directory->id_folder }}">
+                        <input type="hidden" name="file_kategori" value="{{ $kategori->id_fk }}">
                         <input type="hidden" name="file_konten">
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label">Nama File <span class="text-danger">*</span></label>
                             <div class="col-md-10">
-                                <input type="text" name="nama_file" class="form-control {{ $errors->has('nama_file') ? 'is-invalid' : '' }}" value="{{ old('nama_file') }}">
+                                <input type="text" name="nama_file" class="form-control {{ $errors->has('nama_file') ? 'is-invalid' : '' }}" value="{{ $file->file_nama }}">
                                 @if($errors->has('nama_file'))
                                 <div class="small text-danger mt-1">{{ ucfirst($errors->first('nama_file')) }}</div>
                                 @endif
@@ -61,24 +62,9 @@
                                 <input type="file" id="file" class="d-none" accept="image/*">
                                 <a class="btn btn-sm btn-secondary btn-image" href="#"><i class="fa fa-image mr-2"></i>Pilih Gambar...</a>
                                 <br>
-                                <img id="img-file" class="mt-2 img-thumbnail d-none" style="max-height: 150px">
+                                <img src="{{ image('assets/images/file/'.$file->file_thumbnail, 'file') }}" id="img-file" class="mt-2 img-thumbnail {{ $file->file_thumbnail != '' ? '' : 'd-none' }}" style="max-height: 150px">
                                 <input type="hidden" name="gambar">
                                 <input type="hidden" name="gambar_url">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-2 col-form-label">File PDF <span class="text-danger">*</span></label>
-                            <div class="col-md-10">
-                                <input type="file" id="file-pdf" class="d-none" accept="application/pdf">
-                                <input type="hidden" name="pdf">
-                                <a class="btn btn-sm btn-secondary btn-file-pdf" href="#"><i class="fa fa-file-pdf-o mr-2"></i>Pilih File PDF...</a>
-                                <div class="progress-pdf d-none">
-                                    <div class="mt-3 mb-1"><span class="total-page">0</span> halaman berhasil di-render.</div>
-                                    <div class="progress mb-3">
-                                        <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
-                                    </div>
-                                </div>
-                                <!-- <br> -->
                             </div>
                         </div>
                         <div class="form-group row">
@@ -106,7 +92,5 @@
 @section('js-extra')
 
 @include('faturcms::template.admin._js-image', ['imageType' => 'folder', 'croppieWidth' => 400, 'croppieHeight' => 400])
-
-@include('faturcms::template.admin._js-pdf', ['kategori' => $kategori->slug_kategori])
 
 @endsection

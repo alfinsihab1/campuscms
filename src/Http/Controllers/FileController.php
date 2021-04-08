@@ -95,34 +95,6 @@ class FileController extends Controller
 	}
 	
     /**
-     * Mengupload file PDF
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function uploadPDF(Request $request)
-    {
-		// Get data
-		$file_name = $request->name;
-
-		// Save files
-		$data = $request->code;
-		list($type, $data) = explode(';', $data);
-		list(, $data)      = explode(',', $data);
-		$data = base64_decode($data);
-		
-		$number = $request->key + 1;
-		$number = add_zero($number);
-		$file_detail_name = $file_name.'-'.$number.'.jpg';
-		if(file_put_contents('assets/uploads/'.$file_detail_name, $data)){
-			$file_detail = new FileDetail;
-			$file_detail->id_file = $file_name;
-			$file_detail->nama_fd = $file_detail_name;
-			$file_detail->save();
-		}
-	}
-	
-    /**
      * Menyimpan file
      *
      * @param  \Illuminate\Http\Request  $request
@@ -152,7 +124,7 @@ class FileController extends Controller
             $file = new Files;
             $file->id_folder = $request->id_folder;
             $file->id_user = Auth::user()->id_user;
-            $file->file_nama = $request->nama_file;
+            $file->file_nama = generate_file_name($request->nama_file, 'file2', 'file_nama', 'id_folder', $request->id_folder, 'id_file', null);
             $file->file_kategori = $request->file_kategori;
             $file->file_deskripsi = $request->file_deskripsi != '' ? $request->file_deskripsi : '';
             $file->file_konten = $request->file_konten;
@@ -171,8 +143,177 @@ class FileController extends Controller
 
 		// Redirect
         return redirect()->route('admin.filemanager.index', ['kategori' => $kategori->slug_kategori, 'dir' => $current_folder->folder_dir])->with(['message' => 'Berhasil menambah file.']);
-		// return redirect('/admin/file-manager/'.generate_permalink($kategori->folder_kategori).'?dir='.$directory->folder_dir)->with(['message' => 'Berhasil menambah file.']);
 	}
+
+    /**
+     * Menampilkan form edit file
+     *
+     * string $category
+     * int $id
+     * @return \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Request $request, $category, $id)
+    {
+        // Kategori
+        $kategori = FolderKategori::where('slug_kategori','=',$category)->firstOrFail();
+
+        // Jika role admin
+        if(Auth::user()->is_admin == 1){
+            // Get direktori
+            $directory = ($request->query('dir') == '/') ? Folder::find(1) : Folder::where('folder_dir','=',$request->query('dir'))->where('folder_kategori','=',$kategori->id_fk)->first();
+
+            // Jika direktori tidak ditemukan
+            if(!$directory){
+                // Redirect to '/'
+                return redirect()->route('admin.file.edit', ['kategori' => $kategori->slug_kategori, 'dir' => '/']);
+            }
+
+            // Get file
+            $file = Files::where('id_folder','=',$directory->id_folder)->where('file_kategori','=',$kategori->id_fk)->findOrFail($id);
+            
+            return view('faturcms::admin.file.edit-'.$kategori->tipe_kategori, [
+                'kategori' => $kategori,
+                'directory' => $directory,
+                'file' => $file,
+            ]);
+        }
+    }
+    
+    /**
+     * Mengupdate file
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request)
+    {
+        // Kategori
+        $kategori = FolderKategori::find($request->file_kategori);
+
+        // Validasi
+        $validator = Validator::make($request->all(), [
+            'nama_file' => 'required|max:255',
+        ], array_validation_messages());
+        
+        // Mengecek jika ada error
+        if($validator->fails()){
+            // Kembali ke halaman sebelumnya dan menampilkan pesan error
+            return redirect()->back()->withErrors($validator->errors())->withInput($request->only([
+                'nama_file'
+            ]));
+        }
+        // Jika tidak ada error
+        else{            
+            // Mengupdate data
+            $file = Files::find($request->id);
+            $file->id_folder = $request->id_folder;
+            $file->file_nama = generate_file_name($request->nama_file, 'file2', 'file_nama', 'id_folder', $request->id_folder, 'id_file', $request->id);
+            $file->file_thumbnail = generate_image_name("assets/images/file/", $request->gambar, $request->gambar_url) != '' ? generate_image_name("assets/images/file/", $request->gambar, $request->gambar_url) : $file->file_thumbnail;
+            $file->save();
+            
+            // Get data folder
+            $current_folder = Folder::find($request->id_folder);
+            
+            // Kategori folder
+            $kategori = FolderKategori::find($file->file_kategori);
+        }
+
+        // Redirect
+        return redirect()->route('admin.filemanager.index', ['kategori' => $kategori->slug_kategori, 'dir' => $current_folder->folder_dir])->with(['message' => 'Berhasil mengupdate file.']);
+    }
+
+    /**
+     * Menghapus file
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function delete(Request $request)
+    {
+        // Get file
+        $file = Files::findOrFail($request->id);
+
+        // Menghapus file ebook
+        if($file->file_kategori > 3){
+            $file_detail = FileDetail::where('id_file','=',$file->file_konten)->get();
+            if(count($file_detail) > 0){
+                foreach($file_detail as $data){
+                    $fd = FileDetail::find($data->id_fd);
+                    File::delete('assets/uploads/'.$fd->nama_fd);
+                    $fd->delete();
+                }
+            }
+            else{
+                File::delete('assets/uploads/'.$file->file_konten);
+            }
+        }
+        // Menghapus file tools
+        elseif($file->file_kategori == 3){
+            File::delete('assets/tools/'.$file->file_konten);
+        }
+        $file->delete();
+            
+        // Get data current folder
+        $current_folder = Folder::find($file->id_folder);
+
+        // Kategori folder
+        $kategori = FolderKategori::find($file->file_kategori);
+
+        // Redirect
+        return redirect()->route('admin.filemanager.index', ['kategori' => $kategori->slug_kategori, 'dir' => $current_folder->folder_dir])->with(['message' => 'Berhasil menghapus file.']);
+    }
+
+    /**
+     * Memindahkan file
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function move(Request $request)
+    {
+        // Move file
+        $file = Files::findOrFail($request->id);
+        $file->id_folder = $request->destination;
+        $file->save();
+            
+        // Get data current folder
+        $current_folder = Folder::find($file->id_folder);
+
+        // Kategori folder
+        $kategori = FolderKategori::find($file->file_kategori);
+
+        // Redirect
+        return redirect()->route('admin.filemanager.index', ['kategori' => $kategori->slug_kategori, 'dir' => $current_folder->folder_dir])->with(['message' => 'Berhasil memindahkan file.']);
+    }
+    
+    /**
+     * Mengupload file PDF
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function uploadPDF(Request $request)
+    {
+        // Get data
+        $file_name = $request->name;
+
+        // Save files
+        $data = $request->code;
+        list($type, $data) = explode(';', $data);
+        list(, $data)      = explode(',', $data);
+        $data = base64_decode($data);
+        
+        $number = $request->key + 1;
+        $number = add_zero($number);
+        $file_detail_name = $file_name.'-'.$number.'.jpg';
+        if(file_put_contents('assets/uploads/'.$file_detail_name, $data)){
+            $file_detail = new FileDetail;
+            $file_detail->id_file = $file_name;
+            $file_detail->nama_fd = $file_detail_name;
+            $file_detail->save();
+        }
+    }
       
     /**
      * Menampilkan file gambar
@@ -194,6 +335,26 @@ class FileController extends Controller
      */
     public function availableFolders($id)
     {
-		return Folder::where('folder_kategori','=',$id)->orWhere('folder_kategori','=',0)->orderBy('folder_parent','asc')->orderBy('folder_nama','asc')->get();
+		// return Folder::where('folder_kategori','=',$id)->orWhere('folder_kategori','=',0)->orderBy('folder_parent','asc')->orderBy('folder_nama','asc')->get();
+
+        $children = [];
+        $child = Folder::where('folder_parent','=',1)->where('folder_kategori','=',4)->get();
+        $level = 1;
+        while(count($child) > 0){
+            $ids = [];
+            foreach($child as $c){
+                $data = Folder::find($c->id_folder);
+                array_push($ids, $data->id_folder);
+                array_push($children, [
+                    'id' => $data->id_folder,
+                    'nama' => $data->folder_nama,
+                    'parent' => $data->folder_parent,
+                    'level' => $level
+                ]);
+            }
+            $child = Folder::whereIn('folder_parent',$ids)->get();
+            $level++;
+        }
+        return $children;
     }
 }

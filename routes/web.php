@@ -138,6 +138,16 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::post('/admin/slider/sort', $namespacePrefix.'SliderController@sorting')->name('admin.slider.sort');
 	Route::get('/admin/slider/images', $namespacePrefix.'SliderController@showImages')->name('admin.slider.images');
 
+	// Fitur
+	Route::get('/admin/fitur', $namespacePrefix.'FiturController@index')->name('admin.fitur.index');
+	Route::get('/admin/fitur/create', $namespacePrefix.'FiturController@create')->name('admin.fitur.create');
+	Route::post('/admin/fitur/store', $namespacePrefix.'FiturController@store')->name('admin.fitur.store');
+	Route::get('/admin/fitur/edit/{id}', $namespacePrefix.'FiturController@edit')->name('admin.fitur.edit');
+	Route::post('/admin/fitur/update', $namespacePrefix.'FiturController@update')->name('admin.fitur.update');
+	Route::post('/admin/fitur/delete', $namespacePrefix.'FiturController@delete')->name('admin.fitur.delete');
+	Route::post('/admin/fitur/sort', $namespacePrefix.'FiturController@sorting')->name('admin.fitur.sort');
+	Route::get('/admin/slider/images', $namespacePrefix.'FiturController@showImages')->name('admin.fitur.images');
+
 	// Pelatihan
 	Route::get('/admin/pelatihan', $namespacePrefix.'PelatihanController@index')->name('admin.pelatihan.index');
 	Route::get('/admin/pelatihan/create', $namespacePrefix.'PelatihanController@create')->name('admin.pelatihan.create');

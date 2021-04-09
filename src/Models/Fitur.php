@@ -26,7 +26,7 @@ class Fitur extends Model
      * @var array
      */
     protected $fillable = [
-        'nama_fitur', 'keterangan_fitur', 'url_fitur', 'icon_fitur',
+        'nama_fitur', 'deskripsi_fitur', 'url_fitur', 'gambar_fitur', 'order_fitur'
     ];
 
     /**

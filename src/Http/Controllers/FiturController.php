@@ -6,25 +6,24 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use App\User;
-use Ajifatur\FaturCMS\Models\Slider;
+use Ajifatur\FaturCMS\Models\Fitur;
 
-class SliderController extends Controller
+class FiturController extends Controller
 {
     /**
-     * Menampilkan data slider
+     * Menampilkan data fitur
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
         if(Auth::user()->role == role('it') || Auth::user()->role == role('manager')){
-            // Data slider
-            $slider = Slider::orderBy('order_slider','asc')->orderBy('status_slider','desc')->get();
+            // Data fitur
+            $fitur = Fitur::orderBy('order_fitur','asc')->get();
             
             // View
-            return view('faturcms::admin.slider.index', [
-                'slider' => $slider,
+            return view('faturcms::admin.fitur.index', [
+                'fitur' => $fitur,
             ]);
         }
         else{
@@ -34,7 +33,7 @@ class SliderController extends Controller
     }
 
     /**
-     * Menampilkan form tambah slider
+     * Menampilkan form tambah fitur
      *
      * @return \Illuminate\Http\Response
      */
@@ -42,7 +41,7 @@ class SliderController extends Controller
     {
         if(Auth::user()->role == role('it') || Auth::user()->role == role('manager')){
             // View
-            return view('faturcms::admin.slider.create');
+            return view('faturcms::admin.fitur.create');
         }
         else{
             // View
@@ -51,7 +50,7 @@ class SliderController extends Controller
     }
 
     /**
-     * Menambah slider
+     * Menambah fitur
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -60,38 +59,41 @@ class SliderController extends Controller
     {
         // Validasi
         $validator = Validator::make($request->all(), [
-            'url' => 'max:255',
-            'status_slider' => 'required',
+            'nama_fitur' => 'required',
+            'deskripsi_fitur' => 'required',
+            'url_fitur' => 'max:255',
         ], array_validation_messages());
         
         // Mengecek jika ada error
         if($validator->fails()){
             // Kembali ke halaman sebelumnya dan menampilkan pesan error
             return redirect()->back()->withErrors($validator->errors())->withInput($request->only([
-                'url',
-                'status_slider'
+                'nama_fitur',
+                'deskripsi_fitur',
+                'url_fitur'
             ]));
         }
         // Jika tidak ada error
         else{
             // Latest data
-            $latest = Slider::latest('order_slider')->first();
+            $latest = Fitur::latest('order_fitur')->first();
 
             // Menambah data
-            $slider = new Slider;
-            $slider->slider = generate_image_name("assets/images/slider/", $request->gambar, $request->gambar_url);
-            $slider->slider_url = $request->url != '' ? $request->url : '';
-            $slider->status_slider = $request->status_slider;
-            $slider->order_slider = $latest ? $latest->order_slider + 1 : 1;
-            $slider->save();
+            $fitur = new Fitur;
+            $fitur->nama_fitur = $request->nama_fitur;
+            $fitur->deskripsi_fitur = $request->deskripsi_fitur;
+            $fitur->url_fitur = $request->url_fitur != '' ? $request->url_fitur : '';
+            $fitur->gambar_fitur = generate_image_name("assets/images/fitur/", $request->gambar, $request->gambar_url);
+            $fitur->order_fitur = $latest ? $latest->order_fitur + 1 : 1;
+            $fitur->save();
         }
 
         // Redirect
-        return redirect()->route('admin.slider.index')->with(['message' => 'Berhasil menambah data.']);
+        return redirect()->route('admin.fitur.index')->with(['message' => 'Berhasil menambah data.']);
     }
 
     /**
-     * Menampilkan form edit slider
+     * Menampilkan form edit fitur
      *
      * int $id
      * @return \Illuminate\Http\Response
@@ -99,12 +101,12 @@ class SliderController extends Controller
     public function edit($id)
     {
         if(Auth::user()->role == role('it') || Auth::user()->role == role('manager')){
-            // Data slider
-            $slider = Slider::findOrFail($id);
+            // Data fitur
+            $fitur = Fitur::findOrFail($id);
 
             // View
-            return view('faturcms::admin.slider.edit', [
-                'slider' => $slider
+            return view('faturcms::admin.fitur.edit', [
+                'fitur' => $fitur
             ]);
         }
         else{
@@ -114,7 +116,7 @@ class SliderController extends Controller
     }
 
     /**
-     * Mengupdate slider
+     * Mengupdate fitur
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -123,34 +125,37 @@ class SliderController extends Controller
     {
         // Validasi
         $validator = Validator::make($request->all(), [
-            'url' => 'max:255',
-            'status_slider' => 'required',
+            'nama_fitur' => 'required',
+            'deskripsi_fitur' => 'required',
+            'url_fitur' => 'max:255',
         ], array_validation_messages());
         
         // Mengecek jika ada error
         if($validator->fails()){
             // Kembali ke halaman sebelumnya dan menampilkan pesan error
             return redirect()->back()->withErrors($validator->errors())->withInput($request->only([
-                'url',
-                'status_slider'
+                'nama_fitur',
+                'deskripsi_fitur',
+                'url_fitur'
             ]));
         }
         // Jika tidak ada error
         else{
             // Mengupdate data
-            $slider = Slider::find($request->id);
-            $slider->slider = generate_image_name("assets/images/slider/", $request->gambar, $request->gambar_url) != '' ? generate_image_name("assets/images/slider/", $request->gambar, $request->gambar_url) : $slider->slider;
-            $slider->slider_url = $request->url != '' ? $request->url : '';
-            $slider->status_slider = $request->status_slider;
-            $slider->save();
+            $fitur = Fitur::find($request->id);
+            $fitur->nama_fitur = $request->nama_fitur;
+            $fitur->deskripsi_fitur = $request->deskripsi_fitur;
+            $fitur->url_fitur = $request->url_fitur != '' ? $request->url_fitur : '';
+            $fitur->gambar_fitur = generate_image_name("assets/images/fitur/", $request->gambar, $request->gambar_url) != '' ? generate_image_name("assets/images/fitur/", $request->gambar, $request->gambar_url) : $fitur->gambar_fitur;
+            $fitur->save();
         }
 
         // Redirect
-        return redirect()->route('admin.slider.index')->with(['message' => 'Berhasil mangupdate data.']);
+        return redirect()->route('admin.fitur.index')->with(['message' => 'Berhasil mangupdate data.']);
     }
 
     /**
-     * Menghapus slider
+     * Menghapus fitur
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -158,11 +163,11 @@ class SliderController extends Controller
     public function delete(Request $request)
     {
     	// Menghapus data
-        $slider = Slider::find($request->id);
-        $slider->delete();
+        $fitur = Fitur::find($request->id);
+        $fitur->delete();
 
         // Redirect
-        return redirect()->route('admin.slider.index')->with(['message' => 'Berhasil menghapus data.']);
+        return redirect()->route('admin.fitur.index')->with(['message' => 'Berhasil menghapus data.']);
     }
       
     /**
@@ -173,42 +178,25 @@ class SliderController extends Controller
      */
     public function showImages(Request $request)
     {
-        echo json_encode(generate_file(public_path('assets/images/slider')));
+        echo json_encode(generate_file(public_path('assets/images/fitur')));
     }
 
     /**
-     * Mengurutkan slider
+     * Mengurutkan fitur
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function sorting(Request $request)
     {
-        // Mengurutkan slider
+        // Mengurutkan fitur
         foreach($request->get('ids') as $key=>$id){
-            $slider = Slider::find($id);
-            if($slider){
-                $slider->order_slider = $key + 1;
-                $slider->save();
+            $fitur = Fitur::find($id);
+            if($fitur){
+                $fitur->order_fitur = $key + 1;
+                $fitur->save();
             }
         }
-        echo 'Sukses mengupdate urutan slider!';
-    }
-    
-    /**
-     * Mengambil data slider
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function getSlider()
-    {
-        // Data slider
-        $slider = Slider::where('status_slider',1)->orderBy('id_slider','asc')->get();
-        
-        foreach($slider as $data){
-            $data->slider = $data->slider != '' ? '/assets/images/slider/'.$data->slider : '';
-        }
-
-        echo json_encode($slider);
+        echo 'Sukses mengupdate urutan fitur!';
     }
 }

@@ -44,15 +44,17 @@
                     <ul class="list-group sortable">
                         @if(count($slider)>0)
                             @foreach($slider as $data)
-                                <div class="list-group-item d-flex justify-content-between align-items-center tile" data-id="{{ $data->id_slider }}">
+                                <div class="list-group-item d-flex justify-content-between align-items-center" data-id="{{ $data->id_slider }}">
                                     <div>
-                                        <img src="{{ image('assets/images/slider/'.$data->slider, 'slider') }}" width="250" class="img-thumbnail">
-                                        <p class="mb-1"><a href="{{ $data->slider_url }}" target="_blank">{{ $data->slider_url }}</a></p>
+                                        <a class="btn-magnify-popup" href="{{ image('assets/images/slider/'.$data->slider, 'slider') }}">
+                                            <img src="{{ image('assets/images/slider/'.$data->slider, 'slider') }}" width="250" class="img-thumbnail">
+                                        </a>
+                                        <p class="mb-1"><a href="{{ $data->slider_url }}" target="_blank"><i class="fa fa-link mr-1"></i>{{ $data->slider_url }}</a></p>
                                         <p class="mb-1"><span class="badge badge-{{ $data->status_slider == 1 ? 'success' : 'danger' }}">{{ $data->status_slider == 1 ? 'Tampilkan' : 'Sembunyikan' }}</span></p>
                                     </div>
                                     <div class="btn-group">
-                                        <a href="{{ route('admin.slider.edit', ['id' => $data->id_slider]) }}" class="btn btn-sm btn-theme-1" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
-                                        <a href="#" class="btn btn-sm btn-theme-1 btn-delete" title="Hapus" data-id="{{ $data->id_slider }}" data-toggle="tooltip"><i class="fa fa-trash"></i></a>
+                                        <a href="{{ route('admin.slider.edit', ['id' => $data->id_slider]) }}" class="btn btn-sm btn-warning" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
+                                        <a href="#" class="btn btn-sm btn-danger btn-delete" title="Hapus" data-id="{{ $data->id_slider }}" data-toggle="tooltip"><i class="fa fa-trash"></i></a>
                                     </div>
                                 </div>
                             @endforeach
@@ -77,42 +79,6 @@
 
 @section('js-extra')
 
-<script type="text/javascript">    
-    // Sortable
-    $(".sortable").sortable({
-        placeholder: "ui-state-highlight",
-        start: function(event, ui){
-            $(".ui-state-highlight").css("height", $(ui.item).outerHeight());
-        },
-        update: function(event, ui){
-            sorting();
-        }
-    });
-    $(".sortable").disableSelection();
-
-    // Update urutan
-    function sorting(){
-        var ids = [];
-        $(".tile").each(function(key,elem){
-            ids.push($(elem).data("id"));
-        });
-        $.ajax({
-            type: "post",
-            url: "{{ route('admin.slider.sort') }}",
-            data: {_token: "{{ csrf_token() }}", ids: ids},
-            success: function(response){
-                alert(response);
-            }
-        });
-    }
-</script>
-
-@endsection
-
-@section('css-extra')
-
-<style type="text/css">
-    .sortable .list-group-item {cursor: move!important;}
-</style>
+@include('faturcms::template.admin._js-sortable', ['url' => route('admin.slider.sort')])
 
 @endsection

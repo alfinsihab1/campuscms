@@ -24,6 +24,7 @@ return [
     'images' => [
         'blog' => 'blog.png',
         'file' => 'file.jpg',
+        'fitur' => 'fitur.png',
         'folder' => 'folder.png',
         'pelatihan' => 'pelatihan.png',
         'slider' => 'slider.png',

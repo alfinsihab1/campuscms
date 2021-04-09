@@ -3,12 +3,15 @@
     .app-title {padding: 20px;}
 
     /* Sidebar */
-    .app-menu__item {padding: .5rem;}
+    .app-menu__item {padding: 8px 15px;}
     .treeview.is-expanded .treeview-menu {margin-bottom: .5rem;}
 
     /* Button */
     .btn-theme-1 {background-color: {{ setting('site.primary_color') }}!important; border-color: background: {{ setting('site.primary_color') }}!important; color: #fff;}
     .btn-theme-1:hover {background-color: #e0852f!important; border-color: #e0852f!important; color: #fff;}
+
+    /* Badge */
+    .badge {font-size: 87.5%;}
 
     /* Table */
     #dataTable td {padding: .5rem;}
@@ -35,6 +38,7 @@
 
     /* Modal Croppie */
     #modal-croppie .modal-dialog {max-width: 100%; margin-left: 1rem; margin-right: 1rem;}
+    #modal-croppie .modal-body .table-responsive {max-height: calc(100vh - 250px); overflow-y: auto;}
 
     /* Quill Editor */
     #editor {height: 300px;}
@@ -48,8 +52,8 @@
     .tt-suggestion {padding: .5rem; cursor: pointer;}
     .tt-suggestion:hover {background-color: #e5e5e5;}
 
-    /* Badge */
-    .badge {font-size: 87.5%;}
+    /* Sortable */
+    .sortable .list-group-item {cursor: move!important;}
 
     /* Change Primary */
     ::selection {background-color: {{ setting('site.primary_color') }}!important;}

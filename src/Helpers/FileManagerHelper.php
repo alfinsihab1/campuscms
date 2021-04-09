@@ -1,6 +1,7 @@
 <?php
 
 use Ajifatur\FaturCMS\Models\Folder;
+use Ajifatur\FaturCMS\Models\FolderKategori;
 
 // Generate file name
 if(!function_exists('generate_file_name')){
@@ -52,5 +53,13 @@ if(!function_exists('add_zero')){
         if($length == 1) return '00'.$number;
         elseif($length == 2) return '0'.$number;
         else return $number;
+    }
+}
+
+// Get tipe file
+if(!function_exists('tipe_file')){
+    function tipe_file($id){
+        $data = FolderKategori::find($id);
+        return $data ? $data->tipe_kategori : '';
     }
 }

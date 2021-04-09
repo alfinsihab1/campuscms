@@ -127,7 +127,16 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::post('/admin/file-manager/{kategori}/folder/delete', $namespacePrefix.'FolderController@delete')->name('admin.folder.delete');
 	Route::post('/admin/file-manager/{kategori}/folder/move', $namespacePrefix.'FolderController@move')->name('admin.folder.move');
 	Route::get('/admin/folder/images', $namespacePrefix.'FolderController@showImages')->name('admin.folder.images');
-	Route::get('/admin/folder/hierarchy', $namespacePrefix.'FolderController@hierarchy')->name('admin.folder.hierarchy');
+
+	// Slider
+	Route::get('/admin/slider', $namespacePrefix.'SliderController@index')->name('admin.slider.index');
+	Route::get('/admin/slider/create', $namespacePrefix.'SliderController@create')->name('admin.slider.create');
+	Route::post('/admin/slider/store', $namespacePrefix.'SliderController@store')->name('admin.slider.store');
+	Route::get('/admin/slider/edit/{id}', $namespacePrefix.'SliderController@edit')->name('admin.slider.edit');
+	Route::post('/admin/slider/update', $namespacePrefix.'SliderController@update')->name('admin.slider.update');
+	Route::post('/admin/slider/delete', $namespacePrefix.'SliderController@delete')->name('admin.slider.delete');
+	Route::post('/admin/slider/sort', $namespacePrefix.'SliderController@sorting')->name('admin.slider.sort');
+	Route::get('/admin/slider/images', $namespacePrefix.'SliderController@showImages')->name('admin.slider.images');
 
 	// Pelatihan
 	Route::get('/admin/pelatihan', $namespacePrefix.'PelatihanController@index')->name('admin.pelatihan.index');

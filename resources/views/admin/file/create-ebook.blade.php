@@ -78,7 +78,6 @@
                                         <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
                                     </div>
                                 </div>
-                                <!-- <br> -->
                             </div>
                         </div>
                         <div class="form-group row">
@@ -99,13 +98,13 @@
 </main>
 <!-- /Main -->
 
-@include('faturcms::template.admin._modal-image', ['croppieWidth' => 400, 'croppieHeight' => 400])
+@include('faturcms::template.admin._modal-image', ['croppieWidth' => 848, 'croppieHeight' => 480])
 
 @endsection
 
 @section('js-extra')
 
-@include('faturcms::template.admin._js-image', ['imageType' => 'folder', 'croppieWidth' => 400, 'croppieHeight' => 400])
+@include('faturcms::template.admin._js-image', ['imageType' => 'file', 'croppieWidth' => 848, 'croppieHeight' => 480])
 
 @include('faturcms::template.admin._js-pdf', ['kategori' => $kategori->slug_kategori])
 

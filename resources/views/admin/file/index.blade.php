@@ -128,6 +128,24 @@
 </main>
 <!-- /Main -->
 
+@php
+
+function loop_folder($folder){
+    $html = '';
+    $html .= '<ul class="list-group list-group-flush">';
+    if(count($folder) > 0){
+        foreach($folder as $key=>$data){
+            $html .= '<li class="list-group-item btn-available-folder" data-id="'.$data['id'].'"><i class="fa fa-folder mr-2"></i>'.$data['nama'].'</li>';
+            $html .= loop_folder($data['children']);
+        }
+    }
+    $html .= '</ul>';
+
+    return $html;
+}
+
+@endphp
+
 <!-- Modal Pindah Folder -->
 <div class="modal fade" id="modal-move" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -144,16 +162,8 @@
                     <input type="hidden" name="id">
                     <input type="hidden" name="type">
                     <input type="hidden" name="destination">
-                    <div class="row">
-                        <div class="form-group col-md-12">
-                            <table class="table table-hovered" id="table-available-folders">
-                                @foreach($available_folders as $available_folder)
-                                <tr>
-                                    <td class="btn-available-folder" data-id="{{ $available_folder['id'] }}" style="{{ $available_folder['parent'] != 0 ? 'padding-left:'.$available_folder['level'].'rem!important' : '' }}"><i class="fa fa-folder mr-2"></i> {{ $available_folder['nama'] }}</td>
-                                </tr>
-                                @endforeach
-                            </table>
-                        </div>
+                    <div class="available-folders">
+                        {!! loop_folder($available_folders) !!}
                     </div>
                 </form>
             </div>
@@ -223,8 +233,9 @@
 @section('css-extra')
 
 <style type="text/css">
-    #table-available-folders tr td {padding: .5rem;}
-    #table-available-folders tr td:hover {background-color: #eee; cursor: pointer;}
+    .available-folders ul li {padding: .5rem;}
+    .available-folders ul li:hover {background-color: #eee; cursor: pointer;}
+    .available-folders ul ul {padding-left: 1rem;}
 </style>
 
 @endsection

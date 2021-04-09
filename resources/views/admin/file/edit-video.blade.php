@@ -44,9 +44,8 @@
                     <form id="form" method="post" action="{{ route('admin.file.update', ['kategori' => $kategori->slug_kategori]) }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <input type="hidden" name="id" value="{{ $file->id_file }}">
-                        <input type="hidden" name="id_folder" value="{{ $directory->id_folder }}">
                         <input type="hidden" name="file_kategori" value="{{ $kategori->id_fk }}">
-                        <input type="hidden" name="file_konten">
+                        <input type="hidden" name="id_folder" value="{{ $directory->id_folder }}">
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label">Nama File <span class="text-danger">*</span></label>
                             <div class="col-md-10">
@@ -65,6 +64,33 @@
                                 <img src="{{ image('assets/images/file/'.$file->file_thumbnail, 'file') }}" id="img-file" class="mt-2 img-thumbnail {{ $file->file_thumbnail != '' ? '' : 'd-none' }}" style="max-height: 150px">
                                 <input type="hidden" name="gambar">
                                 <input type="hidden" name="gambar_url">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label">Deskripsi</label>
+                            <div class="col-md-10">
+                                <textarea name="file_deskripsi" class="form-control {{ $errors->has('file_deskripsi') ? 'is-invalid' : '' }}" rows="3">{{ $file->file_deskripsi }}</textarea>
+                                @if($errors->has('file_deskripsi'))
+                                <div class="small text-danger mt-1">{{ ucfirst($errors->first('file_deskripsi')) }}</div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label">Kode YouTube <span class="text-danger">*</span></label>
+                            <div class="col-md-10">
+                                <input type="text" name="file_konten" class="form-control {{ $errors->has('file_konten') ? 'is-invalid' : '' }}" value="{{ $file->file_konten }}">
+                                @if($errors->has('file_konten'))
+                                <div class="small text-danger mt-1">{{ ucfirst($errors->first('file_konten')) }}</div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label">Kode Embed Google Slide</label>
+                            <div class="col-md-10">
+                                <textarea name="file_keterangan" class="form-control {{ $errors->has('file_keterangan') ? 'is-invalid' : '' }}" rows="3">{{ $file->file_keterangan }}</textarea>
+                                @if($errors->has('file_keterangan'))
+                                <div class="small text-danger mt-1">{{ ucfirst($errors->first('file_keterangan')) }}</div>
+                                @endif
                             </div>
                         </div>
                         <div class="form-group row">

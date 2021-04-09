@@ -128,7 +128,7 @@ class FileController extends Controller
             $file->file_kategori = $request->file_kategori;
             $file->file_deskripsi = $request->file_deskripsi != '' ? $request->file_deskripsi : '';
             $file->file_konten = $request->file_konten;
-            $file->file_keterangan = $request->file_kategori == 1 ? htmlentities($request->file_keterangan) : '';
+            $file->file_keterangan = $request->file_kategori == tipe_file(1) ? htmlentities($request->file_keterangan) : '';
             $file->file_thumbnail = generate_image_name("assets/images/file/", $request->gambar, $request->gambar_url);
             $file->file_at = date('Y-m-d H:i:s');
             $file->file_up = date('Y-m-d H:i:s');
@@ -209,6 +209,9 @@ class FileController extends Controller
             $file = Files::find($request->id);
             $file->id_folder = $request->id_folder;
             $file->file_nama = generate_file_name($request->nama_file, 'file2', 'file_nama', 'id_folder', $request->id_folder, 'id_file', $request->id);
+            $file->file_deskripsi = $request->file_deskripsi != '' ? $request->file_deskripsi : '';
+            $file->file_konten = $request->file_kategori == tipe_file(1) ? $request->file_konten : $file->file_konten;
+            $file->file_keterangan = $request->file_kategori == tipe_file(1) ? htmlentities($request->file_keterangan) : '';
             $file->file_thumbnail = generate_image_name("assets/images/file/", $request->gambar, $request->gambar_url) != '' ? generate_image_name("assets/images/file/", $request->gambar, $request->gambar_url) : $file->file_thumbnail;
             $file->save();
             
@@ -329,32 +332,76 @@ class FileController extends Controller
     /**
      * Folder tersedia
      *
-	 * int $id
+     * int $category
+	 * int $i
      * @return \Illuminate\Http\Request
      * @return \Illuminate\Http\Response
      */
-    public function availableFolders($id)
+    public function availableFolders($category)
     {
-		// return Folder::where('folder_kategori','=',$id)->orWhere('folder_kategori','=',0)->orderBy('folder_parent','asc')->orderBy('folder_nama','asc')->get();
+        // Define id
+        $id = 1;
 
-        $children = [];
-        $child = Folder::where('folder_parent','=',1)->where('folder_kategori','=',4)->get();
-        $level = 1;
-        while(count($child) > 0){
-            $ids = [];
-            foreach($child as $c){
-                $data = Folder::find($c->id_folder);
-                array_push($ids, $data->id_folder);
-                array_push($children, [
-                    'id' => $data->id_folder,
-                    'nama' => $data->folder_nama,
-                    'parent' => $data->folder_parent,
-                    'level' => $level
+        // Define folders
+        $folders = [];
+
+        // Get home folder and push to folders
+        $home_folder = Folder::find($id);
+        array_push($folders, [
+            'id' => $home_folder->id_folder,
+            'nama' => $home_folder->folder_nama,
+            'parent' => $home_folder->folder_parent,
+            'children' => []
+        ]);
+
+        // Return
+        return $this->loopChildren($folders, $category);
+    }
+
+    /**
+     * Folder children
+     *
+     * int $category
+     * int $id
+     * @return \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function getChildren($category, $id)
+    {
+        $array = [];
+        $children = Folder::where('folder_kategori','=',$category)->where('folder_parent','=',$id)->get();
+        if(count($children) > 0){
+            foreach($children as $child){
+                array_push($array, [
+                    'id' => $child->id_folder,
+                    'nama' => $child->folder_nama,
+                    'parent' => $child->folder_parent,
+                    'children' => []
                 ]);
             }
-            $child = Folder::whereIn('folder_parent',$ids)->get();
-            $level++;
         }
-        return $children;
+        return $array;
+    }
+
+    /**
+     * Loop children
+     *
+     * array $parent
+     * int $category
+     * @return \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function loopChildren($parent, $category)
+    {
+        $folders = $parent;
+
+        if(count($folders)>0){
+            foreach($folders as $key=>$folder){
+                $children = $this->getChildren($category, $folder['id']);
+                $folders[$key]['children'] = $this->loopChildren($children, $category);
+            }
+        }
+
+        return $folders;
     }
 }

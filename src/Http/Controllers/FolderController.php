@@ -295,36 +295,5 @@ class FolderController extends Controller
     public function showImages(Request $request)
     {
         echo json_encode(generate_file(public_path('assets/images/folder')));
-    }   
-      
-    /**
-     * Hierarki direktori
-     *
-     * @return \Illuminate\Http\Request
-     * @return \Illuminate\Http\Response
-     */
-    public function hierarchy()
-    {
-        $children = [];
-        $child = Folder::where('folder_parent','=',1)->where('folder_kategori','=',4)->get();
-        $level = 1;
-        while(count($child) > 0){
-            $ids = [];
-            foreach($child as $c){
-                $data = Folder::find($c->id_folder);
-                array_push($ids, $data->id_folder);
-                array_push($children, [
-                    'id' => $data->id_folder,
-                    'nama' => $data->folder_nama,
-                    'parent' => $data->folder_parent,
-                    'level' => $level
-                ]);
-
-                // array_push($children, $data);
-            }
-            $child = Folder::whereIn('folder_parent',$ids)->get();
-            $level++;
-        }
-        var_dump($children);
     }
 }

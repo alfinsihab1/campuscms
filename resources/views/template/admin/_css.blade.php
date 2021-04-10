@@ -53,7 +53,8 @@
     .tt-suggestion:hover {background-color: #e5e5e5;}
 
     /* Sortable */
-    .sortable .list-group-item {cursor: move!important;}
+    .sortable .sortable-item {cursor: move!important;}
+    .sortable .sortable-item.card {border: 1px solid #bebebe!important;}
 
     /* Change Primary */
     ::selection {background-color: {{ setting('site.primary_color') }}!important;}

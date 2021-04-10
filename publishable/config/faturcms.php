@@ -26,8 +26,11 @@ return [
         'file' => 'file.jpg',
         'fitur' => 'fitur.png',
         'folder' => 'folder.png',
+        'mentor' => 'mentor.jpg',
+        'mitra' => 'mitra.png',
         'pelatihan' => 'pelatihan.png',
         'slider' => 'slider.png',
+        'testimoni' => 'testimoni.jpg',
         'user' => 'user.jpg',
     ]
 ];

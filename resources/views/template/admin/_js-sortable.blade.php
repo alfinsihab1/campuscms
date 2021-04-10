@@ -18,7 +18,7 @@
     // Update urutan
     function sorting(){
         var ids = [];
-        $(".sortable .list-group-item").each(function(key,elem){
+        $(".sortable .sortable-item").each(function(key,elem){
             ids.push($(elem).data("id"));
         });
         $.ajax({

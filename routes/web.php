@@ -146,7 +146,37 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::post('/admin/fitur/update', $namespacePrefix.'FiturController@update')->name('admin.fitur.update');
 	Route::post('/admin/fitur/delete', $namespacePrefix.'FiturController@delete')->name('admin.fitur.delete');
 	Route::post('/admin/fitur/sort', $namespacePrefix.'FiturController@sorting')->name('admin.fitur.sort');
-	Route::get('/admin/slider/images', $namespacePrefix.'FiturController@showImages')->name('admin.fitur.images');
+	Route::get('/admin/fitur/images', $namespacePrefix.'FiturController@showImages')->name('admin.fitur.images');
+
+	// Mitra
+	Route::get('/admin/mitra', $namespacePrefix.'MitraController@index')->name('admin.mitra.index');
+	Route::get('/admin/mitra/create', $namespacePrefix.'MitraController@create')->name('admin.mitra.create');
+	Route::post('/admin/mitra/store', $namespacePrefix.'MitraController@store')->name('admin.mitra.store');
+	Route::get('/admin/mitra/edit/{id}', $namespacePrefix.'MitraController@edit')->name('admin.mitra.edit');
+	Route::post('/admin/mitra/update', $namespacePrefix.'MitraController@update')->name('admin.mitra.update');
+	Route::post('/admin/mitra/delete', $namespacePrefix.'MitraController@delete')->name('admin.mitra.delete');
+	Route::post('/admin/mitra/sort', $namespacePrefix.'MitraController@sorting')->name('admin.mitra.sort');
+	Route::get('/admin/mitra/images', $namespacePrefix.'MitraController@showImages')->name('admin.mitra.images');
+
+	// Mentor
+	Route::get('/admin/mentor', $namespacePrefix.'MentorController@index')->name('admin.mentor.index');
+	Route::get('/admin/mentor/create', $namespacePrefix.'MentorController@create')->name('admin.mentor.create');
+	Route::post('/admin/mentor/store', $namespacePrefix.'MentorController@store')->name('admin.mentor.store');
+	Route::get('/admin/mentor/edit/{id}', $namespacePrefix.'MentorController@edit')->name('admin.mentor.edit');
+	Route::post('/admin/mentor/update', $namespacePrefix.'MentorController@update')->name('admin.mentor.update');
+	Route::post('/admin/mentor/delete', $namespacePrefix.'MentorController@delete')->name('admin.mentor.delete');
+	Route::post('/admin/mentor/sort', $namespacePrefix.'MentorController@sorting')->name('admin.mentor.sort');
+	Route::get('/admin/mentor/images', $namespacePrefix.'MentorController@showImages')->name('admin.mentor.images');
+
+	// Testimoni
+	Route::get('/admin/testimoni', $namespacePrefix.'TestimoniController@index')->name('admin.testimoni.index');
+	Route::get('/admin/testimoni/create', $namespacePrefix.'TestimoniController@create')->name('admin.testimoni.create');
+	Route::post('/admin/testimoni/store', $namespacePrefix.'TestimoniController@store')->name('admin.testimoni.store');
+	Route::get('/admin/testimoni/edit/{id}', $namespacePrefix.'TestimoniController@edit')->name('admin.testimoni.edit');
+	Route::post('/admin/testimoni/update', $namespacePrefix.'TestimoniController@update')->name('admin.testimoni.update');
+	Route::post('/admin/testimoni/delete', $namespacePrefix.'TestimoniController@delete')->name('admin.testimoni.delete');
+	Route::post('/admin/testimoni/sort', $namespacePrefix.'TestimoniController@sorting')->name('admin.testimoni.sort');
+	Route::get('/admin/testimoni/images', $namespacePrefix.'TestimoniController@showImages')->name('admin.testimoni.images');
 
 	// Pelatihan
 	Route::get('/admin/pelatihan', $namespacePrefix.'PelatihanController@index')->name('admin.pelatihan.index');

@@ -1,6 +1,6 @@
 @extends('faturcms::template.admin.main')
 
-@section('title', 'Data Fitur')
+@section('title', 'Data Testimoni')
 
 @section('content')
 
@@ -9,10 +9,10 @@
 
     <!-- Breadcrumb -->
     @include('faturcms::template.admin._breadcrumb', ['breadcrumb' => [
-        'title' => 'Data Fitur',
+        'title' => 'Data Testimoni',
         'items' => [
-            ['text' => 'Fitur', 'url' => route('admin.fitur.index')],
-            ['text' => 'Data Fitur', 'url' => '#'],
+            ['text' => 'Testimoni', 'url' => route('admin.testimoni.index')],
+            ['text' => 'Data Testimoni', 'url' => '#'],
         ]
     ]])
     <!-- /Breadcrumb -->
@@ -26,7 +26,7 @@
                 <!-- Tile Title -->
                 <div class="tile-title-w-btn">
                     <div class="btn-group">
-                        <a href="{{ route('admin.fitur.create') }}" class="btn btn-sm btn-theme-1"><i class="fa fa-plus mr-2"></i> Tambah Data</a>
+                        <a href="{{ route('admin.testimoni.create') }}" class="btn btn-sm btn-theme-1"><i class="fa fa-plus mr-2"></i> Tambah Data</a>
                     </div>
                 </div>
                 <!-- /Tile Title -->
@@ -42,30 +42,31 @@
                     @endif
                     <p><em>Drag (geser) konten di bawah ini untuk mengurutkan dari yang teratas sampai terbawah.</em></p>
                     <ul class="list-group sortable">
-                        @if(count($fitur)>0)
-                            @foreach($fitur as $data)
-                                <div class="list-group-item d-flex justify-content-between align-items-center sortable-item" data-id="{{ $data->id_fitur }}">
+                        @if(count($testimoni)>0)
+                            @foreach($testimoni as $data)
+                                <div class="list-group-item d-flex justify-content-between align-items-center sortable-item" data-id="{{ $data->id_testimoni }}">
                                     <div>
                                         <div class="media">
-                                            <a class="btn-magnify-popup" href="{{ image('assets/images/fitur/'.$data->gambar_fitur, 'fitur') }}">
-                                                <img src="{{ image('assets/images/fitur/'.$data->gambar_fitur, 'fitur') }}" width="75" class="align-self-center mr-3">
+                                            <a class="btn-magnify-popup" href="{{ image('assets/images/testimoni/'.$data->foto_klien, 'testimoni') }}">
+                                                <img src="{{ image('assets/images/testimoni/'.$data->foto_klien, 'testimoni') }}" width="75" class="align-self-center mr-3">
                                             </a>
                                             <div class="media-body">
-                                                <h5 class="mt-0">{{ $data->nama_fitur }}</h5>
-                                                <p class="mb-1">{{ $data->deskripsi_fitur }}</p>
-                                                <p class="mb-1"><a href="{{ $data->url_fitur }}" target="_blank"><i class="fa fa-link mr-1"></i>{{ $data->url_fitur }}</a></p>
+                                                <blockquote class="blockquote">
+                                                    <p class="mb-0">{{ $data->testimoni }}</p>
+                                                    <footer class="blockquote-footer"><cite title="Source Title">{{ $data->nama_klien }} {{ $data->profesi_klien != '' ? '('.$data->profesi_klien.')' : '' }}</cite></footer>
+                                                </blockquote>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="btn-group">
-                                        <a href="{{ route('admin.fitur.edit', ['id' => $data->id_fitur]) }}" class="btn btn-sm btn-warning" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
-                                        <a href="#" class="btn btn-sm btn-danger btn-delete" title="Hapus" data-id="{{ $data->id_fitur }}" data-toggle="tooltip"><i class="fa fa-trash"></i></a>
+                                        <a href="{{ route('admin.testimoni.edit', ['id' => $data->id_testimoni]) }}" class="btn btn-sm btn-warning" title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i></a>
+                                        <a href="#" class="btn btn-sm btn-danger btn-delete" title="Hapus" data-id="{{ $data->id_testimoni }}" data-toggle="tooltip"><i class="fa fa-trash"></i></a>
                                     </div>
                                 </div>
                             @endforeach
                         @endif
                     </ul>
-                    <form id="form-delete" class="d-none" method="post" action="{{ route('admin.fitur.delete') }}">
+                    <form id="form-delete" class="d-none" method="post" action="{{ route('admin.testimoni.delete') }}">
                         {{ csrf_field() }}
                         <input type="hidden" name="id">
                     </form>
@@ -84,6 +85,6 @@
 
 @section('js-extra')
 
-@include('faturcms::template.admin._js-sortable', ['url' => route('admin.fitur.sort')])
+@include('faturcms::template.admin._js-sortable', ['url' => route('admin.testimoni.sort')])
 
 @endsection

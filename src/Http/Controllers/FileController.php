@@ -13,16 +13,6 @@ use Ajifatur\FaturCMS\Models\Folder;
 use Ajifatur\FaturCMS\Models\FolderKategori;
 use Ajifatur\FaturCMS\Models\FileDetail;
 
-// use Ajifatur\FaturCMS\Models\FilePath;
-// use Ajifatur\FaturCMS\Models\FileDetail;
-// use Ajifatur\FaturCMS\Models\FileReader;
-// use Ajifatur\FaturCMS\Models\FileThumbnail;
-// use Ajifatur\FaturCMS\Models\FolderIcon;
-// use Ajifatur\FaturCMS\Models\KategoriMateri;
-
-// use Ajifatur\FaturCMS\Models\Files2;
-// use Ajifatur\FaturCMS\Models\Folder2;
-
 class FileController extends Controller
 {
     /**

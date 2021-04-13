@@ -1,8 +1,6 @@
 @extends('faturcms::template.admin.main')
 
-@php $prefix = $kategori->slug_kategori != 'tools' ? 'Materi' : 'Kumpulan'; @endphp
-
-@section('title', 'Edit Folder')
+@section('title', 'Tambah File')
 
 @section('content')
 
@@ -11,11 +9,11 @@
 
     <!-- Breadcrumb -->
     @include('faturcms::template.admin._breadcrumb', ['breadcrumb' => [
-        'title' => 'Edit Folder',
+        'title' => 'Tambah File',
         'items' => [
             ['text' => 'File Manager', 'url' => '#'],
-            ['text' => $prefix.' '.$kategori->folder_kategori, 'url' => route('admin.filemanager.index', ['kategori' => $kategori->slug_kategori])],
-            ['text' => 'Edit Folder', 'url' => '#'],
+            ['text' => 'Kumpulan Tools', 'url' => route('admin.filemanager.index', ['kategori' => $kategori->slug_kategori])],
+            ['text' => 'Tambah File', 'url' => '#'],
         ]
     ]])
     <!-- /Breadcrumb -->
@@ -43,26 +41,17 @@
                 <!-- /Tile Title -->
                 <!-- Tile Body -->
                 <div class="tile-body">
-                    <form id="form" method="post" action="{{ route('admin.folder.update', ['kategori' => $kategori->slug_kategori]) }}" enctype="multipart/form-data">
+                    <form id="form" method="post" action="{{ route('admin.file.store', ['kategori' => $kategori->slug_kategori]) }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
-                        <input type="hidden" name="id" value="{{ $folder->id_folder }}">
-                        <input type="hidden" name="folder_kategori" value="{{ $kategori->id_fk }}">
-                        <input type="hidden" name="folder_parent" value="{{ $directory->id_folder }}">
+                        <input type="hidden" name="file_kategori" value="{{ $kategori->id_fk }}">
+                        <input type="hidden" name="id_folder" value="{{ $directory->id_folder }}">
+                        <input type="hidden" name="file_konten">
                         <div class="form-group row">
-                            <label class="col-md-2 col-form-label">Nama Folder <span class="text-danger">*</span></label>
+                            <label class="col-md-2 col-form-label">Nama File <span class="text-danger">*</span></label>
                             <div class="col-md-10">
-                                <input type="text" name="nama_folder" class="form-control {{ $errors->has('nama_folder') ? 'is-invalid' : '' }}" value="{{ $folder->folder_nama }}">
-                                @if($errors->has('nama_folder'))
-                                <div class="small text-danger mt-1">{{ ucfirst($errors->first('nama_folder')) }}</div>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-2 col-form-label">Kode Voucher</label>
-                            <div class="col-md-10">
-                                <input type="text" name="voucher" class="form-control {{ $errors->has('voucher') ? 'is-invalid' : '' }}" value="{{ $folder->folder_voucher }}">
-                                @if($errors->has('voucher'))
-                                <div class="small text-danger mt-1">{{ ucfirst($errors->first('voucher')) }}</div>
+                                <input type="text" name="nama_file" class="form-control {{ $errors->has('nama_file') ? 'is-invalid' : '' }}" value="{{ old('nama_file') }}">
+                                @if($errors->has('nama_file'))
+                                <div class="small text-danger mt-1">{{ ucfirst($errors->first('nama_file')) }}</div>
                                 @endif
                             </div>
                         </div>
@@ -72,9 +61,17 @@
                                 <input type="file" id="file" class="d-none" accept="image/*">
                                 <a class="btn btn-sm btn-secondary btn-image" href="#"><i class="fa fa-image mr-2"></i>Pilih Gambar...</a>
                                 <br>
-                                <img src="{{ image('assets/images/folder/'.$folder->folder_icon, 'folder') }}" id="img-file" class="mt-2 img-thumbnail {{ $folder->folder_icon != '' ? '' : 'd-none' }}" style="max-height: 150px">
+                                <img id="img-file" class="mt-2 img-thumbnail d-none" style="max-height: 150px">
                                 <input type="hidden" name="gambar">
                                 <input type="hidden" name="gambar_url">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label">File <span class="text-danger">*</span></label>
+                            <div class="col-md-10">
+                                <input type="file" id="file-tools" class="d-none">
+                                <a class="btn btn-sm btn-secondary btn-browse-file" href="#"><i class="fa fa-file mr-2"></i>Pilih File...</a>
+                                <p class="my-1" id="file-name"></p>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -95,12 +92,14 @@
 </main>
 <!-- /Main -->
 
-@include('faturcms::template.admin._modal-image', ['croppieWidth' => 400, 'croppieHeight' => 400])
+@include('faturcms::template.admin._modal-image', ['croppieWidth' => 848, 'croppieHeight' => 480])
 
 @endsection
 
 @section('js-extra')
 
-@include('faturcms::template.admin._js-image', ['imageType' => 'folder', 'croppieWidth' => 400, 'croppieHeight' => 400])
+@include('faturcms::template.admin._js-image', ['imageType' => 'file', 'croppieWidth' => 848, 'croppieHeight' => 480])
+
+@include('faturcms::template.admin._js-tools', ['kategori' => $kategori->slug_kategori])
 
 @endsection

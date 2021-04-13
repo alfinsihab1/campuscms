@@ -1,6 +1,8 @@
 @extends('faturcms::template.admin.main')
 
-@section('title', 'Materi '.$kategori->folder_kategori)
+@php $prefix = $kategori->slug_kategori != 'tools' ? 'Materi' : 'Kumpulan'; @endphp
+
+@section('title', $prefix.' '.$kategori->folder_kategori)
 
 @section('content')
 
@@ -9,10 +11,10 @@
 
     <!-- Breadcrumb -->
     @include('faturcms::template.admin._breadcrumb', ['breadcrumb' => [
-        'title' => 'Materi '.$kategori->folder_kategori,
+        'title' => $prefix.' '.$kategori->folder_kategori,
         'items' => [
             ['text' => 'File Manager', 'url' => '#'],
-            ['text' => 'Materi '.$kategori->folder_kategori, 'url' => '#'],
+            ['text' => $prefix.' '.$kategori->folder_kategori, 'url' => '#'],
         ]
     ]])
     <!-- /Breadcrumb -->
@@ -88,7 +90,7 @@
                                 @foreach($files as $data)
                                 <tr>
                                     <td><input type="checkbox"></td>
-                                    <td><i class="fa fa-file mr-1"></i><a href="#">{{ $data->file_nama }}</a></td>
+                                    <td><i class="fa fa-file mr-1"></i><a href="{{ $data->slug_kategori == 'tools' ? asset('assets/tools/'.$data->file_konten) : '#' }}">{{ $data->file_nama }}</a></td>
                                     <td></td>
                                     <td>
                                         <span class="d-none">{{ $data->file_up }}</span>

@@ -59,6 +59,9 @@ class InstallCommand extends Command
         // Publish resources
         $this->call('vendor:publish', ['--provider' => FaturCMSServiceProvider::class, '--tag' => 'assets']);
         $this->call('vendor:publish', ['--provider' => FaturCMSServiceProvider::class, '--tag' => 'templates']);
+
+        // Remove config file if exist and publish it
+        if(file_exists(config_path('faturcms.php'))) unlink(config_path('faturcms.php'));
         $this->call('vendor:publish', ['--provider' => FaturCMSServiceProvider::class, '--tag' => 'config']);
 
         // Find composer

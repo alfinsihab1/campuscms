@@ -86,7 +86,7 @@
                                     <td align="center">
                                         <div class="btn-group"> 
                                             @if($data->fee_status == 0 && $data->fee_bukti != '')
-                                                <a href="#" class="btn btn-sm btn-sucess btn-verify" data-id="{{ $data->id_pm }}" data-proof="{{ asset('assets/images/fee-pelatihan/'.$data->fee_bukti) }}" data-toggle="tooltip" title="Verifikasi Pembayaran"><i class="fa fa-check"></i></a>
+                                                <a href="#" class="btn btn-sm btn-success btn-verify" data-id="{{ $data->id_pm }}" data-proof="{{ asset('assets/images/fee-pelatihan/'.$data->fee_bukti) }}" data-toggle="tooltip" title="Verifikasi Pembayaran"><i class="fa fa-check"></i></a>
                                             @endif
                                             @if($data->fee_bukti != '')
                                                 <a href="{{ asset('assets/images/fee-pelatihan/'.$data->fee_bukti) }}" class="btn btn-sm btn-info btn-magnify-popup" data-toggle="tooltip" title="Bukti Transfer"><i class="fa fa-image"></i></a>
@@ -119,27 +119,27 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form id="form-verify" method="post" action="{{ route('admin.pelatihan.verify') }}">
+            <form id="form-verify" method="post" action="{{ route('admin.pelatihan.verify') }}" enctype="multipart/form-data">
+                <div class="modal-body">
                     {{ csrf_field() }}
                     <div class="row">
                         <div class="form-group col-md-12">
                             <label>Bukti Transfer:</label>
                             <br>
-                            <img id="komisi-proof" class="img-thumbnail mt-2" style="max-width: 300px;">
+                            <img class="img-thumbnail mt-2" style="max-width: 300px;">
                         </div>
                         <input type="hidden" name="id">
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="btn-submit-verify">Verifikasi</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Verifikasi</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
-<!-- End Modal Verifikasi Pembayaran -->
+<!-- /Modal Verifikasi Pembayaran -->
 
 @endsection
 
@@ -151,102 +151,15 @@
     // DataTable
     generate_datatable("#dataTable");
 
-    /* Verifikasi Pelatihan */
+    // Button Verify
     $(document).on("click", ".btn-verify", function(e){
         e.preventDefault();
         var id = $(this).data("id");
         var proof = $(this).data("proof");
-        $("input[name=id]").val(id);
-        $("#komisi-proof").attr("src", proof);
+        $("#form-verify input[name=id]").val(id);
+        $("#form-verify img").attr("src", proof);
         $("#modal-verify").modal("show");
     });
-    
-    $(document).on("click", "#btn-submit-verify", function(e){
-        e.preventDefault();
-        $("#form-verify")[0].submit();
-    });
-    $('#modal-verify').on('hidden.bs.modal', function(){
-        $("#komisi-proof").removeAttr("src");
-    });
-
-    /* Upload File */
-    $(document).on("click", ".btn-send", function(e){
-        e.preventDefault();
-        var id = $(this).data("id");
-        $("input[name=id_withdrawal]").val(id);
-    });
-    
-    $(document).on("click", "#btn-choose", function(e){
-        e.preventDefault();
-        $("#file").trigger("click");
-    });
-
-    $(document).on("change", "#file", function(){
-        // ukuran maksimal upload file
-        $max = 2 * 1024 * 1024;
-        // validasi
-        if(this.files && this.files[0]) {
-            // jika ukuran melebihi batas maksimum
-            if(this.files[0].size > $max){
-                alert("Ukuran file terlalu besar dan melebihi batas maksimum! Maksimal 2 MB");
-                $("#file").val(null);
-                $("#btn-submit-send").attr("disabled","disabled");
-            }
-            // jika ekstensi tidak diizinkan
-            else if(!validateExtension(this.files[0].name)){
-                alert("Ekstensi file tidak diizinkan!");
-                $("#file").val(null);
-                $("#btn-submit-send").attr("disabled","disabled");
-            }
-            // validasi sukses
-            else{
-                readURL(this);
-                $("#btn-submit-send").removeAttr("disabled");
-            }
-            // console.log(this.files[0]);
-        }
-    });
-    
-    $(document).on("click", "#btn-submit-send", function(e){
-        e.preventDefault();
-        $("#form-send")[0].submit();
-    });
-    $('#modal').on('hidden.bs.modal', function(){
-        $("#file").val(null);
-        $("#src_image").val(null);
-        $("input[name=id_withdrawal]").val(null);
-        $("#image").removeAttr("src").addClass("d-none");
-        $("#btn-submit-send").attr("disabled","disabled");
-    });
-
-    function getFileExtension(filename){
-        var split = filename.split(".");
-        var extension = split[split.length - 1];
-        return extension;
-    }
-
-    function validateExtension(filename){
-        var ext = getFileExtension(filename);
-
-        // ekstensi yang diizinkan
-        var extensions = ['jpg', 'jpeg', 'png', 'bmp', 'svg'];
-        for(var i in extensions){
-            if(ext == extensions[i]) return true;
-        }
-        return false;
-    }
-
-    function readURL(input){
-        if(input.files && input.files[0]){
-            var reader = new FileReader();
-            reader.onload = function(e){
-                imageURL = e.target.result;
-                $("#src_image").val(e.target.result);
-                $("#image").attr("src", e.target.result).removeClass("d-none");
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
 </script>
 
 @endsection

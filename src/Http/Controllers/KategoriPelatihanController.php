@@ -6,12 +6,12 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use Ajifatur\FaturCMS\Models\KategoriProgram;
+use Ajifatur\FaturCMS\Models\KategoriPelatihan;
 
-class KategoriprogramController extends Controller
+class KategoripelatihanController extends Controller
 {
     /**
-     * Menampilkan data kategori program
+     * Menampilkan data kategori pelatihan
      *
      * @return \Illuminate\Http\Response
      */
@@ -19,10 +19,10 @@ class KategoriprogramController extends Controller
     {
         if(Auth::user()->role == role('it') || Auth::user()->role == role('manager') || Auth::user()->role == role('mentor')){
             // Data kategori
-            $kategori = KategoriProgram::all();
+            $kategori = KategoriPelatihan::all();
             
             // View
-            return view('faturcms::admin.kategori-program.index', [
+            return view('faturcms::admin.kategori-pelatihan.index', [
                 'kategori' => $kategori,
             ]);
         }
@@ -33,7 +33,7 @@ class KategoriprogramController extends Controller
     }
 
     /**
-     * Menampilkan form tambah kategori program
+     * Menampilkan form tambah kategori pelatihan
      *
      * @return \Illuminate\Http\Response
      */
@@ -41,7 +41,7 @@ class KategoriprogramController extends Controller
     {
         if(Auth::user()->role == role('it') || Auth::user()->role == role('manager') || Auth::user()->role == role('mentor')){ 
             // View
-            return view('faturcms::admin.kategori-program.create');
+            return view('faturcms::admin.kategori-pelatihan.create');
         }
         else{
             // View
@@ -50,7 +50,7 @@ class KategoriprogramController extends Controller
     }
 
     /**
-     * Menambah kategori program
+     * Menambah kategori pelatihan
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -70,18 +70,18 @@ class KategoriprogramController extends Controller
         // Jika tidak ada error
         else{
             // Menambah data
-            $kategori = new Kategoriprogram;
+            $kategori = new KategoriPelatihan;
             $kategori->kategori = $request->kategori;
-            $kategori->slug = slugify($request->kategori, 'kategori_program', 'slug', 'id_kp', null);
+            $kategori->slug = slugify($request->kategori, 'kategori_pelatihan', 'slug', 'id_kp', null);
             $kategori->save();
         }
 
         // Redirect
-		return redirect()->route('admin.program.kategori.index')->with(['message' => 'Berhasil menambah data.']);
+		return redirect()->route('admin.pelatihan.kategori.index')->with(['message' => 'Berhasil menambah data.']);
     }
 
     /**
-     * Menampilkan form edit kategori program
+     * Menampilkan form edit kategori pelatihan
      *
      * * int $id
      * @return \Illuminate\Http\Response
@@ -90,10 +90,10 @@ class KategoriprogramController extends Controller
     {
         if(Auth::user()->role == role('it') || Auth::user()->role == role('manager') || Auth::user()->role == role('mentor')){ 
             // Kategori
-            $kategori = KategoriProgram::findOrFail($id);
+            $kategori = KategoriPelatihan::findOrFail($id);
             
             // View
-            return view('faturcms::admin.kategori-program.edit', [
+            return view('faturcms::admin.kategori-pelatihan.edit', [
                 'kategori' => $kategori,
             ]);
         }
@@ -104,7 +104,7 @@ class KategoriprogramController extends Controller
     }
 
     /**
-     * Mengupdate kategori program
+     * Mengupdate kategori pelatihan
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -124,18 +124,18 @@ class KategoriprogramController extends Controller
         // Jika tidak ada error
         else{
             // Mengupdate data
-            $kategori = KategoriProgram::find($request->id);
+            $kategori = KategoriPelatihan::find($request->id);
             $kategori->kategori = $request->kategori;
-            $kategori->slug = slugify($request->kategori, 'kategori_program', 'slug', 'id_kp', $request->id);
+            $kategori->slug = slugify($request->kategori, 'kategori_pelatihan', 'slug', 'id_kp', $request->id);
             $kategori->save();
         }
 
         // Redirect
-		return redirect()->route('admin.program.kategori.index')->with(['message' => 'Berhasil mengupdate data.']);
+		return redirect()->route('admin.pelatihan.kategori.index')->with(['message' => 'Berhasil mengupdate data.']);
     }
 
     /**
-     * Menghapus kategori program
+     * Menghapus kategori pelatihan
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -143,10 +143,10 @@ class KategoriprogramController extends Controller
     public function delete(Request $request)
     {
     	// Menghapus data
-        $kategori = KategoriProgram::find($request->id);
+        $kategori = KategoriPelatihan::find($request->id);
         $kategori->delete();
 
         // Redirect
-        return redirect()->route('admin.program.kategori.index')->with(['message' => 'Berhasil menghapus data.']);
+        return redirect()->route('admin.pelatihan.kategori.index')->with(['message' => 'Berhasil menghapus data.']);
     }
 }

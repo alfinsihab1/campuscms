@@ -81,56 +81,21 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::post('/admin/email/delete', $namespacePrefix.'EmailController@delete')->name('admin.email.delete');
 	Route::post('/admin/email/import', $namespacePrefix.'EmailController@import')->name('admin.email.import');
 
-	// Artikel
-	Route::get('/admin/blog', $namespacePrefix.'BlogController@index')->name('admin.blog.index');
-	Route::get('/admin/blog/create', $namespacePrefix.'BlogController@create')->name('admin.blog.create');
-	Route::post('/admin/blog/store', $namespacePrefix.'BlogController@store')->name('admin.blog.store');
-	Route::get('/admin/blog/edit/{id}', $namespacePrefix.'BlogController@edit')->name('admin.blog.edit');
-	Route::post('/admin/blog/update', $namespacePrefix.'BlogController@update')->name('admin.blog.update');
-	Route::post('/admin/blog/delete', $namespacePrefix.'BlogController@delete')->name('admin.blog.delete');
-	Route::get('/admin/blog/images', $namespacePrefix.'BlogController@showImages')->name('admin.blog.images');
+	// Psikolog
+	Route::get('/admin/psikolog', $namespacePrefix.'PsikologController@index')->name('admin.psikolog.index');
+	Route::get('/admin/psikolog/create', $namespacePrefix.'PsikologController@create')->name('admin.psikolog.create');
+	Route::post('/admin/psikolog/store', $namespacePrefix.'PsikologController@store')->name('admin.psikolog.store');
+	Route::get('/admin/psikolog/edit/{id}', $namespacePrefix.'PsikologController@edit')->name('admin.psikolog.edit');
+	Route::post('/admin/psikolog/update', $namespacePrefix.'PsikologController@update')->name('admin.psikolog.update');
+	Route::post('/admin/psikolog/delete', $namespacePrefix.'PsikologController@delete')->name('admin.psikolog.delete');
 
-	// Kategori Artikel
-	Route::get('/admin/blog/kategori', $namespacePrefix.'KategoriArtikelController@index')->name('admin.blog.kategori.index');
-	Route::get('/admin/blog/kategori/create', $namespacePrefix.'KategoriArtikelController@create')->name('admin.blog.kategori.create');
-	Route::post('/admin/blog/kategori/store', $namespacePrefix.'KategoriArtikelController@store')->name('admin.blog.kategori.store');
-	Route::get('/admin/blog/kategori/edit/{id}', $namespacePrefix.'KategoriArtikelController@edit')->name('admin.blog.kategori.edit');
-	Route::post('/admin/blog/kategori/update', $namespacePrefix.'KategoriArtikelController@update')->name('admin.blog.kategori.update');
-	Route::post('/admin/blog/kategori/delete', $namespacePrefix.'KategoriArtikelController@delete')->name('admin.blog.kategori.delete');
-
-	// Tag Artikel
-	Route::get('/admin/blog/tag', $namespacePrefix.'TagController@index')->name('admin.blog.tag.index');
-	Route::get('/admin/blog/tag/create', $namespacePrefix.'TagController@create')->name('admin.blog.tag.create');
-	Route::post('/admin/blog/tag/store', $namespacePrefix.'TagController@store')->name('admin.blog.tag.store');
-	Route::get('/admin/blog/tag/edit/{id}', $namespacePrefix.'TagController@edit')->name('admin.blog.tag.edit');
-	Route::post('/admin/blog/tag/update', $namespacePrefix.'TagController@update')->name('admin.blog.tag.update');
-	Route::post('/admin/blog/tag/delete', $namespacePrefix.'TagController@delete')->name('admin.blog.tag.delete');
-
-	// Program
-	Route::get('/admin/program', $namespacePrefix.'ProgramController@index')->name('admin.program.index');
-	Route::get('/admin/program/create', $namespacePrefix.'ProgramController@create')->name('admin.program.create');
-	Route::post('/admin/program/store', $namespacePrefix.'ProgramController@store')->name('admin.program.store');
-	Route::get('/admin/program/edit/{id}', $namespacePrefix.'ProgramController@edit')->name('admin.program.edit');
-	Route::post('/admin/program/update', $namespacePrefix.'ProgramController@update')->name('admin.program.update');
-	Route::post('/admin/program/delete', $namespacePrefix.'ProgramController@delete')->name('admin.program.delete');
-	Route::get('/admin/program/images', $namespacePrefix.'ProgramController@showImages')->name('admin.program.images');
-
-	// Kategori Program
-	Route::get('/admin/program/kategori', $namespacePrefix.'KategoriProgramController@index')->name('admin.program.kategori.index');
-	Route::get('/admin/program/kategori/create', $namespacePrefix.'KategoriProgramController@create')->name('admin.program.kategori.create');
-	Route::post('/admin/program/kategori/store', $namespacePrefix.'KategoriProgramController@store')->name('admin.program.kategori.store');
-	Route::get('/admin/program/kategori/edit/{id}', $namespacePrefix.'KategoriProgramController@edit')->name('admin.program.kategori.edit');
-	Route::post('/admin/program/kategori/update', $namespacePrefix.'KategoriProgramController@update')->name('admin.program.kategori.update');
-	Route::post('/admin/program/kategori/delete', $namespacePrefix.'KategoriProgramController@delete')->name('admin.program.kategori.delete');
-
-	// Karir
-	Route::get('/admin/karir', $namespacePrefix.'KarirController@index')->name('admin.karir.index');
-	Route::get('/admin/karir/create', $namespacePrefix.'KarirController@create')->name('admin.karir.create');
-	Route::post('/admin/karir/store', $namespacePrefix.'KarirController@store')->name('admin.karir.store');
-	Route::get('/admin/karir/edit/{id}', $namespacePrefix.'KarirController@edit')->name('admin.karir.edit');
-	Route::post('/admin/karir/update', $namespacePrefix.'KarirController@update')->name('admin.karir.update');
-	Route::post('/admin/karir/delete', $namespacePrefix.'KarirController@delete')->name('admin.karir.delete');
-	Route::get('/admin/karir/images', $namespacePrefix.'KarirController@showImages')->name('admin.karir.images');
+	// Halaman
+	Route::get('/admin/halaman', $namespacePrefix.'HalamanController@index')->name('admin.halaman.index');
+	Route::get('/admin/halaman/create', $namespacePrefix.'HalamanController@create')->name('admin.halaman.create');
+	Route::post('/admin/halaman/store', $namespacePrefix.'HalamanController@store')->name('admin.halaman.store');
+	Route::get('/admin/halaman/edit/{id}', $namespacePrefix.'HalamanController@edit')->name('admin.halaman.edit');
+	Route::post('/admin/halaman/update', $namespacePrefix.'HalamanController@update')->name('admin.halaman.update');
+	Route::post('/admin/halaman/delete', $namespacePrefix.'HalamanController@delete')->name('admin.halaman.delete');
 
 	// File Manager
 	Route::get('/admin/file-manager/{kategori}', $namespacePrefix.'FileController@index')->name('admin.filemanager.index');
@@ -204,6 +169,48 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::post('/admin/testimoni/sort', $namespacePrefix.'TestimoniController@sorting')->name('admin.testimoni.sort');
 	Route::get('/admin/testimoni/images', $namespacePrefix.'TestimoniController@showImages')->name('admin.testimoni.images');
 
+	// Artikel
+	Route::get('/admin/blog', $namespacePrefix.'BlogController@index')->name('admin.blog.index');
+	Route::get('/admin/blog/create', $namespacePrefix.'BlogController@create')->name('admin.blog.create');
+	Route::post('/admin/blog/store', $namespacePrefix.'BlogController@store')->name('admin.blog.store');
+	Route::get('/admin/blog/edit/{id}', $namespacePrefix.'BlogController@edit')->name('admin.blog.edit');
+	Route::post('/admin/blog/update', $namespacePrefix.'BlogController@update')->name('admin.blog.update');
+	Route::post('/admin/blog/delete', $namespacePrefix.'BlogController@delete')->name('admin.blog.delete');
+	Route::get('/admin/blog/images', $namespacePrefix.'BlogController@showImages')->name('admin.blog.images');
+
+	// Kategori Artikel
+	Route::get('/admin/blog/kategori', $namespacePrefix.'KategoriArtikelController@index')->name('admin.blog.kategori.index');
+	Route::get('/admin/blog/kategori/create', $namespacePrefix.'KategoriArtikelController@create')->name('admin.blog.kategori.create');
+	Route::post('/admin/blog/kategori/store', $namespacePrefix.'KategoriArtikelController@store')->name('admin.blog.kategori.store');
+	Route::get('/admin/blog/kategori/edit/{id}', $namespacePrefix.'KategoriArtikelController@edit')->name('admin.blog.kategori.edit');
+	Route::post('/admin/blog/kategori/update', $namespacePrefix.'KategoriArtikelController@update')->name('admin.blog.kategori.update');
+	Route::post('/admin/blog/kategori/delete', $namespacePrefix.'KategoriArtikelController@delete')->name('admin.blog.kategori.delete');
+
+	// Tag Artikel
+	Route::get('/admin/blog/tag', $namespacePrefix.'TagController@index')->name('admin.blog.tag.index');
+	Route::get('/admin/blog/tag/create', $namespacePrefix.'TagController@create')->name('admin.blog.tag.create');
+	Route::post('/admin/blog/tag/store', $namespacePrefix.'TagController@store')->name('admin.blog.tag.store');
+	Route::get('/admin/blog/tag/edit/{id}', $namespacePrefix.'TagController@edit')->name('admin.blog.tag.edit');
+	Route::post('/admin/blog/tag/update', $namespacePrefix.'TagController@update')->name('admin.blog.tag.update');
+	Route::post('/admin/blog/tag/delete', $namespacePrefix.'TagController@delete')->name('admin.blog.tag.delete');
+
+	// Program
+	Route::get('/admin/program', $namespacePrefix.'ProgramController@index')->name('admin.program.index');
+	Route::get('/admin/program/create', $namespacePrefix.'ProgramController@create')->name('admin.program.create');
+	Route::post('/admin/program/store', $namespacePrefix.'ProgramController@store')->name('admin.program.store');
+	Route::get('/admin/program/edit/{id}', $namespacePrefix.'ProgramController@edit')->name('admin.program.edit');
+	Route::post('/admin/program/update', $namespacePrefix.'ProgramController@update')->name('admin.program.update');
+	Route::post('/admin/program/delete', $namespacePrefix.'ProgramController@delete')->name('admin.program.delete');
+	Route::get('/admin/program/images', $namespacePrefix.'ProgramController@showImages')->name('admin.program.images');
+
+	// Kategori Program
+	Route::get('/admin/program/kategori', $namespacePrefix.'KategoriProgramController@index')->name('admin.program.kategori.index');
+	Route::get('/admin/program/kategori/create', $namespacePrefix.'KategoriProgramController@create')->name('admin.program.kategori.create');
+	Route::post('/admin/program/kategori/store', $namespacePrefix.'KategoriProgramController@store')->name('admin.program.kategori.store');
+	Route::get('/admin/program/kategori/edit/{id}', $namespacePrefix.'KategoriProgramController@edit')->name('admin.program.kategori.edit');
+	Route::post('/admin/program/kategori/update', $namespacePrefix.'KategoriProgramController@update')->name('admin.program.kategori.update');
+	Route::post('/admin/program/kategori/delete', $namespacePrefix.'KategoriProgramController@delete')->name('admin.program.kategori.delete');
+
 	// Pelatihan
 	Route::get('/admin/pelatihan', $namespacePrefix.'PelatihanController@index')->name('admin.pelatihan.index');
 	Route::get('/admin/pelatihan/create', $namespacePrefix.'PelatihanController@create')->name('admin.pelatihan.create');
@@ -215,6 +222,28 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::get('/admin/pelatihan/peserta/{id}', $namespacePrefix.'PelatihanController@participant')->name('admin.pelatihan.participant');
 	Route::post('/admin/pelatihan/update-status', $namespacePrefix.'PelatihanController@updateStatus')->name('admin.pelatihan.updatestatus');
 	Route::get('/admin/pelatihan/images', $namespacePrefix.'PelatihanController@showImages')->name('admin.pelatihan.images');
+
+	// Kategori Pelatihan
+	Route::get('/admin/pelatihan/kategori', $namespacePrefix.'KategoriPelatihanController@index')->name('admin.pelatihan.kategori.index');
+	Route::get('/admin/pelatihan/kategori/create', $namespacePrefix.'KategoriPelatihanController@create')->name('admin.pelatihan.kategori.create');
+	Route::post('/admin/pelatihan/kategori/store', $namespacePrefix.'KategoriPelatihanController@store')->name('admin.pelatihan.kategori.store');
+	Route::get('/admin/pelatihan/kategori/edit/{id}', $namespacePrefix.'KategoriPelatihanController@edit')->name('admin.pelatihan.kategori.edit');
+	Route::post('/admin/pelatihan/kategori/update', $namespacePrefix.'KategoriPelatihanController@update')->name('admin.pelatihan.kategori.update');
+	Route::post('/admin/pelatihan/kategori/delete', $namespacePrefix.'KategoriPelatihanController@delete')->name('admin.pelatihan.kategori.delete');
+
+	// Karir
+	Route::get('/admin/karir', $namespacePrefix.'KarirController@index')->name('admin.karir.index');
+	Route::get('/admin/karir/create', $namespacePrefix.'KarirController@create')->name('admin.karir.create');
+	Route::post('/admin/karir/store', $namespacePrefix.'KarirController@store')->name('admin.karir.store');
+	Route::get('/admin/karir/edit/{id}', $namespacePrefix.'KarirController@edit')->name('admin.karir.edit');
+	Route::post('/admin/karir/update', $namespacePrefix.'KarirController@update')->name('admin.karir.update');
+	Route::post('/admin/karir/delete', $namespacePrefix.'KarirController@delete')->name('admin.karir.delete');
+	Route::get('/admin/karir/images', $namespacePrefix.'KarirController@showImages')->name('admin.karir.images');
+
+	// Absensi
+	Route::get('/admin/absensi', $namespacePrefix.'AbsensiController@index')->name('admin.absensi.index');
+	Route::post('/admin/absensi/delete', $namespacePrefix.'AbsensiController@delete')->name('admin.absensi.delete');
+	Route::get('/admin/absensi/export', $namespacePrefix.'AbsensiController@export')->name('admin.absensi.export');
 });
 
 // Member Capabilities

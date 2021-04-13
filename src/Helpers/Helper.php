@@ -75,6 +75,24 @@ if(!function_exists('kategori_pelatihan')){
     }
 }
 
+// Get psikolog
+if(!function_exists('psikolog')){
+    function psikolog($psikolog){
+        if($psikolog == 1) return 'Psikolog';
+        elseif($psikolog == 2) return 'Konsultan';
+        else return '';
+    }
+}
+
+// Get tipe halaman
+if(!function_exists('tipe_halaman')){
+    function tipe_halaman($tipe){
+        if($tipe == 1) return 'Auto';
+        elseif($tipe == 2) return 'Manual';
+        else return '';
+    }
+}
+
 // Get message
 if(!function_exists('message')){
     function message($key){

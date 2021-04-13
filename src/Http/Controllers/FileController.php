@@ -42,7 +42,7 @@ class FileController extends Controller
 			$folders = Folder::where('folder_parent','=',$directory->id_folder)->where('folder_kategori','=',$kategori->id_fk)->orderBy('folder_nama','asc')->get();
 
 			// Get file dalam direktori
-			$files = Files::where('id_folder','=',$directory->id_folder)->where('file_kategori','=',$kategori->id_fk)->orderBy('file_nama','asc')->get();
+			$files = Files::join('folder_kategori','file2.file_kategori','=','folder_kategori.id_fk')->where('id_folder','=',$directory->id_folder)->where('file_kategori','=',$kategori->id_fk)->orderBy('file_nama','asc')->get();
 			
             return view('faturcms::admin.file.index', [
 				'kategori' => $kategori,
@@ -305,6 +305,37 @@ class FileController extends Controller
             $file_detail->id_file = $file_name;
             $file_detail->nama_fd = $file_detail_name;
             $file_detail->save();
+        }
+    }
+    
+    /**
+     * Mengupload tools
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function uploadTools(Request $request)
+    {
+        // Nama file
+        $file_name = explode('.'.mime_to_ext($_FILES["datafile"]["type"])[0], $_FILES["datafile"]["name"])[0];
+        // Nama file temp
+        $file_temp = $_FILES["datafile"]["tmp_name"];
+        // Tipe file
+        $file_type = $_FILES["datafile"]["type"];
+        // Ukuran file
+        $file_size = $_FILES["datafile"]["size"];
+
+        // Nama file
+        $nama_file = generate_permalink($file_name);
+        $i = 1;
+        while(in_array($nama_file.'.'.mime_to_ext($file_type)[0], generate_file('assets/tools'))){
+            $nama_file = rename_permalink(generate_permalink($file_name), $i);
+            $i++;
+        }
+        
+        // Upload file ke folder
+        if(move_uploaded_file($file_temp, 'assets/tools/'.$nama_file.'.'.mime_to_ext($file_type)[0])){
+            echo $nama_file.'.'.mime_to_ext($file_type)[0];
         }
     }
       

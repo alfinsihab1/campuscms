@@ -1,5 +1,7 @@
 @extends('faturcms::template.admin.main')
 
+@php $prefix = $kategori->slug_kategori != 'tools' ? 'Materi' : 'Kumpulan'; @endphp
+
 @section('title', 'Tambah Folder')
 
 @section('content')
@@ -12,7 +14,7 @@
         'title' => 'Tambah Folder',
         'items' => [
             ['text' => 'File Manager', 'url' => '#'],
-            ['text' => 'Materi '.$kategori->folder_kategori, 'url' => route('admin.filemanager.index', ['kategori' => $kategori->slug_kategori])],
+            ['text' => $prefix.' '.$kategori->folder_kategori, 'url' => route('admin.filemanager.index', ['kategori' => $kategori->slug_kategori])],
             ['text' => 'Tambah Folder', 'url' => '#'],
         ]
     ]])

@@ -74,7 +74,6 @@
         $.ajax({
             type: "get",
             url: "{{ route('admin.'.$imageType.'.images', ['id' => isset($id) ? $id : '']) }}",
-            // url: "/admin/{{ $imageType }}/images{{ isset($id) ? '?id='.$id : '' }}",
             success: function(response){
                 var result = JSON.parse(response);
                 var html = '';

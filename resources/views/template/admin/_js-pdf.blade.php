@@ -54,7 +54,7 @@
                 // $("#btn-upload").attr("disabled","disabled");
             }
             // Jika ekstensi tidak diizinkan
-            else if(!validateExtension(this.files[0].name, "pdf")){
+            else if(!validate_extension(this.files[0].name, "pdf")){
                 alert("Ekstensi file tidak diizinkan!");
                 $(".progress").addClass("d-none");
                 $("#file-pdf").val(null);
@@ -138,10 +138,6 @@
             $(".btn-file-pdf").attr("disabled","disabled");
             $("button[type=submit]").removeAttr("disabled");
 			$("#file-pdf").val(null);
-            // $("#btn-upload").removeAttr("disabled");
-		}
-		else{
-            // $("#btn-upload").attr("disabled","disabled");
 		}
 	}
 

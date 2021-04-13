@@ -108,6 +108,7 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::post('/admin/file-manager/{kategori}/file/delete', $namespacePrefix.'FileController@delete')->name('admin.file.delete');
 	Route::post('/admin/file-manager/{kategori}/file/move', $namespacePrefix.'FileController@move')->name('admin.file.move');
 	Route::post('/admin/file-manager/{kategori}/file/upload-pdf', $namespacePrefix.'FileController@uploadPDF')->name('admin.file.uploadpdf');
+	Route::post('/admin/file-manager/{kategori}/file/upload-tools', $namespacePrefix.'FileController@uploadTools')->name('admin.file.uploadtools');
 	Route::get('/admin/file/images', $namespacePrefix.'FileController@showImages')->name('admin.file.images');
 
 	// Folder

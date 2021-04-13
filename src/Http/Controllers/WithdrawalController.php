@@ -60,14 +60,16 @@ class WithdrawalController extends Controller
      */
     public function send(Request $request)
     {
-        // Mengupload foto
-        $image_name = upload_file($request->src_image, "assets/images/withdrawal/");
+        // Mengupload file
+        $file = $request->file('foto');
+        $filename = time().".".$file->getClientOriginalExtension();
+        $file->move('assets/images/withdrawal', $filename);
 
         // Update data
         $withdrawal = Withdrawal::find($request->id_withdrawal);
         $withdrawal->withdrawal_status = 1;
         $withdrawal->withdrawal_success_at = date('Y-m-d H:i:s');
-        $withdrawal->withdrawal_proof = $image_name;
+        $withdrawal->withdrawal_proof = $filename;
         $withdrawal->save();
         
         // Update data user

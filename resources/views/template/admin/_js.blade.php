@@ -20,6 +20,12 @@
         e.preventDefault();
         $("#modal-image").modal("show");
     });
+    
+    // Button Browse File
+    $(document).on("click", ".btn-browse-file", function(e){
+        e.preventDefault();
+        $(this).parents(".form-group").find("input[type=file]").trigger("click");
+    });
 
     // Button Delete
     $(document).on("click", ".btn-delete", function(e){
@@ -83,7 +89,7 @@
         }
     });
     
-    // Input Hanya Nomor
+    // Input number only
     $(document).on("keypress", ".number-only", function(e){
         var charCode = (e.which) ? e.which : e.keyCode;
         if (charCode >= 48 && charCode <= 57) { 
@@ -94,16 +100,20 @@
             return false;
         }
     });
-    // End Input Hanya Nomor
 
-    // Input Format Ribuan
+    // Input Thousand Format
     $(document).on("keyup", ".thousand-format", function(){
         var value = $(this).val();
         $(this).val(thousand_format(value, ""));
     });
-    // End Input Format Ribuan
 
-    // Functions
+    // Events when modal is hiding
+    $('.modal').on('hidden.bs.modal', function(){
+        $(this).find("input[type=file]").val(null);
+        $(this).find("img").removeAttr("src").addClass("d-none");
+    });
+
+    // Thousand format
     function thousand_format(angka, prefix){
         var number_string = angka.replace(/\D/g,'');
         number_string = (number_string.length > 1) ? number_string.replace(/^(0+)/g, '') : number_string;
@@ -111,8 +121,7 @@
         var sisa = split[0].length % 3;
         var rupiah = split[0].substr(0, sisa);
         var ribuan = split[0].substr(sisa).match(/\d{3}/gi);
-     
-        // tambahkan titik jika yang di input sudah menjadi angka ribuan
+
         if(ribuan){
             separator = sisa ? '.' : '';
             rupiah += separator + ribuan.join('.');
@@ -123,24 +132,63 @@
     }
 
     // Get file extension
-    function getFileExtension(filename){
+    function get_file_extension(filename){
         var split = filename.split(".");
         var extension = split[split.length - 1];
         return extension;
     }
 
     // Validate extension
-    function validateExtension(filename, filetype){
+    function validate_extension(filename, filetype){
         var extensions = {
             'pdf': ['pdf'],
-            'image': ['jpg', 'jpeg', 'png', 'bmp', 'svg']
+            'image': ['jpg', 'jpeg', 'png', 'bmp', 'svg'],
+            'tools': ['jpg', 'jpeg', 'png', 'bmp', 'svg', 'gif', 'ico', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv', 'ppt', 'pptx', 'txt', 'json', 'sql', 'zip', 'rar', 'mp3', 'wav']
         };
 
-        var ext = getFileExtension(filename);
-        var allowedExtensions = extensions['pdf'];
+        var ext = get_file_extension(filename);
+        var allowedExtensions = extensions[filetype];
         for(var i in allowedExtensions){
             if(ext == allowedExtensions[i]) return true;
         }
         return false;
+    }
+
+    // Function change file
+    function change_file(input, filetype, maxsize){
+        // Convert max file size to bytes
+        var maxByte = maxsize * 1028 * 1028;
+
+        // Validation
+        if(input.files && input.files[0]){
+            // If file is more than limit
+            if(input.files[0].size > maxByte){
+                alert("Ukuran file terlalu besar dan melebihi batas maksimum! Maksimal "+maxsize+" MB");
+                $(input).val(null);
+                $(input).parents("form").find("button[type=submit]").attr("disabled","disabled");
+            }
+            // If extension is not allowed
+            else if(!validate_extension(input.files[0].name, filetype)){
+                alert("Ekstensi file tidak diizinkan!");
+                $(input).val(null);
+                $(input).parents("form").find("button[type=submit]").attr("disabled","disabled");
+            }
+            // If success
+            else{
+                if(filetype == "image") read_image_url(input);
+                $(input).parents("form").find("button[type=submit]").removeAttr("disabled");
+            }
+        }
+    }
+
+    // Read image URL (Base 64)
+    function read_image_url(input){
+        if(input.files && input.files[0]){
+            var reader = new FileReader();
+            reader.onload = function(e){
+                $(input).parents(".form-group").find("img").attr("src", e.target.result).removeClass("d-none");
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
     }
 </script>

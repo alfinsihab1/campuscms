@@ -86,7 +86,7 @@ class BlogController extends Controller
             $blog = new Blog;
             $blog->blog_title = $request->judul_artikel;
             $blog->blog_permalink = slugify($request->judul_artikel, 'blog', 'blog_permalink', 'id_blog', null);
-            $blog->blog_gambar = generate_image_name("assets/images/pelatihan/", $request->gambar, $request->gambar_url);
+            $blog->blog_gambar = generate_image_name("assets/images/blog/", $request->gambar, $request->gambar_url);
             $blog->blog_kategori = $request->kategori;
             $blog->blog_tag = generate_tag_by_name($request->get('tag'));
             $blog->konten = htmlentities(upload_quill_image($request->konten, 'assets/images/konten-blog/'));
@@ -154,7 +154,7 @@ class BlogController extends Controller
             $blog = Blog::find($request->id);
             $blog->blog_title = $request->judul_artikel;
             $blog->blog_permalink = slugify($request->judul_artikel, 'blog', 'blog_permalink', 'id_blog', $request->id);
-            $blog->blog_gambar = generate_image_name("assets/images/pelatihan/", $request->gambar, $request->gambar_url) != '' ? generate_image_name("assets/images/pelatihan/", $request->gambar, $request->gambar_url) : $blog->blog_gambar;
+            $blog->blog_gambar = generate_image_name("assets/images/blog/", $request->gambar, $request->gambar_url) != '' ? generate_image_name("assets/images/blog/", $request->gambar, $request->gambar_url) : $blog->blog_gambar;
             $blog->blog_kategori = $request->kategori;
             $blog->blog_tag = generate_tag_by_name($request->get('tag'));
             $blog->konten = htmlentities(upload_quill_image($request->konten, 'assets/images/konten-blog/'));

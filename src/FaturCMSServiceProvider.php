@@ -7,7 +7,6 @@ use Illuminate\Routing\Router;
 use Ajifatur\FaturCMS\Http\Middleware\AdminMiddleware;
 use Ajifatur\FaturCMS\Http\Middleware\MemberMiddleware;
 use Ajifatur\FaturCMS\Http\Middleware\GuestMiddleware;
-use Maatwebsite\Excel\ExcelServiceProvider;
 
 class FaturCMSServiceProvider extends ServiceProvider
 {
@@ -18,9 +17,6 @@ class FaturCMSServiceProvider extends ServiceProvider
 	 */
 	public function boot(Router $router)
 	{
-        // Register other packages
-        $this->app->register(ExcelServiceProvider::class);
-
 		// Add package's view.
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'faturcms');
 

@@ -103,6 +103,7 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	// File
 	Route::get('/admin/file-manager/{kategori}/file/create', $namespacePrefix.'FileController@create')->name('admin.file.create');
 	Route::post('/admin/file-manager/{kategori}/file/store', $namespacePrefix.'FileController@store')->name('admin.file.store');
+	Route::get('/admin/file-manager/{kategori}/file/detail/{id}', $namespacePrefix.'FileController@detail')->name('admin.file.detail');
 	Route::get('/admin/file-manager/{kategori}/file/edit/{id}', $namespacePrefix.'FileController@edit')->name('admin.file.edit');
 	Route::post('/admin/file-manager/{kategori}/file/update', $namespacePrefix.'FileController@update')->name('admin.file.update');
 	Route::post('/admin/file-manager/{kategori}/file/delete', $namespacePrefix.'FileController@delete')->name('admin.file.delete');
@@ -246,6 +247,12 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::post('/admin/testimoni/delete', $namespacePrefix.'TestimoniController@delete')->name('admin.testimoni.delete');
 	Route::post('/admin/testimoni/sort', $namespacePrefix.'TestimoniController@sorting')->name('admin.testimoni.sort');
 	Route::get('/admin/testimoni/images', $namespacePrefix.'TestimoniController@showImages')->name('admin.testimoni.images');
+
+	// Tandatangan Digital
+	Route::get('/admin/e-signature', $namespacePrefix.'SignatureController@index')->name('admin.signature.index');
+	Route::get('/admin/e-signature/input', $namespacePrefix.'SignatureController@input')->name('admin.signature.input');
+	Route::post('/admin/e-signature/update', $namespacePrefix.'SignatureController@update')->name('admin.signature.update');
+	Route::post('/admin/e-signature/delete', $namespacePrefix.'SignatureController@delete')->name('admin.signature.delete');
 
 	// Absensi
 	Route::get('/admin/absensi', $namespacePrefix.'AbsensiController@index')->name('admin.absensi.index');

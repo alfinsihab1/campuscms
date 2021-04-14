@@ -22,6 +22,9 @@
     #dataTable td a.btn {width: 36px;}
     div.dataTables_wrapper div.dataTables_processing {background-color: #eeeeee;}
 
+    /* List Group */
+    .list-group-item.active {background-color: {{ setting('site.primary_color') }}; border-color: {{ setting('site.primary_color') }};}
+
     /* Image Overlay */
     .image-overlay {cursor: pointer; position: absolute; top: 0; bottom: 0; left: 0; right: 0; height: 100%; width: 100%; opacity: 0; transition: .5s ease; background-color: rgba(0,0,0,.6); border-radius: 50%;}
     .image-overlay span {color: white; position: absolute; top: 50%; left: 50%; -webkit-transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%); text-align: center; font-weight: bold;}

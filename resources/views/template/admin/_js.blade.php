@@ -143,7 +143,8 @@
         var extensions = {
             'pdf': ['pdf'],
             'image': ['jpg', 'jpeg', 'png', 'bmp', 'svg'],
-            'tools': ['jpg', 'jpeg', 'png', 'bmp', 'svg', 'gif', 'ico', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv', 'ppt', 'pptx', 'txt', 'json', 'sql', 'zip', 'rar', 'mp3', 'wav']
+            'tools': ['jpg', 'jpeg', 'png', 'bmp', 'svg', 'gif', 'ico', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv', 'ppt', 'pptx', 'txt', 'json', 'sql', 'zip', 'rar', 'mp3', 'wav'],
+            'signature': ['png']
         };
 
         var ext = get_file_extension(filename);
@@ -175,7 +176,7 @@
             }
             // If success
             else{
-                if(filetype == "image") read_image_url(input);
+                if(filetype == "image" || filetype == "signature") read_image_url(input);
                 $(input).parents("form").find("button[type=submit]").removeAttr("disabled");
             }
         }

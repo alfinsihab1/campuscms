@@ -1,6 +1,6 @@
 @extends('faturcms::template.admin.main')
 
-@php $prefix = $kategori->slug_kategori != 'tools' ? 'Materi' : 'Kumpulan'; @endphp
+@php $prefix = $kategori->tipe_kategori == 'ebook' || $kategori->tipe_kategori == 'video'  ? 'Materi' : 'Kumpulan'; @endphp
 
 @section('title', $prefix.' '.$kategori->folder_kategori)
 
@@ -90,7 +90,7 @@
                                 @foreach($files as $data)
                                 <tr>
                                     <td><input type="checkbox"></td>
-                                    <td><i class="fa fa-file mr-1"></i><a href="{{ $data->slug_kategori == 'tools' ? asset('assets/tools/'.$data->file_konten) : '#' }}">{{ $data->file_nama }}</a></td>
+                                    <td><i class="fa {{ $file_icon }} mr-1"></i><a href="{{ $data->tipe_kategori == 'tools' ? asset('assets/tools/'.$data->file_konten) : route('admin.file.detail', ['kategori' => $kategori->slug_kategori, 'id' => $data->id_file]) }}">{{ $data->file_nama }}</a></td>
                                     <td></td>
                                     <td>
                                         <span class="d-none">{{ $data->file_up }}</span>

@@ -56,6 +56,15 @@ if(!function_exists('add_zero')){
     }
 }
 
+// Menghapus angka nol (max: 999)
+if(!function_exists('remove_zero')){
+    function remove_zero($number){
+		if(substr($number,0,2) == '00') return substr($number,2,1);
+		elseif(substr($number,0,1) == '0') return substr($number,1,2);
+		else return $number;
+    }
+}
+
 // Get tipe file
 if(!function_exists('tipe_file')){
     function tipe_file($id){

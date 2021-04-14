@@ -40,7 +40,6 @@
                                     <th width="20"><input type="checkbox"></th>
                                     <th>Identitas Peserta</th>
                                     <th>Pelatihan</th>
-                                    <th width="100">Kode Sertifikat</th>
                                     <th width="120">Waktu Mendaftar</th>
                                     <th width="100">Status</th>
                                 </tr>
@@ -61,7 +60,6 @@
                                         <br>
                                         <small><i class="fa fa-tag mr-1"></i>{{ $data->nomor_pelatihan }}</small>
                                     </td>
-                                    <td>{{ $data->kode_sertifikat }}</td>
                                     <td>
                                         <span class="d-none">{{ $data->pm_at }}</span>
                                         {{ date('d/m/Y', strtotime($data->pm_at)) }}

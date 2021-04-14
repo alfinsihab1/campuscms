@@ -11,6 +11,9 @@
     <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown"><i class="fa fa-user fa-lg"></i></a>
       <ul class="dropdown-menu settings-menu dropdown-menu-right">
         <li><a class="dropdown-item" href="{{ route('admin.profile') }}"><i class="fa fa-cog fa-lg"></i> Profil</a></li>
+        @if(Auth::user()->role == role('manager') || Auth::user()->role == role('mentor'))
+        <li><a class="dropdown-item" href="{{ route('admin.signature.input') }}"><i class="fa fa-tint fa-lg"></i> Tandatangan</a></li>
+        @endif
         <li><a class="dropdown-item" href="javascript:void(0)" onclick="event.preventDefault(); document.getElementById('form-logout').submit();"><i class="fa fa-sign-out fa-lg"></i> Logout</a></li>
         <form id="form-logout" method="post" action="{{ route('admin.logout') }}">
             {{ csrf_field() }}

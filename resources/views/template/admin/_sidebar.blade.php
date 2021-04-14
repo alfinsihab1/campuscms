@@ -37,6 +37,7 @@
         <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.filemanager.index', ['kategori' => 'e-library']))) ? 'active' : '' }}" href="{{ route('admin.filemanager.index', ['kategori' => 'e-library']) }}"><i class="app-menu__icon fa fa-folder-open"></i><span class="app-menu__label">Materi E-Library</span></a></li>
         <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.filemanager.index', ['kategori' => 'e-competence']))) ? 'active' : '' }}" href="{{ route('admin.filemanager.index', ['kategori' => 'e-competence']) }}"><i class="app-menu__icon fa fa-folder-open"></i><span class="app-menu__label">Materi E-Competence</span></a></li>
         <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.filemanager.index', ['kategori' => 'e-course']))) ? 'active' : '' }}" href="{{ route('admin.filemanager.index', ['kategori' => 'e-course']) }}"><i class="app-menu__icon fa fa-video-camera"></i><span class="app-menu__label">Materi E-Course</span></a></li>
+        <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.filemanager.index', ['kategori' => 'script']))) ? 'active' : '' }}" href="{{ route('admin.filemanager.index', ['kategori' => 'script']) }}"><i class="app-menu__icon fa fa-file-text-o"></i><span class="app-menu__label">Kumpulan Copywriting</span></a></li>
         <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.filemanager.index', ['kategori' => 'tools']))) ? 'active' : '' }}" href="{{ route('admin.filemanager.index', ['kategori' => 'tools']) }}"><i class="app-menu__icon fa fa-wrench"></i><span class="app-menu__label">Kumpulan Tools</span></a></li>
 
         @if(Auth::user()->role == role('it') || Auth::user()->role == role('manager'))
@@ -98,6 +99,10 @@
             <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.sertifikat.indexpeserta'))) ? 'active' : '' }}" href="{{ route('admin.sertifikat.indexpeserta') }}"><i class="icon fa fa-circle-o"></i> Peserta</a></li>
           </ul>
         </li>
+        @endif
+
+        @if(Auth::user()->role == role('it') || Auth::user()->role == role('manager'))
+        <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.signature.index'))) ? 'active' : '' }}" href="{{ route('admin.signature.index') }}"><i class="app-menu__icon fa fa-tint"></i><span class="app-menu__label">Tandatangan Digital</span></a></li>
         @endif
 
         <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.absensi.index'))) ? 'active' : '' }}" href="{{ route('admin.absensi.index') }}"><i class="app-menu__icon fa fa-clipboard"></i><span class="app-menu__label">Absensi Online</span></a></li>

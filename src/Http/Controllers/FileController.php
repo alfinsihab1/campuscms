@@ -7,7 +7,6 @@ use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use App\User;
 use Ajifatur\FaturCMS\Models\Files;
 use Ajifatur\FaturCMS\Models\Folder;
 use Ajifatur\FaturCMS\Models\FolderKategori;
@@ -43,12 +42,19 @@ class FileController extends Controller
 
 			// Get file dalam direktori
 			$files = Files::join('folder_kategori','file2.file_kategori','=','folder_kategori.id_fk')->where('id_folder','=',$directory->id_folder)->where('file_kategori','=',$kategori->id_fk)->orderBy('file_nama','asc')->get();
+
+            // File icon
+            if($kategori->tipe_kategori == "video") $file_icon = "fa-video-camera";
+            elseif($kategori->tipe_kategori == "script") $file_icon = "fa-file-text-o";
+            elseif($kategori->tipe_kategori == "tools") $file_icon = "fa-file";
+            elseif($kategori->tipe_kategori == "ebook") $file_icon = "fa-file-pdf-o";
 			
             return view('faturcms::admin.file.index', [
 				'kategori' => $kategori,
 				'directory' => $directory,
                 'folders' => $folders,
 				'files' => $files,
+				'file_icon' => $file_icon,
 				'available_folders' => $this->availableFolders($kategori->id_fk),
             ]);
         }
@@ -134,6 +140,42 @@ class FileController extends Controller
 		// Redirect
         return redirect()->route('admin.filemanager.index', ['kategori' => $kategori->slug_kategori, 'dir' => $current_folder->folder_dir])->with(['message' => 'Berhasil menambah file.']);
 	}
+
+    /**
+     * Menampilkan detail file
+     *
+     * string $category
+     * int $id
+     * @return \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function detail($category, $id)
+    {
+        // Kategori
+        $kategori = FolderKategori::where('slug_kategori','=',$category)->firstOrFail();
+
+        // Jika role admin
+        if(Auth::user()->is_admin == 1){
+            // Get file
+            $file = Files::join('users','file2.id_user','=','users.id_user')->where('file_kategori','=',$kategori->id_fk)->findOrFail($id);
+
+            // Get file detail
+            if($kategori->tipe_kategori == "video")
+				$file_list = Files::where('id_folder','=',$file->id_folder)->where('file_kategori','=',$file->file_kategori)->get();
+            elseif($kategori->tipe_kategori == "ebook")
+				$file_list = FileDetail::where('id_file','=',$file->file_konten)->orderBy('nama_fd','asc')->get();
+
+            // Get direktori
+            $directory = Folder::findOrFail($file->id_folder);
+            
+            return view('faturcms::admin.file.detail-'.$kategori->tipe_kategori, [
+                'kategori' => $kategori,
+                'directory' => $directory,
+                'file' => $file,
+                'file_list' => isset($file_list) ? $file_list : [],
+            ]);
+        }
+    }
 
     /**
      * Menampilkan form edit file
@@ -225,10 +267,10 @@ class FileController extends Controller
     public function delete(Request $request)
     {
         // Get file
-        $file = Files::findOrFail($request->id);
+        $file = Files::join('folder_kategori','file2.file_kategori','=','folder_kategori.id_fk')->findOrFail($request->id);
 
         // Menghapus file ebook
-        if($file->file_kategori > 3){
+        if($file->tipe_kategori == "ebook"){
             $file_detail = FileDetail::where('id_file','=',$file->file_konten)->get();
             if(count($file_detail) > 0){
                 foreach($file_detail as $data){
@@ -242,7 +284,7 @@ class FileController extends Controller
             }
         }
         // Menghapus file tools
-        elseif($file->file_kategori == 3){
+        elseif($file->tipe_kategori == "tools"){
             File::delete('assets/tools/'.$file->file_konten);
         }
         $file->delete();

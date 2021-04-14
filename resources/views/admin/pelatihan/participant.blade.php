@@ -38,9 +38,9 @@
                             <thead>
                                 <tr>
                                     <th width="20"><input type="checkbox"></th>
-                                    <th>Identitas User</th>
+                                    <th>Identitas Peserta</th>
                                     <th>Pelatihan</th>
-                                    <th width="150">Kode Sertifikat</th>
+                                    <th width="100">Kode Sertifikat</th>
                                     <th width="120">Waktu Mendaftar</th>
                                     <th width="100">Status</th>
                                 </tr>
@@ -70,7 +70,10 @@
                                     </td>
                                     <td>
                                         <select class="form-control form-control-sm select-status" data-id="{{ $data->id_pm }}">
-                                            <option value="1" {{ $data->status_pelatihan == '1' ? 'selected' : '' }}>Lulus</option>
+                                            <option value="1" {{ $data->status_pelatihan == 1 ? 'selected' : '' }}>Lulus</option>
+                                            <option value="11" {{ $data->status_pelatihan == 11 ? 'selected' : '' }}>Lulus (A: Sangat Baik)</option>
+                                            <option value="12" {{ $data->status_pelatihan == 12 ? 'selected' : '' }}>Lulus (B: Baik)</option>
+                                            <option value="13" {{ $data->status_pelatihan == 13 ? 'selected' : '' }}>Lulus (C: Cukup)</option>
                                             <option value="0" {{ $data->status_pelatihan == '0' ? 'selected' : '' }}>Belum Lulus</option>
                                         </select>
                                     </td>

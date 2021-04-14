@@ -114,8 +114,8 @@
     });
 
     // Thousand format
-    function thousand_format(angka, prefix){
-        var number_string = angka.replace(/\D/g,'');
+    function thousand_format(angka, prefix = ''){
+        var number_string = angka.toString().replace(/\D/g,'');
         number_string = (number_string.length > 1) ? number_string.replace(/^(0+)/g, '') : number_string;
         var split = number_string.split(',');
         var sisa = split[0].length % 3;

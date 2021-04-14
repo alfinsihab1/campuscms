@@ -51,18 +51,17 @@
                 alert("Maksimal file "+max+" MB!");
                 $(".progress").addClass("d-none");
                 $("#file-pdf").val(null);
-                // $("#btn-upload").attr("disabled","disabled");
             }
             // Jika ekstensi tidak diizinkan
             else if(!validate_extension(this.files[0].name, "pdf")){
                 alert("Ekstensi file tidak diizinkan!");
                 $(".progress").addClass("d-none");
                 $("#file-pdf").val(null);
-                // $("#btn-upload").attr("disabled","disabled");
             }
             // Validasi sukses
             else{
-				showPDF(URL.createObjectURL($("#file-pdf").get(0).files[0]));
+				show_PDF(URL.createObjectURL($("#file-pdf").get(0).files[0]));
+                $("input[name=nama_file]").val(this.files[0].name);
                 $(".progress-pdf").removeClass("d-none");
                 $(".progress-pdf .progress").removeClass("d-none");
                 $(".progress-pdf .progress-bar").text('0%').css({
@@ -79,7 +78,7 @@
 	var numPages = 0;
 	var thePDF = null;
 
-	function showPDF(pdf_url) {
+	function show_PDF(pdf_url) {
 		//This is where you start
 		PDFJS.getDocument({url : pdf_url}).then(function(pdf) {
 			//Set PDFJS global object (so we can easily access in our page functions
@@ -89,11 +88,11 @@
 			numPages = pdf.numPages;
 
 			//Start with first page
-			pdf.getPage(1).then(handlePages);
+			pdf.getPage(1).then(handle_pages);
 		});
 	}
 
-	function handlePages(page){
+	function handle_pages(page){
 		// This gives us the page's dimensions at full scale
 		var viewport = page.getViewport(1.5);
 
@@ -112,14 +111,14 @@
         $(".progress-pdf .total-page").text(currPage);
 		// $("canvas").addClass("mb-2 mx-auto").css("width", "100%");
 
-		progressHandler(currPage, numPages);
+		progress_handler(currPage, numPages);
 
 		// Move to next page
 		currPage++;
-		if(thePDF !== null && currPage <= numPages) thePDF.getPage(currPage).then(handlePages);
+		if(thePDF !== null && currPage <= numPages) thePDF.getPage(currPage).then(handle_pages);
 	}
 
-	function progressHandler(loaded, total){
+	function progress_handler(loaded, total){
 		// hitung prosentase
 		var percent = (loaded / total) * 100;
 

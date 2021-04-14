@@ -31,7 +31,9 @@
     // Change file
     $(document).on("change", "#file-tools", function(){
         change_file(this, "tools", 64);
-        $("#file-name").text(this.files[0].name);
+        var sizeInKB = Math.round(this.files[0].size / 1024);
+        $("input[name=nama_file]").val(this.files[0].name);
+        $("#file-name").text(this.files[0].name + " (" + thousand_format(sizeInKB) + " KB)");
     });
 
 	// Submit Form

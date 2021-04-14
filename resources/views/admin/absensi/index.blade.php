@@ -116,7 +116,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
         // Datepicker
-        $("#date").datepicker({
+        $("input[name=tanggal]").datepicker({
             format: 'dd/mm/yyyy',
             todayHighlight: true,
             autoclose: true

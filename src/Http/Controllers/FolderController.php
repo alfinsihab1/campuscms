@@ -7,7 +7,6 @@ use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use App\User;
 use Ajifatur\FaturCMS\Models\Files;
 use Ajifatur\FaturCMS\Models\Folder;
 use Ajifatur\FaturCMS\Models\FolderKategori;
@@ -54,7 +53,7 @@ class FolderController extends Controller
     {
         // Validasi
         $validator = Validator::make($request->all(), [
-            'nama_folder' => 'required|max:255|regex:/^[0-9A-Za-z. -]+$/',
+            'nama_folder' => 'required|max:255|regex:/^[0-9A-Za-z. -()]+$/',
         ], array_validation_messages());
         
         // Mengecek jika ada error

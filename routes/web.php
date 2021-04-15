@@ -81,14 +81,6 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::post('/admin/email/delete', $namespacePrefix.'EmailController@delete')->name('admin.email.delete');
 	Route::post('/admin/email/import', $namespacePrefix.'EmailController@import')->name('admin.email.import');
 
-	// Psikolog
-	Route::get('/admin/psikolog', $namespacePrefix.'PsikologController@index')->name('admin.psikolog.index');
-	Route::get('/admin/psikolog/create', $namespacePrefix.'PsikologController@create')->name('admin.psikolog.create');
-	Route::post('/admin/psikolog/store', $namespacePrefix.'PsikologController@store')->name('admin.psikolog.store');
-	Route::get('/admin/psikolog/edit/{id}', $namespacePrefix.'PsikologController@edit')->name('admin.psikolog.edit');
-	Route::post('/admin/psikolog/update', $namespacePrefix.'PsikologController@update')->name('admin.psikolog.update');
-	Route::post('/admin/psikolog/delete', $namespacePrefix.'PsikologController@delete')->name('admin.psikolog.delete');
-
 	// Halaman
 	Route::get('/admin/halaman', $namespacePrefix.'HalamanController@index')->name('admin.halaman.index');
 	Route::get('/admin/halaman/create', $namespacePrefix.'HalamanController@create')->name('admin.halaman.create');
@@ -192,11 +184,19 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::post('/admin/karir/delete', $namespacePrefix.'KarirController@delete')->name('admin.karir.delete');
 	Route::get('/admin/karir/images', $namespacePrefix.'KarirController@showImages')->name('admin.karir.images');
 
+	// Psikolog
+	Route::get('/admin/psikolog', $namespacePrefix.'PsikologController@index')->name('admin.psikolog.index');
+	Route::get('/admin/psikolog/create', $namespacePrefix.'PsikologController@create')->name('admin.psikolog.create');
+	Route::post('/admin/psikolog/store', $namespacePrefix.'PsikologController@store')->name('admin.psikolog.store');
+	Route::get('/admin/psikolog/edit/{id}', $namespacePrefix.'PsikologController@edit')->name('admin.psikolog.edit');
+	Route::post('/admin/psikolog/update', $namespacePrefix.'PsikologController@update')->name('admin.psikolog.update');
+	Route::post('/admin/psikolog/delete', $namespacePrefix.'PsikologController@delete')->name('admin.psikolog.delete');
+
 	// Sertifikat
-	Route::get('/admin/e-sertifikat/trainer', $namespacePrefix.'SertifikatController@indexTrainer')->name('admin.sertifikat.indextrainer');
-	Route::get('/admin/e-sertifikat/peserta', $namespacePrefix.'SertifikatController@indexParticipant')->name('admin.sertifikat.indexpeserta');
-	Route::get('/admin/e-sertifikat/trainer/detail/{id}', $namespacePrefix.'SertifikatController@detailTrainer')->name('admin.sertifikat.detailtrainer');
-	Route::get('/admin/e-sertifikat/peserta/detail/{id}', $namespacePrefix.'SertifikatController@detailParticipant')->name('admin.sertifikat.detailpeserta');
+	Route::get('/admin/e-sertifikat/trainer', $namespacePrefix.'SertifikatController@indexTrainer')->name('admin.sertifikat.trainer.index');
+	Route::get('/admin/e-sertifikat/trainer/detail/{id}', $namespacePrefix.'SertifikatController@detailTrainer')->name('admin.sertifikat.trainer.detail');
+	Route::get('/admin/e-sertifikat/peserta', $namespacePrefix.'SertifikatController@indexParticipant')->name('admin.sertifikat.peserta.index');
+	Route::get('/admin/e-sertifikat/peserta/detail/{id}', $namespacePrefix.'SertifikatController@detailParticipant')->name('admin.sertifikat.peserta.detail');
 
 	// Slider
 	Route::get('/admin/slider', $namespacePrefix.'SliderController@index')->name('admin.slider.index');
@@ -291,4 +291,14 @@ Route::group(['middleware' => ['faturcms.member']], function() use ($namespacePr
 
 	// Withdrawal
 	Route::get('/member/transaksi/withdrawal', $namespacePrefix.'WithdrawalController@index')->name('member.withdrawal.index');
+
+	// File Manager
+	Route::get('/member/file-manager/{kategori}', $namespacePrefix.'FileController@index')->name('member.filemanager.index');
+	Route::get('/member/file-manager/{kategori}/file/detail/{id}', $namespacePrefix.'FileController@detail')->name('member.file.detail');
+
+	// Sertifikat
+	Route::get('/member/e-sertifikat/trainer', $namespacePrefix.'SertifikatController@indexTrainer')->name('member.sertifikat.trainer.index');
+	Route::get('/member/e-sertifikat/trainer/detail/{id}', $namespacePrefix.'SertifikatController@detailTrainer')->name('member.sertifikat.trainer.detail');
+	Route::get('/member/e-sertifikat/peserta', $namespacePrefix.'SertifikatController@indexParticipant')->name('member.sertifikat.peserta.index');
+	Route::get('/member/e-sertifikat/peserta/detail/{id}', $namespacePrefix.'SertifikatController@detailParticipant')->name('member.sertifikat.peserta.detail');
 });

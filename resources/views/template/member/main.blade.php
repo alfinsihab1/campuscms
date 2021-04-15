@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         @include('faturcms::template.member._head')
-        @include('faturcms::template.member._css')
+        @include('faturcms::template.admin._css')
         @yield('css-extra')
         <title>@yield('title') | {{ setting('site.name') }}</title>
     </head>

@@ -1,5 +1,6 @@
 <?php
 
+use Ajifatur\FaturCMS\Models\Files;
 use Ajifatur\FaturCMS\Models\Folder;
 use Ajifatur\FaturCMS\Models\FolderKategori;
 
@@ -70,5 +71,19 @@ if(!function_exists('tipe_file')){
     function tipe_file($id){
         $data = FolderKategori::find($id);
         return $data ? $data->tipe_kategori : '';
+    }
+}
+
+// Menghitung jumlah file dalam folder
+if(!function_exists('count_files')){
+    function count_files($id_folder, $kategori){
+        return Files::where('id_folder','=',$id_folder)->where('file_kategori','=',$kategori)->count();
+    }
+}
+
+// Menghitung jumlah folder dalam folder
+if(!function_exists('count_folders')){
+    function count_folders($id_folder, $kategori){
+        return Folder::where('folder_parent','=',$id_folder)->where('folder_kategori','=',$kategori)->count();
     }
 }

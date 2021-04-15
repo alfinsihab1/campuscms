@@ -26,29 +26,38 @@ class FileController extends Controller
 		// Kategori
 		$kategori = FolderKategori::where('slug_kategori','=',$category)->firstOrFail();
 
-        // Jika role admin
-        if(Auth::user()->is_admin == 1){
-			// Get direktori
-        	$directory = ($request->query('dir') == '/') ? Folder::find(1) : Folder::where('folder_dir','=',$request->query('dir'))->where('folder_kategori','=',$kategori->id_fk)->first();
+		// Get direktori
+    	$directory = ($request->query('dir') == '/') ? Folder::find(1) : Folder::where('folder_dir','=',$request->query('dir'))->where('folder_kategori','=',$kategori->id_fk)->first();
 
-        	// Jika direktori tidak ditemukan
-        	if(!$directory){
+    	// Jika direktori tidak ditemukan
+    	if(!$directory){
+            // Jika role admin
+            if(Auth::user()->is_admin == 1){
 				// Redirect to '/'
 				return redirect()->route('admin.filemanager.index', ['kategori' => $kategori->slug_kategori, 'dir' => '/']);
-        	}
+            }
+            // Jika role admin
+            if(Auth::user()->is_admin == 0){
+                // Redirect to '/'
+                return redirect()->route('member.filemanager.index', ['kategori' => $kategori->slug_kategori, 'dir' => '/']);
+            }
+    	}
 
-			// Get folder dalam direktori
-			$folders = Folder::where('folder_parent','=',$directory->id_folder)->where('folder_kategori','=',$kategori->id_fk)->orderBy('folder_nama','asc')->get();
+		// Get folder dalam direktori
+		$folders = Folder::where('folder_parent','=',$directory->id_folder)->where('folder_kategori','=',$kategori->id_fk)->orderBy('folder_nama','asc')->get();
 
-			// Get file dalam direktori
-			$files = Files::join('folder_kategori','file2.file_kategori','=','folder_kategori.id_fk')->where('id_folder','=',$directory->id_folder)->where('file_kategori','=',$kategori->id_fk)->orderBy('file_nama','asc')->get();
+		// Get file dalam direktori
+		$files = Files::join('folder_kategori','file2.file_kategori','=','folder_kategori.id_fk')->where('id_folder','=',$directory->id_folder)->where('file_kategori','=',$kategori->id_fk)->orderBy('file_nama','asc')->get();
 
-            // File icon
-            if($kategori->tipe_kategori == "video") $file_icon = "fa-video-camera";
-            elseif($kategori->tipe_kategori == "script") $file_icon = "fa-file-text-o";
-            elseif($kategori->tipe_kategori == "tools") $file_icon = "fa-file";
-            elseif($kategori->tipe_kategori == "ebook") $file_icon = "fa-file-pdf-o";
+        // File icon
+        if($kategori->tipe_kategori == "video") $file_icon = "fa-video-camera";
+        elseif($kategori->tipe_kategori == "script") $file_icon = "fa-file-text-o";
+        elseif($kategori->tipe_kategori == "tools") $file_icon = "fa-file";
+        elseif($kategori->tipe_kategori == "ebook") $file_icon = "fa-file-pdf-o";
 			
+        // Jika role admin
+        if(Auth::user()->is_admin == 1){
+            // View
             return view('faturcms::admin.file.index', [
 				'kategori' => $kategori,
 				'directory' => $directory,
@@ -56,6 +65,18 @@ class FileController extends Controller
 				'files' => $files,
 				'file_icon' => $file_icon,
 				'available_folders' => $this->availableFolders($kategori->id_fk),
+            ]);
+        }
+        // Jika role member
+        elseif(Auth::user()->is_admin == 0){
+            // View
+            return view('faturcms::member.file.index', [
+                'kategori' => $kategori,
+                'directory' => $directory,
+                'folders' => $folders,
+                'files' => $files,
+                'file_icon' => $file_icon,
+                'available_folders' => $this->availableFolders($kategori->id_fk),
             ]);
         }
 	}
@@ -154,21 +175,30 @@ class FileController extends Controller
         // Kategori
         $kategori = FolderKategori::where('slug_kategori','=',$category)->firstOrFail();
 
+        // Get file
+        $file = Files::join('users','file2.id_user','=','users.id_user')->where('file_kategori','=',$kategori->id_fk)->findOrFail($id);
+
+        // Get file detail
+        if($kategori->tipe_kategori == "video")
+			$file_list = Files::where('id_folder','=',$file->id_folder)->where('file_kategori','=',$file->file_kategori)->get();
+        elseif($kategori->tipe_kategori == "ebook")
+			$file_list = FileDetail::where('id_file','=',$file->file_konten)->orderBy('nama_fd','asc')->get();
+
+        // Get direktori
+        $directory = Folder::findOrFail($file->id_folder);
+            
         // Jika role admin
         if(Auth::user()->is_admin == 1){
-            // Get file
-            $file = Files::join('users','file2.id_user','=','users.id_user')->where('file_kategori','=',$kategori->id_fk)->findOrFail($id);
-
-            // Get file detail
-            if($kategori->tipe_kategori == "video")
-				$file_list = Files::where('id_folder','=',$file->id_folder)->where('file_kategori','=',$file->file_kategori)->get();
-            elseif($kategori->tipe_kategori == "ebook")
-				$file_list = FileDetail::where('id_file','=',$file->file_konten)->orderBy('nama_fd','asc')->get();
-
-            // Get direktori
-            $directory = Folder::findOrFail($file->id_folder);
-            
             return view('faturcms::admin.file.detail-'.$kategori->tipe_kategori, [
+                'kategori' => $kategori,
+                'directory' => $directory,
+                'file' => $file,
+                'file_list' => isset($file_list) ? $file_list : [],
+            ]);
+        }
+        // Jika role member
+        if(Auth::user()->is_admin == 0){
+            return view('faturcms::member.file.detail-'.$kategori->tipe_kategori, [
                 'kategori' => $kategori,
                 'directory' => $directory,
                 'file' => $file,

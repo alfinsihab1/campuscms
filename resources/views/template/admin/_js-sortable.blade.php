@@ -40,5 +40,8 @@
         image: {
             verticalFit: true
         },
+        gallery: {
+            enabled: true
+        }
     });
 </script>

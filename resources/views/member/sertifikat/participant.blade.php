@@ -1,6 +1,6 @@
-@extends('faturcms::template.admin.main')
+@extends('faturcms::template.member.main')
 
-@section('title', 'E-Sertifikat Trainer')
+@section('title', 'E-Sertifikat Peserta')
 
 @section('content')
 
@@ -8,11 +8,11 @@
 <main class="app-content">
 
     <!-- Breadcrumb -->
-    @include('faturcms::template.admin._breadcrumb', ['breadcrumb' => [
-        'title' => 'E-Sertifikat Trainer',
+    @include('faturcms::template.member._breadcrumb', ['breadcrumb' => [
+        'title' => 'E-Sertifikat Peserta',
         'items' => [
             ['text' => 'E-Sertifikat', 'url' => '#'],
-            ['text' => 'E-Sertifikat Trainer', 'url' => '#'],
+            ['text' => 'E-Sertifikat Peserta', 'url' => '#'],
         ]
     ]])
     <!-- /Breadcrumb -->
@@ -31,7 +31,6 @@
                                 <tr>
                                     <th width="20"><input type="checkbox"></th>
                                     <th width="100">Kode Sertifikat</th>
-                                    <th>Identitas Trainer</th>
                                     <th>Pelatihan</th>
                                     <th width="100">Waktu Pelatihan</th>
                                     <th width="40">Opsi</th>
@@ -41,14 +40,7 @@
                                 @foreach($sertifikat as $data)
                                 <tr>
                                     <td><input type="checkbox"></td>
-                                    <td>{{ $data->kode_trainer }}</td>
-                                    <td>
-                                        <a href="{{ route('admin.user.detail', ['id' => $data->id_user ]) }}">{{ $data->nama_user }}</a>
-                                        <br>
-                                        <small><i class="fa fa-envelope mr-1"></i>{{ $data->email }}</small>
-                                        <br>
-                                        <small><i class="fa fa-phone mr-1"></i>{{ $data->nomor_hp }}</small>
-                                    </td>
+                                    <td>{{ $data->kode_sertifikat }}</td>
                                     <td>
                                         <a href="{{ route('admin.pelatihan.detail', ['id' => $data->id_pelatihan]) }}">{{ $data->nama_pelatihan }}</a>
                                         <br>
@@ -62,7 +54,7 @@
                                     </td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="{{ route('admin.sertifikat.trainer.detail', ['id' => $data->id_pelatihan]) }}" class="btn btn-sm btn-warning" target="_blank" data-toggle="tooltip" title="Cetak"><i class="fa fa-print"></i></a>
+                                            <a href="#" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Cetak"><i class="fa fa-print"></i></a>
                                         </div>
                                     </td>
                                 </tr>
@@ -85,7 +77,7 @@
 
 @section('js-extra')
 
-@include('faturcms::template.admin._js-table')
+@include('faturcms::template.member._js-table')
 
 <script type="text/javascript">
     // DataTable

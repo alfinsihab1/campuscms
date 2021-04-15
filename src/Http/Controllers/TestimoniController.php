@@ -17,19 +17,16 @@ class TestimoniController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager')){
-            // Data testimoni
-            $testimoni = Testimoni::orderBy('order_testimoni','asc')->get();
-            
-            // View
-            return view('faturcms::admin.testimoni.index', [
-                'testimoni' => $testimoni,
-            ]);
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // Data testimoni
+        $testimoni = Testimoni::orderBy('order_testimoni','asc')->get();
+        
+        // View
+        return view('faturcms::admin.testimoni.index', [
+            'testimoni' => $testimoni,
+        ]);
     }
 
     /**
@@ -39,14 +36,11 @@ class TestimoniController extends Controller
      */
     public function create()
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager')){
-            // View
-            return view('faturcms::admin.testimoni.create');
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // View
+        return view('faturcms::admin.testimoni.create');
     }
 
     /**
@@ -99,19 +93,16 @@ class TestimoniController extends Controller
      */
     public function edit($id)
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager')){
-            // Data testimoni
-            $testimoni = Testimoni::findOrFail($id);
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
 
-            // View
-            return view('faturcms::admin.testimoni.edit', [
-                'testimoni' => $testimoni
-            ]);
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Data testimoni
+        $testimoni = Testimoni::findOrFail($id);
+
+        // View
+        return view('faturcms::admin.testimoni.edit', [
+            'testimoni' => $testimoni
+        ]);
     }
 
     /**
@@ -160,6 +151,9 @@ class TestimoniController extends Controller
      */
     public function delete(Request $request)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+        
     	// Menghapus data
         $testimoni = Testimoni::find($request->id);
         $testimoni->delete();

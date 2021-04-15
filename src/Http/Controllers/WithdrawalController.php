@@ -18,21 +18,18 @@ class WithdrawalController extends Controller
      */
     public function index()
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
         // Jika role = admin
         if(Auth::user()->is_admin == 1){
-            if(Auth::user()->role == role('it') || Auth::user()->role == role('manager') || Auth::user()->role == role('finance')){
-                // Data withdrawal
-                $withdrawal = Withdrawal::join('users','withdrawal.id_user','=','users.id_user')->join('rekening','withdrawal.id_rekening','=','rekening.id_rekening')->join('platform','rekening.id_platform','=','platform.id_platform')->orderBy('withdrawal_status','desc')->orderBy('withdrawal_at','desc')->get();
+            // Data withdrawal
+            $withdrawal = Withdrawal::join('users','withdrawal.id_user','=','users.id_user')->join('rekening','withdrawal.id_rekening','=','rekening.id_rekening')->join('platform','rekening.id_platform','=','platform.id_platform')->orderBy('withdrawal_status','desc')->orderBy('withdrawal_at','desc')->get();
 
-                // View
-                return view('faturcms::admin.withdrawal.index', [
-                    'withdrawal' => $withdrawal,
-                ]);
-            }
-            else{
-                // View
-                abort(403);
-            }
+            // View
+            return view('faturcms::admin.withdrawal.index', [
+                'withdrawal' => $withdrawal,
+            ]);
         }
         elseif(Auth::user()->is_admin == 0){
 			// User belum membayar

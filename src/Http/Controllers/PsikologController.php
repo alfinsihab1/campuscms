@@ -17,19 +17,16 @@ class PsikologController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager')){
-            // Data psikolog
-            $psikolog = Psikolog::all();
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
 
-            // View
-            return view('faturcms::admin.psikolog.index', [
-                'psikolog' => $psikolog,
-            ]);
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Data psikolog
+        $psikolog = Psikolog::all();
+
+        // View
+        return view('faturcms::admin.psikolog.index', [
+            'psikolog' => $psikolog,
+        ]);
     }
 
     /**
@@ -39,14 +36,11 @@ class PsikologController extends Controller
      */
     public function create()
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager')){
-            // View
-            return view('faturcms::admin.psikolog.create');
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // View
+        return view('faturcms::admin.psikolog.create');
     }
 
     /**
@@ -97,19 +91,16 @@ class PsikologController extends Controller
      */
     public function edit($id)
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager')){
-            // Data psikolog
-            $psikolog = Psikolog::findOrFail($id);
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
 
-            // View
-            return view('faturcms::admin.psikolog.edit', [
-                'psikolog' => $psikolog
-            ]);
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Data psikolog
+        $psikolog = Psikolog::findOrFail($id);
+
+        // View
+        return view('faturcms::admin.psikolog.edit', [
+            'psikolog' => $psikolog
+        ]);
     }
 
     /**
@@ -160,6 +151,9 @@ class PsikologController extends Controller
      */
     public function delete(Request $request)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+        
     	// Menghapus data
         $psikolog = Psikolog::find($request->id);
         $psikolog->delete();

@@ -2,7 +2,9 @@
 
 use Ajifatur\FaturCMS\Models\KategoriMateri;
 use Ajifatur\FaturCMS\Models\KategoriPelatihan;
+use Ajifatur\FaturCMS\Models\Permission;
 use Ajifatur\FaturCMS\Models\Role;
+use Ajifatur\FaturCMS\Models\RolePermission;
 use Ajifatur\FaturCMS\Models\Setting;
 use Ajifatur\FaturCMS\Models\Tag;
 
@@ -11,6 +13,36 @@ use Ajifatur\FaturCMS\Models\Tag;
  * Main Helpers
  * 
  */
+
+// Get has access
+if(!function_exists('has_access')){
+    function has_access($permission, $role, $isAbort = true){
+        // Get permission
+        $data_permission = Permission::where('key_permission','=',$permission)->first();
+
+        // Jika tidak ada data permission
+        if(!$data_permission){
+            if($isAbort) abort(403);
+            else return false;
+        }
+
+        // Get role permission
+        $role_permission = RolePermission::where('id_permission','=',$data_permission->id_permission)->where('id_role','=',$role)->first();
+
+        // Return
+        if($role_permission){
+            if($role_permission->access == 1) return true;
+            else{
+                if($isAbort) abort(403);
+                else return false;
+            }
+        }
+        else{
+            if($isAbort) abort(403);
+            else return false;
+        }
+    }
+}
 
 // Get role
 if(!function_exists('role')){

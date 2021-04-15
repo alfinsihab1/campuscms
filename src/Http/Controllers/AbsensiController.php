@@ -20,6 +20,9 @@ class AbsensiController extends Controller
      */
     public function index(Request $request)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
 		// Get tanggal
 		$tanggal = $request->query('tanggal') != null ? $request->query('tanggal') : date('d/m/Y');
 		
@@ -41,6 +44,9 @@ class AbsensiController extends Controller
      */
     public function delete(Request $request)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
         // Menghapus absensi
         $absensi = Absensi::find($request->id);
         $absensi->delete();
@@ -57,6 +63,9 @@ class AbsensiController extends Controller
      */
     public function export(Request $request)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+        
 		// Get tanggal
 		$tanggal = $request->query('tanggal') != null ? $request->query('tanggal') : date('d/m/Y');
 		

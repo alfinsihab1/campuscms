@@ -67,7 +67,7 @@
                                         <small><i class="fa fa-phone mr-2"></i>{{ $data->nomor_hp }}</small>
                                     </td>
                                     <td>
-                                        <a href="/admin/pelatihan/detail/{{ $data->id_pelatihan }}">{{ $data->nama_pelatihan }}</a>
+                                        <a href="{{ route('admin.pelatihan.detail', ['id' => $data->id_pelatihan]) }}">{{ $data->nama_pelatihan }}</a>
                                         <br>
                                         <small><i class="fa fa-tag mr-2"></i>{{ $data->nomor_pelatihan }}</small>
                                     </td>
@@ -80,6 +80,8 @@
                                         @else
                                             @if($data->fee_bukti == '')
                                                 <strong class="text-danger">User Belum Membayar</strong>
+                                            @else
+                                                <strong class="text-danger">Belum Diverifikasi</strong>
                                             @endif
                                         @endif
                                     </td>

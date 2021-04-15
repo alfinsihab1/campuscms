@@ -18,19 +18,16 @@ class SliderController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager')){
-            // Data slider
-            $slider = Slider::orderBy('order_slider','asc')->orderBy('status_slider','desc')->get();
-            
-            // View
-            return view('faturcms::admin.slider.index', [
-                'slider' => $slider,
-            ]);
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // Data slider
+        $slider = Slider::orderBy('order_slider','asc')->orderBy('status_slider','desc')->get();
+        
+        // View
+        return view('faturcms::admin.slider.index', [
+            'slider' => $slider,
+        ]);
     }
 
     /**
@@ -40,14 +37,11 @@ class SliderController extends Controller
      */
     public function create()
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager')){
-            // View
-            return view('faturcms::admin.slider.create');
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // View
+        return view('faturcms::admin.slider.create');
     }
 
     /**
@@ -98,19 +92,16 @@ class SliderController extends Controller
      */
     public function edit($id)
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager')){
-            // Data slider
-            $slider = Slider::findOrFail($id);
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
 
-            // View
-            return view('faturcms::admin.slider.edit', [
-                'slider' => $slider
-            ]);
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Data slider
+        $slider = Slider::findOrFail($id);
+
+        // View
+        return view('faturcms::admin.slider.edit', [
+            'slider' => $slider
+        ]);
     }
 
     /**
@@ -157,6 +148,9 @@ class SliderController extends Controller
      */
     public function delete(Request $request)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+        
     	// Menghapus data
         $slider = Slider::find($request->id);
         $slider->delete();

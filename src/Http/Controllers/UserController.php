@@ -25,6 +25,9 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
         // Get data user
         if($request->query('filter') == null){
             $users = User::join('role','users.role','=','role.id_role')->orderBy('register_at','desc')->get();
@@ -59,6 +62,9 @@ class UserController extends Controller
      */
     public function create()
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
         // Get data role
         $role = Role::orderBy('is_admin','desc')->get();
 
@@ -131,12 +137,11 @@ class UserController extends Controller
      */
     public function detail($id)
     {
-        // Get data user
-        $user = User::join('role','users.role','=','role.id_role')->find($id);
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
 
-        if(!$user){
-            abort(404);
-        }
+        // Get data user
+        $user = User::join('role','users.role','=','role.id_role')->findOrFail($id);
 
         // Sponsor
         $sponsor = User::where('username','=',$user->reference)->first();
@@ -157,13 +162,11 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        // Get data user
-        $user = User::find($id);
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
 
-        // Jika tidak ada user
-        if(!$user){
-            abort(404);
-        }
+        // Get data user
+        $user = User::findOrFail($id);
 
         // Get data role
         $role = Role::orderBy('is_admin','desc')->get();
@@ -235,6 +238,9 @@ class UserController extends Controller
      */
     public function delete(Request $request)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
         // Menghapus user
         $user = User::find($request->id);
         $user->delete();
@@ -262,12 +268,11 @@ class UserController extends Controller
      */
     public function profile()
     {
-        // Get data user
-        $user = User::join('role','users.role','=','role.id_role')->find(Auth::user()->id_user);
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
 
-        if(!$user){
-            abort(404);
-        }
+        // Get data user
+        $user = User::join('role','users.role','=','role.id_role')->findOrFail(Auth::user()->id_user);
 
         // Sponsor
         $sponsor = User::where('username','=',$user->reference)->first();
@@ -320,7 +325,7 @@ class UserController extends Controller
                 return redirect()->route('admin.user.detail', ['id' => $user->id_user])->with(['updatePhotoMessage' => 'Berhasil mengganti foto profil.']);
         }
         elseif(Auth::user()->is_admin == 0){
-            return redirect('/member/profil')->with(['updatePhotoMessage' => 'Berhasil mengganti foto profil.']);
+            return redirect()->route('member.profile')->with(['updatePhotoMessage' => 'Berhasil mengganti foto profil.']);
         }
     }
     
@@ -332,6 +337,9 @@ class UserController extends Controller
      */
     public function export(Request $request)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
         // Get data user
         if($request->query('filter') == null){
             $users = User::join('role','users.role','=','role.id_role')->get();
@@ -367,89 +375,5 @@ class UserController extends Controller
         $photo = ProfilePhoto::where('id_user','=',$request->id)->groupBy('photo_name')->get()->pluck('photo_name');
 
         echo json_encode($photo);
-    }
-
-    /**********************************************************************************************/
-    
-    /**
-     * Menampilkan profil member
-     * 
-     * @return \Illuminate\Http\Response
-     */
-    public function memberProfile()
-    {
-        // User belum membayar
-        if(Auth::user()->status == 0) return redirect('/member/pemberitahuan');
-            
-        // Get data user
-        $user = User::find(Auth::user()->id_user);
-
-        // Sponsor
-        $sponsor = ($user->role == role_trainer()) ? User::where('username',Auth::user()->reference)->first() : null;
-
-        // Refer
-        $refer = User::where('reference',Auth::user()->username)->get();
-        
-        // Galeri foto
-        $photos = ProfilePhoto::where('id_user','=',Auth::user()->id_user)->get();
-
-        // View
-        if(Auth::user()->is_admin == 0){            
-            return view('user/member/profile', [
-                'user' => $user,
-                'sponsor' => $sponsor,
-                'refer' => $refer,
-                'photos' => $photos,
-            ]);
-        }
-    }
-
-    /**
-     * Mengupdate data identitas profil user
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function updateProfile(Request $request)
-    {
-        // Validasi
-        $validator = Validator::make($request->all(), [
-            'nama_lengkap' => 'required|string|max:255',
-            'tanggal_lahir' => 'required',
-            'jenis_kelamin' => 'required',
-            'nomor_hp' => 'required',
-            'username' => Auth::user()->is_admin == 1 ? ['required', 'string', 'min:6', 'max:255', Rule::unique('users')->ignore(Auth::user()->id_user, 'id_user')] : '',
-            'email' => [
-                'required', 'string', 'email', 'max:255', Rule::unique('users')->ignore(Auth::user()->id_user, 'id_user')
-            ],
-            'password' => $request->password != '' ? 'required|string|min:6' : '',
-        ], validation_messages());
-        
-        // Mengecek jika ada error
-        if($validator->fails()){
-            // Kembali ke halaman sebelumnya dan menampilkan pesan error
-            return redirect()->back()->withErrors($validator->errors())->withInput();
-        }
-        // Jika tidak ada error
-        else{
-            // Memilih data
-            $user = User::find(Auth::user()->id_user);
-            $user->nama_user = $request->nama_lengkap;
-            $user->username = Auth::user()->is_admin == 1 ? $request->username : $user->username;
-            $user->tanggal_lahir = $request->tanggal_lahir;
-            $user->jenis_kelamin = $request->jenis_kelamin;
-            $user->nomor_hp = $request->nomor_hp;
-            $user->email = $request->email;
-            $user->password = $request->password != '' ? bcrypt($request->password) : $user->password;
-            $user->save();
-        }
-
-        // Redirect
-        if(Auth::user()->is_admin == 1){
-            return redirect('/admin/profil')->with(['updateProfile' => 'Berhasil mengupdate profil.']);
-        }
-        elseif(Auth::user()->is_admin == 0){
-            return redirect('/member/profil')->with(['updateProfile' => 'Berhasil mengupdate profil.']);
-        }
     }
 }

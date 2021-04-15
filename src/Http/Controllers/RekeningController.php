@@ -19,20 +19,17 @@ class RekeningController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->is_admin == 1){
-            if(Auth::user()->role == role('it') || Auth::user()->role == role('manager') || Auth::user()->role == role('finance')){
-                // Data rekening
-                $rekening = Rekening::join('users','rekening.id_user','=','users.id_user')->join('platform','rekening.id_platform','=','platform.id_platform')->orderBy('id_rekening','desc')->get();
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
 
-                // View
-                return view('faturcms::admin.rekening.index', [
-                    'rekening' => $rekening,
-                ]);
-            }
-            else{
-                // View
-                abort(403);
-            }
+        if(Auth::user()->is_admin == 1){
+            // Data rekening
+            $rekening = Rekening::join('users','rekening.id_user','=','users.id_user')->join('platform','rekening.id_platform','=','platform.id_platform')->orderBy('id_rekening','desc')->get();
+
+            // View
+            return view('faturcms::admin.rekening.index', [
+                'rekening' => $rekening,
+            ]);
         }
         elseif(Auth::user()->is_admin == 0){
             // User belum membayar
@@ -55,24 +52,25 @@ class RekeningController extends Controller
      */
     public function create()
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
         if(Auth::user()->is_admin == 1){
-            if(Auth::user()->role == role('it') || Auth::user()->role == role('manager') || Auth::user()->role == role('finance')){
-                // User
-                $user = User::where('is_admin','=',0)->where('status','=',1)->get();
+            // User
+            $user = User::where('is_admin','=',0)->where('status','=',1)->get();
 
-                // Data platform bank
-                $bank = Platform::where('tipe_platform','=',1)->orderBy('nama_platform','asc')->get();
-                
-                // Data platform fintech
-                $fintech = Platform::where('tipe_platform','=',2)->orderBy('nama_platform','asc')->get();
+            // Data platform bank
+            $bank = Platform::where('tipe_platform','=',1)->orderBy('nama_platform','asc')->get();
+            
+            // Data platform fintech
+            $fintech = Platform::where('tipe_platform','=',2)->orderBy('nama_platform','asc')->get();
 
-                // View
-                return view('faturcms::admin.rekening.create', [
-                    'user' => $user,
-                    'bank' => $bank,
-                    'fintech' => $fintech,
-                ]);
-            }
+            // View
+            return view('faturcms::admin.rekening.create', [
+                'user' => $user,
+                'bank' => $bank,
+                'fintech' => $fintech,
+            ]);
         }
         elseif(Auth::user()->is_admin == 0){
     		// User belum membayar
@@ -139,28 +137,25 @@ class RekeningController extends Controller
      */
     public function edit($id)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
         if(Auth::user()->is_admin == 1){
-            if(Auth::user()->role == role('it') || Auth::user()->role == role('manager') || Auth::user()->role == role('finance')){
-                // Data rekening
-                $rekening = Rekening::findOrFail($id);
+            // Data rekening
+            $rekening = Rekening::findOrFail($id);
 
-                // Data platform bank
-                $bank = Platform::where('tipe_platform','=',1)->orderBy('nama_platform','asc')->get();
-                
-                // Data platform fintech
-                $fintech = Platform::where('tipe_platform','=',2)->orderBy('nama_platform','asc')->get();
+            // Data platform bank
+            $bank = Platform::where('tipe_platform','=',1)->orderBy('nama_platform','asc')->get();
+            
+            // Data platform fintech
+            $fintech = Platform::where('tipe_platform','=',2)->orderBy('nama_platform','asc')->get();
 
-                // View
-                return view('faturcms::admin.rekening.edit', [
-                    'bank' => $bank,
-                    'fintech' => $fintech,
-                    'rekening' => $rekening,
-                ]);
-            }
-            else{
-                // View
-                return view('faturcms::error.403');
-            }
+            // View
+            return view('faturcms::admin.rekening.edit', [
+                'bank' => $bank,
+                'fintech' => $fintech,
+                'rekening' => $rekening,
+            ]);
         }
         elseif(Auth::user()->is_admin == 0){
             // User belum membayar
@@ -229,6 +224,9 @@ class RekeningController extends Controller
      */
     public function delete(Request $request)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
     	// Menghapus data
         $rekening = Rekening::find($request->id);
         $rekening->delete();

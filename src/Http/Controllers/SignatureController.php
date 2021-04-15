@@ -17,19 +17,16 @@ class SignatureController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager')){
-            // Data signature
-            $signature = Signature::join('users','signature.id_user','=','users.id_user')->orderBy('is_admin','desc')->get();
-            
-            // View
-            return view('faturcms::admin.signature.index', [
-                'signature' => $signature,
-            ]);
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // Data signature
+        $signature = Signature::join('users','signature.id_user','=','users.id_user')->orderBy('is_admin','desc')->get();
+        
+        // View
+        return view('faturcms::admin.signature.index', [
+            'signature' => $signature,
+        ]);
     }
 
     /**
@@ -39,26 +36,24 @@ class SignatureController extends Controller
      */
     public function input()
     {
-		if(Auth::user()->role == role('manager') || Auth::user()->role == role('mentor')){
-			// Data signature
-			$signature = Signature::where('id_user','=',Auth::user()->id_user)->firstOrFail();
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // Data signature
+        $signature = Signature::where('id_user','=',Auth::user()->id_user)->first();
+
+		if(Auth::user()->is_admin == 1){
 
 			// View
 			return view('faturcms::admin.signature.input', [
 				'signature' => $signature,
 			]);
 		}
-		// elseif(Auth::user()->role == role_trainer()){
-		// 	// Data signature
-		// 	$signature = Signature::where('id_user','=',Auth::user()->id_user)->first();
-
-		// 	// View
-		// 	return view('signature/member/index', [
-		// 		'signature' => $signature,
-		// 	]);
-		// }
-		else{
-			abort(403);
+		elseif(Auth::user()->is_admin == 0){
+			// View
+			return view('faturcms::member.signature.input', [
+				'signature' => $signature,
+			]);
 		}
     }
 
@@ -96,8 +91,8 @@ class SignatureController extends Controller
 		// Redirect
 		if(Auth::user()->is_admin == 1)
 			return redirect()->route('admin.signature.input')->with(['message' => 'Berhasil menyimpan E-Signature.']);
-		// elseif(Auth::user()->is_admin == 0)
-		// 	return redirect('/member/e-signature')->with(['message' => 'Berhasil menyimpan E-Signature.']);
+        elseif(Auth::user()->is_admin == 0)
+            return redirect()->route('member.signature.input')->with(['message' => 'Berhasil menyimpan E-Signature.']);
     }
 
     /**
@@ -108,6 +103,9 @@ class SignatureController extends Controller
      */
     public function delete(Request $request)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+        
     	// Menghapus data
         $signature = Signature::find($request->id);
         $signature->delete();

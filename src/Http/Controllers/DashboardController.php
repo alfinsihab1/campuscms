@@ -25,7 +25,10 @@ class DashboardController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function admin()
-    {       
+    {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
         // Data Member Aktif
         $data_student_aktif = User::where('is_admin','=',0)->where('status','=',1)->count();
         // Data Member Belum Aktif
@@ -67,11 +70,14 @@ class DashboardController extends Controller
      */
     public function member()
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+        
         // Get deskripsi
         $deskripsi = Deskripsi::first();
 
         // Get data fitur
-        $fitur = Fitur::all();
+        $fitur = Fitur::orderBy('order_fitur','asc')->get();
 
         // Get data default rekening
         $default_rekening = DefaultRekening::join('platform','default_rekening.id_platform','=','platform.id_platform')->orderBy('tipe_platform','asc')->get();

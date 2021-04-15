@@ -21,19 +21,16 @@ class BlogController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager') || Auth::user()->role == role('mentor')){
-            // Data blog
-            $blog = Blog::join('users','blog.author','=','users.id_user')->join('kategori_artikel','blog.blog_kategori','=','kategori_artikel.id_ka')->orderBy('blog_at','desc')->get();
-			
-            // View
-            return view('faturcms::admin.blog.index', [
-                'blog' => $blog,
-            ]);
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // Data blog
+        $blog = Blog::join('users','blog.author','=','users.id_user')->join('kategori_artikel','blog.blog_kategori','=','kategori_artikel.id_ka')->orderBy('blog_at','desc')->get();
+		
+        // View
+        return view('faturcms::admin.blog.index', [
+            'blog' => $blog,
+        ]);
     }
 
     /**
@@ -43,19 +40,16 @@ class BlogController extends Controller
      */
     public function create()
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager') || Auth::user()->role == role('mentor')){
-            // Kategori
-            $kategori = KategoriArtikel::orderBy('id_ka','desc')->get();
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
 
-            // View
-            return view('faturcms::admin.blog.create', [
-                'kategori' => $kategori,
-            ]);
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Kategori
+        $kategori = KategoriArtikel::orderBy('id_ka','desc')->get();
+
+        // View
+        return view('faturcms::admin.blog.create', [
+            'kategori' => $kategori,
+        ]);
     }
 
     /**
@@ -107,23 +101,20 @@ class BlogController extends Controller
      */
     public function edit($id)
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager') || Auth::user()->role == role('mentor')){
-        	// Data blog
-        	$blog = Blog::findOrFail($id);
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
 
-            // Kategori
-            $kategori = KategoriArtikel::orderBy('id_ka','desc')->get();
+    	// Data blog
+    	$blog = Blog::findOrFail($id);
 
-            // View
-            return view('faturcms::admin.blog.edit', [
-            	'blog' => $blog,
-            	'kategori' => $kategori,
-            ]);
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Kategori
+        $kategori = KategoriArtikel::orderBy('id_ka','desc')->get();
+
+        // View
+        return view('faturcms::admin.blog.edit', [
+        	'blog' => $blog,
+        	'kategori' => $kategori,
+        ]);
     }
 
     /**
@@ -173,6 +164,9 @@ class BlogController extends Controller
      */
     public function delete(Request $request)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+        
     	// Menghapus data
         $blog = Blog::find($request->id);
         $blog->delete();

@@ -22,15 +22,16 @@ class EmailController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->is_admin == 1){
-            // Data email
-            $email = Email::join('users','email.sender','=','users.id_user')->orderBy('sent_at','desc')->get();
-			
-            // View
-            return view('faturcms::admin.email.index', [
-                'email' => $email,
-            ]);
-        }
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // Data email
+        $email = Email::join('users','email.sender','=','users.id_user')->orderBy('sent_at','desc')->get();
+		
+        // View
+        return view('faturcms::admin.email.index', [
+            'email' => $email,
+        ]);
     }
 
     /**
@@ -40,15 +41,16 @@ class EmailController extends Controller
      */
     public function create()
     {
-        if(Auth::user()->is_admin == 1){
-    		// Get data member
-    		$members = User::where('is_admin','=',0)->get();
-    		
-            // View
-            return view('faturcms::admin.email.create', [
-    			'members' => $members	
-    		]);
-        }
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+		// Get data member
+		$members = User::where('is_admin','=',0)->get();
+		
+        // View
+        return view('faturcms::admin.email.create', [
+			'members' => $members	
+		]);
     }
 
     /**
@@ -122,6 +124,9 @@ class EmailController extends Controller
      */
     public function detail($id)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
         // Data email
         $email = Email::join('users','email.sender','=','users.id_user')->findOrFail($id);
 		
@@ -143,6 +148,9 @@ class EmailController extends Controller
      */
     public function delete(Request $request)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
     	// Menghapus data
         $email = Email::find($request->id);
         $email->delete();
@@ -163,7 +171,12 @@ class EmailController extends Controller
     //     echo json_encode($users);
     // }
  
-    // Import excel
+    /**
+     * Mengimport email
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function import(Request $request) 
     {       
         echo json_encode(Excel::toArray(new EmailImport, $request->file('file')));

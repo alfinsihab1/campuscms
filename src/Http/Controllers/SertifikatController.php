@@ -21,20 +21,17 @@ class SertifikatController extends Controller
      */
     public function indexTrainer()
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
 		if(Auth::user()->is_admin == 1){
-            if(Auth::user()->role == role('it') || Auth::user()->role == role('manager') || Auth::user()->role == role('mentor')){
-                // Data Sertifikat
-                $sertifikat = Pelatihan::join('users','pelatihan.trainer','=','users.id_user')->orderBy('tanggal_pelatihan_from','desc')->get();
-				
-                // View
-                return view('faturcms::admin.sertifikat.trainer', [
-                    'sertifikat' => $sertifikat,
-                ]);
-            }
-            else{
-                // View
-                abort(403);
-            }
+            // Data Sertifikat
+            $sertifikat = Pelatihan::join('users','pelatihan.trainer','=','users.id_user')->orderBy('tanggal_pelatihan_from','desc')->get();
+			
+            // View
+            return view('faturcms::admin.sertifikat.trainer', [
+                'sertifikat' => $sertifikat,
+            ]);
 		}
 		elseif(Auth::user()->is_admin == 0){
 			// Data Sertifikat
@@ -54,21 +51,18 @@ class SertifikatController extends Controller
      */
     public function indexParticipant()
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
 		if(Auth::user()->is_admin == 1){
-            if(Auth::user()->role == role('it') || Auth::user()->role == role('manager') || Auth::user()->role == role('mentor')){
-                // Data Sertifikat
-                $sertifikat = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->join('users','pelatihan_member.id_user','=','users.id_user')->where('status_pelatihan','!=',0)->orderBy('tanggal_pelatihan_from','desc')->get();
-                
-                // View
-                return view('faturcms::admin.sertifikat.participant', [
-                    'sertifikat' => $sertifikat,
-                ]);
-            }
-            else{
-                // View
-                abort(403);
-            }
-		}
+            // Data Sertifikat
+            $sertifikat = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->join('users','pelatihan_member.id_user','=','users.id_user')->where('status_pelatihan','!=',0)->orderBy('tanggal_pelatihan_from','desc')->get();
+            
+            // View
+            return view('faturcms::admin.sertifikat.participant', [
+                'sertifikat' => $sertifikat,
+            ]);
+	}
 		elseif(Auth::user()->is_admin == 0){
 			// Data Sertifikat
 			$sertifikat = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->join('users','pelatihan_member.id_user','=','users.id_user')->where('pelatihan_member.id_user','=',Auth::user()->id_user)->where('status_pelatihan','!=',0)->orderBy('tanggal_pelatihan_from','desc')->get();
@@ -90,15 +84,12 @@ class SertifikatController extends Controller
     {
         ini_set('max_execution_time', 300);
 
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
         if(Auth::user()->is_admin == 1){
-            if(Auth::user()->role == role('it') || Auth::user()->role == role('manager') || Auth::user()->role == role('mentor')){
-                // Data Member
-                $pelatihan = Pelatihan::join('users','pelatihan.trainer','=','users.id_user')->join('kategori_pelatihan','pelatihan.kategori_pelatihan','=','kategori_pelatihan.id_kp')->findOrFail($id);
-            }
-            else{
-                // View
-                abort(403);
-            }
+            // Data Member
+            $pelatihan = Pelatihan::join('users','pelatihan.trainer','=','users.id_user')->join('kategori_pelatihan','pelatihan.kategori_pelatihan','=','kategori_pelatihan.id_kp')->findOrFail($id);
 		}
 		elseif(Auth::user()->is_admin == 0){
 			// Data Member
@@ -149,29 +140,16 @@ class SertifikatController extends Controller
     {
         ini_set('max_execution_time', 300);
 
-        if(Auth::user()->is_admin == 1){
-            if(Auth::user()->role == role('it') || Auth::user()->role == role('manager') || Auth::user()->role == role('mentor')){
-                // Data Member
-                $member = PelatihanMember::join('users','pelatihan_member.id_user','=','users.id_user')->where('status_pelatihan','!=',0)->find($id);
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
 
-                // Jika tidak ada
-                if(!$member){
-                    abort(404);
-                }
-            }
-            else{
-                // View
-                abort(403);
-            }
+        if(Auth::user()->is_admin == 1){
+            // Data Member
+            $member = PelatihanMember::join('users','pelatihan_member.id_user','=','users.id_user')->where('status_pelatihan','!=',0)->findOrFail($id);
 		}
 		elseif(Auth::user()->is_admin == 0){
 			// Data Member
-			$member = PelatihanMember::join('users','pelatihan_member.id_user','=','users.id_user')->where('pelatihan_member.id_user','=',Auth::user()->id_user)->where('status_pelatihan','!=',0)->find($id);
-
-			// Jika tidak ada
-			if(!$member){
-				abort(404);
-			}
+			$member = PelatihanMember::join('users','pelatihan_member.id_user','=','users.id_user')->where('pelatihan_member.id_user','=',Auth::user()->id_user)->where('status_pelatihan','!=',0)->findOrFail($id);
 		}
 		
 		$qrcode = base64_encode(\QrCode::format('png')->size(200)->backgroundColor(0,0,0,0)->errorCorrection('H')->generate(url()->to('/cek-sertifikat/'.$member->id_pm)));

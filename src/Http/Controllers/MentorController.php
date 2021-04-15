@@ -17,19 +17,16 @@ class MentorController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager')){
-            // Data mentor
-            $mentor = Mentor::orderBy('order_mentor','asc')->get();
-            
-            // View
-            return view('faturcms::admin.mentor.index', [
-                'mentor' => $mentor,
-            ]);
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // Data mentor
+        $mentor = Mentor::orderBy('order_mentor','asc')->get();
+        
+        // View
+        return view('faturcms::admin.mentor.index', [
+            'mentor' => $mentor,
+        ]);
     }
 
     /**
@@ -39,14 +36,11 @@ class MentorController extends Controller
      */
     public function create()
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager')){
-            // View
-            return view('faturcms::admin.mentor.create');
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // View
+        return view('faturcms::admin.mentor.create');
     }
 
     /**
@@ -96,19 +90,16 @@ class MentorController extends Controller
      */
     public function edit($id)
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager')){
-            // Data mentor
-            $mentor = Mentor::findOrFail($id);
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
 
-            // View
-            return view('faturcms::admin.mentor.edit', [
-                'mentor' => $mentor
-            ]);
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Data mentor
+        $mentor = Mentor::findOrFail($id);
+
+        // View
+        return view('faturcms::admin.mentor.edit', [
+            'mentor' => $mentor
+        ]);
     }
 
     /**
@@ -154,6 +145,9 @@ class MentorController extends Controller
      */
     public function delete(Request $request)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+        
     	// Menghapus data
         $mentor = Mentor::find($request->id);
         $mentor->delete();

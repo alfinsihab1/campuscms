@@ -6,6 +6,9 @@
     .app-menu__item {padding: 8px 15px;}
     .treeview.is-expanded .treeview-menu {margin-bottom: .5rem;}
 
+    /* Navbar */
+    .app-nav .app-nav__item .badge {position: absolute; right: 0; bottom: 8px; font-size: 75%;}
+
     /* Button */
     .btn-theme-1 {background-color: {{ setting('site.primary_color') }}!important; border-color: background: {{ setting('site.primary_color') }}!important; color: #fff;}
     .btn-theme-1:hover {background-color: #e0852f!important; border-color: #e0852f!important; color: #fff;}

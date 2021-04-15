@@ -19,19 +19,16 @@ class ProgramController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager') || Auth::user()->role == role('mentor')){
-            // Data program
-            $program = Program::join('users','program.author','=','users.id_user')->join('kategori_program','program.program_kategori','=','kategori_program.id_kp')->orderBy('program_at','desc')->get();
-			
-            // View
-            return view('faturcms::admin.program.index', [
-                'program' => $program,
-            ]);
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // Data program
+        $program = Program::join('users','program.author','=','users.id_user')->join('kategori_program','program.program_kategori','=','kategori_program.id_kp')->orderBy('program_at','desc')->get();
+		
+        // View
+        return view('faturcms::admin.program.index', [
+            'program' => $program,
+        ]);
     }
 
     /**
@@ -41,19 +38,16 @@ class ProgramController extends Controller
      */
     public function create()
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager') || Auth::user()->role == role('mentor')){
-            // Kategori
-            $kategori = KategoriProgram::all();
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
 
-            // View
-            return view('faturcms::admin.program.create', [
-                'kategori' => $kategori,
-            ]);
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Kategori
+        $kategori = KategoriProgram::all();
+
+        // View
+        return view('faturcms::admin.program.create', [
+            'kategori' => $kategori,
+        ]);
     }
 
     /**
@@ -104,23 +98,20 @@ class ProgramController extends Controller
      */
     public function edit($id)
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager') || Auth::user()->role == role('mentor')){
-        	// Data program
-        	$program = Program::findOrFail($id);
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
 
-            // Kategori
-            $kategori = KategoriProgram::all();
+    	// Data program
+    	$program = Program::findOrFail($id);
 
-            // View
-            return view('faturcms::admin.program.edit', [
-            	'program' => $program,
-            	'kategori' => $kategori,
-            ]);
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Kategori
+        $kategori = KategoriProgram::all();
+
+        // View
+        return view('faturcms::admin.program.edit', [
+        	'program' => $program,
+        	'kategori' => $kategori,
+        ]);
     }
 
     /**
@@ -169,6 +160,9 @@ class ProgramController extends Controller
      */
     public function delete(Request $request)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+        
     	// Menghapus data
         $program = Program::find($request->id);
         $program->delete();

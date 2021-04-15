@@ -16,9 +16,11 @@
     ]])
     <!-- /Breadcrumb -->
 
+    <!-- Welcome Text -->
     <div class="alert alert-success text-center shadow">
-        Selamat datang <span class="font-weight-bold">{{ Auth::user()->nama_user }}</span> di {{ setting('site.name') }}.
+        🔔 Selamat datang <span class="font-weight-bold">{{ Auth::user()->nama_user }}</span> di {{ setting('site.name') }}.
     </div>
+    <!-- /Welcome Text -->
 
     <!-- Row -->
     <div class="row">

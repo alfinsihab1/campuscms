@@ -29,12 +29,23 @@
         <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('member.filemanager.index', ['kategori' => 'script']))) ? 'active' : '' }}" href="{{ route('member.filemanager.index', ['kategori' => 'script']) }}"><i class="app-menu__icon fa fa-file-text-o"></i><span class="app-menu__label">Kumpulan Copywriting</span></a></li>
         <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('member.filemanager.index', ['kategori' => 'tools']))) ? 'active' : '' }}" href="{{ route('member.filemanager.index', ['kategori' => 'tools']) }}"><i class="app-menu__icon fa fa-wrench"></i><span class="app-menu__label">Kumpulan Tools</span></a></li>
 
+        <li class="treeview {{ is_int(strpos(Request::url(), route('member.pelatihan.index'))) ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-graduation-cap"></i><span class="app-menu__label">Pelatihan</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+          <ul class="treeview-menu">
+            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('member.pelatihan.index'))) && !is_int(strpos(Request::url(), route('member.pelatihan.trainer'))) ? 'active' : '' }}" href="{{ route('member.pelatihan.index') }}"><i class="icon fa fa-circle-o"></i> Pelatihan Tersedia</a></li>
+            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('member.pelatihan.trainer'))) ? 'active' : '' }}" href="{{ route('member.pelatihan.trainer') }}"><i class="icon fa fa-circle-o"></i> Pelatihan Kamu</a></li>
+          </ul>
+        </li>
+
         <li class="treeview {{ is_int(strpos(Request::url(), route('member.sertifikat.trainer.index'))) || is_int(strpos(Request::url(), route('member.sertifikat.peserta.index'))) ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-certificate"></i><span class="app-menu__label">E-Sertifikat</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
             <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('member.sertifikat.trainer.index'))) ? 'active' : '' }}" href="{{ route('member.sertifikat.trainer.index') }}"><i class="icon fa fa-circle-o"></i> Trainer</a></li>
             <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('member.sertifikat.peserta.index'))) ? 'active' : '' }}" href="{{ route('member.sertifikat.peserta.index') }}"><i class="icon fa fa-circle-o"></i> Peserta</a></li>
           </ul>
         </li>
+
+        @if(Auth::user()->role == role('trainer'))
+        <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('member.signature.input'))) ? 'active' : '' }}" href="{{ route('member.signature.input') }}"><i class="app-menu__icon fa fa-tint"></i><span class="app-menu__label">Tandatangan Digital</span></a></li>
+        @endif
 
       </ul>
     </aside>

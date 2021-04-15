@@ -11,7 +11,7 @@ class Folder extends Model
      *
      * @var string
      */
-    protected $table = 'folder2';
+    protected $table = 'folder';
 
     /**
      * The primary key for the model.

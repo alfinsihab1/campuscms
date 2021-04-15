@@ -23,6 +23,9 @@ class FileController extends Controller
      */
     public function index(Request $request, $category)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
 		// Kategori
 		$kategori = FolderKategori::where('slug_kategori','=',$category)->firstOrFail();
 
@@ -47,7 +50,7 @@ class FileController extends Controller
 		$folders = Folder::where('folder_parent','=',$directory->id_folder)->where('folder_kategori','=',$kategori->id_fk)->orderBy('folder_nama','asc')->get();
 
 		// Get file dalam direktori
-		$files = Files::join('folder_kategori','file2.file_kategori','=','folder_kategori.id_fk')->where('id_folder','=',$directory->id_folder)->where('file_kategori','=',$kategori->id_fk)->orderBy('file_nama','asc')->get();
+		$files = Files::join('folder_kategori','file.file_kategori','=','folder_kategori.id_fk')->where('id_folder','=',$directory->id_folder)->where('file_kategori','=',$kategori->id_fk)->orderBy('file_nama','asc')->get();
 
         // File icon
         if($kategori->tipe_kategori == "video") $file_icon = "fa-video-camera";
@@ -90,6 +93,9 @@ class FileController extends Controller
      */
     public function create(Request $request, $category)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
 		// Kategori
 		$kategori = FolderKategori::where('slug_kategori','=',$category)->firstOrFail();
 
@@ -141,7 +147,7 @@ class FileController extends Controller
             $file = new Files;
             $file->id_folder = $request->id_folder;
             $file->id_user = Auth::user()->id_user;
-            $file->file_nama = generate_file_name($request->nama_file, 'file2', 'file_nama', 'id_folder', $request->id_folder, 'id_file', null);
+            $file->file_nama = generate_file_name($request->nama_file, 'file', 'file_nama', 'id_folder', $request->id_folder, 'id_file', null);
             $file->file_kategori = $request->file_kategori;
             $file->file_deskripsi = $request->file_deskripsi != '' ? $request->file_deskripsi : '';
             $file->file_konten = $request->file_konten;
@@ -172,11 +178,14 @@ class FileController extends Controller
      */
     public function detail($category, $id)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
         // Kategori
         $kategori = FolderKategori::where('slug_kategori','=',$category)->firstOrFail();
 
         // Get file
-        $file = Files::join('users','file2.id_user','=','users.id_user')->where('file_kategori','=',$kategori->id_fk)->findOrFail($id);
+        $file = Files::join('users','file.id_user','=','users.id_user')->where('file_kategori','=',$kategori->id_fk)->findOrFail($id);
 
         // Get file detail
         if($kategori->tipe_kategori == "video")
@@ -217,6 +226,9 @@ class FileController extends Controller
      */
     public function edit(Request $request, $category, $id)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
         // Kategori
         $kategori = FolderKategori::where('slug_kategori','=',$category)->firstOrFail();
 
@@ -270,7 +282,7 @@ class FileController extends Controller
             // Mengupdate data
             $file = Files::find($request->id);
             $file->id_folder = $request->id_folder;
-            $file->file_nama = generate_file_name($request->nama_file, 'file2', 'file_nama', 'id_folder', $request->id_folder, 'id_file', $request->id);
+            $file->file_nama = generate_file_name($request->nama_file, 'file', 'file_nama', 'id_folder', $request->id_folder, 'id_file', $request->id);
             $file->file_deskripsi = $request->file_deskripsi != '' ? $request->file_deskripsi : '';
             $file->file_konten = $request->file_kategori == tipe_file(1) ? $request->file_konten : $file->file_konten;
             $file->file_keterangan = $request->file_kategori == tipe_file(1) ? htmlentities($request->file_keterangan) : '';
@@ -296,8 +308,11 @@ class FileController extends Controller
      */
     public function delete(Request $request)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+        
         // Get file
-        $file = Files::join('folder_kategori','file2.file_kategori','=','folder_kategori.id_fk')->findOrFail($request->id);
+        $file = Files::join('folder_kategori','file.file_kategori','=','folder_kategori.id_fk')->findOrFail($request->id);
 
         // Menghapus file ebook
         if($file->tipe_kategori == "ebook"){

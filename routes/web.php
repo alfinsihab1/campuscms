@@ -258,6 +258,18 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::get('/admin/absensi', $namespacePrefix.'AbsensiController@index')->name('admin.absensi.index');
 	Route::post('/admin/absensi/delete', $namespacePrefix.'AbsensiController@delete')->name('admin.absensi.delete');
 	Route::get('/admin/absensi/export', $namespacePrefix.'AbsensiController@export')->name('admin.absensi.export');
+
+	// Role Permission
+	Route::get('/admin/role-permission', $namespacePrefix.'RolePermissionController@index')->name('admin.rolepermission.index');
+	Route::post('/admin/role-permission/update-access', $namespacePrefix.'RolePermissionController@update')->name('admin.rolepermission.update');
+
+	// Permission
+	Route::get('/admin/role-permission/create', $namespacePrefix.'PermissionController@create')->name('admin.permission.create');
+	Route::post('/admin/role-permission/store', $namespacePrefix.'PermissionController@store')->name('admin.permission.store');
+	Route::get('/admin/role-permission/edit/{id}', $namespacePrefix.'PermissionController@edit')->name('admin.permission.edit');
+	Route::post('/admin/role-permission/update', $namespacePrefix.'PermissionController@update')->name('admin.permission.update');
+	Route::post('/admin/role-permission/delete', $namespacePrefix.'PermissionController@delete')->name('admin.permission.delete');
+	Route::post('/admin/role-permission/sort', $namespacePrefix.'PermissionController@sorting')->name('admin.permission.sort');
 });
 
 // Member Capabilities
@@ -296,9 +308,21 @@ Route::group(['middleware' => ['faturcms.member']], function() use ($namespacePr
 	Route::get('/member/file-manager/{kategori}', $namespacePrefix.'FileController@index')->name('member.filemanager.index');
 	Route::get('/member/file-manager/{kategori}/file/detail/{id}', $namespacePrefix.'FileController@detail')->name('member.file.detail');
 
+	// Pelatihan
+	Route::get('/member/pelatihan', $namespacePrefix.'PelatihanController@index')->name('member.pelatihan.index');
+	Route::get('/member/pelatihan/detail/{id}', $namespacePrefix.'PelatihanController@detail')->name('member.pelatihan.detail');
+	Route::get('/member/pelatihan/trainer', $namespacePrefix.'PelatihanController@trainer')->name('member.pelatihan.trainer');
+	Route::get('/member/pelatihan/peserta/{id}', $namespacePrefix.'PelatihanController@participant')->name('member.pelatihan.participant');
+	Route::post('/member/pelatihan/register', $namespacePrefix.'PelatihanController@register')->name('member.pelatihan.register');
+	Route::post('/member/pelatihan/update-status', $namespacePrefix.'PelatihanController@updateStatus')->name('member.pelatihan.updatestatus');
+
 	// Sertifikat
 	Route::get('/member/e-sertifikat/trainer', $namespacePrefix.'SertifikatController@indexTrainer')->name('member.sertifikat.trainer.index');
 	Route::get('/member/e-sertifikat/trainer/detail/{id}', $namespacePrefix.'SertifikatController@detailTrainer')->name('member.sertifikat.trainer.detail');
 	Route::get('/member/e-sertifikat/peserta', $namespacePrefix.'SertifikatController@indexParticipant')->name('member.sertifikat.peserta.index');
 	Route::get('/member/e-sertifikat/peserta/detail/{id}', $namespacePrefix.'SertifikatController@detailParticipant')->name('member.sertifikat.peserta.detail');
+
+	// Tandatangan Digital
+	Route::get('/member/e-signature/input', $namespacePrefix.'SignatureController@input')->name('member.signature.input');
+	Route::post('/member/e-signature/update', $namespacePrefix.'SignatureController@update')->name('member.signature.update');
 });

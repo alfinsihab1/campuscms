@@ -17,19 +17,16 @@ class HalamanController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager')){
-            // Data halaman
-            $halaman = Halaman::orderBy('halaman_at','desc')->get();
-			
-            // View
-            return view('faturcms::admin.halaman.index', [
-                'halaman' => $halaman,
-            ]);
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // Data halaman
+        $halaman = Halaman::orderBy('halaman_at','desc')->get();
+		
+        // View
+        return view('faturcms::admin.halaman.index', [
+            'halaman' => $halaman,
+        ]);
     }
 
     /**
@@ -39,14 +36,11 @@ class HalamanController extends Controller
      */
     public function create()
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager')){
-            // View
-            return view('faturcms::admin.halaman.create');
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // View
+        return view('faturcms::admin.halaman.create');
     }
 
     /**
@@ -97,19 +91,16 @@ class HalamanController extends Controller
      */
     public function edit($id)
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager')){
-        	// Data halaman
-        	$halaman = Halaman::findOrFail($id);
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
 
-            // View
-            return view('faturcms::admin.halaman.edit', [
-            	'halaman' => $halaman,
-            ]);
-        }
-        else{
-            // View
-            abort(403);
-        }
+    	// Data halaman
+    	$halaman = Halaman::findOrFail($id);
+
+        // View
+        return view('faturcms::admin.halaman.edit', [
+        	'halaman' => $halaman,
+        ]);
     }
 
     /**
@@ -159,6 +150,9 @@ class HalamanController extends Controller
      */
     public function delete(Request $request)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+        
     	// Menghapus data
         $halaman = Halaman::find($request->id);
         $halaman->delete();

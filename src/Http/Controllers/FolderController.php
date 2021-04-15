@@ -67,7 +67,7 @@ class FolderController extends Controller
         // Jika tidak ada error
         else{
         	// Nama folder
-        	$nama_folder = generate_file_name($request->nama_folder, 'folder2', 'folder_nama', 'folder_parent', $request->folder_parent, 'id_folder', null);
+        	$nama_folder = generate_file_name($request->nama_folder, 'folder', 'folder_nama', 'folder_parent', $request->folder_parent, 'id_folder', null);
 
 			// Generate dir folder
 			if($request->folder_parent == 1){
@@ -160,7 +160,7 @@ class FolderController extends Controller
         // Jika tidak ada error
         else{
         	// Nama folder
-        	$nama_folder = generate_file_name($request->nama_folder, 'folder2', 'folder_nama', 'folder_parent', $request->folder_parent, 'id_folder', $request->id);
+        	$nama_folder = generate_file_name($request->nama_folder, 'folder', 'folder_nama', 'folder_parent', $request->folder_parent, 'id_folder', $request->id);
 
 			// Generate dir folder
 			if($request->folder_parent == 1){

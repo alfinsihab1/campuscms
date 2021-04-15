@@ -24,26 +24,23 @@ class KomisiController extends Controller
      */
     public function index()
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
 		// Jika role = admin
 		if(Auth::user()->is_admin == 1){
-            if(Auth::user()->role == role('it') || Auth::user()->role == role('manager') || Auth::user()->role == role('finance')){
-    			// Data komisi
-    			$komisi = Komisi::join('users','komisi.id_user','=','users.id_user')->orderBy('komisi_at','desc')->get();
-    			
-    			// Set data komisi
-    			foreach($komisi as $key=>$data){
-    				$komisi[$key]->id_sponsor = User::find($data->id_sponsor);
-    			}
+			// Data komisi
+			$komisi = Komisi::join('users','komisi.id_user','=','users.id_user')->orderBy('komisi_at','desc')->get();
+			
+			// Set data komisi
+			foreach($komisi as $key=>$data){
+				$komisi[$key]->id_sponsor = User::find($data->id_sponsor);
+			}
 
-    			// View
-    			return view('faturcms::admin.komisi.index', [
-    				'komisi' => $komisi,
-    			]);
-            }
-            else{
-                // View
-                abort(403);
-            }
+			// View
+			return view('faturcms::admin.komisi.index', [
+				'komisi' => $komisi,
+			]);
 		}
 		// Jika role = member
 		elseif(Auth::user()->is_admin == 0){

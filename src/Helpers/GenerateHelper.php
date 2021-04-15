@@ -3,6 +3,14 @@
 use Ajifatur\FaturCMS\Models\Pelatihan;
 use Ajifatur\FaturCMS\Models\Tag;
 
+// Generate method
+if(!function_exists('generate_method')){
+    function generate_method($method){
+        $explode = explode('\\', $method);
+        return end($explode);
+    }
+}
+
 // Generate umur / usia
 if(!function_exists('generate_age')){
     function generate_age($date){
@@ -223,6 +231,16 @@ if(!function_exists('generate_nomor_pelatihan')){
 
         // Return
         return $num.'/'.kategori_pelatihan($kategori).'/'.setting('site.kode_sertifikat').'/'.date('Y', strtotime(generate_date_range('explode', $tanggal_pelatihan)['from']));
+    }
+}
+
+// Generate nomor sertifikat
+if(!function_exists('generate_nomor_sertifikat')){
+    function generate_nomor_sertifikat($count, $pelatihan){
+        $num = $count + 1;
+        if($num < 10) $num = '0'.$num;
+        $explode = explode('/', $pelatihan->nomor_pelatihan);
+        return $num.'.'.$explode[2].'.'.$explode[0].'.'.$explode[1].'.'.$explode[3];
     }
 }
 

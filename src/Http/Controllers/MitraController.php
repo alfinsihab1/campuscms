@@ -17,19 +17,16 @@ class MitraController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager')){
-            // Data mitra
-            $mitra = Mitra::orderBy('order_mitra','asc')->get();
-            
-            // View
-            return view('faturcms::admin.mitra.index', [
-                'mitra' => $mitra,
-            ]);
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // Data mitra
+        $mitra = Mitra::orderBy('order_mitra','asc')->get();
+        
+        // View
+        return view('faturcms::admin.mitra.index', [
+            'mitra' => $mitra,
+        ]);
     }
 
     /**
@@ -39,14 +36,11 @@ class MitraController extends Controller
      */
     public function create()
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager')){
-            // View
-            return view('faturcms::admin.mitra.create');
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // View
+        return view('faturcms::admin.mitra.create');
     }
 
     /**
@@ -94,19 +88,16 @@ class MitraController extends Controller
      */
     public function edit($id)
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager')){
-            // Data mitra
-            $mitra = Mitra::findOrFail($id);
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
 
-            // View
-            return view('faturcms::admin.mitra.edit', [
-                'mitra' => $mitra
-            ]);
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Data mitra
+        $mitra = Mitra::findOrFail($id);
+
+        // View
+        return view('faturcms::admin.mitra.edit', [
+            'mitra' => $mitra
+        ]);
     }
 
     /**
@@ -150,6 +141,9 @@ class MitraController extends Controller
      */
     public function delete(Request $request)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+        
     	// Menghapus data
         $mitra = Mitra::find($request->id);
         $mitra->delete();

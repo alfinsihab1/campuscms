@@ -17,19 +17,16 @@ class FiturController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager')){
-            // Data fitur
-            $fitur = Fitur::orderBy('order_fitur','asc')->get();
-            
-            // View
-            return view('faturcms::admin.fitur.index', [
-                'fitur' => $fitur,
-            ]);
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // Data fitur
+        $fitur = Fitur::orderBy('order_fitur','asc')->get();
+        
+        // View
+        return view('faturcms::admin.fitur.index', [
+            'fitur' => $fitur,
+        ]);
     }
 
     /**
@@ -39,14 +36,11 @@ class FiturController extends Controller
      */
     public function create()
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager')){
-            // View
-            return view('faturcms::admin.fitur.create');
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // View
+        return view('faturcms::admin.fitur.create');
     }
 
     /**
@@ -100,19 +94,16 @@ class FiturController extends Controller
      */
     public function edit($id)
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager')){
-            // Data fitur
-            $fitur = Fitur::findOrFail($id);
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
 
-            // View
-            return view('faturcms::admin.fitur.edit', [
-                'fitur' => $fitur
-            ]);
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Data fitur
+        $fitur = Fitur::findOrFail($id);
+
+        // View
+        return view('faturcms::admin.fitur.edit', [
+            'fitur' => $fitur
+        ]);
     }
 
     /**
@@ -162,6 +153,9 @@ class FiturController extends Controller
      */
     public function delete(Request $request)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+        
     	// Menghapus data
         $fitur = Fitur::find($request->id);
         $fitur->delete();

@@ -18,19 +18,16 @@ class KarirController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager') || Auth::user()->role == role('mentor')){
-            // Data karir
-            $karir = Karir::join('users','karir.author','=','users.id_user')->orderBy('karir_at','desc')->get();
-			
-            // View
-            return view('faturcms::admin.karir.index', [
-                'karir' => $karir,
-            ]);
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // Data karir
+        $karir = Karir::join('users','karir.author','=','users.id_user')->orderBy('karir_at','desc')->get();
+		
+        // View
+        return view('faturcms::admin.karir.index', [
+            'karir' => $karir,
+        ]);
     }
 
     /**
@@ -40,14 +37,11 @@ class KarirController extends Controller
      */
     public function create()
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager') || Auth::user()->role == role('mentor')){
-            // View
-            return view('faturcms::admin.karir.create');
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // View
+        return view('faturcms::admin.karir.create');
     }
 
     /**
@@ -98,19 +92,16 @@ class KarirController extends Controller
      */
     public function edit($id)
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager') || Auth::user()->role == role('mentor')){
-        	// Data karir
-        	$karir = Karir::findOrFail($id);
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
 
-            // View
-            return view('faturcms::admin.karir.edit', [
-            	'karir' => $karir,
-            ]);
-        }
-        else{
-            // View
-            abort(403);
-        }
+    	// Data karir
+    	$karir = Karir::findOrFail($id);
+
+        // View
+        return view('faturcms::admin.karir.edit', [
+        	'karir' => $karir,
+        ]);
     }
 
     /**
@@ -159,6 +150,9 @@ class KarirController extends Controller
      */
     public function delete(Request $request)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+        
     	// Menghapus data
         $karir = Karir::find($request->id);
         $karir->delete();

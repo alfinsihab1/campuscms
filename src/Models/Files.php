@@ -11,7 +11,7 @@ class Files extends Model
      *
      * @var string
      */
-    protected $table = 'file2';
+    protected $table = 'file';
 
     /**
      * The primary key for the model.

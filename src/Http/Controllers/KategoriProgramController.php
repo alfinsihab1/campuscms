@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Ajifatur\FaturCMS\Models\KategoriProgram;
 
-class KategoriprogramController extends Controller
+class KategoriProgramController extends Controller
 {
     /**
      * Menampilkan data kategori program

@@ -65,7 +65,7 @@ class InstallCommand extends Command
         $this->call('vendor:publish', ['--provider' => FaturCMSServiceProvider::class, '--tag' => 'config']);
 
         // Remove exception Handler if exist and publish it
-        if(File::exists(app_path('Exception/Handler.php'))) File::delete(app_path('Exception/Handler.php'));
+        if(File::exists(app_path('Exceptions/Handler.php'))) File::delete(app_path('Exceptions/Handler.php'));
         $this->call('vendor:publish', ['--provider' => FaturCMSServiceProvider::class, '--tag' => 'exception']);
 
         // Remove model User if exist and publish it

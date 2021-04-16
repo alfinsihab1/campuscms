@@ -3,7 +3,7 @@
 namespace Ajifatur\FaturCMS\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\File;
 use Symfony\Component\Process\Process;
 use Ajifatur\FaturCMS\FaturCMSServiceProvider;
 
@@ -61,8 +61,16 @@ class InstallCommand extends Command
         $this->call('vendor:publish', ['--provider' => FaturCMSServiceProvider::class, '--tag' => 'templates']);
 
         // Remove config file if exist and publish it
-        if(file_exists(config_path('faturcms.php'))) unlink(config_path('faturcms.php'));
+        if(File::exists(config_path('faturcms.php'))) File::delete(config_path('faturcms.php'));
         $this->call('vendor:publish', ['--provider' => FaturCMSServiceProvider::class, '--tag' => 'config']);
+
+        // Remove exception Handler if exist and publish it
+        if(File::exists(app_path('Exception/Handler.php'))) File::delete(app_path('Exception/Handler.php'));
+        $this->call('vendor:publish', ['--provider' => FaturCMSServiceProvider::class, '--tag' => 'exception']);
+
+        // Remove model User if exist and publish it
+        if(File::exists(app_path('User.php'))) File::delete(app_path('User.php'));
+        $this->call('vendor:publish', ['--provider' => FaturCMSServiceProvider::class, '--tag' => 'userModel']);
 
         // Find composer
         $composer = $this->findComposer();
@@ -71,6 +79,32 @@ class InstallCommand extends Command
         $process = new Process([$composer.' dump-autoload']);
         $process->setTimeout(null); // Setting timeout to null to prevent installation from stopping at a certain point in time
         $process->setWorkingDirectory(base_path())->run();
+
+        // Add route
+        $routes_contents = File::get(base_path('routes/web.php'));
+        if(strpos($routes_contents, '\Ajifatur\FaturCMS\FaturCMS::routes();') === false){
+            $this->info('Adding FaturCMS routes to routes/web.php');
+            File::append(
+                base_path('routes/web.php'),
+                "\n\n\Ajifatur\FaturCMS\FaturCMS::routes();\n"
+            );
+        }
+
+        // Change app config
+        $app_config_contents = File::get(config_path('app.php'));
+        if(strpos($app_config_contents, "'timezone' => 'Asia/Jakarta'") === false){
+            $this->info('Change app configuration in config/app.php');
+            str_replace("'timezone' => 'UTC'", "'timezone' => 'Asia/Jakarta'", $app_config_contents);
+            File::put(config_path('app.php'), $app_config_contents);
+        }
+
+        // Change database config
+        $db_config_contents = File::get(config_path('database.php'));
+        if(strpos($db_config_contents, "'strict' => false") === false){
+            $this->info('Change database configuration in config/database.php');
+            str_replace("'strict' => true", "'strict' => false", $db_config_contents);
+            File::put(config_path('database.php'), $db_config_contents);
+        }        
 
         $this->info('Successfully installed FaturCMS! Enjoy');
     }

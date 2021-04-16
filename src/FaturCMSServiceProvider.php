@@ -77,6 +77,12 @@ class FaturCMSServiceProvider extends ServiceProvider
             'config' => [
                 "{$publishablePath}/config/faturcms.php" => config_path('faturcms.php'),
             ],
+            'exception' => [
+                "{$publishablePath}/exceptions/Handler.php" => app_path('Exceptions/Handler.php'),
+            ],
+            'userModel' => [
+                "{$publishablePath}/models/User.php" => app_path('User.php'),
+            ],
         ];
 
         foreach($publishable as $group => $paths){

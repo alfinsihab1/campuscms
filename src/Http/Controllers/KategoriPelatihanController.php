@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Ajifatur\FaturCMS\Models\KategoriPelatihan;
 
-class KategoripelatihanController extends Controller
+class KategoriPelatihanController extends Controller
 {
     /**
      * Menampilkan data kategori pelatihan

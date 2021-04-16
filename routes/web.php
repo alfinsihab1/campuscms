@@ -282,6 +282,7 @@ Route::group(['middleware' => ['faturcms.member']], function() use ($namespacePr
 
 	// Profil
 	Route::get('/member/profile', $namespacePrefix.'UserController@profile')->name('member.profile');
+	Route::get('/member/user/images', $namespacePrefix.'UserController@showImages')->name('member.user.images');
 
 	// Rekening
 	Route::get('/member/rekening', $namespacePrefix.'RekeningController@index')->name('member.rekening.index');

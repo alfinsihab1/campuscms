@@ -17,19 +17,16 @@ class KategoripelatihanController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager') || Auth::user()->role == role('mentor')){
-            // Data kategori
-            $kategori = KategoriPelatihan::all();
-            
-            // View
-            return view('faturcms::admin.kategori-pelatihan.index', [
-                'kategori' => $kategori,
-            ]);
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // Data kategori
+        $kategori = KategoriPelatihan::all();
+        
+        // View
+        return view('faturcms::admin.kategori-pelatihan.index', [
+            'kategori' => $kategori,
+        ]);
     }
 
     /**
@@ -39,14 +36,11 @@ class KategoripelatihanController extends Controller
      */
     public function create()
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager') || Auth::user()->role == role('mentor')){ 
-            // View
-            return view('faturcms::admin.kategori-pelatihan.create');
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // View
+        return view('faturcms::admin.kategori-pelatihan.create');
     }
 
     /**
@@ -88,19 +82,16 @@ class KategoripelatihanController extends Controller
      */
     public function edit($id)
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager') || Auth::user()->role == role('mentor')){ 
-            // Kategori
-            $kategori = KategoriPelatihan::findOrFail($id);
-            
-            // View
-            return view('faturcms::admin.kategori-pelatihan.edit', [
-                'kategori' => $kategori,
-            ]);
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // Kategori
+        $kategori = KategoriPelatihan::findOrFail($id);
+        
+        // View
+        return view('faturcms::admin.kategori-pelatihan.edit', [
+            'kategori' => $kategori,
+        ]);
     }
 
     /**
@@ -142,6 +133,9 @@ class KategoripelatihanController extends Controller
      */
     public function delete(Request $request)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+        
     	// Menghapus data
         $kategori = KategoriPelatihan::find($request->id);
         $kategori->delete();

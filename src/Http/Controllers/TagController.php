@@ -18,19 +18,16 @@ class TagController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager') || Auth::user()->role == role('mentor')){
-            // Data tag
-            $tag = Tag::all();
-            
-            // View
-            return view('faturcms::admin.tag.index', [
-                'tag' => $tag,
-            ]);
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // Data tag
+        $tag = Tag::all();
+        
+        // View
+        return view('faturcms::admin.tag.index', [
+            'tag' => $tag,
+        ]);
     }
 
     /**
@@ -40,14 +37,11 @@ class TagController extends Controller
      */
     public function create()
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager') || Auth::user()->role == role('mentor')){ 
-            // View
-            return view('faturcms::admin.tag.create');
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // View
+        return view('faturcms::admin.tag.create');
     }
 
     /**
@@ -89,19 +83,16 @@ class TagController extends Controller
      */
     public function edit($id)
     {
-        if(Auth::user()->role == role('it') || Auth::user()->role == role('manager') || Auth::user()->role == role('mentor')){ 
-            // tag
-            $tag = Tag::findOrFail($id);
-            
-            // View
-            return view('faturcms::admin.tag.edit', [
-                'tag' => $tag,
-            ]);
-        }
-        else{
-            // View
-            abort(403);
-        }
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // tag
+        $tag = Tag::findOrFail($id);
+        
+        // View
+        return view('faturcms::admin.tag.edit', [
+            'tag' => $tag,
+        ]);
     }
 
     /**
@@ -143,6 +134,9 @@ class TagController extends Controller
      */
     public function delete(Request $request)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+        
     	// Menghapus data
         $tag = Tag::find($request->id);
         $tag->delete();

@@ -7,10 +7,15 @@
   <a class="app-sidebar__toggle" href="#" data-toggle="sidebar"></a>
   <!-- Navbar Right Menu-->
   <ul class="app-nav ml-auto ml-md">
-    <!-- Setting Menu-->
-    <li><a class="app-nav__item" href="{{ route('admin.rolepermission.index') }}" data-toggle="tooltip" title="Role Permission"><i class="fa fa-exclamation-triangle fa-lg"></i></a></li>
-    <!-- Notification Menu-->
-    <li class="dropdown">
+
+    <!-- Role Permission Menu -->
+    @if(has_access('RolePermissionController::index', Auth::user()->role, false))
+    <li data-toggle="tooltip" title="Role Permission"><a class="app-nav__item" href="{{ route('admin.rolepermission.index') }}"><i class="fa fa-exclamation-triangle fa-lg"></i></a></li>
+    @endif
+    <!-- /Role Permission Menu -->
+
+    <!-- Notification Menu -->
+    <li class="dropdown" data-toggle="tooltip" title="Notifikasi">
       <a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Show notifications">
         <i class="fa fa-bell fa-lg"></i>
         @if(count_notif_all() > 0)
@@ -48,12 +53,13 @@
         <!-- <li class="app-notification__footer"><a href="#">See all notifications.</a></li> -->
       </ul>
     </li>
-    <!-- /Notification Menu-->
-    <!-- User Menu-->
-    <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown"><i class="fa fa-user fa-lg"></i></a>
+    <!-- /Notification Menu -->
+
+    <!-- User Menu -->
+    <li class="dropdown" data-toggle="tooltip" title="Akun"><a class="app-nav__item" href="#" data-toggle="dropdown"><i class="fa fa-user fa-lg"></i></a>
       <ul class="dropdown-menu settings-menu dropdown-menu-right">
         <li><a class="dropdown-item" href="{{ route('admin.profile') }}"><i class="fa fa-cog fa-lg"></i> Profil</a></li>
-        @if(Auth::user()->role == role('manager') || Auth::user()->role == role('mentor'))
+        @if(has_access('SignatureController::input', Auth::user()->role, false))
         <li><a class="dropdown-item" href="{{ route('admin.signature.input') }}"><i class="fa fa-tint fa-lg"></i> Tandatangan</a></li>
         @endif
         <li><a class="dropdown-item" href="javascript:void(0)" onclick="event.preventDefault(); document.getElementById('form-logout').submit();"><i class="fa fa-sign-out fa-lg"></i> Logout</a></li>
@@ -62,6 +68,7 @@
         </form>
       </ul>
     </li>
-    <!-- /User Menu-->
+    <!-- /User Menu -->
+
   </ul>
 </header>

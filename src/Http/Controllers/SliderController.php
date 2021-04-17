@@ -190,19 +190,29 @@ class SliderController extends Controller
     }
     
     /**
-     * Mengambil data slider
+     * JSON data slider
      *
      * @return \Illuminate\Http\Response
      */
-    public function getSlider()
+    public function json(Request $request)
     {
+        // Get limit
+        $limit = $request->query('limit');
+
         // Data slider
-        $slider = Slider::where('status_slider',1)->orderBy('id_slider','asc')->get();
+        $slider = $limit > 0 ? Slider::orderBy('order_slider','asc')->orderBy('status_slider','desc')->limit($limit)->get() : Slider::orderBy('order_slider','asc')->orderBy('status_slider','desc')->get();
         
-        foreach($slider as $data){
-            $data->slider = $data->slider != '' ? '/assets/images/slider/'.$data->slider : '';
+        if(count($slider)>0){
+            foreach($slider as $data){
+                $data->slider = image('assets/images/slider/'.$data->slider, 'slider');
+            }
         }
 
-        echo json_encode($slider);
+        // Return JSON
+        return response()->json([
+            'status' => 200,
+            'data' => $slider,
+            'message' => 'OK'
+        ]);
     }
 }

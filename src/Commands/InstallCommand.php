@@ -80,13 +80,23 @@ class InstallCommand extends Command
         $process->setTimeout(null); // Setting timeout to null to prevent installation from stopping at a certain point in time
         $process->setWorkingDirectory(base_path())->run();
 
-        // Add route
+        // Add web routes
         $routes_contents = File::get(base_path('routes/web.php'));
         if(strpos($routes_contents, '\Ajifatur\FaturCMS\FaturCMS::routes();') === false){
-            $this->info('Adding FaturCMS routes to routes/web.php');
+            $this->info('Adding FaturCMS web routes to routes/web.php');
             File::append(
                 base_path('routes/web.php'),
                 "\n\n\Ajifatur\FaturCMS\FaturCMS::routes();\n"
+            );
+        }
+
+        // Add API routes
+        $routes_contents = File::get(base_path('routes/api.php'));
+        if(strpos($routes_contents, '\Ajifatur\FaturCMS\FaturCMS::APIroutes();') === false){
+            $this->info('Adding FaturCMS API routes to routes/api.php');
+            File::append(
+                base_path('routes/api.php'),
+                "\n\n\Ajifatur\FaturCMS\FaturCMS::APIroutes();\n"
             );
         }
 

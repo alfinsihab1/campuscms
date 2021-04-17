@@ -146,6 +146,14 @@ if(!function_exists('referral')){
     }
 }
 
+// Get sponsor
+if(!function_exists('sponsor')){
+    function sponsor($username){
+        $user = User::where('username','=',$username)->first();
+        return $user ? $user->nama_user : '';
+    }
+}
+
 // Get message
 if(!function_exists('message')){
     function message($key){

@@ -19,6 +19,10 @@ Route::group(['middleware' => ['faturcms.guest']], function() use ($namespacePre
 	// Login
 	Route::get('/login', $namespacePrefix.'LoginController@showLoginForm')->name('auth.login');
 	Route::post('/login', $namespacePrefix.'LoginController@login')->name('auth.postlogin');
+
+	// Register
+	Route::get('/register', $namespacePrefix.'RegisterController@showRegistrationForm')->name('auth.register');
+	Route::post('/register', $namespacePrefix.'RegisterController@register')->name('auth.postregister');
 });
 
 // Admin Capabilities
@@ -294,7 +298,7 @@ Route::group(['middleware' => ['faturcms.member']], function() use ($namespacePr
 
 	// Komisi
 	Route::get('/member/transaksi/komisi', $namespacePrefix.'KomisiController@index')->name('member.komisi.index');
-	Route::post('/member/transaksi/komisi/confirm', $namespacePrefix.'KomisiController@verify')->name('member.komisi.confirm');
+	Route::post('/member/transaksi/komisi/confirm', $namespacePrefix.'KomisiController@confirm')->name('member.komisi.confirm');
 	Route::post('/member/transaksi/komisi/withdraw', $namespacePrefix.'KomisiController@withdraw')->name('member.komisi.withdraw');
 
 	// Withdrawal

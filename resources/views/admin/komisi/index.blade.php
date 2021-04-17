@@ -84,18 +84,24 @@
                                             <strong class="text-success">Diterima</strong>
                                         @else
                                             @if($data->komisi_proof != '')
-                                                <a href="#" class="btn btn-sm btn-success btn-verify" data-id="{{ $data->id_komisi }}" data-proof="{{ asset('assets/images/komisi/'.$data->komisi_proof) }}" data-toggle="tooltip" title="Verifikasi Pembayaran"><i class="fa fa-check"></i></a>
+                                                <strong class="text-danger">Pembayaran Belum Diverifikasi</strong>
                                             @else
                                                 <strong class="text-danger">User Belum Membayar</strong>
                                             @endif
                                         @endif
                                     </td>
                                     <td align="center">
-                                        @if($data->komisi_proof != '')
-                                            <a href="{{ asset('assets/images/komisi/'.$data->komisi_proof) }}" class="btn btn-sm btn-info btn-magnify-popup" data-toggle="tooltip" title="Bukti Transfer"><i class="fa fa-image"></i></a>
-                                        @else
-                                            <a href="#" class="btn btn-sm btn-success btn-confirm" data-id="{{ $data->id_komisi }}" data-toggle="tooltip" title="Konfirmasi Pembayaran"><i class="fa fa-check"></i></a>
-                                        @endif
+                                        <div class="btn-group"> 
+                                            @if($data->komisi_status == 1)
+                                                <a href="{{ asset('assets/images/komisi/'.$data->komisi_proof) }}" class="btn btn-sm btn-info btn-magnify-popup" data-toggle="tooltip" title="Bukti Transfer"><i class="fa fa-image"></i></a>
+                                            @else
+                                                @if($data->komisi_proof != '')
+                                                    <a href="#" class="btn btn-sm btn-success btn-verify" data-id="{{ $data->id_komisi }}" data-proof="{{ asset('assets/images/komisi/'.$data->komisi_proof) }}" data-toggle="tooltip" title="Verifikasi Pembayaran"><i class="fa fa-check"></i></a>
+                                                @else
+                                                    <a href="#" class="btn btn-sm btn-success btn-confirm" data-id="{{ $data->id_komisi }}" data-toggle="tooltip" title="Konfirmasi Pembayaran"><i class="fa fa-check"></i></a>
+                                                @endif
+                                            @endif
+                                        </div>
                                     </td>
                                 </tr>
                                 @endforeach

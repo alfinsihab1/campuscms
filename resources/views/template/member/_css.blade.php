@@ -10,7 +10,7 @@
     .app-nav .app-nav__item .badge {position: absolute; right: 0; bottom: 8px; font-size: 75%;}
 
     /* Button */
-    .btn-theme-1 {background-color: {{ setting('site.primary_color') }}!important; border-color: background: {{ setting('site.primary_color') }}!important; color: #fff;}
+    .btn-theme-1 {background-color: {{ setting('site.color.primary') }}!important; border-color: background: {{ setting('site.color.primary') }}!important; color: #fff;}
     .btn-theme-1:hover {background-color: #e0852f!important; border-color: #e0852f!important; color: #fff;}
 
     /* Badge */
@@ -26,7 +26,7 @@
     div.dataTables_wrapper div.dataTables_processing {background-color: #eeeeee;}
 
     /* List Group */
-    .list-group-item.active {background-color: {{ setting('site.primary_color') }}; border-color: {{ setting('site.primary_color') }};}
+    .list-group-item.active {background-color: {{ setting('site.color.primary') }}; border-color: {{ setting('site.color.primary') }};}
 
     /* Image Overlay */
     .image-overlay {cursor: pointer; position: absolute; top: 0; bottom: 0; left: 0; right: 0; height: 100%; width: 100%; opacity: 0; transition: .5s ease; background-color: rgba(0,0,0,.6); border-radius: 50%;}
@@ -35,8 +35,8 @@
 
     /* Modal Image */
     #modal-image .modal-body {height: 80vh; overflow-y: auto;}
-    .dropzone-wrapper {height: 150px; border: 2px dashed {{ setting('site.primary_color') }};}
-    .dropzone-wrapper:hover {background-color: {{ setting('site.primary_color') }}66; transition: .3s ease-in;}
+    .dropzone-wrapper {height: 150px; border: 2px dashed {{ setting('site.color.primary') }};}
+    .dropzone-wrapper:hover {background-color: {{ setting('site.color.primary') }}66; transition: .3s ease-in;}
     .dropzone-desc {text-align: center; font-weight: bold;}
     .dropzone, .dropzone:focus {position: absolute; width: 100%; height: 150px; outline: none!important; cursor: pointer; opacity: 0;}
     .btn-choose-image {cursor: pointer; opacity: .7;}
@@ -54,7 +54,7 @@
 
     /* Bootstrap Tagsinput */
     .bootstrap-tagsinput {width: 100%!important;}
-    .bootstrap-tagsinput .tag {padding: 1px 2px; border-radius: 4px; background-color: {{ setting('site.primary_color') }}!important;}
+    .bootstrap-tagsinput .tag {padding: 1px 2px; border-radius: 4px; background-color: {{ setting('site.color.primary') }}!important;}
     .tt-menu {background-color: #fff!important; width: 100%; box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15)!important; -webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15)!important}
     .tt-suggestion {padding: .5rem; cursor: pointer;}
     .tt-suggestion:hover {background-color: #e5e5e5;}
@@ -64,26 +64,26 @@
     .sortable .sortable-item.card {border: 1px solid #bebebe!important;}
 
     /* Change Primary */
-    ::selection {background-color: {{ setting('site.primary_color') }}!important;}
-    ::-moz-selection {background-color: {{ setting('site.primary_color') }}!important;}
-    a {color: {{ setting('site.primary_color') }};}
-    .page-link {color: {{ setting('site.primary_color') }};}
-    .page-link:hover {color: {{ setting('site.secondary_color') }};}
-    .nav-pills .nav-link.active, .nav-pills .show > .nav-link {background-color: {{ setting('site.primary_color') }}!important;}
-    .material-half-bg .cover {background-color: {{ setting('site.primary_color') }}!important;}
-    .app-sidebar__toggle:focus, .app-sidebar__toggle:hover {background-color: {{ setting('site.secondary_color') }}!important;}
-    .text-primary {color: {{ setting('site.primary_color') }}!important;}
-    .btn-primary {background-color: {{ setting('site.primary_color') }}!important; border-color: {{ setting('site.primary_color') }}!important;}
-    .btn-primary:hover {background-color: {{ setting('site.secondary_color') }}!important; border-color: {{ setting('site.secondary_color') }}!important;}
-    .page-item.active .page-link {background-color: {{ setting('site.primary_color') }}!important; border-color: {{ setting('site.primary_color') }}!important;}
-    .form-control:focus {border-color: {{ setting('site.primary_color') }}!important;}
-    .animated-checkbox input[type="checkbox"]:checked + .label-text:before {color: {{ setting('site.primary_color') }}!important;}
-    .widget-small.primary.coloured-icon .icon {background-color: {{ setting('site.primary_color') }}!important;}
-    .dropdown-item.active, .dropdown-item:active {background-color: {{ setting('site.primary_color') }}!important;}
-    .progress-bar {background-color: {{ setting('site.primary_color') }}!important;}
-    .btn-outline-primary {color: {{ setting('site.primary_color') }}; background-color: transparent; background-image: none; border-color: {{ setting('site.primary_color') }};}
-    .btn-outline-primary:hover {color: #FFF; background-color: {{ setting('site.primary_color') }}; border-color: {{ setting('site.primary_color') }};}
-    .btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled).active, .show > .btn-outline-primary.dropdown-toggle {color: #FFF; background-color: {{ setting('site.primary_color') }}; border-color: {{ setting('site.primary_color') }};}
+    ::selection {background-color: {{ setting('site.color.primary') }}!important;}
+    ::-moz-selection {background-color: {{ setting('site.color.primary') }}!important;}
+    a {color: {{ setting('site.color.primary') }};}
+    .page-link {color: {{ setting('site.color.primary') }};}
+    .page-link:hover {color: {{ setting('site.color.secondary') }};}
+    .nav-pills .nav-link.active, .nav-pills .show > .nav-link {background-color: {{ setting('site.color.primary') }}!important;}
+    .material-half-bg .cover {background-color: {{ setting('site.color.primary') }}!important;}
+    .app-sidebar__toggle:focus, .app-sidebar__toggle:hover {background-color: {{ setting('site.color.secondary') }}!important;}
+    .text-primary {color: {{ setting('site.color.primary') }}!important;}
+    .btn-primary {background-color: {{ setting('site.color.primary') }}!important; border-color: {{ setting('site.color.primary') }}!important;}
+    .btn-primary:hover {background-color: {{ setting('site.color.secondary') }}!important; border-color: {{ setting('site.color.secondary') }}!important;}
+    .page-item.active .page-link {background-color: {{ setting('site.color.primary') }}!important; border-color: {{ setting('site.color.primary') }}!important;}
+    .form-control:focus {border-color: {{ setting('site.color.primary') }}!important;}
+    .animated-checkbox input[type="checkbox"]:checked + .label-text:before {color: {{ setting('site.color.primary') }}!important;}
+    .widget-small.primary.coloured-icon .icon {background-color: {{ setting('site.color.primary') }}!important;}
+    .dropdown-item.active, .dropdown-item:active {background-color: {{ setting('site.color.primary') }}!important;}
+    .progress-bar {background-color: {{ setting('site.color.primary') }}!important;}
+    .btn-outline-primary {color: {{ setting('site.color.primary') }}; background-color: transparent; background-image: none; border-color: {{ setting('site.color.primary') }};}
+    .btn-outline-primary:hover {color: #FFF; background-color: {{ setting('site.color.primary') }}; border-color: {{ setting('site.color.primary') }};}
+    .btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled).active, .show > .btn-outline-primary.dropdown-toggle {color: #FFF; background-color: {{ setting('site.color.primary') }}; border-color: {{ setting('site.color.primary') }};}
 
     .login-content .login-box {min-height: 430px;}
     .treeview.is-expanded [data-toggle='treeview'] {border-left-color: #fdd100!important;}
@@ -93,7 +93,7 @@
     .app-menu {border-top: 1px solid #bbb;}
     .app-menu__submenu {margin-top: 2rem; padding: 8px 15px;}
     .app-menu__submenu .app-menu__label {color: #fff; font-size: 1rem; font-weight: bold; text-transform: uppercase;}
-    .tab-content {border-top: 1px solid {{ setting('site.primary_color') }};}
+    .tab-content {border-top: 1px solid {{ setting('site.color.primary') }};}
     .separator {width: 100%; margin: 1rem; border-top: 1px solid #ddd;}
     .hidden-date {display: none;}
     .cr-boundary {border: 3px dashed #bebebe;}

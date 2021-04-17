@@ -128,16 +128,21 @@ if(!function_exists('tipe_halaman')){
 
 // Get referral
 if(!function_exists('referral')){
-    function referral($ref = ''){
-        $user = User::where('username','=',$ref)->first();
+    function referral($ref, $route, $routeParams = []){
+        // Data user
+        $user = User::where('status','=',1)->where('username','=',$ref)->first();
 
         if(!$user){
             // Jika user tidak ditemukan
             $setting = Setting::where('setting_key','=','site.referral')->first();
-            $user = User::find($setting->setting_value);
-        }
+            $user = User::where('status','=',1)->find($setting->setting_value);
 
-        return $user->username;
+            // Push to route params
+            $routeParams['ref'] = $user->username;
+
+            // Return
+            return redirect()->route($route, $routeParams)->send();
+        }
     }
 }
 

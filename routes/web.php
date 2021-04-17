@@ -16,11 +16,6 @@ $namespacePrefix = '\\'.config('faturcms.controllers.namespace').'\\';
 
 // Guest Capabilities
 Route::group(['middleware' => ['faturcms.guest']], function() use ($namespacePrefix){
-	// Welcome
-	Route::get('/', function(){
-		return view('welcome');
-	})->name('site.home');
-
 	// Login
 	Route::get('/login', $namespacePrefix.'LoginController@showLoginForm')->name('auth.login');
 	Route::post('/login', $namespacePrefix.'LoginController@login')->name('auth.postlogin');

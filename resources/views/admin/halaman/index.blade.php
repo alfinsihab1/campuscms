@@ -53,7 +53,9 @@
                                 <tr>
                                     <td><input type="checkbox"></td>
                                     <td>
-                                        <a href="/{{ $data->halaman_permalink }}">{{ $data->halaman_title }}</a>
+                                        <a href="{{ URL::to($data->halaman_permalink) }}">{{ $data->halaman_title }}</a>
+                                        <br>
+                                        <small><i class="fa fa-link mr-1"></i>{{ URL::to($data->halaman_permalink) }}</small>
                                     </td>
                                     <td>{{ tipe_halaman($data->halaman_tipe) }}</td>
                                     <td>

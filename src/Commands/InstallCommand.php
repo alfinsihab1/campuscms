@@ -127,6 +127,6 @@ class InstallCommand extends Command
             File::put(config_path('database.php'), $db_config_contents);
         }        
 
-        $this->info('Successfully installed FaturCMS! Enjoy');
+        $this->info('Successfully installing FaturCMS! Enjoy');
     }
 }

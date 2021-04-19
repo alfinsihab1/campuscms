@@ -3,6 +3,7 @@
     .app-title {padding: 20px;}
 
     /* Sidebar */
+    .app-header__logo {color: {{ setting('site.color.primary') }}!important; font-family: 'Lato'; text-transform: uppercase;}
     .app-menu__item {padding: 8px 15px;}
     .treeview.is-expanded .treeview-menu {margin-bottom: .5rem;}
 
@@ -152,7 +153,7 @@
 	}
 
     @media(min-width: 768px){
-	    .app-header__logo {background-color: var(--white)!important; font-family: 'Lato'; text-transform: uppercase;}
+	    .app-header__logo {background-color: var(--white)!important;}
 	}
     @media (max-width: 767px){
         .app-header__logo {display: block}

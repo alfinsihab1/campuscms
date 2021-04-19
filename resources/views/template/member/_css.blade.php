@@ -3,6 +3,7 @@
     .app-title {padding: 20px;}
 
     /* Sidebar */
+    .app-header__logo {color: {{ setting('site.color.primary') }}!important; font-family: 'Lato'; text-transform: uppercase;}
     .app-menu__item {padding: 8px 15px;}
     .treeview.is-expanded .treeview-menu {margin-bottom: .5rem;}
 
@@ -50,7 +51,7 @@
     #editor {height: 300px;}
     .ql-button-html:after {content: "<>";}
     .ql-editor {white-space: normal!important;}
-    .ql-editor h1, .ql-editor h2, .ql-editor h3, .ql-editor h4, .ql-editor h5, .ql-editor h6, .ql-editor p {margin-bottom: 1rem!important;}
+	.ql-editor h1, .ql-editor h2, .ql-editor h3, .ql-editor h4, .ql-editor h5, .ql-editor h6, .ql-editor p {margin-bottom: 1rem!important;}
 
     /* Bootstrap Tagsinput */
     .bootstrap-tagsinput {width: 100%!important;}
@@ -148,12 +149,12 @@
     }
 
     @media(max-width: 767px){
-        .app-header__logo {display: none;}
-    }
+	    .app-header__logo {display: none;}
+	}
 
     @media(min-width: 768px){
-        .app-header__logo {background-color: var(--white)!important; font-family: 'Lato'; text-transform: uppercase;}
-    }
+	    .app-header__logo {background-color: var(--white)!important;}
+	}
     @media (max-width: 767px){
         .app-header__logo {display: block}
         .app-header__logo img {vertical-align: sub;}

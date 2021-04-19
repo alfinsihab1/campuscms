@@ -1,6 +1,7 @@
 <!-- Navbar-->
 <header class="app-header">
-  <a class="app-header__logo" href="/" target="_blank">
+  <a class="app-header__logo" href="{{ route('site.home') }}" target="_blank">
+    Admin Area
     <!-- <img width="160" src="{{asset('assets/images/logo/campusnet.webp')}}"> -->
   </a>
   <!-- Sidebar toggle button-->

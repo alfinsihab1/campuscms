@@ -34,8 +34,9 @@ class FaturCMSServiceProvider extends ServiceProvider
         // Load helpers.
         $this->loadHelpers();
         
-        // Load install command.
+        // Load commands.
         $this->commands(Commands\InstallCommand::class);
+        $this->commands(Commands\UpdateCommand::class);
 
         if($this->app->runningInConsole()){
             // Register publishable resources.

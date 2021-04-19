@@ -49,11 +49,11 @@ class LoginController extends Controller
             session()->put('url.intended', $urlPrevious);
 
             // View
-            return view('faturcms::auth.login', ['message' => 'Anda harus login terlebih dahulu!']);
+            return view('auth.'.setting('site.view.login'), ['message' => 'Anda harus login terlebih dahulu!']);
         }
 
         // View
-        return view('faturcms::auth.login');
+        return view('auth.'.setting('site.view.login'));
     }
 
     /**
@@ -125,10 +125,10 @@ class LoginController extends Controller
 
         // Redirect after login
         if($user->is_admin == 1){
-            return redirect('/admin');
+            return redirect()->route('admin.dashboard');
         }
         elseif($user->is_admin == 0){
-            return redirect('/member');
+            return redirect()->route('member.dashboard');
         }
     }
 }

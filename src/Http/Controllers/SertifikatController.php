@@ -7,6 +7,7 @@ use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\User;
 use Ajifatur\FaturCMS\Models\Pelatihan;
 use Ajifatur\FaturCMS\Models\PelatihanMember;
@@ -116,7 +117,7 @@ class SertifikatController extends Controller
 		$signature_trainer = Signature::where('id_user','=',$pelatihan->trainer)->first();
 
 		// View PDF
-		$pdf = PDF::loadview('faturcms::pdf.sertifikat-trainer', [
+		$pdf = PDF::loadview('pdf.'.setting('site.view.sertifikat_trainer'), [
 			// 'member' => $member,
 			'direktur' => $direktur,
 			'dosen' => $dosen,
@@ -152,7 +153,7 @@ class SertifikatController extends Controller
 			$member = PelatihanMember::join('users','pelatihan_member.id_user','=','users.id_user')->where('pelatihan_member.id_user','=',Auth::user()->id_user)->where('status_pelatihan','!=',0)->findOrFail($id);
 		}
 		
-		$qrcode = base64_encode(\QrCode::format('png')->size(200)->backgroundColor(0,0,0,0)->errorCorrection('H')->generate(url()->to('/cek-sertifikat/'.$member->id_pm)));
+		$qrcode = base64_encode(QrCode::format('png')->size(200)->backgroundColor(0,0,0,0)->errorCorrection('H')->generate(url()->to('/cek-sertifikat/'.$member->id_pm)));
 
 		// Data pelatihan
 		$pelatihan = Pelatihan::join('users','pelatihan.trainer','=','users.id_user')->join('kategori_pelatihan','pelatihan.kategori_pelatihan','=','kategori_pelatihan.id_kp')->find($member->id_pelatihan);
@@ -172,13 +173,9 @@ class SertifikatController extends Controller
 		
 		// Data signature trainer
 		$signature_trainer = Signature::where('id_user','=',$pelatihan->trainer)->first();
-		
-		// Page
-		$page = $request->query('page');
-		// if($page != 1 || $page != 2 || $page != 'all') return redirect('/admin/e-sertifikat/peserta/detail/'.$id.'?page=all');
 
 		// View PDF
-		$pdf = PDF::loadview('faturcms::pdf.sertifikat.peserta/'.$page, [
+		$pdf = PDF::loadview('pdf.'.setting('site.view.sertifikat_peserta'), [
 			'member' => $member,
 			'direktur' => $direktur,
 			'dosen' => $dosen,

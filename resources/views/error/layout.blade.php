@@ -19,7 +19,7 @@
         <h1 data-aos="fade-up" data-aos-duration="2000" data-aos-anchor-placement="top-bottom">4</h1> -->
       </div>
       <h5 class="text-capitalize mb-4" data-aos="fade-up" data-aos-duration="2500">@yield('message')</h5> 
-      <a data-aos="fade-up" data-aos-duration="3000" href="/" class="btn btn-theme text-uppercase btn-theme-1 me-2">Home</a>
+      <a data-aos="fade-up" data-aos-duration="3000" href="{{ route('site.home') }}" class="btn btn-theme text-uppercase btn-theme-1 me-2">Home</a>
     </div>
     <p class="position-absolute" style="top: 96%; transform: translate(-50%,-50%)!important; left: 50%!important;">Made with <i class="fa fa-heart" style="font-size: .8rem; color: rgba(230, 57, 70, 1)"></i></p>
   </div>
@@ -32,11 +32,11 @@
   .bg-theme-1{animation: changebg 7s infinite; height: 100vh}
   .btn-theme-1{background-color: rgba(0,0,0,.2); animation: animatebtn 7s infinite!important}
   @keyframes changebg {
-    0% {background-color: {{ setting('site.primary_color') }};}
-    25%{background-color: {{ setting('site.secondary_color') }};}
-    50% {background-color: {{ setting('site.primary_color') }};}
-    74% {background-color: {{ setting('site.secondary_color') }};}
-    100% {background-color: {{ setting('site.primary_color') }};}
+    0% {background-color: {{ setting('site.color.primary') }};}
+    25%{background-color: {{ setting('site.color.secondary') }};}
+    50% {background-color: {{ setting('site.color.primary') }};}
+    74% {background-color: {{ setting('site.color.secondary') }};}
+    100% {background-color: {{ setting('site.color.primary') }};}
   }
   @keyframes animatebtn {
     0% {width: 150px}

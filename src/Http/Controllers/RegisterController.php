@@ -38,7 +38,7 @@ class RegisterController extends Controller
         referral($request->query('ref'), 'auth.register');
 
         // View
-        return view('faturcms::auth.register');
+        return view('auth.'.setting('site.view.register'));
     }
 
     /**
@@ -146,7 +146,7 @@ class RegisterController extends Controller
         // Jika user tidak ditemukan
         if(!$user){
             // View
-            return view('faturcms::auth.email-verification', [
+            return view('auth.'.setting('site.view.email_verification'), [
                 'user' => $user,
                 'status' => 0,
             ]);
@@ -171,7 +171,7 @@ class RegisterController extends Controller
             // Jika user sudah terverifikasi
             else{
                 // View
-                return view('faturcms::auth.email-verification', [
+                return view('auth.'.setting('site.view.email_verification'), [
                     'user' => $user,
                     'status' => 1,
                 ]);

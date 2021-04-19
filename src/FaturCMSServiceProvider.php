@@ -41,6 +41,9 @@ class FaturCMSServiceProvider extends ServiceProvider
             // Register publishable resources.
             $this->registerPublishableResources();
 
+            // Register view resources.
+            $this->registerViewResources();
+
             // Register console commands.
             $this->registerConsoleCommands();
         }
@@ -86,6 +89,29 @@ class FaturCMSServiceProvider extends ServiceProvider
         ];
 
         foreach($publishable as $group => $paths){
+            $this->publishes($paths, $group);
+        }
+    }
+
+    /**
+     * Register the view files.
+     * 
+	 * @return void
+     */
+    private function registerViewResources()
+    {
+        $viewPath = dirname(__DIR__).'/resources/views';
+
+        $view = [
+            'viewAuth' => [
+                "{$viewPath}/auth" => resources_path('views/auth'),
+            ],
+            'viewPDF' => [
+                "{$viewPath}/pdf" => resources_path('views/pdf'),
+            ],
+        ];
+
+        foreach($view as $group => $paths){
             $this->publishes($paths, $group);
         }
     }

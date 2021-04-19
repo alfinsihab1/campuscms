@@ -86,7 +86,7 @@ class InstallCommand extends Command
             $this->info('Adding FaturCMS web routes to routes/web.php');
             File::append(
                 base_path('routes/web.php'),
-                "\n\n\Ajifatur\FaturCMS\FaturCMS::routes();\n"
+                "\n//Letakkan fungsi ini pada route paling atas\n\Ajifatur\FaturCMS\FaturCMS::routes();\n"
             );
         }
 

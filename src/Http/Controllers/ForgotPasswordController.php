@@ -36,7 +36,7 @@ class ForgotPasswordController extends Controller
         referral($request->query('ref'), 'auth.forgotpassword');
 
         // View
-        return view('faturcms::auth.forgot-password');
+        return view('auth.'.setting('site.view.forgot_password'));
     }
 
     /**

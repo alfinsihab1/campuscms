@@ -27,10 +27,14 @@ class LoginController extends Controller
     /**
      * Show the application's login form.
      *
+     * @return \Illuminate\Http\Request
      * @return \Illuminate\Http\Response
      */
-    public function showLoginForm()
+    public function showLoginForm(Request $request)
     {
+        // Referal
+        referral($request->query('ref'), 'auth.login');
+
         // Get URLs
         $urlPrevious = url()->previous();
         $urlBase = url()->to('/');

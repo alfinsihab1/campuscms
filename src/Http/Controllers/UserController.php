@@ -120,6 +120,7 @@ class UserController extends Controller
             $user->is_admin = $role->is_admin;
             $user->status = $request->status;
             $user->saldo = 0;
+            $user->email_verified = 1;
             $user->last_visit = null;
             $user->register_at = date('Y-m-d H:i:s');
             $user->save();

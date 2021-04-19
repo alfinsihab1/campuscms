@@ -127,7 +127,7 @@ class KomisiController extends Controller
 		if(Auth::user()->is_admin == 1){
 			// Mengupload file
 			$file = $request->file('foto');
-			$filename = time().".".$file->getClientOriginalExtension();
+			$filename = date('Y-m-d-H-i-s').".".$file->getClientOriginalExtension();
 			$file->move('assets/images/komisi', $filename);
 
 			// Mengupdate data komisi
@@ -163,7 +163,7 @@ class KomisiController extends Controller
 		elseif(Auth::user()->is_admin == 0){
 			// Mengupload file
 			$file = $request->file('foto');
-			$filename = time().".".$file->getClientOriginalExtension();
+			$filename = date('Y-m-d-H-i-s').".".$file->getClientOriginalExtension();
 			$file->move('assets/images/komisi', $filename);
 
 			// Mengupdate data komisi

@@ -93,6 +93,8 @@
 
 @section('js-extra')
 
+@include('faturcms::template.member._js-table')
+
 <script type="text/javascript">
     // DataTable
     generate_datatable("#dataTable");

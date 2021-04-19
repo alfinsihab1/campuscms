@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        @include('faturcms::template.admin._meta')
         @include('faturcms::template.admin._head')
         @include('faturcms::template.admin._css')
         @yield('css-extra')

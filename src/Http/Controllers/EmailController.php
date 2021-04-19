@@ -87,7 +87,7 @@ class EmailController extends Controller
 				// Send Mail
 				foreach($ids as $id){
 					$receiver = User::find($id);
-					// Mail::to($receiver->email)->send(new MessageMail(Auth::user()->email, $receiver, $request->subjek, htmlentities($html)));
+					Mail::to($receiver->email)->send(new MessageMail(Auth::user()->email, $receiver, $request->subjek, htmlentities($request->pesan)));
 				}
 			}
 			else{
@@ -97,7 +97,7 @@ class EmailController extends Controller
 
 				// Send Mail
 				foreach($emails as $key=>$email){
-					// Mail::to($email)->send(new MessageMail(Auth::user()->email, $names[$key], $request->subjek, htmlentities($html)));
+					Mail::to($email)->send(new MessageMail(Auth::user()->email, $names[$key], $request->subjek, htmlentities($request->pesan)));
 				}
 			}
 			

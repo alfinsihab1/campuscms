@@ -40,7 +40,7 @@
                                             <label class="control-label">Username / Email</label>
                                             <div class="input-group input-group-lg">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
+                                                    <span class="input-group-text {{ $errors->has('username') ? 'border-danger' : '' }}" id="basic-addon1"><i class="fa fa-user"></i></span>
                                                 </div>
                                                 <input class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}" name="username" type="text" placeholder="Username atau Email" autofocus>
                                             </div>
@@ -52,11 +52,11 @@
                                             <label class="control-label">Password</label>
                                             <div class="input-group input-group-lg">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-lock"></i></span>
+                                                    <span class="input-group-text {{ $errors->has('password') ? 'border-danger' : '' }}" id="basic-addon1"><i class="fa fa-lock"></i></span>
                                                 </div>
                                                 <input type="password" name="password" class="form-control {{ $errors->has('password') ? 'border-danger' : '' }}" placeholder="Password">
                                                 <div class="input-group-append">
-                                                    <a href="#" class="input-group-text text-dark btn btn-toggle-password {{ $errors->has('password') ? 'border-danger' : 'bg-theme-1' }}"><i class="fa fa-eye"></i></a>
+                                                    <a href="#" class="input-group-text text-dark btn btn-toggle-password {{ $errors->has('password') ? 'border-danger' : '' }}"><i class="fa fa-eye"></i></a>
                                                 </div>
                                             </div>
                                             @if($errors->has('password'))

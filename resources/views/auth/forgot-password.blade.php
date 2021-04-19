@@ -41,7 +41,7 @@
                                             <label class="control-label">Email</label>
                                             <div class="input-group input-group-lg">
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-envelope"></i></span>
+                                                    <span class="input-group-text {{ $errors->has('email') ? 'border-danger' : '' }}" id="basic-addon1"><i class="fa fa-envelope"></i></span>
                                                 </div>
                                                 <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" name="email" type="email" placeholder="Email" autofocus>
                                             </div>

@@ -104,10 +104,10 @@ class FaturCMSServiceProvider extends ServiceProvider
 
         $view = [
             'viewAuth' => [
-                "{$viewPath}/auth" => resources_path('views/auth'),
+                "{$viewPath}/auth" => resource_path('views/auth'),
             ],
             'viewPDF' => [
-                "{$viewPath}/pdf" => resources_path('views/pdf'),
+                "{$viewPath}/pdf" => resource_path('views/pdf'),
             ],
         ];
 

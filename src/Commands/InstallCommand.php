@@ -56,7 +56,7 @@ class InstallCommand extends Command
     {
         $this->info('Installing FaturCMS package');
 
-        // Publish resources
+        // Publish assets and templates
         $this->call('vendor:publish', ['--provider' => FaturCMSServiceProvider::class, '--tag' => 'assets']);
         $this->call('vendor:publish', ['--provider' => FaturCMSServiceProvider::class, '--tag' => 'templates']);
 
@@ -72,6 +72,10 @@ class InstallCommand extends Command
         if(File::exists(app_path('User.php'))) File::delete(app_path('User.php'));
         $this->call('vendor:publish', ['--provider' => FaturCMSServiceProvider::class, '--tag' => 'userModel']);
 
+        // Publish views
+        $this->call('vendor:publish', ['--provider' => FaturCMSServiceProvider::class, '--tag' => 'viewAuth']);
+        $this->call('vendor:publish', ['--provider' => FaturCMSServiceProvider::class, '--tag' => 'viewPDF']);
+
         // Find composer
         $composer = $this->findComposer();
 
@@ -86,7 +90,11 @@ class InstallCommand extends Command
             $this->info('Adding FaturCMS web routes to routes/web.php');
             File::append(
                 base_path('routes/web.php'),
-                "\n//Letakkan fungsi ini pada route paling atas\n\Ajifatur\FaturCMS\FaturCMS::routes();\n"
+                "\n".
+                "//Letakkan fungsi ini pada route paling atas".
+                "\n".
+                "\Ajifatur\FaturCMS\FaturCMS::routes();".
+                "\n"
             );
         }
 

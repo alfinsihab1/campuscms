@@ -69,12 +69,12 @@
                                             <label class="form-check-label" for="exampleCheck1">Ingat Saya</label>
                                           </div>
                                           <div class="form-group">
-                                            <a href="/recovery-password" class="text-body">Lupa Password?</a>
+                                            <a href="{{ route('auth.forgotpassword') }}" class="text-body">Lupa Password?</a>
                                           </div>
                                         </div>
                                         <div class="form-group btn-container">
                                             <button type="submit" class="btn btn-theme-1 btn-lg rounded px-4 shadow-sm btn-block">Masuk</button>
-                                            <a href="/register" class="btn btn-light btn-lg rounded px-4 shadow-sm btn-block">Daftar</a>
+                                            <a href="{{ route('auth.register') }}" class="btn btn-light btn-lg rounded px-4 shadow-sm btn-block">Daftar</a>
                                         </div>
                                     </form>
                                 </div>

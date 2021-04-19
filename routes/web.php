@@ -23,6 +23,10 @@ Route::group(['middleware' => ['faturcms.guest']], function() use ($namespacePre
 	// Register
 	Route::get('/register', $namespacePrefix.'RegisterController@showRegistrationForm')->name('auth.register');
 	Route::post('/register', $namespacePrefix.'RegisterController@register')->name('auth.postregister');
+
+	// Lupa Password
+	Route::get('/forgot-password', $namespacePrefix.'ForgotPasswordController@showLinkRequestForm')->name('auth.forgotpassword');
+	Route::get('/forgot-password', $namespacePrefix.'ForgotPasswordController@sendResetLinkEmail')->name('auth.postforgotpassword');
 });
 
 // Admin Capabilities

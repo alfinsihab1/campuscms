@@ -26,7 +26,7 @@ Route::group(['middleware' => ['faturcms.guest']], function() use ($namespacePre
 
 	// Lupa Password
 	Route::get('/forgot-password', $namespacePrefix.'ForgotPasswordController@showLinkRequestForm')->name('auth.forgotpassword');
-	Route::get('/forgot-password', $namespacePrefix.'ForgotPasswordController@sendResetLinkEmail')->name('auth.postforgotpassword');
+	Route::post('/forgot-password', $namespacePrefix.'ForgotPasswordController@sendResetLinkEmail')->name('auth.postforgotpassword');
 });
 
 // Admin Capabilities

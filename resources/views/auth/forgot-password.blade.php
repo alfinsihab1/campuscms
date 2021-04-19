@@ -31,10 +31,10 @@
                                 <div class="card-body">
                                     <form class="login-form" action="{{ route('auth.postforgotpassword') }}" method="post">
                                         {{ csrf_field() }}
-                                        <input type="hidden" name="referral" value="{{ $_GET['referral'] }}">
-                                        @if(isset($message))
+                                        <input type="hidden" name="referral" value="{{ $_GET['ref'] }}">
+                                        @if(Session::get('message'))
                                         <div class="alert alert-danger">
-                                            {{ $message }}
+                                            {{ Session::get('message') }}
                                         </div>
                                         @endif
                                         <div class="form-group ">

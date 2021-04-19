@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-// use App\Mail\TrainingPaymentMail;
+use Ajifatur\FaturCMS\Mails\TrainingPaymentMail;
 use App\User;
 use Ajifatur\FaturCMS\Models\DefaultRekening;
 use Ajifatur\FaturCMS\Models\KategoriPelatihan;

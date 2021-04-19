@@ -104,7 +104,10 @@ class InstallCommand extends Command
             $this->info('Adding FaturCMS API routes to routes/api.php');
             File::append(
                 base_path('routes/api.php'),
-                "\n\n\Ajifatur\FaturCMS\FaturCMS::APIroutes();\n"
+                "\n".
+                "\n".
+                "\Ajifatur\FaturCMS\FaturCMS::APIroutes();".
+                "\n"
             );
         }
 

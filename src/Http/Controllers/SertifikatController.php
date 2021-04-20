@@ -96,10 +96,6 @@ class SertifikatController extends Controller
 			// Data Member
 			$pelatihan = Pelatihan::join('users','pelatihan.trainer','=','users.id_user')->join('kategori_pelatihan','pelatihan.kategori_pelatihan','=','kategori_pelatihan.id_kp')->where('users.id_user','=',Auth::user()->id_user)->findOrFail($id);
 		}
-
-		// Data pelatihan
-		// $pelatihan = Pelatihan::join('users','pelatihan.trainer','=','users.id_user')->join('kategori_pelatihan','pelatihan.kategori_pelatihan','=','kategori_pelatihan.id_kp')->find($member->id_pelatihan);
-		$pelatihan->materi_pelatihan = json_decode($pelatihan->materi_pelatihan, true);
 		
 		// Direktur
 		$direktur = User::where('role','=',role('manager'))->first();

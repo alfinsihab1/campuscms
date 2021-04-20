@@ -178,6 +178,7 @@ class FolderController extends Controller
 			$folder->folder_parent = $request->folder_parent;
 			$folder->folder_icon = generate_image_name("assets/images/folder/", $request->gambar, $request->gambar_url) != '' ? generate_image_name("assets/images/folder/", $request->gambar, $request->gambar_url) : $folder->folder_icon;
 			$folder->folder_voucher = $request->voucher != '' ? $request->voucher : '';
+			$folder->folder_up = date('Y-m-d H:i:s');
             $folder->save();
 			
 			// Get data folder

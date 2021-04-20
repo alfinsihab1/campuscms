@@ -54,7 +54,7 @@
                                     </td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="#" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Cetak"><i class="fa fa-print"></i></a>
+                                            <a href="{{ route('member.sertifikat.peserta.detail', ['id' => $data->id_pm]) }}" target="_blank" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Cetak"><i class="fa fa-print"></i></a>
                                         </div>
                                     </td>
                                 </tr>

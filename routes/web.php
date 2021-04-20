@@ -10,8 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-use Symfony\Component\Process\Process;
-use Symfony\Component\Process\Exception\ProcessFailedException;
 
 // Namespace Prefix
 $namespacePrefix = '\\'.config('faturcms.controllers.namespace').'\\';

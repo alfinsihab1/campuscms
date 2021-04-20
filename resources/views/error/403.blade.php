@@ -2,4 +2,4 @@
 
 @section('title', 'Akses Dilarang!')
 @section('code', '403')
-@section('message', $exception->getMessage() ?: 'Akses Dilarang!')
+@section('message', 'Akses Dilarang!')

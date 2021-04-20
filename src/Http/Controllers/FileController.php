@@ -26,6 +26,9 @@ class FileController extends Controller
         // Check Access
         has_access(generate_method(__METHOD__), Auth::user()->role);
 
+        // Check status kategori folder
+        if(Auth::user()->is_admin == 0 && !status_kategori_folder($category)) abort(404);
+
 		// Kategori
 		$kategori = FolderKategori::where('slug_kategori','=',$category)->firstOrFail();
 
@@ -157,8 +160,10 @@ class FileController extends Controller
             $file->file_up = date('Y-m-d H:i:s');
             $file->save();
 			
-			// Get data folder
+			// Get and update folder
             $current_folder = Folder::find($request->id_folder);
+            $current_folder->folder_up = $file->file_up;
+            $current_folder->save();
             
             // Kategori folder
             $kategori = FolderKategori::find($file->file_kategori);
@@ -287,10 +292,13 @@ class FileController extends Controller
             $file->file_konten = $request->file_kategori == tipe_file(1) ? $request->file_konten : $file->file_konten;
             $file->file_keterangan = $request->file_kategori == tipe_file(1) ? htmlentities($request->file_keterangan) : '';
             $file->file_thumbnail = generate_image_name("assets/images/file/", $request->gambar, $request->gambar_url) != '' ? generate_image_name("assets/images/file/", $request->gambar, $request->gambar_url) : $file->file_thumbnail;
+            $file->file_up = date('Y-m-d H:i:s');
             $file->save();
             
             // Get data folder
             $current_folder = Folder::find($request->id_folder);
+            $current_folder->folder_up = $file->file_up;
+            $current_folder->save();
             
             // Kategori folder
             $kategori = FolderKategori::find($file->file_kategori);

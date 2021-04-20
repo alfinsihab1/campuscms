@@ -19,7 +19,7 @@
 				</div>
 				<div class="card-body">
 					<div class="text-center mb-3">
-                    	<a href="#" target="_blank" class="btn btn-theme-1 rounded-1"><i class="fa fa-download mr-2"></i>Download Tutorial Pendaftaran Member {{ setting('site.name') }}</a>
+                    	<a href="{{ asset('assets/docs/TUTORIAL PENDAFTARAN PERSONALITY TALK.pdf') }}" target="_blank" class="btn btn-theme-1 rounded-1"><i class="fa fa-download mr-2"></i>Download Tutorial Pendaftaran Member {{ setting('site.name') }}</a>
                     </div>
 					<form method="post" action="{{ route('auth.postregister') }}">
 						{{ csrf_field() }}

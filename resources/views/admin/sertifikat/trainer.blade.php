@@ -62,7 +62,7 @@
                                     </td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="{{ route('admin.sertifikat.trainer.detail', ['id' => $data->id_pelatihan]) }}" class="btn btn-sm btn-warning" target="_blank" data-toggle="tooltip" title="Cetak"><i class="fa fa-print"></i></a>
+                                            <a href="{{ route('admin.sertifikat.trainer.detail', ['id' => $data->id_pelatihan]) }}" target="_blank" class="btn btn-sm btn-warning" target="_blank" data-toggle="tooltip" title="Cetak"><i class="fa fa-print"></i></a>
                                         </div>
                                     </td>
                                 </tr>

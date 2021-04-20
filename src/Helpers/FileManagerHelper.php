@@ -34,6 +34,15 @@ if(!function_exists('rename_file')){
     }
 }
 
+// Status folder kategori
+if(!function_exists('status_kategori_folder')){
+    function status_kategori_folder($category){
+        $data = FolderKategori::where('slug_kategori','=',$category)->first();
+        if($data) return $data->status_kategori == 1 ? true : false;
+        else return false;
+    }
+}
+
 // File Manager breadcrumb
 if(!function_exists('file_breadcrumb')){
     function file_breadcrumb($directory){

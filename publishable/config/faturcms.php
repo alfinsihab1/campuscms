@@ -30,9 +30,21 @@ return [
         'mentor' => 'mentor.jpg',
         'mitra' => 'mitra.png',
         'pelatihan' => 'pelatihan.png',
+        'pdf' => 'pdf.svg',
         'program' => 'program.png',
         'slider' => 'slider.png',
         'testimoni' => 'testimoni.jpg',
         'user' => 'user.jpg',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Role permission config
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    'allowed_access' => [
+        'DashboardController::member',
     ]
 ];

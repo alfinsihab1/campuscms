@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use App\User;
 use Ajifatur\FaturCMS\Models\KategoriMateri;
 use Ajifatur\FaturCMS\Models\KategoriPelatihan;
@@ -30,14 +31,27 @@ if(!function_exists('has_access')){
         // Get role permission
         $role_permission = RolePermission::where('id_permission','=',$data_permission->id_permission)->where('id_role','=',$role)->first();
 
-        // Return
+        // Jika ada akses
         if($role_permission){
-            if($role_permission->access == 1) return true;
+            // Jika mempunyai hak akses
+            if($role_permission->access == 1){
+                // Jika status user aktif
+                if(Auth::user()->status == 1) return true;
+                // Jika status user belum aktif, tapi akses diizinkan
+                elseif(Auth::user()->status == 0 && in_array($permission, config('faturcms.allowed_access'))) return true;
+                // Jika status user belum aktif
+                else{
+                    if($isAbort) abort(403);
+                    else return false;
+                }
+            }
+            // Jika tidak mempunyai hak akses
             else{
                 if($isAbort) abort(403);
                 else return false;
             }
         }
+        // Jika tidak ada akses
         else{
             if($isAbort) abort(403);
             else return false;

@@ -125,7 +125,10 @@ class InstallCommand extends Command
             $this->info('Change database configuration in config/database.php');
             str_replace("'strict' => true", "'strict' => false", $db_config_contents);
             File::put(config_path('database.php'), $db_config_contents);
-        }        
+        }
+
+        // Create folder storage/fonts
+        File::makeDirectory(storage_path('fonts'));
 
         $this->info('Successfully installing FaturCMS! Enjoy');
     }

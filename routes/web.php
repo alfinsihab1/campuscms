@@ -314,6 +314,7 @@ Route::group(['middleware' => ['faturcms.member']], function() use ($namespacePr
 	// File Manager
 	Route::get('/member/file-manager/{kategori}', $namespacePrefix.'FileController@index')->name('member.filemanager.index');
 	Route::get('/member/file-manager/{kategori}/file/detail/{id}', $namespacePrefix.'FileController@detail')->name('member.file.detail');
+	Route::post('/member/file-manager/{kategori}/voucher', $namespacePrefix.'FileController@inputVoucher')->name('member.file.voucher');
 
 	// Pelatihan
 	Route::get('/member/pelatihan', $namespacePrefix.'PelatihanController@index')->name('member.pelatihan.index');

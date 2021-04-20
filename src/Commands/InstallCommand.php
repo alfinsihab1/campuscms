@@ -128,7 +128,7 @@ class InstallCommand extends Command
         }
 
         // Create folder storage/fonts
-        File::makeDirectory(storage_path('fonts'));
+        if(!File::exists(storage_path('fonts'))) File::makeDirectory(storage_path('fonts'));
 
         $this->info('Successfully installing FaturCMS! Enjoy');
     }

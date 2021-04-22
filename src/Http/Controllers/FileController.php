@@ -49,24 +49,6 @@ class FileController extends Controller
             }
     	}
 
-        // Jika role member
-        if(Auth::user()->is_admin == 0){
-            // Check voucher
-            if($directory->folder_voucher != '' && session()->get('id_folder') != $directory->id_folder){
-                if($directory->folder_parent != 0){
-                    // Get folder parent
-                    $folder_parent = Folder::find($directory->folder_parent);
-
-                    // Return
-                    return redirect()->route('member.filemanager.index', ['kategori' => $kategori->slug_kategori, 'dir' => $folder_parent->folder_dir])->with(['message' => 'Tidak berhasil menggunakan voucher.', 'id_folder' => $directory->id_folder]);
-                }
-                else{
-                    // Return
-                    return redirect()->route('member.filemanager.index', ['kategori' => $kategori->slug_kategori, 'dir' => '/'])->with(['message' => 'Tidak berhasil menggunakan voucher.', 'id_folder' => $directory->id_folder]);
-                }
-            }
-        }
-
 		// Get folder dalam direktori
 		$folders = Folder::where('folder_parent','=',$directory->id_folder)->where('folder_kategori','=',$kategori->id_fk)->orderBy('folder_nama','asc')->get();
 

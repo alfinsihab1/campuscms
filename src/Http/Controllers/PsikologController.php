@@ -164,20 +164,4 @@ class PsikologController extends Controller
             return redirect()->route('admin.psikolog.index')->with(['message' => 'Berhasil menghapus data.']);
         }
     }
-
-    /**
-     * Menampilkan data psikolog
-     *
-     * @return \Illuminate\Http\Response
-     */
-    // public function psikolog()
-    // {
-    //     // Data psikolog
-    //     $psikolog = Psikolog::all();
-
-    //     // View
-    //     return view('front/qubisa/psikolog', [
-    //         'psikolog' => $psikolog,
-    //     ]);
-    // }
 }

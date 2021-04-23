@@ -133,6 +133,7 @@ class PsikologController extends Controller
             $psikolog = Psikolog::find($request->id);
             $psikolog->nama_psikolog = $request->nama_psikolog;
             $psikolog->kategori_psikolog = $request->kategori_psikolog;
+            $psikolog->kode_psikolog = $request->kode_psikolog;
             $psikolog->nomor_telepon_psikolog = $request->nomor_telepon_psikolog;
             $psikolog->instagram_psikolog = $request->instagram_psikolog != '' ? $request->instagram_psikolog : '';
             $psikolog->alamat_psikolog = $request->alamat_psikolog;

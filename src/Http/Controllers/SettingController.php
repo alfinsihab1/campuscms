@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\User;
 use Ajifatur\FaturCMS\Models\Setting;
+use Ajifatur\FaturCMS\Models\KategoriSetting;
 
 class SettingController extends Controller
 {
@@ -23,41 +24,24 @@ class SettingController extends Controller
     }
 
     /**
-     * Menampilkan setting umum
+     * Menampilkan form edit setting
      *
+     * string $category
      * @return \Illuminate\Http\Response
      */
-    public function general()
+    public function edit($category)
     {
+        // Get prefix
+        $kategori = KategoriSetting::where('slug','=',$category)->firstOrFail();
+
         // Setting
-        $setting = Setting::where('setting_category','=',1)->get();
+        $setting = Setting::where('setting_category','=',$kategori->id_ks)->get();
 
         // View
-        return view('faturcms::admin.setting.general', [
-            'setting' => $setting
+        return view('faturcms::admin.setting.edit-'.$category, [
+            'kategori' => $kategori,
+            'setting' => $setting,
         ]);
-    }
-    
-    /**
-     * Menampilkan setting logo
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function logo()
-    {
-        // View
-        return view('faturcms::admin.setting.index');
-    }
-    
-    /**
-     * Menampilkan setting icon
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function icon()
-    {
-        // View
-        return view('faturcms::admin.setting.index');
     }
 
     /**
@@ -69,11 +53,16 @@ class SettingController extends Controller
      */
     public function update(Request $request, $category)
     {
+        // Get prefix
+        $kategori = KategoriSetting::where('slug','=',$category)->firstOrFail();
+
         // Set rule setting
         $key_rules = array();
-        $settings = $request->get('setting');
-        foreach($settings as $key=>$value){
-            $key_rules['setting.'.$key] = setting_rules('site.'.$key);
+        $settings = $request->get('setting') != null ? $request->get('setting') : [];
+        if(count($settings)>0){
+            foreach($settings as $key=>$value){
+                $key_rules['setting.'.$key] = setting_rules($kategori->prefix.$key);
+            }
         }
 
         // Validasi
@@ -86,50 +75,42 @@ class SettingController extends Controller
         }
         // Jika tidak ada error
         else{
-            // Mengupdate data
-            foreach($settings as $key=>$value){
+            // Jika kategori icon
+            if($category == 'icon'){
                 // Get data
-                $setting = Setting::where('setting_key','=','site.'.$key)->first();
+                $setting = Setting::where('setting_key','=',$kategori->prefix.$category)->first();
 
-                // Update
-            	$setting->setting_value = $value;
-            	$setting->save();
+                // Update icon
+                $setting->setting_value = generate_image_name("assets/images/icon/", $request->gambar, $request->gambar_url) != '' ? generate_image_name("assets/images/icon/", $request->gambar, $request->gambar_url) : $setting->setting_value;
+                $setting->save();
+            }
+            else{
+                // Mengupdate data
+                if(count($settings)>0){
+                    foreach($settings as $key=>$value){
+                        // Get data
+                        $setting = Setting::where('setting_key','=',$kategori->prefix.$key)->first();
+
+                        // Update
+                    	$setting->setting_value = $category == 'price'? str_replace('.', '', $value) : $value;
+                    	$setting->save();
+                    }
+                }
             }
         }
 
         // Redirect
-        return redirect()->route('admin.setting.'.$category)->with(['message' => 'Berhasil mengupdate data.']);
-
-        /*
-        // Validasi
-        $validator = Validator::make($request->all(), [
-            'nama_mentor' => 'required',
-            'profesi_mentor' => 'required',
-        ], array_validation_messages());
-        
-        // Mengecek jika ada error
-        if($validator->fails()){
-            // Kembali ke halaman sebelumnya dan menampilkan pesan error
-            return redirect()->back()->withErrors($validator->errors())->withInput($request->only([
-                'nama_mentor',
-            ]));
-        }
-        // Jika tidak ada error
-        else{
-            // Latest data
-            $latest = Mentor::latest('order_mentor')->first();
-
-            // Menambah data
-            $mentor = new Mentor;
-            $mentor->nama_mentor = $request->nama_mentor;
-            $mentor->profesi_mentor = $request->profesi_mentor;
-            $mentor->foto_mentor = generate_image_name("assets/images/mentor/", $request->gambar, $request->gambar_url);
-            $mentor->order_mentor = $latest ? $latest->order_mentor + 1 : 1;
-            $mentor->save();
-        }
-
-        // Redirect
-        return redirect()->route('admin.mentor.index')->with(['message' => 'Berhasil menambah data.']);
-        */
+        return redirect()->route('admin.setting.edit', ['category' => $category])->with(['message' => 'Berhasil mengupdate data.']);
+    }
+      
+    /**
+     * Menampilkan file gambar
+     *
+     * @return \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function showIcons(Request $request)
+    {
+        echo json_encode(generate_file(public_path('assets/images/icon')));
     }
 }

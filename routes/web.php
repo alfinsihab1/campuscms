@@ -1,8 +1,5 @@
 <?php
 
-use Symfony\Component\Process\Process;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes (by FaturCMS)
@@ -287,10 +284,11 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 
 	// Setting
 	Route::get('/admin/setting', $namespacePrefix.'SettingController@index')->name('admin.setting.index');
-	Route::get('/admin/setting/general', $namespacePrefix.'SettingController@general')->name('admin.setting.general');
-	Route::get('/admin/setting/logo', $namespacePrefix.'SettingController@logo')->name('admin.setting.logo');
-	Route::get('/admin/setting/icon', $namespacePrefix.'SettingController@icon')->name('admin.setting.icon');
+	Route::get('/admin/setting/{category}', $namespacePrefix.'SettingController@edit')->name('admin.setting.edit');
 	Route::post('/admin/setting/{category}/update', $namespacePrefix.'SettingController@update')->name('admin.setting.update');
+
+	// Icon
+	Route::get('/admin/icon/images', $namespacePrefix.'SettingController@showIcons')->name('admin.icon.images');
 });
 
 // Member Capabilities

@@ -1,6 +1,6 @@
 @extends('faturcms::template.admin.main')
 
-@section('title', 'Data Command')
+@section('title', 'Command List')
 
 @section('content')
 
@@ -9,10 +9,10 @@
 
     <!-- Breadcrumb -->
     @include('faturcms::template.admin._breadcrumb', ['breadcrumb' => [
-        'title' => 'Data Command',
+        'title' => 'Command List',
         'items' => [
             ['text' => 'Command', 'url' => route('admin.command.index')],
-            ['text' => 'Data Command', 'url' => '#'],
+            ['text' => 'Command List', 'url' => '#'],
         ]
     ]])
     <!-- /Breadcrumb -->

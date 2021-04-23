@@ -24,7 +24,7 @@
         @endif
 
         @if(has_access('KomisiController::index', Auth::user()->role, false) || has_access('WithdrawalController::index', Auth::user()->role, false) || has_access('PelatihanController::transaction', Auth::user()->role, false))
-        <li class="treeview {{ strpos(Request::url(), '/admin/transaksi') ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-credit-card"></i><span class="app-menu__label">Transaksi</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+        <li class="treeview {{ is_int(strpos(Request::url(), '/admin/transaksi')) ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-credit-card"></i><span class="app-menu__label">Transaksi</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
             @if(has_access('KomisiController::index', Auth::user()->role, false))
             <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.komisi.index'))) ? 'active' : '' }}" href="{{ route('admin.komisi.index') }}"><i class="icon fa fa-circle-o"></i> Komisi</a></li>
@@ -160,6 +160,16 @@
         @if(has_access('AbsensiController::index', Auth::user()->role, false))
         <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.absensi.index'))) ? 'active' : '' }}" href="{{ route('admin.absensi.index') }}"><i class="app-menu__icon fa fa-clipboard"></i><span class="app-menu__label">Absensi Online</span></a></li>
         @endif
+
+        <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.command.index'))) ? 'active' : '' }}" href="{{ route('admin.command.index') }}"><i class="app-menu__icon fa fa-terminal"></i><span class="app-menu__label">Terminal</span></a></li>
+        
+        <li class="treeview {{ is_int(strpos(Request::url(), route('admin.setting.index'))) ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-cogs"></i><span class="app-menu__label">Pengaturan</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+          <ul class="treeview-menu">
+            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.setting.general'))) ? 'active' : '' }}" href="{{ route('admin.setting.general') }}"><i class="icon fa fa-circle-o"></i> Umum</a></li>
+            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.setting.logo'))) ? 'active' : '' }}" href="{{ route('admin.setting.logo') }}"><i class="icon fa fa-circle-o"></i> Logo</a></li>
+            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.setting.icon'))) ? 'active' : '' }}" href="{{ route('admin.setting.icon') }}"><i class="icon fa fa-circle-o"></i> Icon</a></li>
+          </ul>
+        </li>
 
       </ul>
     </aside>

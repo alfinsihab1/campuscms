@@ -11,6 +11,17 @@ use App\User;
 class CommandController extends Controller
 {
     /**
+     * Menampilkan command list
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        // View
+        return view('faturcms::admin.command.index');
+    }
+
+    /**
      * Update package FaturCMS
      *
      * @return \Illuminate\Http\Response

@@ -176,6 +176,14 @@ if(!function_exists('message')){
     }
 }
 
+// Get setting rules
+if(!function_exists('setting_rules')){
+    function setting_rules($key){
+        $data = DB::table('settings')->where('setting_key',$key)->first();
+        return $data ? $data->setting_rules : '';  
+    }
+}
+
 /**
  *
  * Arrays

@@ -42,10 +42,6 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 
 	// Dashboard
 	Route::get('/admin', $namespacePrefix.'DashboardController@admin')->name('admin.dashboard');
-
-	// Command
-	Route::get('/admin/command/update-package', $namespacePrefix.'CommandController@updatePackage')->name('admin.command.updatepackage');
-	Route::get('/admin/command/composer-version', $namespacePrefix.'CommandController@composerVersion')->name('admin.command.composerversion');
 	
 	// Profil
 	Route::get('/admin/profile', $namespacePrefix.'UserController@profile')->name('admin.profile');
@@ -283,6 +279,18 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::post('/admin/role-permission/update', $namespacePrefix.'PermissionController@update')->name('admin.permission.update');
 	Route::post('/admin/role-permission/delete', $namespacePrefix.'PermissionController@delete')->name('admin.permission.delete');
 	Route::post('/admin/role-permission/sort', $namespacePrefix.'PermissionController@sorting')->name('admin.permission.sort');
+
+	// Command
+	Route::get('/admin/command', $namespacePrefix.'CommandController@index')->name('admin.command.index');
+	Route::get('/admin/command/update-package', $namespacePrefix.'CommandController@updatePackage')->name('admin.command.updatepackage');
+	Route::get('/admin/command/composer-version', $namespacePrefix.'CommandController@composerVersion')->name('admin.command.composerversion');
+
+	// Setting
+	Route::get('/admin/setting', $namespacePrefix.'SettingController@index')->name('admin.setting.index');
+	Route::get('/admin/setting/general', $namespacePrefix.'SettingController@general')->name('admin.setting.general');
+	Route::get('/admin/setting/logo', $namespacePrefix.'SettingController@logo')->name('admin.setting.logo');
+	Route::get('/admin/setting/icon', $namespacePrefix.'SettingController@icon')->name('admin.setting.icon');
+	Route::post('/admin/setting/{category}/update', $namespacePrefix.'SettingController@update')->name('admin.setting.update');
 });
 
 // Member Capabilities

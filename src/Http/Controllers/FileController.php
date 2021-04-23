@@ -42,7 +42,7 @@ class FileController extends Controller
 				// Redirect to '/'
 				return redirect()->route('admin.filemanager.index', ['kategori' => $kategori->slug_kategori, 'dir' => '/']);
             }
-            // Jika role admin
+            // Jika role member
             if(Auth::user()->is_admin == 0){
                 // Redirect to '/'
                 return redirect()->route('member.filemanager.index', ['kategori' => $kategori->slug_kategori, 'dir' => '/']);
@@ -519,5 +519,33 @@ class FileController extends Controller
         }
 
         return $folders;
+    }
+
+    /**
+     * Menginput voucher
+     *
+	 * string $category
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function inputVoucher(Request $request, $category)
+    {
+		// Kategori
+		$kategori = FolderKategori::where('slug_kategori','=',$category)->firstOrFail();
+
+		// Mengecek kecocokan voucher
+		$data = Folder::where('id_folder','=',$request->id)->where('folder_voucher','=',$request->voucher)->first();
+		
+		if(!$data){
+			// Redirect
+			return redirect()->route('member.filemanager.index', ['kategori' => $kategori->slug_kategori, 'dir' => $request->dir])->with(['message' => 'Tidak berhasil menggunakan voucher.', 'id_folder' => $request->id]);
+		}
+		else{
+			// Simpan ke session
+			$request->session()->put('id_folder', $data->id_folder);
+			
+			// Redirect
+			return redirect()->route('member.filemanager.index', ['kategori' => $kategori->slug_kategori, 'dir' => $data->folder_dir]);
+		}
     }
 }

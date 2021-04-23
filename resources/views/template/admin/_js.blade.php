@@ -13,7 +13,15 @@
     $(function(){
         // Tooltip
         $('[data-toggle="tooltip"]').tooltip();
+		
+		// Manage Screen
+		manage_screen();
     });
+	
+	$(window).on("resize", function(){
+		// Manage Screen
+		manage_screen();
+	});
 
     // Button Show Modal Image
     $(document).on("click", ".btn-image", function(e){
@@ -192,4 +200,14 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
+	
+	// Manage screen
+	function manage_screen(){
+		if(screen.width <= 768){
+			$("body").addClass("sidenav-closed");
+		}
+		else{
+			$("body").removeClass("sidenav-closed");
+		}
+	}
 </script>

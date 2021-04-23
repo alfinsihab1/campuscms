@@ -1,5 +1,8 @@
 <?php
 
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes (by FaturCMS)
@@ -40,6 +43,22 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	// Dashboard
 	Route::get('/admin', $namespacePrefix.'DashboardController@admin')->name('admin.dashboard');
 
+	Route::get('/admin/update', function(){
+		ini_set('max_execution_time', 0);
+		ini_set('memory_limit', -1);
+	
+		$process = new Process(['/opt/plesk/php/7.3/bin/php', '/usr/lib64/plesk-9.0/composer.phar', 'update', 'ajifatur/faturcms'], base_path());
+		$process->setTimeout(null);
+		$process->run();
+	
+		// executes after the command finishes
+		if(!$process->isSuccessful()){
+			throw new ProcessFailedException($process);
+		}
+	
+		echo "<pre>".$process->getOutput()."</pre>";
+	});
+	
 	// Profil
 	Route::get('/admin/profile', $namespacePrefix.'UserController@profile')->name('admin.profile');
 
@@ -314,6 +333,7 @@ Route::group(['middleware' => ['faturcms.member']], function() use ($namespacePr
 	// File Manager
 	Route::get('/member/file-manager/{kategori}', $namespacePrefix.'FileController@index')->name('member.filemanager.index');
 	Route::get('/member/file-manager/{kategori}/file/detail/{id}', $namespacePrefix.'FileController@detail')->name('member.file.detail');
+	Route::post('/member/file-manager/{kategori}/voucher', $namespacePrefix.'FileController@inputVoucher')->name('member.file.voucher');
 
 	// Pelatihan
 	Route::get('/member/pelatihan', $namespacePrefix.'PelatihanController@index')->name('member.pelatihan.index');

@@ -50,10 +50,10 @@
                                 <div class="col-md-3 col-sm-6 mb-3">
                                     <div class="card">
                                         <div class="card-body text-center">
-                                            <a href="{{ route('member.filemanager.index', ['kategori' => $kategori->slug_kategori, 'dir' => $data->folder_dir]) }}">
+                                            <a class="{{ $data->folder_voucher != '' ? session()->get('id_folder') != $data->id_folder ? 'btn-voucher' : '' : '' }}"  data-id="{{ $data->id_folder }}" href="{{ route('member.filemanager.index', ['kategori' => $kategori->slug_kategori, 'dir' => $data->folder_dir]) }}">
                                                 <img src="{{ image('assets/images/folder/'.$data->folder_icon, 'folder') }}" height="100" style="max-width: 100%;">
                                             </a>
-                                            <p class="h6 mt-3 mb-0"><a href="{{ route('member.filemanager.index', ['kategori' => $kategori->slug_kategori, 'dir' => $data->folder_dir]) }}">{{ $data->folder_nama }}</a></p>
+                                            <p class="h6 mt-3 mb-0"><a class="{{ $data->folder_voucher != '' ? session()->get('id_folder') != $data->id_folder ? 'btn-voucher' : '' : '' }}" data-id="{{ $data->id_folder }}" href="{{ route('member.filemanager.index', ['kategori' => $kategori->slug_kategori, 'dir' => $data->folder_dir]) }}">{{ $data->folder_nama }}</a></p>
                                         </div>
                                         <div class="card-footer d-flex justify-content-between">
                                             <span data-toggle="tooltip" title="{{ count_folders($data->id_folder, $data->folder_kategori) }} Folder"><i class="fa fa-folder-open mr-1"></i>{{ count_folders($data->id_folder, $data->folder_kategori) }}</span>
@@ -100,5 +100,60 @@
     <!-- /Row -->
 </main>
 <!-- /Main -->
+
+<!-- Modal Voucher -->
+<div class="modal fade" id="modal-voucher" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Input Voucher</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+				@if(Session::get('message'))
+				<div class="alert alert-danger text-center">
+					{{ Session::get('message') }}
+				</div>
+				@endif
+				<div class="alert alert-warning text-center">
+					Masukkan kode voucher yang Anda miliki untuk mengakses konten ini.
+				</div>
+				<form id="form-voucher" method="post" action="{{ route('member.file.voucher', ['kategori' => $kategori->slug_kategori]) }}">
+					{{ csrf_field() }}
+					<input type="hidden" name="id" value="{{ Session::get('id_folder') }}">
+					<input type="hidden" name="dir" value="{{ $_GET['dir'] }}">
+					<div class="form-group">
+						<label>Kode Voucher</label>
+						<input type="text" name="voucher" class="form-control" required>
+					</div>
+					<div class="form-group">
+                		<button type="submit" class="btn btn-success">Submit</button>
+					</div>
+				</form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Modal Voucher -->
+
+@endsection
+
+@section('js-extra')
+
+<script>
+    @if(Session::get('message'))
+        $("#modal-voucher").modal("show");
+	@endif
+	
+	// Button voucher
+	$(document).on("click", ".btn-voucher", function(e){
+		e.preventDefault();
+		var id = $(this).data("id");
+		$("#form-voucher input[name=id]").val(id);
+		$("#modal-voucher").modal("show");
+	});
+</script>
 
 @endsection

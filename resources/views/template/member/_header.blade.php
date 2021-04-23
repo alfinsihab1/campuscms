@@ -1,15 +1,17 @@
-<!-- Navbar-->
+<!-- Navbar -->
 <header class="app-header">
   <a class="app-header__logo" href="{{ route('site.home') }}" target="_blank">
     Member Area
     <!-- <img width="160" src="{{asset('assets/images/logo/campusnet.webp')}}"> -->
   </a>
-  <!-- Sidebar toggle button-->
+  <!-- Sidebar Toggle Button -->
   <a class="app-sidebar__toggle" href="#" data-toggle="sidebar"></a>
-  <!-- Navbar Right Menu-->
+
+  <!-- Navbar Right Menu -->
   <ul class="app-nav ml-auto ml-md">
+
     <!-- User Menu -->
-    <li class="dropdown" data-toggle="tooltip" title="Akun"><a class="app-nav__item" href="#" data-toggle="dropdown"><i class="fa fa-user fa-lg"></i></a>
+    <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown"><i class="fa fa-user fa-lg" data-toggle="tooltip" title="Akun"></i></a>
       <ul class="dropdown-menu settings-menu dropdown-menu-right">
         <li><a class="dropdown-item" href="{{ route('member.profile') }}"><i class="fa fa-cog fa-lg"></i> Profil</a></li>
         @if(has_access('SignatureController::input', Auth::user()->role, false))
@@ -22,5 +24,6 @@
       </ul>
     </li>
     <!-- /User Menu -->
+    
   </ul>
 </header>

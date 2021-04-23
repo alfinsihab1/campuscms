@@ -1,24 +1,26 @@
-<!-- Navbar-->
+<!-- Navbar -->
 <header class="app-header">
   <a class="app-header__logo" href="{{ route('site.home') }}" target="_blank">
     Admin Area
     <!-- <img width="160" src="{{asset('assets/images/logo/campusnet.webp')}}"> -->
   </a>
-  <!-- Sidebar toggle button-->
+  
+  <!-- Sidebar Toggle Button -->
   <a class="app-sidebar__toggle" href="#" data-toggle="sidebar"></a>
-  <!-- Navbar Right Menu-->
+
+  <!-- Navbar Right Menu -->
   <ul class="app-nav ml-auto ml-md">
 
     <!-- Role Permission Menu -->
     @if(has_access('RolePermissionController::index', Auth::user()->role, false))
-    <li data-toggle="tooltip" title="Role Permission"><a class="app-nav__item" href="{{ route('admin.rolepermission.index') }}"><i class="fa fa-exclamation-triangle fa-lg"></i></a></li>
+    <li><a class="app-nav__item" href="{{ route('admin.rolepermission.index') }}"><i class="fa fa-exclamation-triangle fa-lg" data-toggle="tooltip" title="Role Permission"></i></a></li>
     @endif
     <!-- /Role Permission Menu -->
 
     <!-- Notification Menu -->
-    <li class="dropdown" data-toggle="tooltip" title="Notifikasi">
+    <li class="dropdown">
       <a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Show notifications">
-        <i class="fa fa-bell fa-lg"></i>
+        <i class="fa fa-bell fa-lg" data-toggle="tooltip" title="Notifikasi"></i>
         @if(count_notif_all() > 0)
         <span class="badge badge-info">{{ count_notif_all() }}</span>
         @endif
@@ -57,7 +59,7 @@
     <!-- /Notification Menu -->
 
     <!-- User Menu -->
-    <li class="dropdown" data-toggle="tooltip" title="Akun"><a class="app-nav__item" href="#" data-toggle="dropdown"><i class="fa fa-user fa-lg"></i></a>
+    <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown"><i class="fa fa-user fa-lg" data-toggle="tooltip" title="Akun"></i></a>
       <ul class="dropdown-menu settings-menu dropdown-menu-right">
         <li><a class="dropdown-item" href="{{ route('admin.profile') }}"><i class="fa fa-cog fa-lg"></i> Profil</a></li>
         @if(has_access('SignatureController::input', Auth::user()->role, false))

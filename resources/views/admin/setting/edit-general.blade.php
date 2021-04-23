@@ -1,6 +1,6 @@
 @extends('faturcms::template.admin.main')
 
-@section('title', 'Pengaturan Umum')
+@section('title', 'Pengaturan '.$kategori->kategori)
 
 @section('content')
 
@@ -9,10 +9,10 @@
 
     <!-- Breadcrumb -->
     @include('faturcms::template.admin._breadcrumb', ['breadcrumb' => [
-        'title' => 'Pengaturan Umum',
+        'title' => 'Pengaturan '.$kategori->kategori,
         'items' => [
             ['text' => 'Pengaturan', 'url' => route('admin.setting.index')],
-            ['text' => 'Umum', 'url' => '#'],
+            ['text' => $kategori->kategori, 'url' => '#'],
         ]
     ]])
     <!-- /Breadcrumb -->
@@ -30,15 +30,20 @@
                         <button class="close" type="button" data-dismiss="alert">×</button>{{ Session::get('message') }}
                     </div>
                     @endif
-                    <form id="form" method="post" action="{{ route('admin.setting.update', ['category' => 'general']) }}" enctype="multipart/form-data">
+                    <form id="form" method="post" action="{{ route('admin.setting.update', ['category' => $kategori->slug]) }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         @foreach($setting as $data)
                         <div class="form-group row">
-                            <label class="col-md-2 col-form-label">{{ $data->setting_name }} <span class="text-danger">{{ is_int(strpos($data->setting_rules, 'required')) ? '*' : '' }}</span></label>
+                            <label class="col-md-2 col-form-label">
+                                {{ $data->setting_name }}
+                                <span class="text-danger">{{ is_int(strpos($data->setting_rules, 'required')) ? '*' : '' }}</span>
+                                <br>
+                                <span class="small text-muted">{{ $data->setting_key }}</span>
+                            </label>
                             <div class="col-md-10">
-                                <input type="text" name="setting[{{ str_replace('site.', '', $data->setting_key) }}]" class="form-control {{ $errors->has('setting.'.str_replace('site.', '', $data->setting_key)) ? 'is-invalid' : '' }}" value="{{ $data->setting_value }}">
-                                @if($errors->has('setting.'.str_replace('site.', '', $data->setting_key)))
-                                <div class="small text-danger mt-1">{{ ucfirst($errors->first('setting.'.str_replace('site.', '', $data->setting_key))) }}</div>
+                                <input type="text" name="setting[{{ str_replace($kategori->prefix, '', $data->setting_key) }}]" class="form-control {{ $errors->has('setting.'.str_replace($kategori->prefix, '', $data->setting_key)) ? 'is-invalid' : '' }}" value="{{ $data->setting_value }}">
+                                @if($errors->has('setting.'.str_replace($kategori->prefix, '', $data->setting_key)))
+                                <div class="small text-danger mt-1">{{ ucfirst($errors->first('setting.'.str_replace($kategori->prefix, '', $data->setting_key))) }}</div>
                                 @endif
                             </div>
                         </div>

@@ -11,12 +11,7 @@
   <!-- Navbar Right Menu -->
   <ul class="app-nav ml-auto ml-md">
 
-    <!-- Role Permission Menu -->
-    @if(has_access('RolePermissionController::index', Auth::user()->role, false))
-    <li><a class="app-nav__item" href="{{ route('admin.rolepermission.index') }}"><i class="fa fa-exclamation-triangle fa-lg" data-toggle="tooltip" title="Role Permission"></i></a></li>
-    @endif
-    <!-- /Role Permission Menu -->
-
+    @if(has_access('KomisiController::index', Auth::user()->role, false) || has_access('WithdrawalController::index', Auth::user()->role, false) || has_access('PelatihanController::transaction', Auth::user()->role, false))
     <!-- Notification Menu -->
     <li class="dropdown">
       <a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Show notifications">
@@ -57,6 +52,7 @@
       </ul>
     </li>
     <!-- /Notification Menu -->
+    @endif
 
     <!-- User Menu -->
     <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown"><i class="fa fa-user fa-lg" data-toggle="tooltip" title="Akun"></i></a>

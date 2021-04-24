@@ -34,6 +34,7 @@
 		#tipe {font-family: 'Lato-Bold'; font-size: 21px; position: absolute; top: 437px; left: 88px; width: 950px; text-align: center;}
 		#deskripsi {position: absolute; top: 488px; left: 88px; width: 950px; line-height: 20px; text-align: center;}
 		#judul {font-family: 'Lato-Bold';}
+		#predikat {font-family: 'Lato-Bold'; font-size: 21px;}
 		#text-mengetahui {position: absolute; top: 575px; left: 88px;}
 		#text-direktur {position: absolute; top: 597px; left: 88px;}
 		#direktur {position: absolute; top: 705px; left: 88px;}
@@ -89,7 +90,16 @@
 	<div id="text-diberikan-kepada">Diberikan Kepada:</div>
 	<div id="nama">{{ $member->nama_user}}</div>
 	<div id="tipe">Sebagai Peserta</div>
-	<div id="deskripsi">{{ $pelatihan->kategori }} dengan tema <span id="judul">"{{ $pelatihan->nama_pelatihan }}"</span>. <br>Diselenggarakan oleh {{ setting('site.name') }} pada tanggal {{ date('Y-m-d', strtotime($pelatihan->tanggal_sertifikat_from)) == date('Y-m-d', strtotime($pelatihan->tanggal_sertifikat_to)) ? generate_date($pelatihan->tanggal_sertifikat_to) : generate_date($pelatihan->tanggal_sertifikat_from).' sampai '.generate_date($pelatihan->tanggal_sertifikat_to) }}{{ $pelatihan->tempat_pelatihan != '' ? ' di '.$pelatihan->tempat_pelatihan : '' }}.</div>
+	<div id="deskripsi">
+		{{ $pelatihan->kategori }} dengan tema <span id="judul">"{{ $pelatihan->nama_pelatihan }}"</span>.
+		<br>
+		Diselenggarakan oleh {{ setting('site.name') }} pada tanggal {{ date('Y-m-d', strtotime($pelatihan->tanggal_sertifikat_from)) == date('Y-m-d', strtotime($pelatihan->tanggal_sertifikat_to)) ? generate_date($pelatihan->tanggal_sertifikat_to) : generate_date($pelatihan->tanggal_sertifikat_from).' sampai '.generate_date($pelatihan->tanggal_sertifikat_to) }}{{ $pelatihan->tempat_pelatihan != '' ? ' di '.$pelatihan->tempat_pelatihan : '' }}{{ $status_pelatihan == '' ? '.' : ',' }}
+		@if($status_pelatihan != '')
+			<br>
+			dengan predikat:
+			<span id="predikat">{{ $status_pelatihan }}</span>
+		@endif
+	</div>
 	<div id="text-mengetahui">Mengetahui,</div>
 	<div id="text-direktur">Direktur {{ setting('site.name') }}</div>
 	<div id="direktur">{{ $direktur->nama_user }}</div>

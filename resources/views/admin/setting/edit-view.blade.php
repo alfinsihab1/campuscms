@@ -43,9 +43,12 @@
                             <div class="col-md-10">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text {{ $errors->has('setting.'.str_replace($kategori->prefix, '', $data->setting_key)) ? 'border-danger' : '' }}">Rp.</span>
+                                        <span class="input-group-text {{ $errors->has('setting.'.str_replace($kategori->prefix, '', $data->setting_key)) ? 'border-danger' : '' }}">{{ is_int(strpos($data->setting_key, 'sertifikat')) ? resource_path('views\pdf') : resource_path('views\auth') }}/</span>
                                     </div>
-                                    <input type="text" name="setting[{{ str_replace($kategori->prefix, '', $data->setting_key) }}]" class="form-control {{ $errors->has('setting.'.str_replace($kategori->prefix, '', $data->setting_key)) ? 'is-invalid' : '' }} number-only thousand-format" value="{{ number_format($data->setting_value,0,'.','.') }}">
+                                    <input type="text" name="setting[{{ str_replace($kategori->prefix, '', $data->setting_key) }}]" class="form-control {{ $errors->has('setting.'.str_replace($kategori->prefix, '', $data->setting_key)) ? 'is-invalid' : '' }}" value="{{ $data->setting_value }}">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text {{ $errors->has('setting.'.str_replace($kategori->prefix, '', $data->setting_key)) ? 'border-danger' : '' }}">.blade.php</span>
+                                    </div>
                                 </div>
                                 @if($errors->has('setting.'.str_replace($kategori->prefix, '', $data->setting_key)))
                                 <div class="small text-danger mt-1">{{ ucfirst($errors->first('setting.'.str_replace($kategori->prefix, '', $data->setting_key))) }}</div>

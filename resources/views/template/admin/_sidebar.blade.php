@@ -19,6 +19,20 @@
         <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.user.index'))) ? 'active' : '' }}" href="{{ route('admin.user.index') }}"><i class="app-menu__icon fa fa-users"></i><span class="app-menu__label">User</span></a></li>
         @endif
         
+        @if(has_access('RoleController::index', Auth::user()->role, false) || has_access('RolePermissionController::index', Auth::user()->role, false))
+        <li class="treeview {{ is_int(strpos(Request::url(), route('admin.role.index'))) ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-key"></i><span class="app-menu__label">Role</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+          <ul class="treeview-menu">
+            @if(has_access('RoleController::index', Auth::user()->role, false))
+            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.role.index'))) && !is_int(strpos(Request::url(), route('admin.rolepermission.index'))) ? 'active' : '' }}" href="{{ route('admin.role.index') }}"><i class="icon fa fa-circle-o"></i> Data Role</a></li>
+            @endif
+            @if(has_access('RolePermissionController::index', Auth::user()->role, false))
+            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.rolepermission.index'))) ? 'active' : '' }}" href="{{ route('admin.rolepermission.index') }}"><i class="icon fa fa-circle-o"></i> Role Permission</a></li>
+            @endif
+          </ul>
+        </li>
+        @endif
+        
+        @if(has_access('SettingController::index', Auth::user()->role, false))
         <li class="treeview {{ is_int(strpos(Request::url(), route('admin.setting.index'))) ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-cogs"></i><span class="app-menu__label">Pengaturan</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
             <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.setting.edit', ['category' => 'general']))) ? 'active' : '' }}" href="{{ route('admin.setting.edit', ['category' => 'general']) }}"><i class="app-menu__icon fa fa-circle-o"></i> Umum</a></li>
@@ -26,8 +40,12 @@
             <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.setting.edit', ['category' => 'price']))) ? 'active' : '' }}" href="{{ route('admin.setting.edit', ['category' => 'price']) }}"><i class="app-menu__icon fa fa-circle-o"></i> Harga</a></li>
             <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.setting.edit', ['category' => 'color']))) ? 'active' : '' }}" href="{{ route('admin.setting.edit', ['category' => 'color']) }}"><i class="app-menu__icon fa fa-circle-o"></i> Warna</a></li>
             <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.setting.edit', ['category' => 'certificate']))) ? 'active' : '' }}" href="{{ route('admin.setting.edit', ['category' => 'certificate']) }}"><i class="app-menu__icon fa fa-circle-o"></i> Sertifikat</a></li>
+            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.setting.edit', ['category' => 'view']))) ? 'active' : '' }}" href="{{ route('admin.setting.edit', ['category' => 'view']) }}"><i class="app-menu__icon fa fa-circle-o"></i> Halaman</a></li>
+            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.setting.edit', ['category' => 'receivers']))) ? 'active' : '' }}" href="{{ route('admin.setting.edit', ['category' => 'receivers']) }}"><i class="app-menu__icon fa fa-circle-o"></i> Penerima Notifikasi</a></li>
+            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.setting.edit', ['category' => 'referral']))) ? 'active' : '' }}" href="{{ route('admin.setting.edit', ['category' => 'referral']) }}"><i class="app-menu__icon fa fa-circle-o"></i> Referral</a></li>
           </ul>
         </li>
+        @endif
 
         @if(has_access('RekeningController::index', Auth::user()->role, false))
         <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.rekening.index'))) ? 'active' : '' }}" href="{{ route('admin.rekening.index') }}"><i class="app-menu__icon fa fa-id-card"></i><span class="app-menu__label">Rekening</span></a></li>
@@ -171,7 +189,9 @@
         <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.absensi.index'))) ? 'active' : '' }}" href="{{ route('admin.absensi.index') }}"><i class="app-menu__icon fa fa-clipboard"></i><span class="app-menu__label">Absensi Online</span></a></li>
         @endif
 
+        @if(has_access('CommandController::index', Auth::user()->role, false))
         <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.command.index'))) ? 'active' : '' }}" href="{{ route('admin.command.index') }}"><i class="app-menu__icon fa fa-terminal"></i><span class="app-menu__label">Command</span></a></li>
+        @endif
 
       </ul>
     </aside>

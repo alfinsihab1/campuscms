@@ -19,8 +19,25 @@ class SettingController extends Controller
      */
     public function index()
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // Pengaturan
+        $setting = [
+            ['title' => 'Umum', 'description' => 'Pengaturan Nama Website, Email, Alamat, dll', 'url' => route('admin.setting.edit', ['category' => 'general'])],
+            ['title' => 'Icon', 'description' => 'Pengaturan Icon', 'url' => route('admin.setting.edit', ['category' => 'icon'])],
+            ['title' => 'Harga', 'description' => 'Pengaturan Komisi, Biaya Aktivasi, Withdrawal, dll', 'url' => route('admin.setting.edit', ['category' => 'price'])],
+            ['title' => 'Warna', 'description' => 'Pengaturan Warna Primer, Sekunder, Tersier', 'url' => route('admin.setting.edit', ['category' => 'color'])],
+            ['title' => 'Sertifikat', 'description' => 'Pengaturan Kode, Background Sertifikat', 'url' => route('admin.setting.edit', ['category' => 'certificate'])],
+            ['title' => 'Halaman', 'description' => 'Pengaturan Halaman Login, Register, Sertifikat, dll', 'url' => route('admin.setting.edit', ['category' => 'view'])],
+            ['title' => 'Penerima Notifikasi', 'description' => 'Pengaturan Penerima Notifikasi Email', 'url' => route('admin.setting.edit', ['category' => 'receivers'])],
+            ['title' => 'Referral', 'description' => 'Pengaturan Default Referral', 'url' => route('admin.setting.edit', ['category' => 'referral'])],
+        ];
+
         // View
-        return view('faturcms::admin.setting.index');
+        return view('faturcms::admin.setting.index', [
+            'setting' => $setting
+        ]);
     }
 
     /**
@@ -31,16 +48,23 @@ class SettingController extends Controller
      */
     public function edit($category)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
         // Get prefix
         $kategori = KategoriSetting::where('slug','=',$category)->firstOrFail();
 
         // Setting
         $setting = Setting::where('setting_category','=',$kategori->id_ks)->get();
 
+        // User
+        $users = $category == 'referral' ? User::where('is_admin','=',0)->where('status','=',1)->where('email_verified','=',1)->orderBy('role','asc')->get() : null;
+
         // View
         return view('faturcms::admin.setting.edit-'.$category, [
             'kategori' => $kategori,
             'setting' => $setting,
+            'users' => $users,
         ]);
     }
 

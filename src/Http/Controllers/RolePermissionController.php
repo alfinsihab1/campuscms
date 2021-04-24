@@ -23,7 +23,7 @@ class RolePermissionController extends Controller
         has_access(generate_method(__METHOD__), Auth::user()->role);
 
 		// Get data permission
-		$permissions = Permission::all();
+		$permissions = Permission::orderBy('order_permission','asc')->get();
 
         // Get data role
         $roles = Role::all();

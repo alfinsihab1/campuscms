@@ -265,6 +265,11 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::post('/admin/absensi/delete', $namespacePrefix.'AbsensiController@delete')->name('admin.absensi.delete');
 	Route::get('/admin/absensi/export', $namespacePrefix.'AbsensiController@export')->name('admin.absensi.export');
 
+	// Role
+	Route::get('/admin/role', $namespacePrefix.'RoleController@index')->name('admin.role.index');
+	Route::get('/admin/role/edit/{id}', $namespacePrefix.'RoleController@edit')->name('admin.role.edit');
+	Route::post('/admin/role/update', $namespacePrefix.'RoleController@update')->name('admin.role.update');
+
 	// Role Permission
 	Route::get('/admin/role-permission', $namespacePrefix.'RolePermissionController@index')->name('admin.rolepermission.index');
 	Route::post('/admin/role-permission/update-access', $namespacePrefix.'RolePermissionController@update')->name('admin.rolepermission.update');

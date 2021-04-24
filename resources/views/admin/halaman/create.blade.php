@@ -67,9 +67,12 @@
                             <div class="col-md-10">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text {{ $errors->has('view') ? 'border-danger' : '' }}">{{ resource_path('views\page') }}\</span>
+                                        <span class="input-group-text {{ $errors->has('view') ? 'border-danger' : '' }}">{{ resource_path('views\page') }}/</span>
                                     </div>
                                     <input type="text" name="view" class="form-control {{ $errors->has('view') ? 'is-invalid' : '' }}" value="{{ old('view') }}">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text {{ $errors->has('view') ? 'border-danger' : '' }}">.blade.php</span>
+                                    </div>
                                 </div>
                                 @if($errors->has('view'))
                                 <div class="small text-danger mt-1">{{ ucfirst($errors->first('view')) }}</div>

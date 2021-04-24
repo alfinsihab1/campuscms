@@ -41,12 +41,7 @@
                                 <span class="small text-muted">{{ $data->setting_key }}</span>
                             </label>
                             <div class="col-md-10">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text {{ $errors->has('setting.'.str_replace($kategori->prefix, '', $data->setting_key)) ? 'border-danger' : '' }}">Rp.</span>
-                                    </div>
-                                    <input type="text" name="setting[{{ str_replace($kategori->prefix, '', $data->setting_key) }}]" class="form-control {{ $errors->has('setting.'.str_replace($kategori->prefix, '', $data->setting_key)) ? 'is-invalid' : '' }} number-only thousand-format" value="{{ number_format($data->setting_value,0,'.','.') }}">
-                                </div>
+                                <input type="text" name="setting[{{ str_replace($kategori->prefix, '', $data->setting_key) }}]" class="form-control {{ $errors->has('setting.'.str_replace($kategori->prefix, '', $data->setting_key)) ? 'is-invalid' : '' }} tagsinput" value="{{ $data->setting_value }}">
                                 @if($errors->has('setting.'.str_replace($kategori->prefix, '', $data->setting_key)))
                                 <div class="small text-danger mt-1">{{ ucfirst($errors->first('setting.'.str_replace($kategori->prefix, '', $data->setting_key))) }}</div>
                                 @endif
@@ -70,5 +65,14 @@
     <!-- /Row -->
 </main>
 <!-- /Main -->
+
+@endsection
+
+@section('js-extra')
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js" integrity="sha512-9UR1ynHntZdqHnwXKTaOm1s6V9fExqejKvg5XMawEMToW4sSw+3jtLrYfZPijvnwnnE8Uol1O9BcAskoxgec+g==" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $(".tagsinput").tagsinput();
+</script>
 
 @endsection

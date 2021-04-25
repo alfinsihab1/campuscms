@@ -99,8 +99,17 @@ class SettingController extends Controller
         }
         // Jika tidak ada error
         else{
+            // Jika kategori logo
+            if($category == 'logo'){
+                // Get data
+                $setting = Setting::where('setting_key','=',$kategori->prefix.$category)->first();
+
+                // Update logo
+                $setting->setting_value = generate_image_name("assets/images/logo/", $request->gambar, $request->gambar_url) != '' ? generate_image_name("assets/images/logo/", $request->gambar, $request->gambar_url) : $setting->setting_value;
+                $setting->save();
+            }
             // Jika kategori icon
-            if($category == 'icon'){
+            elseif($category == 'icon'){
                 // Get data
                 $setting = Setting::where('setting_key','=',$kategori->prefix.$category)->first();
 
@@ -128,7 +137,18 @@ class SettingController extends Controller
     }
       
     /**
-     * Menampilkan file gambar
+     * Menampilkan file logo
+     *
+     * @return \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function showLogos(Request $request)
+    {
+        echo json_encode(generate_file(public_path('assets/images/logo')));
+    }
+      
+    /**
+     * Menampilkan file icon
      *
      * @return \Illuminate\Http\Request
      * @return \Illuminate\Http\Response

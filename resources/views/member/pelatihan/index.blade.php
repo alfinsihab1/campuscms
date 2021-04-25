@@ -1,4 +1,4 @@
-@extends('faturcms::template.member.main')
+@extends('faturcms::template.admin.main')
 
 @section('title', 'Pelatihan Tersedia')
 
@@ -8,7 +8,7 @@
 <main class="app-content">
 
     <!-- Breadcrumb -->
-    @include('faturcms::template.member._breadcrumb', ['breadcrumb' => [
+    @include('faturcms::template.admin._breadcrumb', ['breadcrumb' => [
         'title' => 'Pelatihan Tersedia',
         'items' => [
             ['text' => 'Pelatihan', 'url' => route('member.pelatihan.index')],

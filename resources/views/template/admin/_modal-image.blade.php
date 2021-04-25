@@ -19,7 +19,9 @@
                 </ul>
                 <div class="tab-content py-2" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-upload" role="tabpanel" aria-labelledby="pills-upload-tab">
+                        @if(!isset($noCroppie))
                         <p class="text-center mb-2">Ukuran {{ $croppieWidth }}x{{ $croppieHeight }} pixel.</p>
+                        @endif
                         <form id="form-upload" method="post" action="#" enctype="multipart/form-data">
                             <div class="row">
                                 <div class="col-12">
@@ -58,7 +60,9 @@
                 </button>
             </div>
             <div class="modal-body">
+              @if(!isset($noCroppie))
               <p class="text-center mb-0">Ukuran {{ $croppieWidth }}x{{ $croppieHeight }} pixel.</p>
+              @endif
               <div class="table-responsive">
                 <div id="demo" class="mt-3"></div>
               </div>

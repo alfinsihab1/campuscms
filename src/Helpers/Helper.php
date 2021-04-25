@@ -1,6 +1,39 @@
 <?php
 
+/**
+ * Main Helpers:
+ * @method has_access(string $permission, int $role, bool $isAbort = true)
+ * @method role(int|string $key)
+ * @method setting(string $key)
+ * @method image(string $file, string $category = '')
+ * @method status(int $status)
+ * @method gender(string $gender)
+ * @method kategori_pelatihan(int $id)
+ * @method psikolog(int $id)
+ * @method tipe_halaman(int $id)
+ * @method referral(string $ref, string $route, array $routeParams = [])
+ * @method sponsor(string $username)
+ * @method message(string $key)
+ * @method setting_rules(string $key)
+ *
+ * Array Helpers:
+ * @method array_validation_messages()
+ * @method array_indo_month()
+ * @method array_kategori_materi()
+ * @method array_receivers()
+ * @method array_tag()
+ *
+ * Other Helpers:
+ * @method slugify(string $text, string $table, string $field, string $primaryKey, int $id = null)
+ * @method rename_permalink(string $permalink, int $count = 0)
+ * @method upload_file(string $code, string $path)
+ * @method upload_quill_image(string $code, string $path)
+ * @method package_path(string $path)
+ * @method file_replace_contents(string $source_file, string $destination_file, string $contents1 = '', string $contents2 = '', bool $replace = false)
+ */
+
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use App\User;
 use Ajifatur\FaturCMS\Models\KategoriMateri;
 use Ajifatur\FaturCMS\Models\KategoriPelatihan;
@@ -9,12 +42,6 @@ use Ajifatur\FaturCMS\Models\Role;
 use Ajifatur\FaturCMS\Models\RolePermission;
 use Ajifatur\FaturCMS\Models\Setting;
 use Ajifatur\FaturCMS\Models\Tag;
-
-/**
- *
- * Main Helpers
- * 
- */
 
 // Get has access
 if(!function_exists('has_access')){
@@ -124,18 +151,18 @@ if(!function_exists('kategori_pelatihan')){
 
 // Get psikolog
 if(!function_exists('psikolog')){
-    function psikolog($psikolog){
-        if($psikolog == 1) return 'Psikolog';
-        elseif($psikolog == 2) return 'Konsultan';
+    function psikolog($id){
+        if($id == 1) return 'Psikolog';
+        elseif($id == 2) return 'Konsultan';
         else return '';
     }
 }
 
 // Get tipe halaman
 if(!function_exists('tipe_halaman')){
-    function tipe_halaman($tipe){
-        if($tipe == 1) return 'Auto';
-        elseif($tipe == 2) return 'Manual';
+    function tipe_halaman($id){
+        if($id == 1) return 'Auto';
+        elseif($id == 2) return 'Manual';
         else return '';
     }
 }
@@ -249,19 +276,6 @@ if(!function_exists('array_tag')){
  * 
  */
 
-// Slugify
-if(!function_exists('slugify')){
-    function slugify($text, $table, $field, $primaryKey, $id = null){
-        $permalink = generate_permalink($text);
-        $i = 1;
-        while(count_existing_data($table, $field, $permalink, $primaryKey, $id) > 0){
-            $permalink = rename_permalink(generate_permalink($text), $i);
-            $i++;
-        }
-        return $permalink;
-    }
-}
-
 /**
  *
  * Upload File
@@ -326,9 +340,56 @@ if(!function_exists('upload_quill_image')){
  * 
  */
 
+// Slugify
+if(!function_exists('slugify')){
+    function slugify($text, $table, $field, $primaryKey, $id = null){
+        $permalink = generate_permalink($text);
+        $i = 1;
+        while(count_existing_data($table, $field, $permalink, $primaryKey, $id) > 0){
+            $permalink = rename_permalink(generate_permalink($text), $i);
+            $i++;
+        }
+        return $permalink;
+    }
+}
+
 // Mengganti nama permalink jika ada yang sama
 if(!function_exists('rename_permalink')){
     function rename_permalink($permalink, $count = 0){
         return $permalink."-".($count+1);
+    }
+}
+
+// Package path
+if(!function_exists('package_path')){
+    function package_path($path = ''){
+        if(substr($path, 0, 1) != '/') $path = '/'.$path;
+        return base_path('vendor/ajifatur/faturcms'.$path);
+    }
+}
+
+// Mengganti konten file
+if(!function_exists('file_replace_contents')){
+    function file_replace_contents($source_file, $destination_file, $contents1 = '', $contents2 = '', $replace = false){
+        // Jika konten kosong, berarti mengganti "semua" isi file
+        if($contents1 == ''){
+            if(File::exists($source_file) && File::exists($destination_file)){
+                File::put($destination_file, File::get($source_file));
+            }
+        }
+        // Jika konten tidak kosong, berarti mengganti isi file berdasarkan konten yang dicari
+        else{
+            // Jika belum pernah diupdate
+            if(strpos(File::get($destination_file), $contents1) === false){
+                // Jika false, tidak mereplace
+                if($replace === false)
+                    File::append($destination_file, $contents2);
+                // Jika true, berarti mereplace
+                else{
+                    $get_contents = File::get($destination_file);
+                    File::put($destination_file, str_replace($contents2, $contents1, $get_contents));
+                }
+            }
+        }
     }
 }

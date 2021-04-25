@@ -54,27 +54,40 @@ class InstallCommand extends Command
      */
     public function handle()
     {
+        // First info
         $this->info('Installing FaturCMS package');
 
         // Publish assets and templates
         $this->call('vendor:publish', ['--provider' => FaturCMSServiceProvider::class, '--tag' => 'assets']);
         $this->call('vendor:publish', ['--provider' => FaturCMSServiceProvider::class, '--tag' => 'templates']);
 
-        // Remove config file if exist and publish it
-        if(File::exists(config_path('faturcms.php'))) File::delete(config_path('faturcms.php'));
-        $this->call('vendor:publish', ['--provider' => FaturCMSServiceProvider::class, '--tag' => 'config']);
-
-        // Remove exception Handler if exist and publish it
-        if(File::exists(app_path('Exceptions/Handler.php'))) File::delete(app_path('Exceptions/Handler.php'));
-        $this->call('vendor:publish', ['--provider' => FaturCMSServiceProvider::class, '--tag' => 'exception']);
-
-        // Remove model User if exist and publish it
-        if(File::exists(app_path('User.php'))) File::delete(app_path('User.php'));
-        $this->call('vendor:publish', ['--provider' => FaturCMSServiceProvider::class, '--tag' => 'userModel']);
-
         // Publish views
         $this->call('vendor:publish', ['--provider' => FaturCMSServiceProvider::class, '--tag' => 'viewAuth']);
         $this->call('vendor:publish', ['--provider' => FaturCMSServiceProvider::class, '--tag' => 'viewPDF']);
+
+        // Publish or update config/faturcms.php
+        if(!File::exists(config_path('faturcms.php')))
+            $this->call('vendor:publish', ['--provider' => FaturCMSServiceProvider::class, '--tag' => 'config']);
+        else{
+            $this->info('Updating FaturCMS configuration');
+            file_replace_contents(package_path('publishable/config/faturcms.php'), config_path('faturcms.php'));
+        }
+
+        // Publish or update app/Exceptions/Handler.php
+        if(!File::exists(app_path('Exceptions/Handler.php')))
+            $this->call('vendor:publish', ['--provider' => FaturCMSServiceProvider::class, '--tag' => 'exception']);
+        else{
+            $this->info('Updating Exceptions Handler');
+            file_replace_contents(package_path('publishable/exceptions/Handler.php'), app_path('Exceptions/Handler.php'));
+        }
+
+        // Publish or update app/User.php
+        if(!File::exists(app_path('User.php')))
+            $this->call('vendor:publish', ['--provider' => FaturCMSServiceProvider::class, '--tag' => 'userModel']);
+        else{
+            $this->info('Updating Exceptions Handler');
+            file_replace_contents(package_path('publishable/models/User.php'), app_path('User.php'));
+        }
 
         // Find composer
         $composer = $this->findComposer();
@@ -84,52 +97,55 @@ class InstallCommand extends Command
         $process->setTimeout(null); // Setting timeout to null to prevent installation from stopping at a certain point in time
         $process->setWorkingDirectory(base_path())->run();
 
-        // Add web routes
-        $routes_contents = File::get(base_path('routes/web.php'));
-        if(strpos($routes_contents, '\Ajifatur\FaturCMS\FaturCMS::routes();') === false){
-            $this->info('Adding FaturCMS web routes to routes/web.php');
-            File::append(
-                base_path('routes/web.php'),
-                "\n".
-                "//Letakkan fungsi ini pada route paling atas".
-                "\n".
-                "\Ajifatur\FaturCMS\FaturCMS::routes();".
-                "\n"
-            );
-        }
+        // Update web routes
+        $this->info('Updating web routes');
+        file_replace_contents(
+            '',
+            base_path('routes/web.php'),
+            '\Ajifatur\FaturCMS\FaturCMS::routes();',
+            "\n".
+            "//Letakkan fungsi ini pada route paling atas".
+            "\n".
+            "\Ajifatur\FaturCMS\FaturCMS::routes();".
+            "\n"
+        );
 
-        // Add API routes
-        $routes_contents = File::get(base_path('routes/api.php'));
-        if(strpos($routes_contents, '\Ajifatur\FaturCMS\FaturCMS::APIroutes();') === false){
-            $this->info('Adding FaturCMS API routes to routes/api.php');
-            File::append(
-                base_path('routes/api.php'),
-                "\n".
-                "\n".
-                "\Ajifatur\FaturCMS\FaturCMS::APIroutes();".
-                "\n"
-            );
-        }
+        // Update API routes
+        $this->info('Updating API routes');
+        file_replace_contents(
+            '',
+            base_path('routes/api.php'),
+            '\Ajifatur\FaturCMS\FaturCMS::APIroutes();',
+            "\n".
+            "\n".
+            "\Ajifatur\FaturCMS\FaturCMS::APIroutes();".
+            "\n"
+        );
 
-        // Change app config
-        $app_config_contents = File::get(config_path('app.php'));
-        if(strpos($app_config_contents, "'timezone' => 'Asia/Jakarta'") === false){
-            $this->info('Change app configuration in config/app.php');
-            str_replace("'timezone' => 'UTC'", "'timezone' => 'Asia/Jakarta'", $app_config_contents);
-            File::put(config_path('app.php'), $app_config_contents);
-        }
+        // Update config/app.php
+        $this->info('Updating Application configuration');
+        file_replace_contents(
+            '',
+            config_path('app.php'),
+            "'timezone' => 'Asia/Jakarta'",
+            "'timezone' => 'UTC'",
+            true
+        );
 
-        // Change database config
-        $db_config_contents = File::get(config_path('database.php'));
-        if(strpos($db_config_contents, "'strict' => false") === false){
-            $this->info('Change database configuration in config/database.php');
-            str_replace("'strict' => true", "'strict' => false", $db_config_contents);
-            File::put(config_path('database.php'), $db_config_contents);
-        }
+        // Update config/database.php
+        $this->info('Updating Database configuration');
+        file_replace_contents(
+            '',
+            config_path('database.php'),
+            "'strict' => false",
+            "'strict' => true",
+            true
+        );
 
         // Create folder storage/fonts
         if(!File::exists(storage_path('fonts'))) File::makeDirectory(storage_path('fonts'));
 
+        // Last info
         $this->info('Successfully installing FaturCMS! Enjoy');
     }
 }

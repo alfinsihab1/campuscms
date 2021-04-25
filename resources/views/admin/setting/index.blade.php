@@ -21,7 +21,7 @@
         @if(count($setting)>0)
             @foreach($setting as $data)
             <!-- Column -->
-            <div class="col-lg-3 col-md-4">
+            <div class="col-lg-3 col-md-4 mb-3">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">{{ $data['title'] }}</h5>

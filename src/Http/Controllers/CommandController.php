@@ -4,6 +4,7 @@ namespace Ajifatur\FaturCMS\Http\Controllers;
 
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
@@ -19,8 +20,37 @@ class CommandController extends Controller
     // Check Access
     has_access(generate_method(__METHOD__), Auth::user()->role);
 
+    // Composer Commands
+    $composerCommands = [
+        ['title' => 'Update Package', 'description' => 'composer update ajifatur/faturcms', 'url' => route('admin.command.composer.update')],
+        ['title' => 'Check Composer Version', 'description' => 'composer --version', 'url' => route('admin.command.composer.version')],
+    ];
+
+    // Artisan Commands
+    $artisanCommands = [
+        ['title' => 'Update FaturCMS', 'description' => 'php artisan faturcms:install', 'command' => 'faturcms:install'],
+        ['title' => 'Clear Cache', 'description' => 'php artisan cache:clear', 'command' => 'cache:clear'],
+        ['title' => 'Clear Config', 'description' => 'php artisan config:clear', 'command' => 'config:clear'],
+        ['title' => 'Clear View', 'description' => 'php artisan view:clear', 'command' => 'view:clear'],
+    ];
+
     // View
-    return view('faturcms::admin.command.index');
+    return view('faturcms::admin.command.index', [
+      'composerCommands' => $composerCommands,
+      'artisanCommands' => $artisanCommands,
+    ]);
+  }
+
+  /**
+   * Artisan Command
+   *
+   * @return \Illuminate\Http\Request
+   * @return \Illuminate\Http\Response
+   */
+  public function artisan(Request $request)
+  {
+    Artisan::call($request->command);
+    dd(Artisan::output());
   }
 
   /**

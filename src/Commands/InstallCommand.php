@@ -85,7 +85,7 @@ class InstallCommand extends Command
         if(!File::exists(app_path('User.php')))
             $this->call('vendor:publish', ['--provider' => FaturCMSServiceProvider::class, '--tag' => 'userModel']);
         else{
-            $this->info('Updating Exceptions Handler');
+            $this->info('Updating Model User');
             file_replace_contents(package_path('publishable/models/User.php'), app_path('User.php'));
         }
 

@@ -29,6 +29,8 @@ class CommandController extends Controller
     // Artisan Commands
     $artisanCommands = [
         ['title' => 'Update FaturCMS', 'description' => 'php artisan faturcms:install', 'command' => 'faturcms:install'],
+        ['title' => 'Inspiring Quote', 'description' => 'php artisan inspire', 'command' => 'inspire'],
+        ['title' => 'Clear Compiled', 'description' => 'php artisan clear-compiled', 'command' => 'clear-compiled'],
         ['title' => 'Clear Cache', 'description' => 'php artisan cache:clear', 'command' => 'cache:clear'],
         ['title' => 'Clear Config', 'description' => 'php artisan config:clear', 'command' => 'config:clear'],
         ['title' => 'Clear View', 'description' => 'php artisan view:clear', 'command' => 'view:clear'],

@@ -26,7 +26,7 @@ class Deskripsi extends Model
      * @var array
      */
     protected $fillable = [
-        'deskripsi',
+        'judul_deskripsi', 'deskripsi',
     ];
 
     /**

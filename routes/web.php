@@ -66,6 +66,14 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::post('/admin/rekening/update', $namespacePrefix.'RekeningController@update')->name('admin.rekening.update');
 	Route::post('/admin/rekening/delete', $namespacePrefix.'RekeningController@delete')->name('admin.rekening.delete');
 
+	// Default Rekening
+	Route::get('/admin/default-rekening', $namespacePrefix.'DefaultRekeningController@index')->name('admin.default-rekening.index');
+	Route::get('/admin/default-rekening/create', $namespacePrefix.'DefaultRekeningController@create')->name('admin.default-rekening.create');
+	Route::post('/admin/default-rekening/store', $namespacePrefix.'DefaultRekeningController@store')->name('admin.default-rekening.store');
+	Route::get('/admin/default-rekening/edit/{id}', $namespacePrefix.'DefaultRekeningController@edit')->name('admin.default-rekening.edit');
+	Route::post('/admin/default-rekening/update', $namespacePrefix.'DefaultRekeningController@update')->name('admin.default-rekening.update');
+	Route::post('/admin/default-rekening/delete', $namespacePrefix.'DefaultRekeningController@delete')->name('admin.default-rekening.delete');
+
 	// Transaksi Komisi
 	Route::get('/admin/transaksi/komisi', $namespacePrefix.'KomisiController@index')->name('admin.komisi.index');
 	Route::post('/admin/transaksi/komisi/verify', $namespacePrefix.'KomisiController@verify')->name('admin.komisi.verify');
@@ -213,6 +221,10 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::post('/admin/slider/delete', $namespacePrefix.'SliderController@delete')->name('admin.slider.delete');
 	Route::post('/admin/slider/sort', $namespacePrefix.'SliderController@sorting')->name('admin.slider.sort');
 	Route::get('/admin/slider/images', $namespacePrefix.'SliderController@showImages')->name('admin.slider.images');
+
+	// Slider
+	Route::get('/admin/deskripsi', $namespacePrefix.'DeskripsiController@index')->name('admin.deskripsi.index');
+	Route::post('/admin/deskripsi/update', $namespacePrefix.'DeskripsiController@update')->name('admin.deskripsi.update');
 
 	// Fitur
 	Route::get('/admin/fitur', $namespacePrefix.'FiturController@index')->name('admin.fitur.index');

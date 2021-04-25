@@ -47,6 +47,9 @@
     #modal-croppie .modal-dialog {max-width: 100%; margin-left: 1rem; margin-right: 1rem;}
     #modal-croppie .modal-body .table-responsive {max-height: calc(100vh - 250px); overflow-y: auto;}
 
+    /* Modal Terminal */
+    #modal-terminal .modal-body {height: 80vh; overflow-y: auto;}
+
     /* Quill Editor */
     #editor {height: 300px;}
     .ql-button-html:after {content: "<>";}

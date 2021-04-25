@@ -43,7 +43,7 @@
             <div class="tile">
                 <!-- Tile Body -->
                 <div class="tile-body text-center">
-                    <p class="h5 mb-4">Profil {{ setting('site.name') }}</p>
+                    <p class="h5 mb-4">{{ $deskripsi->judul_deskripsi }}</p>
                     <p>{{ $deskripsi->deskripsi }}</p>
                 </div>
                 <!-- /Tile Body -->

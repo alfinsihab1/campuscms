@@ -47,11 +47,11 @@
                             @foreach($slider as $data)
                                 <div class="col-md-3 col-sm-6 mb-3">
                                     <div class="card sortable-item" data-id="{{ $data->id_slider }}">
+                                        <a class="btn-magnify-popup" href="{{ image('assets/images/slider/'.$data->slider, 'slider') }}">
+                                            <img class="card-img-top" src="{{ image('assets/images/slider/'.$data->slider, 'slider') }}" height="100" style="max-width: 100%;">
+                                        </a>
                                         <div class="card-body text-center">
-                                            <a class="btn-magnify-popup" href="{{ image('assets/images/slider/'.$data->slider, 'slider') }}">
-                                                <img src="{{ image('assets/images/slider/'.$data->slider, 'slider') }}" height="100" style="max-width: 100%;">
-                                            </a>
-                                            <p class="mt-2 mb-1"><a href="{{ $data->slider_url }}" target="_blank"><i class="fa fa-link mr-1"></i>{{ $data->slider_url }}</a></p>
+                                            <p class="mb-1"><a href="{{ $data->slider_url }}" target="_blank"><i class="fa fa-link mr-1"></i>{{ $data->slider_url }}</a></p>
                                             <p class="mb-0"><span class="badge badge-{{ $data->status_slider == 1 ? 'success' : 'danger' }}">{{ $data->status_slider == 1 ? 'Tampilkan' : 'Sembunyikan' }}</span></p>
                                         </div>
                                         <div class="card-footer d-flex justify-content-between">

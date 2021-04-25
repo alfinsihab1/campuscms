@@ -25,6 +25,7 @@ class SettingController extends Controller
         // Pengaturan
         $setting = [
             ['title' => 'Umum', 'description' => 'Pengaturan Nama Website, Email, Alamat, dll', 'url' => route('admin.setting.edit', ['category' => 'general'])],
+            ['title' => 'Logo', 'description' => 'Pengaturan Logo', 'url' => route('admin.setting.edit', ['category' => 'logo'])],
             ['title' => 'Icon', 'description' => 'Pengaturan Icon', 'url' => route('admin.setting.edit', ['category' => 'icon'])],
             ['title' => 'Harga', 'description' => 'Pengaturan Komisi, Biaya Aktivasi, Withdrawal, dll', 'url' => route('admin.setting.edit', ['category' => 'price'])],
             ['title' => 'Warna', 'description' => 'Pengaturan Warna Primer, Sekunder, Tersier', 'url' => route('admin.setting.edit', ['category' => 'color'])],

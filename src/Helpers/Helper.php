@@ -15,6 +15,7 @@
  * @method sponsor(string $username)
  * @method message(string $key)
  * @method setting_rules(string $key)
+ * @method package(string $package)
  *
  * Array Helpers:
  * @method array_validation_messages()
@@ -30,6 +31,7 @@
  * @method upload_quill_image(string $code, string $path)
  * @method package_path(string $path)
  * @method file_replace_contents(string $source_file, string $destination_file, string $contents1 = '', string $contents2 = '', bool $replace = false)
+ * @method composer_lock()
  */
 
 use Illuminate\Support\Facades\Auth;
@@ -211,6 +213,20 @@ if(!function_exists('setting_rules')){
     }
 }
 
+// Package
+if(!function_exists('package')){
+    function package($package){
+        $array = composer_lock()['packages'];
+        $index = '';
+        if(count($array)>0){
+            foreach($array as $key=>$data){
+                if($data['name'] == $package) $index = $key;
+            }
+        }
+        return array_key_exists($index, $array) ? $array[$index] : null;
+    }
+}
+
 /**
  *
  * Arrays
@@ -272,13 +288,7 @@ if(!function_exists('array_tag')){
 
 /**
  *
- * Slugify and Generate file name
- * 
- */
-
-/**
- *
- * Upload File
+ * Others
  * 
  */
 
@@ -334,12 +344,6 @@ if(!function_exists('upload_quill_image')){
     }
 }
 
-/**
- *
- * Other Helpers
- * 
- */
-
 // Slugify
 if(!function_exists('slugify')){
     function slugify($text, $table, $field, $primaryKey, $id = null){
@@ -364,7 +368,7 @@ if(!function_exists('rename_permalink')){
 if(!function_exists('package_path')){
     function package_path($path = ''){
         if(substr($path, 0, 1) != '/') $path = '/'.$path;
-        return base_path('vendor/ajifatur/faturcms'.$path);
+        return base_path('vendor/'.config('faturcms.name').$path);
     }
 }
 
@@ -391,5 +395,13 @@ if(!function_exists('file_replace_contents')){
                 }
             }
         }
+    }
+}
+
+// Composer lock
+if(!function_exists('composer_lock')){
+    function composer_lock(){
+        $content = File::get(base_path('composer.lock'));
+        return json_decode($content, true);
     }
 }

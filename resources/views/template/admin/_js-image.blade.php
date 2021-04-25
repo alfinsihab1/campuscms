@@ -11,9 +11,14 @@
 	
     // Change Input File
     $(document).on("change", "#modal-image .dropzone", function(){
-        readURL(this);
-        $("#modal-image").modal("hide");
-        $("#modal-croppie").modal("show");
+        @if(isset($noCroppie))
+          readURLnoCroppie(this);
+          $("#modal-image").modal("hide");
+        @else
+          readURL(this);
+          $("#modal-image").modal("hide");
+          $("#modal-croppie").modal("show");
+        @endif
     });
 	
 	  // Show Modal Croppie
@@ -69,11 +74,23 @@
       }
     }
 
+    function readURLnoCroppie(input){
+      if(input.files && input.files[0]){
+          var reader = new FileReader();
+          reader.onload = function(e){
+            $("#img-file").attr("src",e.target.result).removeClass("d-none");
+            $("input[name=gambar]").val(e.target.result);
+            $("input[name=gambar_url]").val(null);
+          }
+          reader.readAsDataURL(input.files[0]);
+      }
+    }
+
     // Load Galeri Gambar
     $(document).on("click", "#pills-galeri-tab", function(){
         $.ajax({
             type: "get",
-            url: "{{ route('admin.'.$imageType.'.images', ['id' => isset($id) ? $id : '']) }}",
+            url: "{{ Auth::user()->is_admin == 1 ? route('admin.'.$imageType.'.images', ['id' => isset($id) ? $id : '']) : route('member.'.$imageType.'.images', ['id' => isset($id) ? $id : '']) }}",
             success: function(response){
                 var result = JSON.parse(response);
                 var html = '';

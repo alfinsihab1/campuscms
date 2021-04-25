@@ -1,4 +1,4 @@
-@extends('faturcms::template.member.main')
+@extends('faturcms::template.admin.main')
 
 @section('title', 'E-Sertifikat Peserta')
 
@@ -8,7 +8,7 @@
 <main class="app-content">
 
     <!-- Breadcrumb -->
-    @include('faturcms::template.member._breadcrumb', ['breadcrumb' => [
+    @include('faturcms::template.admin._breadcrumb', ['breadcrumb' => [
         'title' => 'E-Sertifikat Peserta',
         'items' => [
             ['text' => 'E-Sertifikat', 'url' => '#'],
@@ -77,7 +77,7 @@
 
 @section('js-extra')
 
-@include('faturcms::template.member._js-table')
+@include('faturcms::template.admin._js-table')
 
 <script type="text/javascript">
     // DataTable

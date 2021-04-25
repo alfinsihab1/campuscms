@@ -373,7 +373,7 @@ class UserController extends Controller
     public function showImages(Request $request)
     {
         // Get foto
-        $photo = ProfilePhoto::where('id_user','=',$request->id)->groupBy('photo_name')->get()->pluck('photo_name');
+        $photo = ProfilePhoto::where('id_user','=',$request->id)->get()->pluck('photo_name');
 
         echo json_encode($photo);
     }

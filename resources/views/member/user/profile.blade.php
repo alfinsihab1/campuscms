@@ -1,4 +1,4 @@
-@extends('faturcms::template.member.main')
+@extends('faturcms::template.admin.main')
 
 @section('title', 'Profil')
 
@@ -8,7 +8,7 @@
 <main class="app-content">
 
     <!-- Breadcrumb -->
-    @include('faturcms::template.member._breadcrumb', ['breadcrumb' => [
+    @include('faturcms::template.admin._breadcrumb', ['breadcrumb' => [
         'title' => 'Profil',
         'items' => [
             ['text' => 'Profil', 'url' => '#'],
@@ -126,12 +126,12 @@
 </main>
 <!-- /Main -->
 
-@include('faturcms::template.member._modal-image', ['croppieWidth' => 300, 'croppieHeight' => 300])
+@include('faturcms::template.admin._modal-image', ['croppieWidth' => 300, 'croppieHeight' => 300])
 
 @endsection
 
 @section('js-extra')
 
-@include('faturcms::template.member._js-image', ['imageType' => 'user', 'croppieWidth' => 300, 'croppieHeight' => 300, 'id' => $id_direct])
+@include('faturcms::template.admin._js-image', ['imageType' => 'user', 'croppieWidth' => 300, 'croppieHeight' => 300, 'id' => $id_direct])
 
 @endsection

@@ -284,8 +284,9 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 
 	// Command
 	Route::get('/admin/command', $namespacePrefix.'CommandController@index')->name('admin.command.index');
-	Route::get('/admin/command/update-package', $namespacePrefix.'CommandController@updatePackage')->name('admin.command.updatepackage');
-	Route::get('/admin/command/composer-version', $namespacePrefix.'CommandController@composerVersion')->name('admin.command.composerversion');
+	Route::post('/admin/command/artisan', $namespacePrefix.'CommandController@artisan')->name('admin.command.artisan');
+	Route::get('/admin/command/composer/update', $namespacePrefix.'CommandController@updatePackage')->name('admin.command.composer.update');
+	Route::get('/admin/command/composer/version', $namespacePrefix.'CommandController@composerVersion')->name('admin.command.composer.version');
 
 	// Setting
 	Route::get('/admin/setting', $namespacePrefix.'SettingController@index')->name('admin.setting.index');
@@ -293,6 +294,7 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::post('/admin/setting/{category}/update', $namespacePrefix.'SettingController@update')->name('admin.setting.update');
 
 	// Icon
+	Route::get('/admin/logo/images', $namespacePrefix.'SettingController@showLogos')->name('admin.logo.images');
 	Route::get('/admin/icon/images', $namespacePrefix.'SettingController@showIcons')->name('admin.icon.images');
 });
 

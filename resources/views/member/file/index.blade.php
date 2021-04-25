@@ -1,4 +1,4 @@
-@extends('faturcms::template.member.main')
+@extends('faturcms::template.admin.main')
 
 @php $prefix = $kategori->tipe_kategori == 'ebook' || $kategori->tipe_kategori == 'video'  ? 'Materi' : 'Kumpulan'; @endphp
 
@@ -10,7 +10,7 @@
 <main class="app-content">
 
     <!-- Breadcrumb -->
-    @include('faturcms::template.member._breadcrumb', ['breadcrumb' => [
+    @include('faturcms::template.admin._breadcrumb', ['breadcrumb' => [
         'title' => $prefix.' '.$kategori->folder_kategori,
         'items' => [
             ['text' => 'File Manager', 'url' => '#'],

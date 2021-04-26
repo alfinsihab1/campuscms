@@ -1,6 +1,6 @@
 @extends('faturcms::auth.layout')
 
-@section('title', 'Login')
+@section('title', 'Cek Email')
 
 @section('content')
 

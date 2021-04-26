@@ -4,6 +4,9 @@
 <head>
     <title>@yield('title') | {{ setting('site.name') }} &#8211; {{ setting('site.tagline') }}</title>
     @include('faturcms::template.admin._meta')
+    <!-- Icon -->
+    <link rel="shortcut icon" href="{{ asset('assets/images/icon/'.setting('site.icon')) }}">
+    <!-- Stylesheets -->
     <link rel="stylesheet" type="text/css" href="{{ asset('templates/vali-admin/css/main.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" integrity="sha512-aOG0c6nPNzGk+5zjwyJaoRUgCdOrfSDhmMID2u4+OIslr0GjpLKo7Xm0Ao3xmpM4T8AmIouRkqwj1nrdVsLKEQ==" crossorigin="anonymous" />
     <!-- Font-icon css-->

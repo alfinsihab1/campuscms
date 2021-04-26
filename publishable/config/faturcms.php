@@ -29,6 +29,7 @@ return [
     */
 
     'images' => [
+        'acara' => 'acara.png',
         'blog' => 'blog.png',
         'file' => 'file.jpg',
         'fitur' => 'fitur.png',

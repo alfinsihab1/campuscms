@@ -65,7 +65,7 @@
 								  </label>
 								</div>
 								<div class="form-check">
-								  <input class="form-check-input border-danger" type="radio" name="jenis_kelamin" id="gender-2" value="P" {{ old('jenis_kelamin') == 'P' ? 'checked' : '' }}>
+								  <input class="form-check-input" type="radio" name="jenis_kelamin" id="gender-2" value="P" {{ old('jenis_kelamin') == 'P' ? 'checked' : '' }}>
 								  <label class="form-check-label" for="gender-2">
 									Perempuan
 								  </label>

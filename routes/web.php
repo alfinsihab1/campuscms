@@ -152,6 +152,24 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::post('/admin/blog/tag/update', $namespacePrefix.'TagController@update')->name('admin.blog.tag.update');
 	Route::post('/admin/blog/tag/delete', $namespacePrefix.'TagController@delete')->name('admin.blog.tag.delete');
 
+	// Acara
+	Route::get('/admin/acara', $namespacePrefix.'AcaraController@index')->name('admin.acara.index');
+	Route::get('/admin/acara/create', $namespacePrefix.'AcaraController@create')->name('admin.acara.create');
+	Route::post('/admin/acara/store', $namespacePrefix.'AcaraController@store')->name('admin.acara.store');
+	Route::get('/admin/acara/detail/{id}', $namespacePrefix.'AcaraController@detail')->name('admin.acara.detail');
+	Route::get('/admin/acara/edit/{id}', $namespacePrefix.'AcaraController@edit')->name('admin.acara.edit');
+	Route::post('/admin/acara/update', $namespacePrefix.'AcaraController@update')->name('admin.acara.update');
+	Route::post('/admin/acara/delete', $namespacePrefix.'AcaraController@delete')->name('admin.acara.delete');
+	Route::get('/admin/acara/images', $namespacePrefix.'AcaraController@showImages')->name('admin.acara.images');
+
+	// Kategori Acara
+	Route::get('/admin/acara/kategori', $namespacePrefix.'KategoriAcaraController@index')->name('admin.acara.kategori.index');
+	Route::get('/admin/acara/kategori/create', $namespacePrefix.'KategoriAcaraController@create')->name('admin.acara.kategori.create');
+	Route::post('/admin/acara/kategori/store', $namespacePrefix.'KategoriAcaraController@store')->name('admin.acara.kategori.store');
+	Route::get('/admin/acara/kategori/edit/{id}', $namespacePrefix.'KategoriAcaraController@edit')->name('admin.acara.kategori.edit');
+	Route::post('/admin/acara/kategori/update', $namespacePrefix.'KategoriAcaraController@update')->name('admin.acara.kategori.update');
+	Route::post('/admin/acara/kategori/delete', $namespacePrefix.'KategoriAcaraController@delete')->name('admin.acara.kategori.delete');
+
 	// Program
 	Route::get('/admin/program', $namespacePrefix.'ProgramController@index')->name('admin.program.index');
 	Route::get('/admin/program/create', $namespacePrefix.'ProgramController@create')->name('admin.program.create');

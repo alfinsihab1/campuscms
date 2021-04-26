@@ -1,5 +1,6 @@
 <?php
 
+use Ajifatur\FaturCMS\Models\Komentar;
 use Ajifatur\FaturCMS\Models\Pelatihan;
 use Ajifatur\FaturCMS\Models\Tag;
 
@@ -301,5 +302,13 @@ if(!function_exists('generate_tag_by_id')){
         else{
             return '';
         }
+    }
+}
+
+// Generate anak komentar
+if(!function_exists('generate_comment_children')){
+    function generate_comment_children($post, $parent){
+        $komentar = Komentar::join('users','komentar.id_user','=','users.id_user')->where('id_artikel','=',$post)->where('komentar_parent','=',$parent)->orderBy('komentar_at','asc')->get();
+        return $komentar;
     }
 }

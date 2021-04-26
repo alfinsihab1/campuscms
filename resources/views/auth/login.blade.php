@@ -74,7 +74,7 @@
                                         </div>
                                         <div class="form-group btn-container">
                                             <button type="submit" class="btn btn-theme-1 btn-lg rounded px-4 shadow-sm btn-block">Masuk</button>
-                                            <a href="{{ route('auth.register') }}" class="btn btn-light btn-lg rounded px-4 shadow-sm btn-block">Daftar</a>
+                                            <a href="{{ route('auth.register', ['ref' => $_GET['ref']]) }}" class="btn btn-light btn-lg rounded px-4 shadow-sm btn-block">Daftar</a>
                                         </div>
                                     </form>
                                 </div>

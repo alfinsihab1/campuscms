@@ -20,6 +20,7 @@
  * Array Helpers:
  * @method array_validation_messages()
  * @method array_indo_month()
+ * @method array_kategori_artikel()
  * @method array_kategori_materi()
  * @method array_receivers()
  * @method array_tag()
@@ -37,6 +38,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use App\User;
+use Ajifatur\FaturCMS\Models\KategoriArtikel;
 use Ajifatur\FaturCMS\Models\KategoriMateri;
 use Ajifatur\FaturCMS\Models\KategoriPelatihan;
 use Ajifatur\FaturCMS\Models\Permission;
@@ -257,6 +259,14 @@ if(!function_exists('array_validation_messages')){
 if(!function_exists('array_indo_month')){
     function array_indo_month(){
         $array = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+        return $array;
+    }
+}
+
+// Array kategori artikel
+if(!function_exists('array_kategori_artikel')){
+    function array_kategori_artikel(){
+        $array = KategoriArtikel::where('id_ka','>',0)->get();
         return $array;
     }
 }

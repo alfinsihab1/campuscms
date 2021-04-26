@@ -126,6 +126,19 @@
         </li>
         @endif
 
+        @if(has_access('AcaraController::index', Auth::user()->role, false) || has_access('KategoriAcaraController::index', Auth::user()->role, false))
+        <li class="treeview {{ is_int(strpos(Request::url(), route('admin.acara.index'))) ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-calendar"></i><span class="app-menu__label">Acara</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+          <ul class="treeview-menu">
+            @if(has_access('AcaraController::index', Auth::user()->role, false))
+            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.acara.index'))) && !is_int(strpos(Request::url(), route('admin.acara.kategori.index'))) ? 'active' : '' }}" href="{{ route('admin.acara.index') }}"><i class="icon fa fa-circle-o"></i> Data Acara</a></li>
+            @endif
+            @if(has_access('KategoriAcaraController::index', Auth::user()->role, false))
+            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.acara.kategori.index'))) ? 'active' : '' }}" href="{{ route('admin.acara.kategori.index') }}"><i class="icon fa fa-circle-o"></i> Kategori</a></li>
+            @endif
+          </ul>
+        </li>
+        @endif
+
         @if(has_access('ProgramController::index', Auth::user()->role, false) || has_access('KategoriProgramController::index', Auth::user()->role, false))
         <li class="treeview {{ is_int(strpos(Request::url(), route('admin.program.index'))) ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-paper-plane"></i><span class="app-menu__label">Program</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">

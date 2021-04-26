@@ -104,7 +104,7 @@ class InstallCommand extends Command
             base_path('routes/web.php'),
             '\Ajifatur\FaturCMS\FaturCMS::routes();',
             "\n".
-            "//Letakkan fungsi ini pada route paling atas".
+            "// Letakkan fungsi ini pada route paling atas".
             "\n".
             "\Ajifatur\FaturCMS\FaturCMS::routes();".
             "\n"

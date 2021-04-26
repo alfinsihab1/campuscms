@@ -51,7 +51,7 @@
                                         </div>
                                         <div class="form-group btn-container">
                                             <button type="submit" class="btn btn-theme-1 btn-lg rounded px-4 shadow-sm btn-block">Recover</button>
-                                            <a href="{{ route('auth.login') }}" class="btn btn-light btn-lg rounded px-4 shadow-sm btn-block">Kembali ke Login</a>
+                                            <a href="{{ route('auth.login', ['ref' => $_GET['ref']]) }}" class="btn btn-light btn-lg rounded px-4 shadow-sm btn-block">Kembali ke Login</a>
                                         </div>
                                     </form>
                                 </div>

@@ -65,7 +65,7 @@
                                         <br>
                                         <small><i class="fa fa-phone mr-1"></i>{{ $data->nomor_hp }}</small>
                                     </td>
-                                    <td><a href="{{ route('admin.pelatihan.participant', ['id' => $data->id_pelatihan]) }}" data-toggle="tooltip" title="Lihat Daftar Peserta">{{ number_format(count_peserta_pelatihan($data->id_pelatihan),0,'.','.') }} orang</a>
+                                    <td><a href="{{ route('admin.pelatihan.participant', ['id' => $data->id_pelatihan]) }}" data-toggle="tooltip" title="Lihat Daftar Peserta">{{ number_format(count_peserta_pelatihan($data->id_pelatihan),0,'.','.') }} orang</a></td>
                                     <td>
                                         <span class="d-none">{{ $data->tanggal_pelatihan_from }}</span>
                                         {{ date('d/m/Y', strtotime($data->tanggal_pelatihan_from)) }}

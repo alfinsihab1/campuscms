@@ -33,7 +33,7 @@ class ForgotPasswordController extends Controller
     public function showLinkRequestForm(Request $request)
     {
         // Referal
-        referral($request->query('ref'), 'auth.forgotpassword');
+        referral($request->query('ref'), 'auth.forgotpassword', ['email' => $request->query('email')]);
 
         // View
         return view('auth.'.setting('site.view.forgot_password'));

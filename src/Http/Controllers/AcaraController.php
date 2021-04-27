@@ -80,6 +80,7 @@ class AcaraController extends Controller
             // Menambah data
             $acara = new Acara;
             $acara->nama_acara = $request->nama_acara;
+            $acara->slug_acara = slugify($request->nama_acara, 'acara', 'slug_acara', 'id_acara', null);
             $acara->kategori_acara = $request->kategori;
             $acara->tempat_acara = $request->tempat_acara != '' ? $request->tempat_acara : '';
             $acara->tanggal_acara_from = generate_date_range('explode', $request->tanggal_acara)['from'];
@@ -163,6 +164,7 @@ class AcaraController extends Controller
             // Mengupdate data
             $acara = Acara::find($request->id);
             $acara->nama_acara = $request->nama_acara;
+            $acara->slug_acara = slugify($request->nama_acara, 'acara', 'slug_acara', 'id_acara', $request->id);
             $acara->kategori_acara = $request->kategori;
             $acara->tempat_acara = $request->tempat_acara != '' ? $request->tempat_acara : '';
             $acara->tanggal_acara_from = generate_date_range('explode', $request->tanggal_acara)['from'];

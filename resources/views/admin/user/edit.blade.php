@@ -74,7 +74,7 @@
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label">Email <span class="text-danger">*</span></label>
                             <div class="col-md-10">
-                                <input type="email" name="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" value="{{ $user->email }}" disabled>
+                                <input type="email" name="email" class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" value="{{ $user->email }}">
                                 @if($errors->has('email'))
                                 <div class="small text-danger mt-1">{{ ucfirst($errors->first('email')) }}</div>
                                 @endif

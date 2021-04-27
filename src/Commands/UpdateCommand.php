@@ -54,16 +54,21 @@ class UpdateCommand extends Command
      */
     public function handle()
     {
+        // First info
         $this->info('Updating FaturCMS package');
 
-        // Find composer
-        $composer = $this->findComposer();
+        // Copy assets
+        $this->info('Copying Assets');
+        File::copyDirectory(package_path('publishable/assets'), public_path('assets'));
 
-        // Dump autoload
-        $process = new Process([$composer.' update ajifatur/faturcms']);
-        $process->setTimeout(null); // Setting timeout to null to prevent installation from stopping at a certain point in time
-        $process->setWorkingDirectory(base_path())->run();
+        // Copy templates
+        $this->info('Copying Templates');
+        File::copyDirectory(package_path('publishable/templates'), public_path('templates'));
 
+        // Run main command
+        $this->call('faturcms:main');
+
+        // Last info
         $this->info('Successfully updating FaturCMS! Enjoy');
     }
 }

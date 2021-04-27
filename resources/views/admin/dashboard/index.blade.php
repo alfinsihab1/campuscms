@@ -55,7 +55,7 @@
                 <div class="tile-body">
 					<div class="list-group mt-3">
 						@foreach($array as $key=>$data)
-						<a href="{{ $data['url'] }}" class="list-group-item list-group-item-action d-flex justify-content-between {{ $key == 0 ? 'bg-warning' : '' }}">
+						<a href="{{ $data['url'] }}" class="list-group-item list-group-item-action d-flex justify-content-between {{ $key == 0 ? 'bg-primary' : '' }}">
 							<span>{{ $data['data'] }}</span>
 							<span>{{ number_format($data['total'],0,'.','.') }}</span>
 						</a>
@@ -76,7 +76,7 @@
 
 @section('js-extra')
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg==" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{{ asset('assets/plugins/chart.js/chart.min.js') }}"></script>
 <script>
 	$(window).on("load", function(){
 		count_visitor();
@@ -157,7 +157,7 @@
 
 @section('css-extra')
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous" />
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/chart.js/chart.min.css') }}">
 <style type="text/css">
 	.card-title {text-align: center!important;}
     .border-top, .border-bottom {padding: 1.25rem;}

@@ -37,7 +37,7 @@
                     <div class="form-group row">
                         <label class="col-md-2 col-form-label">Penerima <span class="text-danger">*</span></label>
                         <div class="col-md-10">
-                            <a class="btn btn-sm btn-info btn-search" href="#"><i class="fa fa-search mr-2"></i>Lihat Penerima</a>
+                            <a class="btn btn-sm btn-secondary btn-search" href="#"><i class="fa fa-search mr-2"></i>Lihat Penerima</a>
                             <br>
                             <textarea name="emails" class="form-control mt-3 {{ $errors->has('emails') ? 'is-invalid' : '' }}" rows="3" readonly>{{ $email->receiver_email }}</textarea>
                             <input type="hidden" name="ids" value="{{ $email->receiver_id }}">
@@ -151,6 +151,7 @@
 
 @section('css-extra')
 
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/quill/quill.snow.css') }}">
 <style type="text/css">
     .modal-content {max-height: 500px; overflow-y: hidden;}
     .modal-body {overflow-y: auto;}

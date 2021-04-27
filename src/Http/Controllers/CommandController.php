@@ -23,17 +23,18 @@ class CommandController extends Controller
     // Composer Commands
     $composerCommands = [
         ['title' => 'Update Package', 'description' => 'composer update ajifatur/faturcms', 'url' => route('admin.command.composer.update')],
-        ['title' => 'Check Composer Version', 'description' => 'composer --version', 'url' => route('admin.command.composer.version')],
+        ['title' => 'Composer Version', 'description' => 'composer --version', 'url' => route('admin.command.composer.version')],
     ];
 
     // Artisan Commands
     $artisanCommands = [
-        ['title' => 'Update FaturCMS', 'description' => 'php artisan faturcms:install', 'command' => 'faturcms:install'],
-        ['title' => 'Inspiring Quote', 'description' => 'php artisan inspire', 'command' => 'inspire'],
+        // ['title' => 'Install FaturCMS', 'description' => 'php artisan faturcms:install', 'command' => 'faturcms:install'],
+        // ['title' => 'Update FaturCMS', 'description' => 'php artisan faturcms:update', 'command' => 'faturcms:update'],
         ['title' => 'Clear Compiled', 'description' => 'php artisan clear-compiled', 'command' => 'clear-compiled'],
         ['title' => 'Clear Cache', 'description' => 'php artisan cache:clear', 'command' => 'cache:clear'],
         ['title' => 'Clear Config', 'description' => 'php artisan config:clear', 'command' => 'config:clear'],
         ['title' => 'Clear View', 'description' => 'php artisan view:clear', 'command' => 'view:clear'],
+        ['title' => 'Inspiring Quote', 'description' => 'php artisan inspire', 'command' => 'inspire'],
     ];
 
     // View
@@ -61,10 +62,7 @@ class CommandController extends Controller
    * @return \Illuminate\Http\Response
    */
   public function updatePackage()
-  {
-    // ini_set('max_execution_time', 0);
-    // ini_set('memory_limit', -1);
-  
+  {  
     $process = new Process(['/opt/plesk/php/7.3/bin/php', '/usr/lib64/plesk-9.0/composer.phar', 'update', 'ajifatur/faturcms'], base_path());
     $process->setTimeout(null);
     $process->run();
@@ -74,10 +72,10 @@ class CommandController extends Controller
       throw new ProcessFailedException($process);
     }
   
-    echo "<pre>".$process->getOutput()."</pre>";
+    // echo "<pre>".$process->getOutput()."</pre>";
 
-    // Artisan::call('faturcms:update');
-    // dd(Artisan::output());
+    Artisan::call("faturcms:update");
+    dd(Artisan::output());
   }
 
   /**

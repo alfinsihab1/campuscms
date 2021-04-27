@@ -36,25 +36,25 @@ class DashboardController extends Controller
         
         // New Array
         $array = [
-            ['data' => 'Member Aktif', 'total' => $data_student_aktif, 'url' => '/admin/user?filter=aktif'],
-            ['data' => 'Member Belum Aktif', 'total' => $data_student_belum_aktif, 'url' => '/admin/user?filter=belum-aktif'],
+            ['data' => 'Member Aktif', 'total' => $data_student_aktif, 'url' => route('admin.user.index', ['filter' => 'aktif'])],
+            ['data' => 'Member Belum Aktif', 'total' => $data_student_belum_aktif, 'url' => route('admin.user.index', ['filter' => 'belum-aktif'])],
         ];
         
         // Array Push Data Materi
-        $kategori_materi = FolderKategori::where('id_fk','>=',4)->get();
+        $kategori_materi = FolderKategori::where('tipe_kategori','=','ebook')->get();
         foreach($kategori_materi as $data){
-            $file = Files::where('file_kategori','=',$data->id_fk)->get();
-            array_push($array, ['data' => 'Materi '.$data->folder_kategori, 'total' => count($file), 'url' => '/admin/file-manager/'.$data->slug_kategori]);
+            $file = Files::where('file_kategori','=',$data->id_fk)->count();
+            array_push($array, ['data' => 'Materi '.$data->folder_kategori, 'total' => $file, 'url' => route('admin.filemanager.index', ['kategori' => $data->slug_kategori])]);
         }
         
         // Array Push Data Course, Data Artikel, Data Pelatihan
-        $data_course = Files::where('file_kategori','=',1)->count();
+        $data_course = Files::join('folder_kategori','file.file_kategori','=','folder_kategori.id_fk')->where('tipe_kategori','=','video')->count();
         $data_artikel = Blog::join('kategori_artikel','blog.blog_kategori','=','kategori_artikel.id_ka')->count();
         $data_pelatihan = Pelatihan::join('kategori_pelatihan','pelatihan.kategori_pelatihan','=','kategori_pelatihan.id_kp')->count();
         array_push($array, 
-            ['data' => 'Materi E-Course', 'total' => $data_course, 'url' => '/admin/file-manager/e-course'],
-            ['data' => 'Artikel', 'total' => $data_artikel, 'url' => '/admin/artikel'],
-            ['data' => 'Pelatihan', 'total' => $data_pelatihan, 'url' => '/admin/pelatihan'],
+            ['data' => 'Materi E-Course', 'total' => $data_course, 'url' => route('admin.filemanager.index', ['kategori' => 'e-course'])],
+            ['data' => 'Artikel', 'total' => $data_artikel, 'url' => route('admin.blog.index')],
+            ['data' => 'Pelatihan', 'total' => $data_pelatihan, 'url' => route('admin.pelatihan.index')],
         );
         
         // View

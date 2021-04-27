@@ -40,14 +40,14 @@
                             </button>
                         </div>
                     @endif
-                    <p><em>Drag (geser) konten di bawah ini untuk mengurutkan dari yang teratas sampai terbawah.</em></p>
-                    <ul class="list-group sortable">
-                        @if(count($fitur)>0)
+                    @if(count($fitur)>0)
+                        <p><em>Drag (geser) konten di bawah ini untuk mengurutkan dari yang teratas sampai terbawah.</em></p>
+                        <ul class="list-group sortable">
                             @foreach($fitur as $data)
                                 <div class="list-group-item d-flex justify-content-between align-items-center sortable-item" data-id="{{ $data->id_fitur }}">
                                     <div>
                                         <div class="media">
-                                            <a class="btn-magnify-popup" href="{{ image('assets/images/fitur/'.$data->gambar_fitur, 'fitur') }}">
+                                            <a class="btn-magnify-popup" href="{{ image('assets/images/fitur/'.$data->gambar_fitur, 'fitur') }}" title="{{ $data->nama_fitur }}">
                                                 <img src="{{ image('assets/images/fitur/'.$data->gambar_fitur, 'fitur') }}" width="75" class="align-self-center mr-3">
                                             </a>
                                             <div class="media-body">
@@ -63,12 +63,14 @@
                                     </div>
                                 </div>
                             @endforeach
-                        @endif
-                    </ul>
-                    <form id="form-delete" class="d-none" method="post" action="{{ route('admin.fitur.delete') }}">
-                        {{ csrf_field() }}
-                        <input type="hidden" name="id">
-                    </form>
+                        </ul>
+                        <form id="form-delete" class="d-none" method="post" action="{{ route('admin.fitur.delete') }}">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="id">
+                        </form>
+                    @else
+                        <div class="alert alert-danger text-center">Tidak ada data tersedia.</div>
+                    @endif
                 </div>
                 <!-- /Tile Body -->
             </div>
@@ -85,5 +87,11 @@
 @section('js-extra')
 
 @include('faturcms::template.admin._js-sortable', ['url' => route('admin.fitur.sort')])
+
+@endsection
+
+@section('css-extra')
+
+<link rel="stylesheet" type="text/css" href="{{ asset('templates/vali-admin/vendor/magnific-popup/magnific-popup.css') }}">
 
 @endsection

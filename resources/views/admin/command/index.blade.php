@@ -23,11 +23,11 @@
             @foreach($composerCommands as $data)
             <!-- Column -->
             <div class="col-lg-3 col-md-4 mb-3">
-                <div class="card">
-                    <div class="card-body">
+                <div class="tile">
+                    <div class="tile-body">
                         <h5 class="card-title">{{ $data['title'] }}</h5>
                         <p class="card-text small">{{ $data['description'] }}</p>
-                        <a href="{{ $data['url'] }}" data-artisan="false" class="btn btn-sm btn-info btn-terminal"><i class="fa fa-terminal mr-2"></i>Run Command</a>
+                        <a href="{{ $data['url'] }}" data-artisan="false" class="btn btn-sm btn-secondary btn-terminal"><i class="fa fa-terminal mr-2"></i>Run Command</a>
                     </div>
                 </div>
             </div>
@@ -43,11 +43,11 @@
             @foreach($artisanCommands as $data)
             <!-- Column -->
             <div class="col-lg-3 col-md-4 mb-3">
-                <div class="card">
-                    <div class="card-body">
+                <div class="tile">
+                    <div class="tile-body">
                         <h5 class="card-title">{{ $data['title'] }}</h5>
                         <p class="card-text small">{{ $data['description'] }}</p>
-                        <a href="{{ $data['command'] }}" data-artisan="true" class="btn btn-sm btn-info btn-terminal"><i class="fa fa-terminal mr-2"></i>Run Command</a>
+                        <a href="{{ $data['command'] }}" data-artisan="true" class="btn btn-sm btn-secondary btn-terminal"><i class="fa fa-terminal mr-2"></i>Run Command</a>
                     </div>
                 </div>
             </div>

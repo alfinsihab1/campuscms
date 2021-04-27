@@ -96,6 +96,20 @@
             $(this).removeClass("show");
         }
     });
+
+    // Mouse over treeview
+    $(document).on("mouseover", ".treeview", function(){
+        if($("body").hasClass("sidenav-closed")){
+            $(this).find(".app-menu__item").css({"border-top-right-radius":"0","border-bottom-right-radius":"0"});
+        }
+    });
+
+    // Mouse leave treeview
+    $(document).on("mouseleave", ".treeview", function(){
+        if($("body").hasClass("sidenav-closed")){
+            $(this).find(".app-menu__item").css({"border-top-right-radius":".5em","border-bottom-right-radius":".5em"});
+        }
+    });
     
     // Input number only
     $(document).on("keypress", ".number-only", function(e){
@@ -203,11 +217,6 @@
 	
 	// Manage screen
 	function manage_screen(){
-		if(screen.width <= 768){
-			$("body").addClass("sidenav-closed");
-		}
-		else{
-			$("body").removeClass("sidenav-closed");
-		}
+		screen.width <= 768 ? $("body").addClass("sidenav-closed") : $("body").removeClass("sidenav-closed");
 	}
 </script>

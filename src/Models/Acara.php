@@ -26,7 +26,7 @@ class Acara extends Model
      * @var array
      */
     protected $fillable = [
-        'nama_acara', 'kategori_acara', 'deskripsi_acara', 'gambar_acara', 'tempat_acara', 'tanggal_acara_from', 'tanggal_acara_to', 'acara_at'
+        'nama_acara', 'slug_acara', 'kategori_acara', 'deskripsi_acara', 'gambar_acara', 'tempat_acara', 'tanggal_acara_from', 'tanggal_acara_to', 'acara_at'
     ];
 
     /**

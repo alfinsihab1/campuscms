@@ -221,3 +221,9 @@
 </script>
 
 @endsection
+
+@section('css-extra')
+
+<link rel="stylesheet" type="text/css" href="{{ asset('templates/vali-admin/vendor/magnific-popup/magnific-popup.css') }}">
+
+@endsection

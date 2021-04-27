@@ -79,7 +79,7 @@
                                     </td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="{{ asset('assets/images/folder/'.$data->folder_icon) }}" class="btn btn-sm btn-info btn-magnify-popup" data-toggle="tooltip" title="Icon"><i class="fa fa-image"></i></a>
+                                            <a href="{{ image('assets/images/folder/'.$data->folder_icon, 'folder') }}" class="btn btn-sm btn-info btn-magnify-popup" data-toggle="tooltip" title="Icon"><i class="fa fa-image"></i></a>
                                             <!-- <a href="#" class="btn btn-sm btn-success btn-move" data-id="{{ $data->id_folder }}" data-type="folder" data-toggle="tooltip" title="Pindah"><i class="fa fa-arrow-right"></i></a> -->
                                             <a href="{{ route('admin.folder.edit', ['kategori' => $kategori->slug_kategori, 'id' => $data->id_folder, 'dir' => $directory->folder_dir]) }}" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>
                                             <a href="#" class="btn btn-sm btn-danger btn-delete-folder" data-id="{{ $data->id_folder }}" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>
@@ -234,6 +234,7 @@ function loop_folder($folder){
 
 @section('css-extra')
 
+<link rel="stylesheet" type="text/css" href="{{ asset('templates/vali-admin/vendor/magnific-popup/magnific-popup.css') }}">
 <style type="text/css">
     .available-folders ul li {padding: .5rem;}
     .available-folders ul li:hover {background-color: #eee; cursor: pointer;}

@@ -40,10 +40,9 @@
                             </button>
                         </div>
                     @endif
-                    <p><em>Drag (geser) konten di bawah ini untuk mengurutkan dari yang teratas sampai terbawah.</em></p>
-
-                    <div class="row sortable">
-                        @if(count($slider)>0)
+                    @if(count($slider)>0)
+                        <p><em>Drag (geser) konten di bawah ini untuk mengurutkan dari yang teratas sampai terbawah.</em></p>
+                        <div class="row sortable">
                             @foreach($slider as $data)
                                 <div class="col-md-3 col-sm-6 mb-3">
                                     <div class="card sortable-item" data-id="{{ $data->id_slider }}">
@@ -61,12 +60,14 @@
                                     </div>
                                 </div>
                             @endforeach
-                        @endif
-                    </div>
-                    <form id="form-delete" class="d-none" method="post" action="{{ route('admin.slider.delete') }}">
-                        {{ csrf_field() }}
-                        <input type="hidden" name="id">
-                    </form>
+                        </div>
+                        <form id="form-delete" class="d-none" method="post" action="{{ route('admin.slider.delete') }}">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="id">
+                        </form>
+                    @else
+                        <div class="alert alert-danger text-center">Tidak ada data tersedia.</div>
+                    @endif
                 </div>
                 <!-- /Tile Body -->
             </div>
@@ -83,5 +84,11 @@
 @section('js-extra')
 
 @include('faturcms::template.admin._js-sortable', ['url' => route('admin.slider.sort')])
+
+@endsection
+
+@section('css-extra')
+
+<link rel="stylesheet" type="text/css" href="{{ asset('templates/vali-admin/vendor/magnific-popup/magnific-popup.css') }}">
 
 @endsection

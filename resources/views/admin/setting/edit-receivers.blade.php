@@ -70,9 +70,15 @@
 
 @section('js-extra')
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js" integrity="sha512-9UR1ynHntZdqHnwXKTaOm1s6V9fExqejKvg5XMawEMToW4sSw+3jtLrYfZPijvnwnnE8Uol1O9BcAskoxgec+g==" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{{ asset('assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
 <script type="text/javascript">
     $(".tagsinput").tagsinput();
 </script>
+
+@endsection
+
+@section('css-extra')
+
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.css') }}">
 
 @endsection

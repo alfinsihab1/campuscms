@@ -130,3 +130,9 @@
 </script>
 
 @endsection
+
+@section('css-extra')
+
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/quill/quill.snow.css') }}">
+
+@endsection

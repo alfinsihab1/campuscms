@@ -90,3 +90,9 @@
 @include('faturcms::template.admin._js-image', ['imageType' => 'slider', 'croppieWidth' => 1700, 'croppieHeight' => 500])
 
 @endsection
+
+@section('css-extra')
+
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/croppie/croppie.css') }}">
+
+@endsection

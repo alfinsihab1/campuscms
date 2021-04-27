@@ -128,8 +128,8 @@
     #modal-croppie .modal-dialog {max-width: 100%; margin-left: 1rem; margin-right: 1rem;}
     #modal-croppie .modal-body .table-responsive {max-height: calc(100vh - 250px); overflow-y: auto;}
 
-    /* Modal Terminal */
-    #modal-terminal .modal-body {height: 80vh; overflow-y: auto;}
+    /* Modal Terminal, Modal Update Me */
+    #modal-terminal .modal-body, #modal-update-me .modal-body {max-height: 80vh; overflow-y: auto;}
 
     /* Quill Editor */
     #editor {height: 300px;}
@@ -176,5 +176,5 @@
     .tile, .dropdown-menu, .widget-small{border-radius: .5em}
     .app-sidebar__user{color: var(--gray)}
     .app-sidebar__user-avatar{transition: var(--transition)}
-    .card, .tile-topik{border: unset!important; border-radius: .5em!important}
+    /*.card, .tile-topik{border: unset!important; border-radius: .5em!important}*/
 </style>

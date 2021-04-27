@@ -14,6 +14,22 @@
         @if(has_access('DashboardController::admin', Auth::user()->role, false))
         <li><a class="app-menu__item {{ Request::path() == 'admin' ? 'active' : '' }}" href="{{ route('admin.dashboard') }}"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
         @endif
+        
+        @if(has_access('PackageController::me', Auth::user()->role, false) || has_access('PackageController::index', Auth::user()->role, false) || has_access('ArtisanController::index', Auth::user()->role, false))
+        <li class="treeview {{ is_int(strpos(Request::url(), '/admin/sistem')) ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-wrench"></i><span class="app-menu__label">Sistem</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+          <ul class="treeview-menu">
+            @if(has_access('PackageController::me', Auth::user()->role, false))
+            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.package.me'))) ? 'active' : '' }}" href="{{ route('admin.package.me') }}"><i class="icon fa fa-circle-o"></i> My Package</a></li>
+            @endif
+            @if(has_access('PackageController::index', Auth::user()->role, false))
+            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.package.index'))) && !is_int(strpos(Request::url(), route('admin.package.me'))) ? 'active' : '' }}" href="{{ route('admin.package.index') }}"><i class="icon fa fa-circle-o"></i> Package</a></li>
+            @endif
+            @if(has_access('ArtisanController::index', Auth::user()->role, false))
+            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.artisan.index'))) ? 'active' : '' }}" href="{{ route('admin.artisan.index') }}"><i class="icon fa fa-circle-o"></i> Artisan</a></li>
+            @endif
+          </ul>
+        </li>
+        @endif
 
         @if(has_access('UserController::index', Auth::user()->role, false))
         <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.user.index'))) ? 'active' : '' }}" href="{{ route('admin.user.index') }}"><i class="app-menu__icon fa fa-users"></i><span class="app-menu__label">User</span></a></li>
@@ -30,10 +46,6 @@
             @endif
           </ul>
         </li>
-        @endif
-
-        @if(has_access('CommandController::index', Auth::user()->role, false))
-        <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.command.index'))) ? 'active' : '' }}" href="{{ route('admin.command.index') }}"><i class="app-menu__icon fa fa-terminal"></i><span class="app-menu__label">Terminal</span></a></li>
         @endif
         
         @if(has_access('SettingController::index', Auth::user()->role, false))

@@ -43,7 +43,7 @@
                                     <td>
                                         <a href="{{ route('admin.package.detail', ['package' => $data['name']]) }}">{{ $data['name'] }}</a>
                                         <br>
-                                        <small class="text-muted">{{ $data['description'] }}</small>
+                                        <small class="text-muted">{{ array_key_exists('description', $data) ? $data['description'] : '' }}</small>
                                     </td>
                                     <td>{{ $data['version'] }}</td>
                                     <td>{{ ucfirst($data['type']) }}</td>

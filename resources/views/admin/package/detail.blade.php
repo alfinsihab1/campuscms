@@ -28,7 +28,7 @@
 
                     <!-- Detail Package -->
                     <h5>{{ $package['full_name'] }}</h5>
-                    <p class="mb-1">{{ $package['description'] }}</p>
+                    <p class="mb-1">{{ array_key_exists('description', $package) ? $package['description'] : '' }}</p>
                     <p><a href="{{ $package['html_url'] }}" target="_blank"><i class="fa fa-link mr-1"></i>{{ $package['html_url'] }}</a></p>
                     <!-- /Detail Package -->
 

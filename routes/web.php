@@ -46,6 +46,16 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	// AJAX
 	Route::get('/admin/ajax/count-visitor', $namespacePrefix.'DashboardController@countVisitor')->name('admin.ajax.countvisitor');
 
+	// Package
+	Route::get('/admin/sistem/package', $namespacePrefix.'PackageController@index')->name('admin.package.index');
+	Route::get('/admin/sistem/package/me', $namespacePrefix.'PackageController@me')->name('admin.package.me');
+	Route::get('/admin/sistem/package/update-me', $namespacePrefix.'PackageController@updateMe')->name('admin.package.update-me');
+	Route::get('/admin/sistem/package/detail', $namespacePrefix.'PackageController@detail')->name('admin.package.detail');
+
+	// Artisan
+	Route::get('/admin/sistem/artisan', $namespacePrefix.'ArtisanController@index')->name('admin.artisan.index');
+	Route::post('/admin/sistem/artisan/call', $namespacePrefix.'ArtisanController@call')->name('admin.artisan.call');
+
 	// User
 	Route::get('/admin/user', $namespacePrefix.'UserController@index')->name('admin.user.index');
 	Route::get('/admin/user/create', $namespacePrefix.'UserController@create')->name('admin.user.create');
@@ -311,12 +321,6 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::post('/admin/role-permission/update', $namespacePrefix.'PermissionController@update')->name('admin.permission.update');
 	Route::post('/admin/role-permission/delete', $namespacePrefix.'PermissionController@delete')->name('admin.permission.delete');
 	Route::post('/admin/role-permission/sort', $namespacePrefix.'PermissionController@sorting')->name('admin.permission.sort');
-
-	// Command
-	Route::get('/admin/command', $namespacePrefix.'CommandController@index')->name('admin.command.index');
-	Route::post('/admin/command/artisan', $namespacePrefix.'CommandController@artisan')->name('admin.command.artisan');
-	Route::get('/admin/command/composer/update', $namespacePrefix.'CommandController@updatePackage')->name('admin.command.composer.update');
-	Route::get('/admin/command/composer/version', $namespacePrefix.'CommandController@composerVersion')->name('admin.command.composer.version');
 
 	// Setting
 	Route::get('/admin/setting', $namespacePrefix.'SettingController@index')->name('admin.setting.index');

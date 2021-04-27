@@ -40,7 +40,7 @@
                         <span class="badge badge-danger">{{ ucfirst($package['type']) }}</span>
                         <span class="badge badge-info">{{ $package['license'] }}</span>
                     </p>
-                    <p class="mb-1">{{ $package['description'] }}</p>
+                    <p class="mb-1">{{ array_key_exists('description', $package) ? $package['description'] : '' }}</p>
                     <p><a href="https://github.com/{{ $package['name'] }}" target="_blank"><i class="fa fa-link mr-1"></i>https://github.com/{{ $package['name'] }}</a></p>
 
                     <p class="mb-0"><strong>Author:</strong></p>

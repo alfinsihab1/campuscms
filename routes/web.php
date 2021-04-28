@@ -42,6 +42,8 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	
 	// Profil
 	Route::get('/admin/profile', $namespacePrefix.'UserController@profile')->name('admin.profile');
+	Route::get('/admin/profile/edit', $namespacePrefix.'UserController@editProfile')->name('admin.profile.edit');
+	Route::post('/admin/profile/update', $namespacePrefix.'UserController@updateProfile')->name('admin.profile.update');
 
 	// AJAX
 	Route::get('/admin/ajax/count-visitor', $namespacePrefix.'DashboardController@countVisitor')->name('admin.ajax.countvisitor');
@@ -342,6 +344,8 @@ Route::group(['middleware' => ['faturcms.member']], function() use ($namespacePr
 
 	// Profil
 	Route::get('/member/profile', $namespacePrefix.'UserController@profile')->name('member.profile');
+	Route::get('/member/profile/edit', $namespacePrefix.'UserController@editProfile')->name('member.profile.edit');
+	Route::post('/member/profile/update', $namespacePrefix.'UserController@updateProfile')->name('member.profile.update');
 	Route::get('/member/user/images', $namespacePrefix.'UserController@showImages')->name('member.user.images');
 
 	// Rekening

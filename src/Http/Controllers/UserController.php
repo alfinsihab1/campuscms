@@ -296,6 +296,73 @@ class UserController extends Controller
     }
 
     /**
+     * Mengedit profil
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function editProfile()
+    {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // Get data user
+        $user = User::findOrFail(Auth::user()->id_user);
+
+        // View
+        if(Auth::user()->is_admin == 1){
+            return view('faturcms::admin.user.edit-profile', [
+                'user' => $user,
+            ]);
+        }
+        elseif(Auth::user()->is_admin == 0){
+            return view('faturcms::member.user.edit-profile', [
+                'user' => $user,
+            ]);
+        }
+    }
+
+    /**
+     * Mengupdate profil
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateProfile(Request $request)
+    {
+        // Validasi
+        $validator = Validator::make($request->all(), [
+            'nama_user' => 'required|string|max:255',
+            'tanggal_lahir' => 'required',
+            'jenis_kelamin' => 'required',
+            'nomor_hp' => 'required',
+            'password' => $request->password != '' ? 'required|string|min:6' : '',
+        ], array_validation_messages());
+        
+        // Mengecek jika ada error
+        if($validator->fails()){
+            // Kembali ke halaman sebelumnya dan menampilkan pesan error
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+        // Jika tidak ada error
+        else{
+            // Menyimpan data
+            $user = User::find($request->id);
+            $user->nama_user = $request->nama_user;
+            $user->tanggal_lahir = generate_date_format($request->tanggal_lahir, 'y-m-d');
+            $user->jenis_kelamin = $request->jenis_kelamin;
+            $user->nomor_hp = $request->nomor_hp;
+            $user->password = $request->password != '' ? bcrypt($request->password) : $user->password;
+            $user->save();
+        }
+
+        // Redirect
+        if(Auth::user()->is_admin == 1)
+            return redirect()->route('admin.profile.edit')->with(['message' => 'Berhasil mengupdate profil.']);
+        elseif(Auth::user()->is_admin == 0)
+            return redirect()->route('member.profile.edit')->with(['message' => 'Berhasil mengupdate profil.']);
+    }
+
+    /**
      * Mengupdate foto profil
      *
      * @param  \Illuminate\Http\Request  $request

@@ -58,7 +58,7 @@
                                         <div class="small text-dark mt-2">
                                             {{ $file }}
                                             <br>
-                                            ({{ generate_size(\File::size('assets/images/'.$category.'/'.$file)) }})
+                                            ({{ generate_size(\File::size('assets/'.$directory[$category]['dir'].'/'.$file)) }})
                                         </div>
                                     </div>
                                 </div>

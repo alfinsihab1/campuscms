@@ -220,3 +220,36 @@
 		screen.width <= 768 ? $("body").addClass("sidenav-closed") : $("body").removeClass("sidenav-closed");
 	}
 </script>
+<!-- Go Top -->
+<script type="text/javascript">
+var btn = $('#top-button');
+
+$(window).scroll(function() {
+  if ($(window).scrollTop() > 300) {
+    btn.addClass('show');
+  } else {
+    btn.removeClass('show');
+  }
+});
+
+btn.on('click', function(e) {
+  e.preventDefault();
+  $('html, body').animate({scrollTop:0}, '300');
+});
+</script>
+<!-- Sticky Navbar -->
+<script type="text/javascript">
+$(function() {
+    //caches a jQuery object containing the header element
+    var header = $(".app-header");
+    $(window).scroll(function() {
+        var scroll = $(window).scrollTop();
+
+        if (scroll >= 100) {
+            header.addClass("nav-sticky");
+        } else {
+            header.removeClass("nav-sticky")
+        }
+    });
+});
+</script>

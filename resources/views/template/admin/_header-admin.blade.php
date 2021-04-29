@@ -1,18 +1,13 @@
-<!-- Navbar -->
-<header class="app-header">
-  <a class="app-header__logo" href="{{ route('site.home') }}" target="_blank">
-    Admin Area
-    <!-- <img width="160" src="{{asset('assets/images/logo/campusnet.webp')}}"> -->
-  </a>
-  
-  <!-- Sidebar Toggle Button -->
-  <a class="app-sidebar__toggle" href="#" data-toggle="sidebar"></a>
-
-  <!-- Navbar Right Menu -->
+<header class="app-header align-items-center mb-4">
+  <div data-toggle="tooltip" title="Peralatan">
+    <a class="app-sidebar__toggle menu-btn-primary d-block" href="#" data-toggle="sidebar"></a>
+  </div>
+  <ul class="app-nav d-block"><li class="app-nav__item" style="line-height: 15px">
+    <h5 class="d-inline-block text-truncate m-0" style="max-width: 150px; color: var(--primary)">Dashboard</h5>
+    <p class="m-0 text-muted"><small><i class="fa fa-home"></i> > Dashboard</small></p>
+  </li></ul>
   <ul class="app-nav ml-auto ml-md">
-
     @if(has_access('KomisiController::index', Auth::user()->role, false) || has_access('WithdrawalController::index', Auth::user()->role, false) || has_access('PelatihanController::transaction', Auth::user()->role, false))
-    <!-- Notification Menu -->
     <li class="dropdown">
       <a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Show notifications">
         <i class="fa fa-bell fa-lg" data-toggle="tooltip" title="Notifikasi"></i>
@@ -21,53 +16,215 @@
         @endif
       </a>
       <ul class="app-notification dropdown-menu dropdown-menu-right">
-        <li class="app-notification__title">Kamu punya <strong>{{ count_notif_all() }}</strong> pemberitahuan baru.</li>
-        <div class="app-notification__content">
-          <li>
-            <a class="app-notification__item" href="{{ route('admin.komisi.index') }}"><span class="app-notification__icon"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-success"></i><i class="fa fa-money fa-stack-1x fa-inverse"></i></span></span>
-              <div>
-                <p class="app-notification__message">Verifikasi Komisi</p>
-                <p class="app-notification__meta">{{ count_notif_komisi() }} pemberitahuan baru</p>
+        <div class="card">
+          <div class="card-header">
+            <p class="m-0 font-weight-bold">Notifikasi</p>  
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-6 border-right border-bottom">
+                <a class="dropdown-item" href="{{ route('admin.komisi.index') }}">
+                  <span class="app-notification__icon p-0"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-success"></i><i class="fa fa-money fa-stack-1x fa-inverse"></i></span>
+                  </span>
+                  <span class="badge badge-pill badge-danger position-absolute">{{ count_notif_komisi() }}</span>
+                  <p class="app-notification__message">Verifikasi Komisi</p>
+                </a>
               </div>
-            </a>
-          </li>
-          <li>
-            <a class="app-notification__item" href="{{ route('admin.withdrawal.index') }}"><span class="app-notification__icon"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-warning"></i><i class="fa fa-money fa-stack-1x fa-inverse"></i></span></span>
-              <div>
-                <p class="app-notification__message">Pengambilan Komisi</p>
-                <p class="app-notification__meta">{{ count_notif_withdrawal() }} pemberitahuan baru</p>
+              <div class="col-6 border-bottom">
+                <a class="dropdown-item" href="{{ route('admin.withdrawal.index') }}">
+                  <span class="app-notification__icon p-0"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-warning"></i><i class="fa fa-money fa-stack-1x fa-inverse"></i></span></span>
+                  <span class="badge badge-pill badge-danger position-absolute">{{ count_notif_withdrawal() }}</span>
+                  <div>
+                    <p class="app-notification__message">Pengambilan Komisi</p>
+                  </div>
+                </a>
               </div>
-            </a>
-          </li>
-          <li>
-            <a class="app-notification__item" href="{{ route('admin.pelatihan.transaction') }}"><span class="app-notification__icon"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-primary"></i><i class="fa fa-money fa-stack-1x fa-inverse"></i></span></span>
-              <div>
-                <p class="app-notification__message">Pembayaran Pelatihan</p>
-                <p class="app-notification__meta">{{ count_notif_pelatihan() }} pemberitahuan baru</p>
+              <div class="col-6 border-right">
+                <a class="dropdown-item" href="{{ route('admin.pelatihan.transaction') }}">
+                  <span class="app-notification__icon p-0"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-primary"></i><i class="fa fa-money fa-stack-1x fa-inverse"></i></span></span>
+                  <span class="badge badge-pill badge-danger position-absolute">{{ count_notif_pelatihan() }}</span>
+                  <div>
+                    <p class="app-notification__message">Pembayaran Pelatihan</p>
+                  </div>
+                </a>
               </div>
-            </a>
-          </li>
+              <div class="col-6 "></div>
+            </div>
+          </div>
         </div>
-        <!-- <li class="app-notification__footer"><a href="#">See all notifications.</a></li> -->
       </ul>
     </li>
-    <!-- /Notification Menu -->
     @endif
-
-    <!-- User Menu -->
     <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown"><i class="fa fa-user fa-lg" data-toggle="tooltip" title="Akun"></i></a>
       <ul class="dropdown-menu settings-menu dropdown-menu-right">
-        <li><a class="dropdown-item" href="{{ route('admin.profile') }}"><i class="fa fa-cog fa-lg"></i> Profil</a></li>
-        @if(has_access('SignatureController::input', Auth::user()->role, false))
-        <li><a class="dropdown-item" href="{{ route('admin.signature.input') }}"><i class="fa fa-tint fa-lg"></i> Tandatangan</a></li>
-        @endif
-        <li><a class="dropdown-item" href="javascript:void(0)" onclick="event.preventDefault(); document.getElementById('form-logout').submit();"><i class="fa fa-sign-out fa-lg"></i> Logout</a></li>
-        <form id="form-logout" method="post" action="{{ route('admin.logout') }}">
-            {{ csrf_field() }}
-        </form>
+        <div class="card">
+          <div class="card-header">
+            <div class="media">
+              <img width="50" height="50" class="rounded mr-3" src="https://www.tagar.id/Asset/uploads2019/1607400367184-munarman-fpi.jpg">
+              <div class="media-body">
+                <p class="m-0 font-weight-bold">Munarboy Jandalimabelas</p>
+                <p class="m-0"><small><i class="fa fa-bookmark"></i> Jihad</small></p>
+              </div>
+            </div>  
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-6 border-right">
+                <a class="dropdown-item" href="{{ route('admin.profile') }}">
+                  <span class="app-notification__icon p-0"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-success"></i><i class="fa fa-cog fa-stack-1x fa-inverse"></i></span></span>
+                  <p class="m-0">Profil</p>
+                </a>
+              </div>
+              @if(has_access('SignatureController::input', Auth::user()->role, false))
+              <div class="col-6">
+                <a class="dropdown-item" href="{{ route('admin.signature.input') }}">
+                  <span class="app-notification__icon p-0"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-info"></i><i class="fa fa-tint fa-stack-1x fa-inverse"></i></span></span>
+                  <p class="m-0">Tandatangan</p>
+                </a>
+              </div>
+              @endif
+              <div class="col-6">
+                <a class="dropdown-item" href="javascript:void(0)" onclick="event.preventDefault(); document.getElementById('form-logout').submit();">
+                  <span class="app-notification__icon p-0"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-danger"></i><i class="fa fa-sign-out fa-stack-1x fa-inverse"></i></span></span>
+                  <p class="m-0">Keluar</p>
+                </a>
+                <form id="form-logout" method="post" action="{{ route('admin.logout') }}">
+                    {{ csrf_field() }}
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
       </ul>
     </li>
-    <!-- /User Menu -->
-
+    <li class="dropdown" data-toggle="tooltip" title="Peralatan"><a class="app-nav__item menu-btn-red" href="#" data-toggle="modal" data-target="#startMenu"><div class="blob red"></div><i class="fa fa-th-large fa-lg"></i></a>
+    </li>
   </ul>
 </header>
+<!-- modal -->
+<div class="modal fade" id="startMenu" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-full">
+    <div class="modal-content modal-content-full">
+      <div class="container">
+        <div class="modal-header align-items-center">
+          <h5 class="modal-title" id="exampleModalLabel" style="color: var(--red)">Peralatan</h5>
+          <button type="button" class="close menu-btn-green" data-dismiss="modal" aria-label="Close" style="padding: .5em .7em; border-radius: .5em">
+            <span aria-hidden="true"><i class="fa fa-times"></i></span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h5><i class="fa fa-paint-brush"></i> Tampilan</h5>
+          <div class="row mb-4">
+            <div class="col-6 col-lg-3 mb-3">
+              <div class="card">
+                <div class="card-body menu-btn-red rounded-1">
+                  <i class="fa fa-desktop" style="font-size: 2em"></i>
+                  <h5 class="m-0">Umum</h5>
+                  <p class="m-0 text-muted"><small>Pengaturan Website</small></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-lg-3 mb-3">
+              <div class="card">
+                <div class="card-body menu-btn-green rounded-1">
+                  <i class="fa fa-picture-o" style="font-size: 2em"></i>
+                  <h5 class="m-0">Logo</h5>
+                  <p class="m-0 text-muted"><small>Logo website</small></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-lg-3 mb-3">
+              <div class="card">
+                <div class="card-body menu-btn-primary rounded-1">
+                  <i class="fa fa-gamepad" style="font-size: 2em"></i>
+                  <h5 class="m-0">Icon</h5>
+                  <p class="m-0 text-muted"><small>Icon website</small></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 col-lg-3 mb-3">
+              <div class="card">
+                <div class="card-body menu-btn-blue rounded-1">
+                  <i class="fa fa-spinner" style="font-size: 2em"></i>
+                  <h5 class="m-0">Warna</h5>
+                  <p class="m-0 text-muted"><small>Warna Website</small></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h5><i class="fa fa-cog"></i> Lainya</h5>
+          <div class="row">
+            <div class="col-12 col-lg-3 mb-3">
+              <div class="heading">
+                <h5 class="m-0 font-weight-bold mb-3 d-flex align-items-center">
+                  <i class="fa fa-wrench menu-btn-red p-3 mr-2 rounded-1"></i>
+                  <div>
+                    <p class="m-0">Sistem</p>
+                    <p class="m-0"><small>Manajemen Sistem</small></p>
+                  </div>
+                </h5>
+              </div>
+              <div class="list-group list-group-flush">
+                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> My Package</a>
+                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> Package</a>
+                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> Artisan</a>
+              </div>
+            </div>
+            <div class="col-12 col-lg-3 mb-3">
+              <div class="heading">
+                <h5 class="m-0 font-weight-bold mb-3 d-flex align-items-center">
+                  <i class="fa fa-key menu-btn-green p-3 mr-2 rounded-1"></i>
+                  <div>
+                    <p class="m-0">Role</p>
+                    <p class="m-0"><small>Manajemen Role</small></p>
+                  </div>
+                </h5>
+              </div>
+              <div class="list-group list-group-flush">
+                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> Data Role</a>
+                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> Role Permission</a>
+              </div>
+            </div>
+            <div class="col-12 col-lg-3 mb-3">
+              <div class="heading">
+                <h5 class="m-0 font-weight-bold mb-3 d-flex align-items-center">
+                  <i class="fa fa-cogs menu-btn-primary p-3 mr-2 rounded-1"></i>
+                  <div>
+                    <p class="m-0">Pengaturan</p>
+                    <p class="m-0"><small>Manajemen Pengaturan</small></p>
+                  </div>
+                </h5>
+              </div>
+              <div class="list-group list-group-flush">
+                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> Harga</a>
+                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> Sertifikat</a>
+                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> Halaman</a>
+                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> Notifikasi</a>
+                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> Referal</a>
+              </div>
+            </div>
+            <div class="col-12 col-lg-3 mb-3">
+              <div class="heading">
+                <h5 class="m-0 font-weight-bold mb-3 d-flex align-items-center">
+                  <i class="fa fa-desktop menu-btn-primary p-3 mr-2 rounded-1"></i>
+                  <div>
+                    <p class="m-0">Konten Situs</p>
+                    <p class="m-0"><small>Manajemen Konten Situs</small></p>
+                  </div>
+                </h5>
+              </div>
+              <div class="list-group list-group-flush">
+                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> Slider</a>
+                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> Deskripsi</a>
+                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> Fitur</a>
+                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> Mitra</a>
+                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> Mentor</a>
+                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i>Testimoni</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

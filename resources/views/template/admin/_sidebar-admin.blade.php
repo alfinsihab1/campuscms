@@ -2,15 +2,18 @@
     <!-- Sidebar Menu -->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <aside class="app-sidebar">
-<!--       <div class="app-sidebar__user">
-        <img class="app-sidebar__user-avatar" width="60" src="{{ image('assets/images/user/'.Auth::user()->foto, 'user') }}">
-        <div>
-          <p class="app-sidebar__user-name">{{ Auth::user()->nama_user }}</p>
-          <p class="app-sidebar__user-designation">{{ role(Auth::user()->role) }}</p>
-        </div>
-      </div> -->
       <ul class="app-menu">
-
+        <li class="my-3 d-flex align-items-center justify-content-between justify-content-lg-center">
+          <div data-toggle="tooltip" title="Peralatan" class="d-block d-lg-none">
+            <a class="app-sidebar__toggle menu-btn-primary d-block" href="#" data-toggle="sidebar"></a>
+          </div>
+          <a class="h4 text-uppercase" href="{{ route('site.home') }}" target="_blank">
+            <img class="a-app_logo" src="https://psikologanda.com/assets/images/logo/1617422635-logo.png">
+            <div class="wrap-b-app_logo menu-bg-primary rounded-1 p-2"><img class="b-app_logo" src="https://psikologanda.com/assets/images/logo/1598935068-icon.png"></div>
+          </a>
+          <a class="d-block d-lg-none" href="#"></a>
+        </li>
+        <hr>
         @if(has_access('DashboardController::admin', Auth::user()->role, false))
         <li><a class="app-menu__item {{ Request::path() == 'admin' ? 'active' : '' }}" href="{{ route('admin.dashboard') }}"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
         @endif

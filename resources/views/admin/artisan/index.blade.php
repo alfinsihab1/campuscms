@@ -23,7 +23,7 @@
             @foreach($commands as $data)
             <!-- Column -->
             <div class="col-lg-3 col-md-4 mb-3">
-                <div class="tile">
+                <div class="tile mb-0">
                     <div class="tile-body">
                         <h5 class="card-title">{{ $data['title'] }}</h5>
                         <p class="card-text small">{{ $data['description'] }}</p>

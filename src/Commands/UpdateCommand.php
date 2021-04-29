@@ -65,8 +65,27 @@ class UpdateCommand extends Command
         $this->info('Copying Templates');
         File::copyDirectory(package_path('publishable/templates'), public_path('templates'));
 
+        // Copy seeds
+        $this->info('Copying Seeds');
+        File::copyDirectory(package_path('publishable/seeds'), database_path('seeds'));
+        $seed_files = generate_file(package_path('publishable/seeds'));
+        if(count($seed_files)>0){
+            foreach($seed_files as $seed_file){
+                file_replace_contents(package_path('publishable/seeds/'.$seed_file), database_path('seeds/'.$seed_file));
+            }
+        }
+
         // Run main command
         $this->call('faturcms:main');
+
+        // Find composer and dump autoload
+        $this->info('Dumping the autoloaded files and reloading all new files');
+        $process = new Process(['/opt/plesk/php/7.3/bin/php', '/usr/lib64/plesk-9.0/composer.phar', 'dump-autoload'], base_path());
+        $process->setTimeout(null); // Setting timeout to null to prevent installation from stopping at a certain point in time
+        $process->setWorkingDirectory(base_path())->run();
+
+        // Seed
+        $this->call('db:seed');
 
         // Last info
         $this->info('Successfully updating FaturCMS! Enjoy');

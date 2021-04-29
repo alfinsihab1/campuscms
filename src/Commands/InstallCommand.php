@@ -34,20 +34,6 @@ class InstallCommand extends Command
     }
 
     /**
-     * Get the composer command for the environment.
-     *
-     * @return string
-     */
-    protected function findComposer()
-    {
-        if(file_exists(getcwd().'/composer.phar')){
-            return '"'.PHP_BINARY.'" '.getcwd().'/composer.phar';
-        }
-
-        return 'composer';
-    }
-
-    /**
      * Execute the console command.
      *
      * @return void
@@ -64,6 +50,12 @@ class InstallCommand extends Command
         // Publish views
         $this->call('vendor:publish', ['--provider' => FaturCMSServiceProvider::class, '--tag' => 'viewAuth']);
         $this->call('vendor:publish', ['--provider' => FaturCMSServiceProvider::class, '--tag' => 'viewPDF']);
+
+        // Publish seeds
+        $this->call('vendor:publish', ['--provider' => FaturCMSServiceProvider::class, '--tag' => 'seeds']);
+
+        // Seed
+        $this->call('db:seed');
         
         // Run main command
         $this->call('faturcms:main');

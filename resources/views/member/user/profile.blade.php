@@ -59,7 +59,8 @@
             <div class="tile">
                 <!-- Tile Body -->
                 <div class="tile-body">
-                    <div class="list-group list-group-flush">
+                    <a class="btn btn-sm btn-primary" href="{{ route('member.profile.edit') }}"><i class="fa fa-edit mr-1"></i>Edit Profil</a>
+                    <div class="list-group list-group-flush mt-3">
                         <div class="list-group-item d-sm-flex justify-content-between px-0 py-1">
                             <div class="font-weight-bold">Nama:</div>
                             <div>{{ $user->nama_user }}</div>

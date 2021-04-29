@@ -79,6 +79,9 @@ class FaturCMSServiceProvider extends ServiceProvider
             'templates' => [
                 "{$publishablePath}/templates" => public_path('templates'),
             ],
+            'seeds' => [
+                "{$publishablePath}/seeds" => database_path('seeds'),
+            ],
             'config' => [
                 "{$publishablePath}/config/faturcms.php" => config_path('faturcms.php'),
             ],

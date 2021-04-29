@@ -43,10 +43,8 @@ class RolePermissionController extends Controller
      */
     public function update(Request $request)
     {
-        // Mengupdate role permission
-        $role_permission = RolePermission::where('id_permission','=',$request->permission)->where('id_role','=',$request->role)->first();
-        $role_permission->access = $request->access;
-        $role_permission->save();
+        // Mengupdate / menambah role permission
+        $role_permission = RolePermission::firstOrCreate(['id_permission' => $request->permission, 'id_role' => $request->role], ['access' => $request->access]);
         
         echo 'Berhasil mengupdate hak akses!';
     }

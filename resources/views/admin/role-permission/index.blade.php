@@ -82,7 +82,7 @@
 </main>
 <!-- /Main -->
 
-<div class="toast" style="position: absolute; top: 15px; right: 15px; z-index: 9999; display: none;">
+<div class="toast" style="position: fixed; top: 65px; right: 15px; z-index: 9999; display: none;">
     <div class="card bg-warning">
         <div class="card-body font-weight-bold"></div>
     </div>

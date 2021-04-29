@@ -15,6 +15,10 @@
         <li><a class="app-menu__item {{ Request::path() == 'member' ? 'active' : '' }}" href="{{ route('member.dashboard') }}"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
         @endif
 
+        @if(has_access('UserController::profile', Auth::user()->role, false))
+        <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('member.profile'))) ? 'active' : '' }}" href="{{ route('member.profile') }}"><i class="app-menu__icon fa fa-user"></i><span class="app-menu__label">Profil</span></a></li>
+        @endif
+
         @if(has_access('RekeningController::index', Auth::user()->role, false) || has_access('KomisiController::index', Auth::user()->role, false) || has_access('WithdrawalController::index', Auth::user()->role, false))
         <li class="treeview {{ strpos(Request::url(), '/member/transaksi') || strpos(Request::url(), '/member/rekening') || strpos(Request::url(), '/member/afiliasi') ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-credit-card"></i><span class="app-menu__label">Afiliasi</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">

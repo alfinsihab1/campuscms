@@ -12,6 +12,7 @@
  * @method count_peserta_pelatihan(int $pelatihan)
  * @method count_artikel_by_kategori(int $kategori)
  * @method count_komentar(int $artikel)
+ * @method count_kunjungan(int $user, string $jenis)
  */
 
 use App\User;
@@ -19,6 +20,7 @@ use Ajifatur\FaturCMS\Models\Blog;
 use Ajifatur\FaturCMS\Models\Komentar;
 use Ajifatur\FaturCMS\Models\Komisi;
 use Ajifatur\FaturCMS\Models\PelatihanMember;
+use Ajifatur\FaturCMS\Models\Visitor;
 use Ajifatur\FaturCMS\Models\Withdrawal;
 
 // Menghitung jumlah data duplikat
@@ -99,5 +101,20 @@ if(!function_exists('count_komentar')){
     function count_komentar($artikel){
         $data = Komentar::join('users','komentar.id_user','=','users.id_user')->join('blog','komentar.id_artikel','=','blog.id_blog')->where('komentar.id_artikel','=',$artikel)->count();
         return $data;
+    }
+}
+
+// Menghitung jumlah kunjungan visitor
+if(!function_exists('count_kunjungan')){
+    function count_kunjungan($user, $jenis){
+        if($jenis == 'all'){
+            $data = Visitor::join('users','visitor.id_user','=','users.id_user')->where('visitor.id_user','=',$user)->count();
+            return $data;
+        }
+        elseif($jenis == 'today'){
+            $data = Visitor::join('users','visitor.id_user','=','users.id_user')->where('visitor.id_user','=',$user)->whereDate('visit_at','=',date('Y-m-d'))->count();
+            return $data;
+        }
+        else return 0;
     }
 }

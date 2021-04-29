@@ -11,14 +11,17 @@
 
 <script type="text/javascript">
     $(function(){
+        // Sidebar Scroll
+        sidebar_scroll();
+        // Manage Screen
+        manage_screen();
         // Tooltip
         $('[data-toggle="tooltip"]').tooltip();
-		
-		// Manage Screen
-		manage_screen();
     });
 	
 	$(window).on("resize", function(){
+        // Sidebar Scroll
+        sidebar_scroll();
 		// Manage Screen
 		manage_screen();
 	});
@@ -213,6 +216,13 @@
             }
             reader.readAsDataURL(input.files[0]);
         }
+    }
+
+    // Sidebar scroll
+    function sidebar_scroll(){
+        var activeItem = $(".app-menu .app-menu__item.active").length == 1 ? $(".app-menu .app-menu__item.active") : $(".app-menu .treeview-item.active").parents(".treeview");
+        if(activeItem.offset().top + 58 > $(window).height())
+            $(".app-sidebar").animate({scrollTop: activeItem.offset().top - 58}, 1000);
     }
 	
 	// Manage screen

@@ -193,7 +193,8 @@
 
     /*.a-app-content{min-height: calc(100vh - 50px); margin-top: 50px; padding: 30px; -webkit-transition: margin-left 0.3s ease; -o-transition: margin-left 0.3s ease; transition: margin-left 0.3s ease; min-height: unset!important; padding-bottom: unset!important; margin-top: 0px; margin-left: 230px}*/
     .a-app-content{min-height: calc(100vh - 50px); margin-top: 50px; -webkit-transition: margin-left 0.3s ease; -o-transition: margin-left 0.3s ease; transition: margin-left 0.3s ease; min-height: unset!important; padding-bottom: unset!important; margin-top: 0px; margin-left: 230px}
-    .b-app-content{min-height: unset!important; padding-bottom: unset!important; margin-top: 1em;}
+    .b-app-content{min-height: unset!important; padding-bottom: unset!important; margin-top: 1em; margin-bottom: 1em;}
+    .app-content {min-height: calc(100vh - 129px);}
 
     a.fab:hover{text-decoration: none;}
     a.fab i{transition: var(--transition)}

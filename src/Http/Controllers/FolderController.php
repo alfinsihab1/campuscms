@@ -22,6 +22,9 @@ class FolderController extends Controller
      */
     public function create(Request $request, $category)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
 		// Kategori
 		$kategori = FolderKategori::where('slug_kategori','=',$category)->firstOrFail();
 
@@ -111,6 +114,9 @@ class FolderController extends Controller
      */
     public function edit(Request $request, $category, $id)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
 		// Kategori
 		$kategori = FolderKategori::where('slug_kategori','=',$category)->firstOrFail();
 
@@ -200,6 +206,9 @@ class FolderController extends Controller
      */
     public function delete(Request $request)
     {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+        
         // Get folder
         $folder = Folder::findOrFail($request->id);
 

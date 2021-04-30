@@ -59,10 +59,10 @@
         <div class="card">
           <div class="card-header">
             <div class="media">
-              <img width="50" height="50" class="rounded mr-3" src="https://www.tagar.id/Asset/uploads2019/1607400367184-munarman-fpi.jpg">
+              <img width="50" height="50" class="rounded mr-3" src="{{ image('assets/images/user/'.Auth::user()->foto, 'user') }}">
               <div class="media-body">
-                <p class="m-0 font-weight-bold">Munarboy Jandalimabelas</p>
-                <p class="m-0"><small><i class="fa fa-bookmark"></i> Jihad</small></p>
+                <p class="m-0 font-weight-bold">{{ Auth::user()->nama_user }}</p>
+                <p class="m-0"><small><i class="fa fa-bookmark"></i> {{ role(Auth::user()->role) }}</small></p>
               </div>
             </div>  
           </div>
@@ -96,12 +96,14 @@
         </div>
       </ul>
     </li>
-    <li class="dropdown" data-toggle="tooltip" title="Peralatan"><a class="app-nav__item menu-btn-red" href="#" data-toggle="modal" data-target="#startMenu"><div class="blob red"></div><i class="fa fa-th-large fa-lg"></i></a>
+    @if(has_access('SettingController::edit', Auth::user()->role, false) || has_access('PackageController::index', Auth::user()->role, false) || has_access('PackageController::me', Auth::user()->role, false) || has_access('ArtisanController::index', Auth::user()->role, false) || has_access('RoleController::index', Auth::user()->role, false) || has_access('RolePermissionController::index', Auth::user()->role, false))
+    <li class="" data-toggle="tooltip" title="Peralatan"><a class="app-nav__item menu-btn-red" href="#" data-toggle="modal" data-target="#startMenu"><div class="blob red"></div><i class="fa fa-th-large fa-lg"></i></a>
+    @endif
     </li>
   </ul>
 </header>
 
-<!-- modal -->
+<!-- Modal Start Menu -->
 <div class="modal fade" id="startMenu" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-full">
     <div class="modal-content modal-content-full">
@@ -113,6 +115,7 @@
           </button>
         </div>
         <div class="modal-body">
+          @if(has_access('SettingController::edit', Auth::user()->role, false))
           <h5><i class="fa fa-thumb-tack"></i> Pintasan</h5>
           <div class="row mb-4">
             <div class="col-6 col-lg-3 mb-3">
@@ -132,7 +135,7 @@
                 <div class="card-body menu-btn-green rounded-1">
                   <i class="fa fa-picture-o" style="font-size: 2em"></i>
                   <h5 class="m-0">Logo</h5>
-                  <p class="m-0"><small>Logo website</small></p>
+                  <p class="m-0"><small>Logo Website</small></p>
                 </div>
               </div>
               </a>
@@ -143,7 +146,7 @@
                 <div class="card-body menu-btn-primary rounded-1">
                   <i class="fa fa-gamepad" style="font-size: 2em"></i>
                   <h5 class="m-0">Icon</h5>
-                  <p class="m-0"><small>Icon website</small></p>
+                  <p class="m-0"><small>Icon Website</small></p>
                 </div>
               </div>
               </a>
@@ -160,8 +163,10 @@
               </a>
             </div>
           </div>
+          @endif
           <h5><i class="fa fa-cog"></i> Lainnya</h5>
           <div class="row">
+            @if(has_access('PackageController::index', Auth::user()->role, false) || has_access('PackageController::me', Auth::user()->role, false) || has_access('ArtisanController::index', Auth::user()->role, false))
             <div class="col-12 col-lg-3 mb-3">
               <div class="heading">
                 <h5 class="m-0 font-weight-bold mb-3 d-flex align-items-center">
@@ -173,11 +178,19 @@
                 </h5>
               </div>
               <div class="list-group list-group-flush">
+                @if(has_access('PackageController::me', Auth::user()->role, false))
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.package.me') }}"><i class="fa fa-circle-o"></i> My Package</a>
+                @endif
+                @if(has_access('PackageController::index', Auth::user()->role, false))
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.package.index') }}"><i class="fa fa-circle-o"></i> Package</a>
+                @endif
+                @if(has_access('ArtisanController::index', Auth::user()->role, false))
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.artisan.index') }}"><i class="fa fa-circle-o"></i> Artisan</a>
+                @endif
               </div>
             </div>
+            @endif
+            @if(has_access('RoleController::index', Auth::user()->role, false) || has_access('RolePermissionController::index', Auth::user()->role, false))
             <div class="col-12 col-lg-3 mb-3">
               <div class="heading">
                 <h5 class="m-0 font-weight-bold mb-3 d-flex align-items-center">
@@ -189,10 +202,16 @@
                 </h5>
               </div>
               <div class="list-group list-group-flush">
+                @if(has_access('RoleController::index', Auth::user()->role, false))
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.role.index') }}"><i class="fa fa-circle-o"></i> Data Role</a>
+                @endif
+                @if(has_access('RolePermissionController::index', Auth::user()->role, false))
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.rolepermission.index') }}"><i class="fa fa-circle-o"></i> Role Permission</a>
+                @endif
               </div>
             </div>
+            @endif
+            @if(has_access('SettingController::edit', Auth::user()->role, false))
             <div class="col-12 col-lg-3 mb-3">
               <div class="heading">
                 <h5 class="m-0 font-weight-bold mb-3 d-flex align-items-center">
@@ -208,9 +227,11 @@
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.setting.edit', ['category' => 'certificate']) }}"><i class="fa fa-circle-o"></i> Sertifikat</a>
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.setting.edit', ['category' => 'view']) }}"><i class="fa fa-circle-o"></i> Halaman</a>
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.setting.edit', ['category' => 'receivers']) }}"><i class="fa fa-circle-o"></i> Notifikasi</a>
-                <a class="list-group-item list-group-item-action" href="{{ route('admin.setting.edit', ['category' => 'referral']) }}"><i class="fa fa-circle-o"></i> Referal</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('admin.setting.edit', ['category' => 'referral']) }}"><i class="fa fa-circle-o"></i> Referral</a>
               </div>
             </div>
+            @endif
+            @if(has_access('SliderController::index', Auth::user()->role, false) || has_access('DeskripsiController::index', Auth::user()->role, false) || has_access('FiturController::index', Auth::user()->role, false) || has_access('MitraController::index', Auth::user()->role, false) || has_access('MentorController::index', Auth::user()->role, false) || has_access('TestimoniController::index', Auth::user()->role, false))
             <div class="col-12 col-lg-3 mb-3">
               <div class="heading">
                 <h5 class="m-0 font-weight-bold mb-3 d-flex align-items-center">
@@ -222,14 +243,27 @@
                 </h5>
               </div>
               <div class="list-group list-group-flush">
+                @if(has_access('SliderController::index', Auth::user()->role, false))
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.slider.index') }}"><i class="fa fa-circle-o"></i> Slider</a>
+                @endif
+                @if(has_access('DeskripsiController::index', Auth::user()->role, false))
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.deskripsi.index') }}"><i class="fa fa-circle-o"></i> Deskripsi</a>
+                @endif
+                @if(has_access('FiturController::index', Auth::user()->role, false))
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.fitur.index') }}"><i class="fa fa-circle-o"></i> Fitur</a>
+                @endif
+                @if(has_access('MitraController::index', Auth::user()->role, false))
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.mitra.index') }}"><i class="fa fa-circle-o"></i> Mitra</a>
+                @endif
+                @if(has_access('MentorController::index', Auth::user()->role, false))
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.mentor.index') }}"><i class="fa fa-circle-o"></i> Mentor</a>
+                @endif
+                @if(has_access('TestimoniController::index', Auth::user()->role, false))
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.testimoni.index') }}"><i class="fa fa-circle-o"></i>Testimoni</a>
+                @endif
               </div>
             </div>
+            @endif
           </div>
         </div>
       </div>

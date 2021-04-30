@@ -221,8 +221,10 @@
     // Sidebar scroll
     function sidebar_scroll(){
         var activeItem = $(".app-menu .app-menu__item.active").length == 1 ? $(".app-menu .app-menu__item.active") : $(".app-menu .treeview-item.active").parents(".treeview");
-        if(activeItem.offset().top + 58 > $(window).height())
-            $(".app-sidebar").animate({scrollTop: activeItem.offset().top - 58}, 1000);
+        if(activeItem.length > 0){
+            if(activeItem.offset().top + 58 > $(window).height())
+                $(".app-sidebar").animate({scrollTop: activeItem.offset().top - 58}, 1000);
+        }
     }
 	
 	// Manage screen

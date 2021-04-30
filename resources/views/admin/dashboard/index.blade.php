@@ -24,62 +24,25 @@
     <!-- /Welcome Text -->
     <div class="menu-grid">
     	<div class="row">
-    		<div class="col-6 col-lg-3 mb-3">
-    			<a href="#" class="text-decoration-none">
-    			<div class="card menu-bg-red">
-    				<div class="card-body">
-    					<div class="media d-block d-md-flex text-center text-md-left">
-    						<div class="mr-0 mr-md-3 h1">3</div>
-    						<div class="media-body pl-0 pl-md-3 " style="border-left: 1px solid var(--red)">
-    							<p class="m-0">Materi<br>E-Learning</p>
-    						</div>
-    					</div>
-    				</div>
-    			</div>
-    			</a>
-    		</div>
-    		<div class="col-6 col-lg-3 mb-3">
-    			<a href="#" class="text-decoration-none">
-    			<div class="card menu-bg-green">
-    				<div class="card-body">
-    					<div class="media d-block d-md-flex text-center text-md-left">
-    						<div class="mr-0 mr-md-3 h1">3</div>
-    						<div class="media-body pl-0 pl-md-3 " style="border-left: 1px solid var(--green)">
-    							<p class="m-0">Materi<br>E-Library</p>
-    						</div>
-    					</div>
-    				</div>
-    			</div>
-    			</a>
-    		</div>
-    		<div class="col-6 col-lg-3 mb-3">
-    			<a href="#" class="text-decoration-none">
-    			<div class="card menu-bg-primary">
-    				<div class="card-body">
-    					<div class="media d-block d-md-flex text-center text-md-left">
-    						<div class="mr-0 mr-md-3 h1">3</div>
-    						<div class="media-body pl-0 pl-md-3 " style="border-left: 1px solid var(--primary)">
-    							<p class="m-0">Materi<br>E-Competence</p>
-    						</div>
-    					</div>
-    				</div>
-    			</div>
-    			</a>
-    		</div>
-    		<div class="col-6 col-lg-3 mb-3">
-    			<a href="#" class="text-decoration-none">
-    			<div class="card menu-bg-blue">
-    				<div class="card-body">
-    					<div class="media d-block d-md-flex text-center text-md-left">
-    						<div class="mr-0 mr-md-3 h1">3</div>
-    						<div class="media-body pl-0 pl-md-3 " style="border-left: 1px solid var(--blue)">
-    							<p class="m-0">Materi<br>E-Course</p>
-    						</div>
-    					</div>
-    				</div>
-    			</div>
-    			</a>
-    		</div>
+    		@php $colors = ["red", "green", "primary", "blue"]; @endphp
+    		@if(count($array_card)>0)
+    			@foreach($array_card as $key=>$data)
+		    		<div class="col-6 col-lg-3 mb-3">
+		    			<a href="{{ $data['url'] }}" class="text-decoration-none">
+		    			<div class="card menu-bg-{{ $colors[$key] }}">
+		    				<div class="card-body">
+		    					<div class="media d-block d-md-flex text-center text-md-left">
+	    						<div class="mr-0 mr-md-3 h1">{{ number_format($data['total'],0,',',',') }}</div>
+		    						<div class="media-body pl-0 pl-md-3 " style="border-left: 1px solid var(--{{ $colors[$key] }})">
+		    							<p class="m-0">Materi<br>{{ $data['data'] }}</p>
+		    						</div>
+		    					</div>
+		    				</div>
+		    			</div>
+		    			</a>
+		    		</div>
+    			@endforeach
+    		@endif
     	</div>
     </div>
     <!-- Row -->

@@ -1,15 +1,12 @@
-
     <!-- Sidebar Menu -->
     <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
     <aside class="app-sidebar">
       <ul class="app-menu">
         <li class="my-3 d-flex align-items-center justify-content-between justify-content-lg-center">
-          <div data-toggle="tooltip" title="Peralatan" class="d-block d-lg-none">
-            <a class="app-sidebar__toggle menu-btn-primary d-block" href="#" data-toggle="sidebar"></a>
-          </div>
+          <a class="app-nav__item menu-btn-green d-block d-lg-none" href="#" data-toggle="sidebar" style=><i class="fa fa-times" style="font-size: 1.5em"></i></a>
           <a class="h4 text-uppercase" href="{{ route('site.home') }}" target="_blank">
-            <img class="a-app_logo" src="https://psikologanda.com/assets/images/logo/1617422635-logo.png">
-            <div class="wrap-b-app_logo menu-bg-primary rounded-1 p-2"><img class="b-app_logo" src="https://psikologanda.com/assets/images/logo/1598935068-icon.png"></div>
+            <img class="a-app_logo" src="{{asset('assets/images/logo/'.setting('site.logo'))}}">
+            <div class="wrap-b-app_logo menu-bg-primary rounded-1 p-2"><img class="b-app_logo" src="{{asset('assets/images/icon/'.setting('site.icon'))}}"></div>
           </a>
           <a class="d-block d-lg-none" href="#"></a>
         </li>
@@ -17,38 +14,9 @@
         @if(has_access('DashboardController::admin', Auth::user()->role, false))
         <li><a class="app-menu__item {{ Request::path() == 'admin' ? 'active' : '' }}" href="{{ route('admin.dashboard') }}"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
         @endif
-        
-        @if(has_access('PackageController::me', Auth::user()->role, false) || has_access('PackageController::index', Auth::user()->role, false) || has_access('ArtisanController::index', Auth::user()->role, false))
-        <li class="treeview {{ is_int(strpos(Request::url(), '/admin/sistem')) ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-wrench"></i><span class="app-menu__label">Sistem</span><i class="treeview-indicator fa fa-angle-right"></i></a>
-          <ul class="treeview-menu">
-            @if(has_access('PackageController::me', Auth::user()->role, false))
-            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.package.me'))) ? 'active' : '' }}" href="{{ route('admin.package.me') }}"><i class="icon fa fa-circle-o"></i> My Package</a></li>
-            @endif
-            @if(has_access('PackageController::index', Auth::user()->role, false))
-            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.package.index'))) && !is_int(strpos(Request::url(), route('admin.package.me'))) ? 'active' : '' }}" href="{{ route('admin.package.index') }}"><i class="icon fa fa-circle-o"></i> Package</a></li>
-            @endif
-            @if(has_access('ArtisanController::index', Auth::user()->role, false))
-            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.artisan.index'))) ? 'active' : '' }}" href="{{ route('admin.artisan.index') }}"><i class="icon fa fa-circle-o"></i> Artisan</a></li>
-            @endif
-          </ul>
-        </li>
-        @endif
 
         @if(has_access('UserController::index', Auth::user()->role, false))
         <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.user.index'))) ? 'active' : '' }}" href="{{ route('admin.user.index') }}"><i class="app-menu__icon fa fa-users"></i><span class="app-menu__label">User</span></a></li>
-        @endif
-        
-        @if(has_access('RoleController::index', Auth::user()->role, false) || has_access('RolePermissionController::index', Auth::user()->role, false))
-        <li class="treeview {{ is_int(strpos(Request::url(), route('admin.role.index'))) ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-key"></i><span class="app-menu__label">Role</span><i class="treeview-indicator fa fa-angle-right"></i></a>
-          <ul class="treeview-menu">
-            @if(has_access('RoleController::index', Auth::user()->role, false))
-            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.role.index'))) && !is_int(strpos(Request::url(), route('admin.rolepermission.index'))) ? 'active' : '' }}" href="{{ route('admin.role.index') }}"><i class="icon fa fa-circle-o"></i> Data Role</a></li>
-            @endif
-            @if(has_access('RolePermissionController::index', Auth::user()->role, false))
-            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.rolepermission.index'))) ? 'active' : '' }}" href="{{ route('admin.rolepermission.index') }}"><i class="icon fa fa-circle-o"></i> Role Permission</a></li>
-            @endif
-          </ul>
-        </li>
         @endif
         
         @if(has_access('VisitorController::index', Auth::user()->role, false) || has_access('VisitorController::topVisitor', Auth::user()->role, false))
@@ -63,22 +31,7 @@
           </ul>
         </li>
         @endif
-        
-        @if(has_access('SettingController::index', Auth::user()->role, false))
-        <li class="treeview {{ is_int(strpos(Request::url(), route('admin.setting.index'))) ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-cogs"></i><span class="app-menu__label">Pengaturan</span><i class="treeview-indicator fa fa-angle-right"></i></a>
-          <ul class="treeview-menu">
-            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.setting.edit', ['category' => 'general']))) ? 'active' : '' }}" href="{{ route('admin.setting.edit', ['category' => 'general']) }}"><i class="app-menu__icon fa fa-circle-o"></i> Umum</a></li>
-            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.setting.edit', ['category' => 'logo']))) ? 'active' : '' }}" href="{{ route('admin.setting.edit', ['category' => 'logo']) }}"><i class="app-menu__icon fa fa-circle-o"></i> Logo</a></li>
-            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.setting.edit', ['category' => 'icon']))) ? 'active' : '' }}" href="{{ route('admin.setting.edit', ['category' => 'icon']) }}"><i class="app-menu__icon fa fa-circle-o"></i> Icon</a></li>
-            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.setting.edit', ['category' => 'price']))) ? 'active' : '' }}" href="{{ route('admin.setting.edit', ['category' => 'price']) }}"><i class="app-menu__icon fa fa-circle-o"></i> Harga</a></li>
-            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.setting.edit', ['category' => 'color']))) ? 'active' : '' }}" href="{{ route('admin.setting.edit', ['category' => 'color']) }}"><i class="app-menu__icon fa fa-circle-o"></i> Warna</a></li>
-            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.setting.edit', ['category' => 'certificate']))) ? 'active' : '' }}" href="{{ route('admin.setting.edit', ['category' => 'certificate']) }}"><i class="app-menu__icon fa fa-circle-o"></i> Sertifikat</a></li>
-            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.setting.edit', ['category' => 'view']))) ? 'active' : '' }}" href="{{ route('admin.setting.edit', ['category' => 'view']) }}"><i class="app-menu__icon fa fa-circle-o"></i> Halaman</a></li>
-            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.setting.edit', ['category' => 'receivers']))) ? 'active' : '' }}" href="{{ route('admin.setting.edit', ['category' => 'receivers']) }}"><i class="app-menu__icon fa fa-circle-o"></i> Penerima Notifikasi</a></li>
-            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.setting.edit', ['category' => 'referral']))) ? 'active' : '' }}" href="{{ route('admin.setting.edit', ['category' => 'referral']) }}"><i class="app-menu__icon fa fa-circle-o"></i> Referral</a></li>
-          </ul>
-        </li>
-        @endif
+      
 
         @if(has_access('MediaController::index', Auth::user()->role, false))
         <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.media.index'))) ? 'active' : '' }}" href="{{ route('admin.media.index') }}"><i class="app-menu__icon fa fa-image"></i><span class="app-menu__label">Media</span></a></li>
@@ -203,31 +156,6 @@
 
         @if(has_access('PsikologController::index', Auth::user()->role, false))
         <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.psikolog.index'))) ? 'active' : '' }}" href="{{ route('admin.psikolog.index') }}"><i class="app-menu__icon fa fa-skyatlas"></i><span class="app-menu__label">Psikolog</span></a></li>
-        @endif
-
-        @if(has_access('SliderController::index', Auth::user()->role, false) || has_access('DeskripsiController::index', Auth::user()->role, false) || has_access('FiturController::index', Auth::user()->role, false) || has_access('MitraController::index', Auth::user()->role, false) || has_access('MentorController::index', Auth::user()->role, false) || has_access('TestimoniController::index', Auth::user()->role, false))
-        <li class="treeview {{ is_int(strpos(Request::url(), route('admin.slider.index'))) || is_int(strpos(Request::url(), route('admin.deskripsi.index'))) || is_int(strpos(Request::url(), route('admin.fitur.index'))) || is_int(strpos(Request::url(), route('admin.mitra.index'))) || is_int(strpos(Request::url(), route('admin.mentor.index'))) || is_int(strpos(Request::url(), route('admin.testimoni.index'))) ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-desktop"></i><span class="app-menu__label">Konten Situs</span><i class="treeview-indicator fa fa-angle-right"></i></a>
-          <ul class="treeview-menu">
-            @if(has_access('SliderController::index', Auth::user()->role, false))
-            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.slider.index'))) ? 'active' : '' }}" href="{{ route('admin.slider.index') }}"><i class="icon fa fa-circle-o"></i> Slider</a></li>
-            @endif
-            @if(has_access('DeskripsiController::index', Auth::user()->role, false))
-            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.deskripsi.index'))) ? 'active' : '' }}" href="{{ route('admin.deskripsi.index') }}"><i class="icon fa fa-circle-o"></i> Deskripsi</a></li>
-            @endif
-            @if(has_access('FiturController::index', Auth::user()->role, false))
-            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.fitur.index'))) ? 'active' : '' }}" href="{{ route('admin.fitur.index') }}"><i class="icon fa fa-circle-o"></i> Fitur</a></li>
-            @endif
-            @if(has_access('MitraController::index', Auth::user()->role, false))
-            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.mitra.index'))) ? 'active' : '' }}" href="{{ route('admin.mitra.index') }}"><i class="icon fa fa-circle-o"></i> Mitra</a></li>
-            @endif
-            @if(has_access('MentorController::index', Auth::user()->role, false))
-            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.mentor.index'))) ? 'active' : '' }}" href="{{ route('admin.mentor.index') }}"><i class="icon fa fa-circle-o"></i> Mentor</a></li>
-            @endif
-            @if(has_access('TestimoniController::index', Auth::user()->role, false))
-            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.testimoni.index'))) ? 'active' : '' }}" href="{{ route('admin.testimoni.index') }}"><i class="icon fa fa-circle-o"></i> Testimoni</a></li>
-            @endif
-          </ul>
-        </li>
         @endif
 
         @if(has_access('SertifikatController::indexTrainer', Auth::user()->role, false) || has_access('SertifikatController::indexParticipant', Auth::user()->role, false))

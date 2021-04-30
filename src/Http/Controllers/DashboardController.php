@@ -39,12 +39,16 @@ class DashboardController extends Controller
             ['data' => 'Member Aktif', 'total' => $data_student_aktif, 'url' => route('admin.user.index', ['filter' => 'aktif'])],
             ['data' => 'Member Belum Aktif', 'total' => $data_student_belum_aktif, 'url' => route('admin.user.index', ['filter' => 'belum-aktif'])],
         ];
+
+        // New Array Card
+        $array_card = [];
         
         // Array Push Data Materi
         $kategori_materi = FolderKategori::where('tipe_kategori','=','ebook')->get();
         foreach($kategori_materi as $data){
             $file = Files::where('file_kategori','=',$data->id_fk)->count();
-            array_push($array, ['data' => 'Materi '.$data->folder_kategori, 'total' => $file, 'url' => route('admin.filemanager.index', ['kategori' => $data->slug_kategori])]);
+            // array_push($array, ['data' => 'Materi '.$data->folder_kategori, 'total' => $file, 'url' => route('admin.filemanager.index', ['kategori' => $data->slug_kategori])]);
+            array_push($array_card, ['data' => $data->folder_kategori, 'total' => $file, 'url' => route('admin.filemanager.index', ['kategori' => $data->slug_kategori])]);
         }
         
         // Array Push Data Course, Data Artikel, Data Pelatihan
@@ -52,14 +56,16 @@ class DashboardController extends Controller
         $data_artikel = Blog::join('kategori_artikel','blog.blog_kategori','=','kategori_artikel.id_ka')->count();
         $data_pelatihan = Pelatihan::join('kategori_pelatihan','pelatihan.kategori_pelatihan','=','kategori_pelatihan.id_kp')->count();
         array_push($array, 
-            ['data' => 'Materi E-Course', 'total' => $data_course, 'url' => route('admin.filemanager.index', ['kategori' => 'e-course'])],
+            // ['data' => 'Materi E-Course', 'total' => $data_course, 'url' => route('admin.filemanager.index', ['kategori' => 'e-course'])],
             ['data' => 'Artikel', 'total' => $data_artikel, 'url' => route('admin.blog.index')],
             ['data' => 'Pelatihan', 'total' => $data_pelatihan, 'url' => route('admin.pelatihan.index')],
         );
+        array_push($array_card, ['data' => 'E-Course', 'total' => $data_course, 'url' => route('admin.filemanager.index', ['kategori' => 'e-course'])]);
         
         // View
         return view('faturcms::admin.dashboard.index', [
             'array' => $array,
+            'array_card' => $array_card,
         ]);
     }
     

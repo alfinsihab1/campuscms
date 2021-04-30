@@ -182,19 +182,17 @@
     .card, .tile-topik{border: unset!important}
 
 
-    .app-header{padding-right: 0px; position: static; background-color: transparent!important; box-shadow: none;}
-    .app-header.nav-sticky{position: sticky; top: 0; transition: var(--transition); background-color: var(--white)!important; box-shadow: var(--shadow); animation: topBottom var(--transition)}
-    .app-content{margin-top: 0px}
+    .app-header{padding: 30px 30px 0px 30px; position: static; background-color: transparent!important; box-shadow: none;}
+    .app-header.nav-sticky{padding: 0px 30px 0px 30px; position: sticky; top: 0; transition: var(--transition); background-color: var(--white)!important; box-shadow: var(--shadow); animation: topBottom var(--transition)}
     .app-sidebar{padding-top: 0px; box-shadow: var(--shadow)!important}
-/*    .app-sidebar:hover{overflow: auto;}*/
-    .app-content{padding-top: unset;}
-    .app-content {min-height: unset; margin-top: unset; padding: unset; background-color: unset; -webkit-transition: unset; -o-transition: unset; transition: }
+    .app-content{min-height: unset; margin-top: unset; padding: 30px; background-color: unset; -webkit-transition: unset; -o-transition: unset; transition: }
     @media (min-width: 768px) {.app-content {margin-left: unset}}
     @media (max-width: 768px) {.app-content {margin-top: unset;min-width: unset}}
     @media (max-width: 480px) {.app-content {padding: unset}}
     @media print {.app-content { margin: unset; padding: unset; background-color: unset}}
 
-    .a-app-content{min-height: calc(100vh - 50px); margin-top: 50px; padding: 30px; -webkit-transition: margin-left 0.3s ease; -o-transition: margin-left 0.3s ease; transition: margin-left 0.3s ease; min-height: unset!important; padding-bottom: unset!important; margin-top: 0px; margin-left: 230px}
+    /*.a-app-content{min-height: calc(100vh - 50px); margin-top: 50px; padding: 30px; -webkit-transition: margin-left 0.3s ease; -o-transition: margin-left 0.3s ease; transition: margin-left 0.3s ease; min-height: unset!important; padding-bottom: unset!important; margin-top: 0px; margin-left: 230px}*/
+    .a-app-content{min-height: calc(100vh - 50px); margin-top: 50px; -webkit-transition: margin-left 0.3s ease; -o-transition: margin-left 0.3s ease; transition: margin-left 0.3s ease; min-height: unset!important; padding-bottom: unset!important; margin-top: 0px; margin-left: 230px}
     .b-app-content{min-height: unset!important; padding-bottom: unset!important; margin-top: 1em;}
 
     a.fab:hover{text-decoration: none;}
@@ -247,8 +245,7 @@
     .sidenav-closed .wrap-b-app_logo:hover img{display: block; filter: brightness(0) invert(1);}
     .sidenav-closed .app-menu__item{text-align: center; justify-content: center;}
     .sidebar-mini.sidenav-closed .a-app-content {margin-left: 72px;}
-    .app-title h1 {display: none;}
-    .app-title {display: none;}
+    /*.app-title {display: none;}*/
     .app-breadcrumb{margin-top: 0!important}
     .dropdown-menu{width: fit-content}
     .dropdown-menu .card{border: 0; box-shadow: var(--shadow)}
@@ -277,7 +274,10 @@
     .modal-body a{color: var(--gray);}
     .modal-body a:hover{color: var(--primary); text-decoration: none;}
     @media (max-width: 480px) {
-        .a-app-content {padding: 15px;}
+        .app-content {padding: 15px;}
+    }
+    @media (max-width: 767.98px) {
+        .app-header{padding: 15px 15px 0px 15px}
     }
     @media (max-width: 991.98px) {
         .sidebar-mini.sidenav-closed .app-content{margin-left: unset}

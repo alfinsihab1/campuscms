@@ -1,11 +1,10 @@
-<header class="app-header align-items-center mb-4">
-  <div data-toggle="tooltip" title="Peralatan">
-    <a class="app-sidebar__toggle menu-btn-primary d-block" href="#" data-toggle="sidebar"></a>
-  </div>
-  <ul class="app-nav d-block"><li class="app-nav__item" style="line-height: 15px">
+<header class="app-header align-items-center">
+  <a class="app-sidebar__toggle menu-btn-primary d-block" href="#" data-toggle="sidebar"></a>
+
+<!--   <ul class="app-nav d-block"><li class="app-nav__item" style="line-height: 15px">
     <h5 class="d-inline-block text-truncate m-0" style="max-width: 150px; color: var(--primary)">Dashboard</h5>
     <p class="m-0 text-muted"><small><i class="fa fa-home"></i> > Dashboard</small></p>
-  </li></ul>
+  </li></ul> -->
   <ul class="app-nav ml-auto ml-md">
     @if(has_access('KomisiController::index', Auth::user()->role, false) || has_access('WithdrawalController::index', Auth::user()->role, false) || has_access('PelatihanController::transaction', Auth::user()->role, false))
     <li class="dropdown">
@@ -101,6 +100,7 @@
     </li>
   </ul>
 </header>
+
 <!-- modal -->
 <div class="modal fade" id="startMenu" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-full">
@@ -113,46 +113,54 @@
           </button>
         </div>
         <div class="modal-body">
-          <h5><i class="fa fa-paint-brush"></i> Tampilan</h5>
+          <h5><i class="fa fa-thumb-tack"></i> Pintasan</h5>
           <div class="row mb-4">
             <div class="col-6 col-lg-3 mb-3">
+              <a href="{{ route('admin.setting.edit', ['category' => 'general']) }}">
               <div class="card">
                 <div class="card-body menu-btn-red rounded-1">
                   <i class="fa fa-desktop" style="font-size: 2em"></i>
                   <h5 class="m-0">Umum</h5>
-                  <p class="m-0 text-muted"><small>Pengaturan Website</small></p>
+                  <p class="m-0"><small>Pengaturan Website</small></p>
                 </div>
               </div>
+              </a>
             </div>
             <div class="col-6 col-lg-3 mb-3">
+              <a href="{{ route('admin.setting.edit', ['category' => 'logo']) }}">
               <div class="card">
                 <div class="card-body menu-btn-green rounded-1">
                   <i class="fa fa-picture-o" style="font-size: 2em"></i>
                   <h5 class="m-0">Logo</h5>
-                  <p class="m-0 text-muted"><small>Logo website</small></p>
+                  <p class="m-0"><small>Logo website</small></p>
                 </div>
               </div>
+              </a>
             </div>
             <div class="col-6 col-lg-3 mb-3">
+              <a href="{{ route('admin.setting.edit', ['category' => 'icon']) }}">
               <div class="card">
                 <div class="card-body menu-btn-primary rounded-1">
                   <i class="fa fa-gamepad" style="font-size: 2em"></i>
                   <h5 class="m-0">Icon</h5>
-                  <p class="m-0 text-muted"><small>Icon website</small></p>
+                  <p class="m-0"><small>Icon website</small></p>
                 </div>
               </div>
+              </a>
             </div>
             <div class="col-6 col-lg-3 mb-3">
+              <a href="{{ route('admin.setting.edit', ['category' => 'price']) }}">
               <div class="card">
                 <div class="card-body menu-btn-blue rounded-1">
-                  <i class="fa fa-spinner" style="font-size: 2em"></i>
-                  <h5 class="m-0">Warna</h5>
-                  <p class="m-0 text-muted"><small>Warna Website</small></p>
+                  <i class="fa fa-money" style="font-size: 2em"></i>
+                  <h5 class="m-0">Harga</h5>
+                  <p class="m-0"><small>Pengaturan Harga</small></p>
                 </div>
               </div>
+              </a>
             </div>
           </div>
-          <h5><i class="fa fa-cog"></i> Lainya</h5>
+          <h5><i class="fa fa-cog"></i> Lainnya</h5>
           <div class="row">
             <div class="col-12 col-lg-3 mb-3">
               <div class="heading">
@@ -165,9 +173,9 @@
                 </h5>
               </div>
               <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> My Package</a>
-                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> Package</a>
-                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> Artisan</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('admin.package.me') }}"><i class="fa fa-circle-o"></i> My Package</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('admin.package.index') }}"><i class="fa fa-circle-o"></i> Package</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('admin.artisan.index') }}"><i class="fa fa-circle-o"></i> Artisan</a>
               </div>
             </div>
             <div class="col-12 col-lg-3 mb-3">
@@ -181,8 +189,8 @@
                 </h5>
               </div>
               <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> Data Role</a>
-                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> Role Permission</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('admin.role.index') }}"><i class="fa fa-circle-o"></i> Data Role</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('admin.rolepermission.index') }}"><i class="fa fa-circle-o"></i> Role Permission</a>
               </div>
             </div>
             <div class="col-12 col-lg-3 mb-3">
@@ -196,11 +204,11 @@
                 </h5>
               </div>
               <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> Harga</a>
-                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> Sertifikat</a>
-                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> Halaman</a>
-                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> Notifikasi</a>
-                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> Referal</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('admin.setting.edit', ['category' => 'color']) }}"><i class="fa fa-circle-o"></i> Warna</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('admin.setting.edit', ['category' => 'certificate']) }}"><i class="fa fa-circle-o"></i> Sertifikat</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('admin.setting.edit', ['category' => 'view']) }}"><i class="fa fa-circle-o"></i> Halaman</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('admin.setting.edit', ['category' => 'receivers']) }}"><i class="fa fa-circle-o"></i> Notifikasi</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('admin.setting.edit', ['category' => 'referral']) }}"><i class="fa fa-circle-o"></i> Referal</a>
               </div>
             </div>
             <div class="col-12 col-lg-3 mb-3">
@@ -214,12 +222,12 @@
                 </h5>
               </div>
               <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> Slider</a>
-                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> Deskripsi</a>
-                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> Fitur</a>
-                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> Mitra</a>
-                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i> Mentor</a>
-                <a class="list-group-item list-group-item-action" href="#"><i class="fa fa-circle-o"></i>Testimoni</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('admin.slider.index') }}"><i class="fa fa-circle-o"></i> Slider</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('admin.deskripsi.index') }}"><i class="fa fa-circle-o"></i> Deskripsi</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('admin.fitur.index') }}"><i class="fa fa-circle-o"></i> Fitur</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('admin.mitra.index') }}"><i class="fa fa-circle-o"></i> Mitra</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('admin.mentor.index') }}"><i class="fa fa-circle-o"></i> Mentor</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('admin.testimoni.index') }}"><i class="fa fa-circle-o"></i>Testimoni</a>
               </div>
             </div>
           </div>

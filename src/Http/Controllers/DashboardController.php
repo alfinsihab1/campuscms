@@ -123,15 +123,14 @@ class DashboardController extends Controller
         $array = array();
         for($i=7; $i>=0; $i--){
             $date = date('Y-m-d', strtotime('-'.$i.' days'));
-            $visitor_all = Visitor::join('users','visitor.id_user','=','users.id_user')->whereDate('visit_at','=',$date)->groupBy('visitor.id_user')->count();
-            $visitor_admin = Visitor::join('users','visitor.id_user','=','users.id_user')->where('is_admin','=',1)->whereDate('visit_at','=',$date)->groupBy('visitor.id_user')->count();
-            $visitor_member = Visitor::join('users','visitor.id_user','=','users.id_user')->where('is_admin','=',0)->whereDate('visit_at','=',$date)->groupBy('visitor.id_user')->count();
+            $visitor_admin = Visitor::join('users','visitor.id_user','=','users.id_user')->where('is_admin','=',1)->whereDate('visit_at','=',$date)->groupBy('visitor.id_user')->get();
+            $visitor_member = Visitor::join('users','visitor.id_user','=','users.id_user')->where('is_admin','=',0)->whereDate('visit_at','=',$date)->groupBy('visitor.id_user')->get();
             array_push($array, array(
                 'date' => $date,
                 'date_str' => date('d/m/y', strtotime($date)),
-                'visitor_all' => $visitor_all,
-                'visitor_admin' => $visitor_admin,
-                'visitor_member' => $visitor_member,
+                'visitor_all' => count($visitor_admin) + count($visitor_member),
+                'visitor_admin' => count($visitor_admin),
+                'visitor_member' => count($visitor_member),
             ));
         }
         echo json_encode($array);

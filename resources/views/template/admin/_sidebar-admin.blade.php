@@ -51,6 +51,19 @@
         </li>
         @endif
         
+        @if(has_access('VisitorController::index', Auth::user()->role, false) || has_access('VisitorController::topVisitor', Auth::user()->role, false))
+        <li class="treeview {{ is_int(strpos(Request::url(), route('admin.visitor.index'))) ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Statistik</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+          <ul class="treeview-menu">
+            @if(has_access('VisitorController::index', Auth::user()->role, false))
+            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.visitor.index'))) && !is_int(strpos(Request::url(), route('admin.visitor.top'))) ? 'active' : '' }}" href="{{ route('admin.visitor.index') }}"><i class="icon fa fa-circle-o"></i> Visitor</a></li>
+            @endif
+            @if(has_access('VisitorController::topVisitor', Auth::user()->role, false))
+            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.visitor.top'))) ? 'active' : '' }}" href="{{ route('admin.visitor.top') }}"><i class="icon fa fa-circle-o"></i> Top Visitor</a></li>
+            @endif
+          </ul>
+        </li>
+        @endif
+        
         @if(has_access('SettingController::index', Auth::user()->role, false))
         <li class="treeview {{ is_int(strpos(Request::url(), route('admin.setting.index'))) ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-cogs"></i><span class="app-menu__label">Pengaturan</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
@@ -65,6 +78,10 @@
             <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.setting.edit', ['category' => 'referral']))) ? 'active' : '' }}" href="{{ route('admin.setting.edit', ['category' => 'referral']) }}"><i class="app-menu__icon fa fa-circle-o"></i> Referral</a></li>
           </ul>
         </li>
+        @endif
+
+        @if(has_access('MediaController::index', Auth::user()->role, false))
+        <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.media.index'))) ? 'active' : '' }}" href="{{ route('admin.media.index') }}"><i class="app-menu__icon fa fa-image"></i><span class="app-menu__label">Media</span></a></li>
         @endif
         
         @if(has_access('RekeningController::index', Auth::user()->role, false) || has_access('DefaultRekeningController::index', Auth::user()->role, false))

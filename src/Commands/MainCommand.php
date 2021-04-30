@@ -78,14 +78,6 @@ class MainCommand extends Command
             file_replace_contents(package_path('publishable/models/User.php'), app_path('User.php'));
         }
 
-        // Find composer
-        $composer = $this->findComposer();
-
-        // Dump autoload
-        $process = new Process([$composer.' dump-autoload']);
-        $process->setTimeout(null); // Setting timeout to null to prevent installation from stopping at a certain point in time
-        $process->setWorkingDirectory(base_path())->run();
-
         // Update web routes
         $this->info('Updating Web routes');
         file_replace_contents(

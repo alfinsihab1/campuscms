@@ -40,8 +40,8 @@ class LoginController extends Controller
         $urlBase = url()->to('/');
         
         // If admin came from login, remove session url.intended
-        // if((session()->get('url.intended') == '/admin/logout') || (session()->get('url.intended') == '/member/logout')){
-        if((session()->get('url.intended') == '/logout')){
+        if((session()->get('url.intended') == '/admin/logout') || (session()->get('url.intended') == '/member/logout')){
+        // if((session()->get('url.intended') == '/logout')){
             session()->forget('url.intended');
         }
         // Set the previous url that we came from to redirect to after successful login but only if is internal

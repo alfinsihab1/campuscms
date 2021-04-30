@@ -332,6 +332,16 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	// Icon
 	Route::get('/admin/logo/images', $namespacePrefix.'SettingController@showLogos')->name('admin.logo.images');
 	Route::get('/admin/icon/images', $namespacePrefix.'SettingController@showIcons')->name('admin.icon.images');
+
+	// Visitor
+	Route::get('/admin/visitor', $namespacePrefix.'VisitorController@index')->name('admin.visitor.index');
+	Route::get('/admin/visitor/top', $namespacePrefix.'VisitorController@topVisitor')->name('admin.visitor.top');
+
+	// Media
+	Route::get('/admin/media', $namespacePrefix.'MediaController@index')->name('admin.media.index');
+	Route::get('/admin/media/detail', $namespacePrefix.'MediaController@detail')->name('admin.media.detail');
+	Route::post('/admin/media/delete', $namespacePrefix.'MediaController@delete')->name('admin.media.delete');
+	Route::post('/admin/media/delete-batch', $namespacePrefix.'MediaController@deleteBatch')->name('admin.media.delete-batch');
 });
 
 // Member Capabilities

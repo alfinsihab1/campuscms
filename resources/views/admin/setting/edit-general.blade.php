@@ -41,7 +41,11 @@
                                 <span class="small text-muted">{{ $data->setting_key }}</span>
                             </label>
                             <div class="col-md-10">
-                                <input type="text" name="setting[{{ str_replace($kategori->prefix, '', $data->setting_key) }}]" class="form-control {{ $errors->has('setting.'.str_replace($kategori->prefix, '', $data->setting_key)) ? 'is-invalid' : '' }}" value="{{ $data->setting_value }}">
+                                @if($data->setting_key == 'site.google_analytics')
+                                    <textarea name="setting[{{ str_replace($kategori->prefix, '', $data->setting_key) }}]" class="form-control {{ $errors->has('setting.'.str_replace($kategori->prefix, '', $data->setting_key)) ? 'is-invalid' : '' }}" rows="5">{!! html_entity_decode($data->setting_value) !!}</textarea>
+                                @else
+                                    <input type="text" name="setting[{{ str_replace($kategori->prefix, '', $data->setting_key) }}]" class="form-control {{ $errors->has('setting.'.str_replace($kategori->prefix, '', $data->setting_key)) ? 'is-invalid' : '' }}" value="{{ $data->setting_value }}">
+                                @endif
                                 @if($errors->has('setting.'.str_replace($kategori->prefix, '', $data->setting_key)))
                                 <div class="small text-danger mt-1">{{ ucfirst($errors->first('setting.'.str_replace($kategori->prefix, '', $data->setting_key))) }}</div>
                                 @endif

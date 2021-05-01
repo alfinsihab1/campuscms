@@ -21,7 +21,7 @@ class MediaController extends Controller
         'acara' => ['title' => 'Acara', 'dir' => 'images/acara', 'type' => 'content', 'table' => 'acara', 'column' => 'gambar_acara', 'access' => 'AcaraController::index'],
         'blog' => ['title' => 'Artikel', 'dir' => 'images/blog', 'type' => 'content', 'table' => 'blog', 'column' => 'blog_gambar', 'access' => 'BlogController::index'],
         'file' => ['title' => 'File', 'dir' => 'images/file', 'type' => 'content', 'table' => 'file', 'column' => 'file_thumbnail', 'access' => 'FileController::index'],
-        'file-detail' => ['title' => 'File Detail', 'dir' => 'uploads', 'type' => 'content', 'table' => 'file_detail', 'column' => 'nama_fd', 'access' => 'FileController::index'],
+        // 'file-detail' => ['title' => 'File Detail', 'dir' => 'uploads', 'type' => 'content', 'table' => 'file_detail', 'column' => 'nama_fd', 'access' => 'FileController::index'],
         'fitur' => ['title' => 'Fitur', 'dir' => 'images/fitur', 'type' => 'content', 'table' => 'fitur', 'column' => 'gambar_fitur', 'access' => 'FiturController::index'],
         'folder' => ['title' => 'Folder', 'dir' => 'images/folder', 'type' => 'content', 'table' => 'folder', 'column' => 'folder_icon', 'access' => 'FileController::index'],
         'icon' => ['title' => 'Icon', 'dir' => 'images/icon', 'type' => 'setting'],
@@ -68,7 +68,7 @@ class MediaController extends Controller
         // Check kategori
         if(array_key_exists($request->query('category'), $this->directory)){
             // Get data file
-            $files = generate_file(public_path('assets/'.$this->directory[$request->query('category')]['dir']));
+            $files = generate_file(public_path('assets/'.$this->directory[$request->query('category')]['dir']), ['..png']);
 
             // Count folder size
             $folder_size = 0;
@@ -135,7 +135,7 @@ class MediaController extends Controller
         $i = 0;
         if($this->directory[$request->category]['type'] == 'setting'){
             // Get data file
-            $files = generate_file(public_path('assets/'.$this->directory[$request->category]['dir']), [setting('site.'.$request->category)]);
+            $files = generate_file(public_path('assets/'.$this->directory[$request->category]['dir']), [setting('site.'.$request->category), '..png']);
 
             if(count($files)>0){
                 foreach($files as $file){
@@ -149,7 +149,7 @@ class MediaController extends Controller
             // File used
             $file_used = DB::table($this->directory[$request->category]['table'])->where($this->directory[$request->category]['column'],'!=','')->get()->pluck($this->directory[$request->category]['column'])->toArray();
             // Get data file
-            $files = generate_file(public_path('assets/'.$this->directory[$request->category]['dir']), $file_used);
+            $files = generate_file(public_path('assets/'.$this->directory[$request->category]['dir']), array_merge($file_used, ['..png']));
 
             if(count($files)>0){
                 foreach($files as $file){

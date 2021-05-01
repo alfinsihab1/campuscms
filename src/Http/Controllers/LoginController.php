@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use App\User;
 use Ajifatur\FaturCMS\Models\Visitor;
 
@@ -76,7 +77,7 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make([
             'username' => 'required|string|min:4',
             'password' => 'required|string|min:4',
         ], array_validation_messages());
@@ -91,10 +92,27 @@ class LoginController extends Controller
 		if(auth()->attempt($login)){
 			return $this->sendLoginResponse($request);
 		}
+
+        log_login($request);
 		
 		$this->incrementLoginAttempts($request);
 
         return $this->sendFailedLoginResponse($request);
+    }
+
+    /**
+     * Get the failed login response instance.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        throw ValidationException::withMessages([
+            $this->username() => 'Tidak ada akun yang terdaftar sesuai username dan password yang dimasukkan!',
+        ]);
     }
 
     /**

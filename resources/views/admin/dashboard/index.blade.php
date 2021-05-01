@@ -34,7 +34,7 @@
 		    					<div class="media d-block d-md-flex text-center text-md-left">
 	    						<div class="mr-0 mr-md-3 h1">{{ number_format($data['total'],0,',',',') }}</div>
 		    						<div class="media-body pl-0 pl-md-3 " style="border-left: 1px solid var(--{{ $colors[$key] }})">
-		    							<p class="m-0">Materi<br>{{ $data['data'] }}</p>
+		    							<p class="m-0">Materi<br>{{ $data['title'] }}</p>
 		    						</div>
 		    					</div>
 		    				</div>
@@ -79,7 +79,7 @@
 					<div class="list-group mt-3">
 						@foreach($array as $key=>$data)
 						<a href="{{ $data['url'] }}" class="list-group-item list-group-item-action d-flex justify-content-between {{ $key == 0 ? 'bg-primary' : '' }}">
-							<span>{{ $data['data'] }}</span>
+							<span>{{ $data['title'] }}</span>
 							<span>{{ number_format($data['total'],0,'.','.') }}</span>
 						</a>
 						@endforeach

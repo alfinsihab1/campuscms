@@ -18,7 +18,7 @@ class MemberMiddleware
     {
         if (Auth::guard($guard)->check() && $request->user()->is_admin == 0) {
             // Aktivitas
-            //aktivitas($request->user()->id_user, str_replace(url('/'), '', urldecode(url()->full())));
+            log_activity();
 
             // Return
             return $next($request);

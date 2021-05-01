@@ -342,6 +342,11 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::get('/admin/media/detail', $namespacePrefix.'MediaController@detail')->name('admin.media.detail');
 	Route::post('/admin/media/delete', $namespacePrefix.'MediaController@delete')->name('admin.media.delete');
 	Route::post('/admin/media/delete-batch', $namespacePrefix.'MediaController@deleteBatch')->name('admin.media.delete-batch');
+
+	// Log Aktivitas
+	Route::get('/admin/log', $namespacePrefix.'LogController@index')->name('admin.log.index');
+	Route::get('/admin/log/activity/{id}', $namespacePrefix.'LogController@activity')->name('admin.log.activity');
+	Route::get('/admin/log/login-error', $namespacePrefix.'LogController@login')->name('admin.log.login');
 });
 
 // Member Capabilities

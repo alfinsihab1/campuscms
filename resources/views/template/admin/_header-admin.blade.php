@@ -235,7 +235,7 @@
             <div class="col-12 col-lg-3 mb-3">
               <div class="heading">
                 <h5 class="m-0 font-weight-bold mb-3 d-flex align-items-center">
-                  <i class="fa fa-desktop menu-btn-primary p-3 mr-2 rounded-1"></i>
+                  <i class="fa fa-desktop menu-btn-blue p-3 mr-2 rounded-1"></i>
                   <div>
                     <p class="m-0">Konten Situs</p>
                     <p class="m-0"><small>Manajemen Konten Situs</small></p>

@@ -16,6 +16,8 @@
  * @method message(string $key)
  * @method setting_rules(string $key)
  * @method package(string $package)
+ * @method log_activity()
+ * @method log_login(object $request)
  *
  * Array Helpers:
  * @method array_validation_messages()
@@ -35,6 +37,7 @@
  * @method composer_lock()
  */
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use App\User;
@@ -228,6 +231,39 @@ if(!function_exists('package')){
         return array_key_exists($index, $array) ? $array[$index] : null;
     }
 }
+
+// Log Activity
+if(!function_exists('log_activity')){
+    function log_activity(){
+        // Add directory if not exist
+        if(!File::exists(storage_path('logs/user-activities'))) File::makeDirectory(storage_path('logs/user-activities'));
+
+        // Put log
+        if(Auth::check()){
+            $activity['user'] = Auth::user()->id_user;
+            $activity['url'] = str_replace(url()->to('/'), "", url()->full());
+            $activity['time'] = time();
+            $activity_json = json_encode($activity);
+            File::append(storage_path('logs/user-activities/'.Auth::user()->id_user.'.log'), $activity_json.",");
+        }
+    }
+}
+
+// Log Login
+if(!function_exists('log_login')){
+    function log_login(Request $request){
+        // Add directory if not exist
+        if(!File::exists(storage_path('logs/login'))) File::makeDirectory(storage_path('logs/login'));
+
+        // Put log
+        $data['username'] = $request->username;
+        $data['ip'] = $request->ip();
+        $data['time'] = time();
+        $data_json = json_encode($data);
+        File::append(storage_path('logs/login/login.log'), $data_json.",");
+    }
+}
+
 
 /**
  *

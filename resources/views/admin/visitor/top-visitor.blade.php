@@ -63,7 +63,7 @@
                                     </td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="#" class="btn btn-sm btn-info btn-forbidden" data-id="{{ $data->id_visitor }}" data-toggle="tooltip" title="Lihat Aktivitas"><i class="fa fa-eye"></i></a>
+                                            <a href="{{ route('admin.log.activity', ['id' => $data->id_user]) }}" class="btn btn-sm btn-info" data-id="{{ $data->id_visitor }}" data-toggle="tooltip" title="Lihat Aktivitas"><i class="fa fa-eye"></i></a>
                                         </div>
                                     </td>
                                 </tr>

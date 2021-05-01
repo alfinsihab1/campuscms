@@ -52,6 +52,11 @@ class PermissionSeeder extends Seeder
             ['key' => 'VisitorController::index', 'name' => 'Menampilkan Data Visitor'],
             ['key' => 'VisitorController::topVisitor', 'name' => 'Menampilkan Data Top Visitor'],
 
+            // Log
+            ['key' => 'LogController::index', 'name' => 'Menampilkan Data Log'],
+            ['key' => 'LogController::activity', 'name' => 'Menampilkan Log Aktivitas'],
+            ['key' => 'LogController::login', 'name' => 'Menampilkan Log Login'],
+
             // Media
             ['key' => 'MediaController::index', 'name' => 'Menampilkan Data Media'],
             ['key' => 'MediaController::detail', 'name' => 'Menampilkan Detail Media'],

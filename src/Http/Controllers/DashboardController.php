@@ -33,34 +33,26 @@ class DashboardController extends Controller
         $data_student_aktif = User::where('is_admin','=',0)->where('status','=',1)->count();
         // Data Member Belum Aktif
         $data_student_belum_aktif = User::where('is_admin','=',0)->where('status','=',0)->count();
+        // Data Artikel
+        $data_artikel = Blog::join('kategori_artikel','blog.blog_kategori','=','kategori_artikel.id_ka')->count();
+        // Data Pelatihan
+        $data_pelatihan = Pelatihan::join('kategori_pelatihan','pelatihan.kategori_pelatihan','=','kategori_pelatihan.id_kp')->count();
         
         // New Array
         $array = [
-            ['data' => 'Member Aktif', 'total' => $data_student_aktif, 'url' => route('admin.user.index', ['filter' => 'aktif'])],
-            ['data' => 'Member Belum Aktif', 'total' => $data_student_belum_aktif, 'url' => route('admin.user.index', ['filter' => 'belum-aktif'])],
+            ['title' => 'Member Aktif', 'total' => $data_student_aktif, 'url' => route('admin.user.index', ['filter' => 'aktif'])],
+            ['title' => 'Member Belum Aktif', 'total' => $data_student_belum_aktif, 'url' => route('admin.user.index', ['filter' => 'belum-aktif'])],
+            ['title' => 'Artikel', 'total' => $data_artikel, 'url' => route('admin.blog.index')],
+            ['title' => 'Pelatihan', 'total' => $data_pelatihan, 'url' => route('admin.pelatihan.index')],
         ];
-
-        // New Array Card
+        
+        // Array Push Data File
         $array_card = [];
-        
-        // Array Push Data Materi
-        $kategori_materi = FolderKategori::where('tipe_kategori','=','ebook')->get();
-        foreach($kategori_materi as $data){
+        $folder_kategori = FolderKategori::where('tipe_kategori','=','ebook')->orWhere('tipe_kategori','=','video')->get();
+        foreach($folder_kategori as $data){
             $file = Files::where('file_kategori','=',$data->id_fk)->count();
-            // array_push($array, ['data' => 'Materi '.$data->folder_kategori, 'total' => $file, 'url' => route('admin.filemanager.index', ['kategori' => $data->slug_kategori])]);
-            array_push($array_card, ['data' => $data->folder_kategori, 'total' => $file, 'url' => route('admin.filemanager.index', ['kategori' => $data->slug_kategori])]);
+            array_push($array_card, ['title' => $data->folder_kategori, 'total' => $file, 'url' => route('admin.filemanager.index', ['kategori' => $data->slug_kategori])]);
         }
-        
-        // Array Push Data Course, Data Artikel, Data Pelatihan
-        $data_course = Files::join('folder_kategori','file.file_kategori','=','folder_kategori.id_fk')->where('tipe_kategori','=','video')->count();
-        $data_artikel = Blog::join('kategori_artikel','blog.blog_kategori','=','kategori_artikel.id_ka')->count();
-        $data_pelatihan = Pelatihan::join('kategori_pelatihan','pelatihan.kategori_pelatihan','=','kategori_pelatihan.id_kp')->count();
-        array_push($array, 
-            // ['data' => 'Materi E-Course', 'total' => $data_course, 'url' => route('admin.filemanager.index', ['kategori' => 'e-course'])],
-            ['data' => 'Artikel', 'total' => $data_artikel, 'url' => route('admin.blog.index')],
-            ['data' => 'Pelatihan', 'total' => $data_pelatihan, 'url' => route('admin.pelatihan.index')],
-        );
-        array_push($array_card, ['data' => 'E-Course', 'total' => $data_course, 'url' => route('admin.filemanager.index', ['kategori' => 'e-course'])]);
         
         // View
         return view('faturcms::admin.dashboard.index', [

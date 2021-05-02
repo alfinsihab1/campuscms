@@ -53,12 +53,24 @@ class InstallCommand extends Command
 
         // Publish seeds
         $this->call('vendor:publish', ['--provider' => FaturCMSServiceProvider::class, '--tag' => 'seeds']);
+        $seed_files = generate_file(package_path('publishable/seeds'));
+        if(count($seed_files)>0){
+            foreach($seed_files as $seed_file){
+                file_replace_contents(package_path('publishable/seeds/'.$seed_file), database_path('seeds/'.$seed_file));
+            }
+        }
+
+        // Run main command
+        $this->call('faturcms:main');
+
+        // Find composer and dump autoload
+        $this->info('Dumping the autoloaded files and reloading all new files');
+        $process = new Process([setting('site.server.php'), setting('site.server.composer'), 'dump-autoload'], base_path());
+        $process->setTimeout(null); // Setting timeout to null to prevent installation from stopping at a certain point in time
+        $process->setWorkingDirectory(base_path())->run();
 
         // Seed
         $this->call('db:seed');
-        
-        // Run main command
-        $this->call('faturcms:main');
 
         // Last info
         $this->info('Successfully installing FaturCMS! Enjoy');

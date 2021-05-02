@@ -76,6 +76,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">Output</h5>
             </div>
             <div class="modal-body">
+                <h5></h5>
                 <div class="output w-100 mb-3"></div>
                 <div class="text-center">
                     <a class="btn btn-primary" href="{{ route('admin.package.me') }}"><i class="fa fa-refresh mr-1"></i>Refresh</a>
@@ -97,7 +98,26 @@
         $.ajax({
             type: "get",
             url: "{{ route('admin.package.update-me') }}",
+            error: function(response){
+                var responseText = JSON.parse(response.responseText);
+                var html = '';
+                html += '<div class="alert alert-danger">' + responseText.message + '</div>';
+                html += '<p class="mb-1">File:<br>' + responseText.file + ' on line ' + responseText.line + '</p>';
+                html += '<p class="mb-1">Exception:<br>' + responseText.exception + '</p>';
+                html += '<ul>';
+                $(responseText.trace).each(function(key, array){
+                    html += '<li>' + array.class + '::' + array.function + ' (line ' + array.line + ')</li>';
+                });
+                html += '</ul>';
+                $("#modal-update-me .modal-body h5").html(response.status + ": " + response.statusText);
+                $("#modal-update-me .output").html(html);
+                $("#modal-update-me").modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+            },
             success: function(response){
+                $("#modal-update-me .modal-body h5").html("");
                 $("#modal-update-me .output").html(response);
                 $("#modal-update-me").modal({
                     backdrop: 'static',
@@ -107,5 +127,14 @@
         });
     });
 </script>
+
+@endsection
+
+@section('css-extra')
+
+<style type="text/css">
+    #modal-update-me .modal-body a {color: #fff;}
+    #modal-update-me .modal-body a:hover {color: #fff;}
+</style>
 
 @endsection

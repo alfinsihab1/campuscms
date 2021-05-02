@@ -80,7 +80,7 @@ class UpdateCommand extends Command
 
         // Find composer and dump autoload
         $this->info('Dumping the autoloaded files and reloading all new files');
-        $process = new Process(['/opt/plesk/php/7.3/bin/php', '/usr/lib64/plesk-9.0/composer.phar', 'dump-autoload'], base_path());
+        $process = new Process([setting('site.server.php'), setting('site.server.composer'), 'dump-autoload'], base_path());
         $process->setTimeout(null); // Setting timeout to null to prevent installation from stopping at a certain point in time
         $process->setWorkingDirectory(base_path())->run();
 

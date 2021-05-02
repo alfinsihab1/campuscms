@@ -26,6 +26,7 @@ class SettingSeeder extends Seeder
             ['key' => 'site.medsos.instagram', 'name' => 'Akun Instagram', 'category' => kategori_setting('general'), 'rules' => ''],
             ['key' => 'site.medsos.facebook', 'name' => 'Akun Facebook', 'category' => kategori_setting('general'), 'rules' => ''],
             ['key' => 'site.medsos.twitter', 'name' => 'Akun Twitter', 'category' => kategori_setting('general'), 'rules' => ''],
+            ['key' => 'site.google_maps', 'name' => 'Kode Google Maps', 'category' => kategori_setting('general'), 'rules' => ''],
             ['key' => 'site.google_analytics', 'name' => 'Kode Google Analytics', 'category' => kategori_setting('general'), 'rules' => ''],
 
             // Color
@@ -62,6 +63,10 @@ class SettingSeeder extends Seeder
 
             // Referral
             ['key' => 'site.referral', 'name' => 'Default Kode Referral', 'category' => kategori_setting('referral'), 'rules' => ''],
+            
+            // Server
+            ['key' => 'site.server.php', 'name' => 'PHP', 'category' => kategori_setting('server'), 'rules' => 'required'],
+            ['key' => 'site.server.composer', 'name' => 'Composer', 'category' => kategori_setting('server'), 'rules' => 'required'],
         ];
 
         foreach($array as $key=>$data){

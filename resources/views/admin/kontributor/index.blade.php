@@ -1,6 +1,6 @@
 @extends('faturcms::template.admin.main')
 
-@section('title', 'Data Tag')
+@section('title', 'Data Kontributor')
 
 @section('content')
 
@@ -9,11 +9,11 @@
 
     <!-- Breadcrumb -->
     @include('faturcms::template.admin._breadcrumb', ['breadcrumb' => [
-        'title' => 'Data Tag',
+        'title' => 'Data Kontributor',
         'items' => [
             ['text' => 'Artikel', 'url' => route('admin.blog.index')],
-            ['text' => 'Tag', 'url' => route('admin.blog.tag.index')],
-            ['text' => 'Data Tag', 'url' => '#'],
+            ['text' => 'Kontributor', 'url' => route('admin.blog.kontributor.index')],
+            ['text' => 'Data Kontributor', 'url' => '#'],
         ]
     ]])
     <!-- /Breadcrumb -->
@@ -27,7 +27,7 @@
                 <!-- Tile Title -->
                 <div class="tile-title-w-btn">
                     <div class="btn-group">
-                        <a href="{{ route('admin.blog.tag.create') }}" class="btn btn-sm btn-theme-1"><i class="fa fa-plus mr-2"></i> Tambah Data</a>
+                        <a href="{{ route('admin.blog.kontributor.create') }}" class="btn btn-sm btn-theme-1"><i class="fa fa-plus mr-2"></i> Tambah Data</a>
                     </div>
                 </div>
                 <!-- /Tile Title -->
@@ -43,28 +43,28 @@
                             <thead>
                                 <tr>
                                     <th width="20"><input type="checkbox"></th>
-                                    <th>Tag</th>
+                                    <th>Kontributor</th>
                                     <th>Slug</th>
                                     <th width="60">Opsi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($tag as $data)
+                                @foreach($kontributor as $data)
                                 <tr>
                                     <td><input type="checkbox"></td>
-                                    <td>{{ $data->tag }}</td>
+                                    <td>{{ $data->kontributor }}</td>
                                     <td>{{ $data->slug }}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="{{ route('admin.blog.tag.edit', ['id' => $data->id_tag]) }}" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>
-                                            <a href="#" class="btn btn-sm btn-danger {{ $data->id_tag == 0 ? 'btn-forbidden' : 'btn-delete' }}" data-id="{{ $data->id_tag }}" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>
+                                            <a href="{{ route('admin.blog.kontributor.edit', ['id' => $data->id_kontributor]) }}" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>
+                                            <a href="#" class="btn btn-sm btn-danger {{ $data->id_kontributor == 0 ? 'btn-forbidden' : 'btn-delete' }}" data-id="{{ $data->id_kontributor }}" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>
                                         </div>
                                     </td>
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                        <form id="form-delete" class="d-none" method="post" action="{{ route('admin.blog.tag.delete') }}">
+                        <form id="form-delete" class="d-none" method="post" action="{{ route('admin.blog.kontributor.delete') }}">
                             {{ csrf_field() }}
                             <input type="hidden" name="id">
                         </form>

@@ -4,21 +4,21 @@ namespace Ajifatur\FaturCMS\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Blog extends Model
+class Kontributor extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'blog';
+    protected $table = 'kontributor';
 
     /**
      * The primary key for the model.
      *
      * @var string
      */
-    protected $primaryKey = 'id_blog';
+    protected $primaryKey = 'id_kontributor';
 
     /**
      * The attributes that are mass assignable.
@@ -26,7 +26,7 @@ class Blog extends Model
      * @var array
      */
     protected $fillable = [
-        'blog_title', 'blog_permalink', 'blog_gambar', 'blog_kategori', 'blog_tag', 'blog_kontributor', 'konten', 'author', 'blog_at',
+        'kontributor', 'slug'
     ];
 
     /**

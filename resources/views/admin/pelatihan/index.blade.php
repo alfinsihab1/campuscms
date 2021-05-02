@@ -46,7 +46,7 @@
                                     <th width="150">Trainer</th>
                                     <th width="80">Peserta</th>
                                     <th width="100">Waktu</th>
-                                    <th width="60">Opsi</th>
+                                    <th width="80">Opsi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -75,6 +75,7 @@
                                     <td>
                                         <div class="btn-group">
                                             <a href="{{ route('admin.pelatihan.detail', ['id' => $data->id_pelatihan]) }}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail"><i class="fa fa-eye"></i></a>
+                                            <a href="#" class="btn btn-sm btn-success btn-duplicate" data-id="{{ $data->id_pelatihan }}" data-toggle="tooltip" title="Duplikasi"><i class="fa fa-copy"></i></a>
                                             <a href="{{ route('admin.pelatihan.edit', ['id' => $data->id_pelatihan]) }}" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>
                                             <a href="#" class="btn btn-sm btn-danger btn-delete" data-id="{{ $data->id_pelatihan }}" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>
                                         </div>
@@ -84,6 +85,10 @@
                             </tbody>
                         </table>
                         <form id="form-delete" class="d-none" method="post" action="{{ route('admin.pelatihan.delete') }}">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="id">
+                        </form>
+                        <form id="form-duplicate" class="d-none" method="post" action="{{ route('admin.pelatihan.duplicate') }}">
                             {{ csrf_field() }}
                             <input type="hidden" name="id">
                         </form>
@@ -108,6 +113,17 @@
 <script type="text/javascript">
     // DataTable
     generate_datatable("#dataTable");
+
+    // Button Duplikasi
+    $(document).on("click", ".btn-duplicate", function(e){
+        e.preventDefault();
+        var id = $(this).data("id");
+        var ask = confirm("Anda yakin ingin menduplikasi data ini?");
+        if(ask){
+            $("#form-duplicate input[name=id]").val(id);
+            $("#form-duplicate").submit();
+        }
+    });
 </script>
 
 @endsection

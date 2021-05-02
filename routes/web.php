@@ -164,6 +164,14 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::post('/admin/blog/tag/update', $namespacePrefix.'TagController@update')->name('admin.blog.tag.update');
 	Route::post('/admin/blog/tag/delete', $namespacePrefix.'TagController@delete')->name('admin.blog.tag.delete');
 
+	// Kontributor Artikel
+	Route::get('/admin/blog/kontributor', $namespacePrefix.'KontributorController@index')->name('admin.blog.kontributor.index');
+	Route::get('/admin/blog/kontributor/create', $namespacePrefix.'KontributorController@create')->name('admin.blog.kontributor.create');
+	Route::post('/admin/blog/kontributor/store', $namespacePrefix.'KontributorController@store')->name('admin.blog.kontributor.store');
+	Route::get('/admin/blog/kontributor/edit/{id}', $namespacePrefix.'KontributorController@edit')->name('admin.blog.kontributor.edit');
+	Route::post('/admin/blog/kontributor/update', $namespacePrefix.'KontributorController@update')->name('admin.blog.kontributor.update');
+	Route::post('/admin/blog/kontributor/delete', $namespacePrefix.'KontributorController@delete')->name('admin.blog.kontributor.delete');
+
 	// Acara
 	Route::get('/admin/acara', $namespacePrefix.'AcaraController@index')->name('admin.acara.index');
 	Route::get('/admin/acara/create', $namespacePrefix.'AcaraController@create')->name('admin.acara.create');
@@ -207,6 +215,7 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::get('/admin/pelatihan/edit/{id}', $namespacePrefix.'PelatihanController@edit')->name('admin.pelatihan.edit');
 	Route::post('/admin/pelatihan/update', $namespacePrefix.'PelatihanController@update')->name('admin.pelatihan.update');
 	Route::post('/admin/pelatihan/delete', $namespacePrefix.'PelatihanController@delete')->name('admin.pelatihan.delete');
+	Route::post('/admin/pelatihan/duplicate', $namespacePrefix.'PelatihanController@duplicate')->name('admin.pelatihan.duplicate');
 	Route::get('/admin/pelatihan/peserta/{id}', $namespacePrefix.'PelatihanController@participant')->name('admin.pelatihan.participant');
 	Route::post('/admin/pelatihan/update-status', $namespacePrefix.'PelatihanController@updateStatus')->name('admin.pelatihan.updatestatus');
 	Route::get('/admin/pelatihan/images', $namespacePrefix.'PelatihanController@showImages')->name('admin.pelatihan.images');
@@ -275,6 +284,14 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::post('/admin/mitra/delete', $namespacePrefix.'MitraController@delete')->name('admin.mitra.delete');
 	Route::post('/admin/mitra/sort', $namespacePrefix.'MitraController@sorting')->name('admin.mitra.sort');
 	Route::get('/admin/mitra/images', $namespacePrefix.'MitraController@showImages')->name('admin.mitra.images');
+
+	// Cabang
+	Route::get('/admin/cabang', $namespacePrefix.'CabangController@index')->name('admin.cabang.index');
+	Route::get('/admin/cabang/create', $namespacePrefix.'CabangController@create')->name('admin.cabang.create');
+	Route::post('/admin/cabang/store', $namespacePrefix.'CabangController@store')->name('admin.cabang.store');
+	Route::get('/admin/cabang/edit/{id}', $namespacePrefix.'CabangController@edit')->name('admin.cabang.edit');
+	Route::post('/admin/cabang/update', $namespacePrefix.'CabangController@update')->name('admin.cabang.update');
+	Route::post('/admin/cabang/delete', $namespacePrefix.'CabangController@delete')->name('admin.cabang.delete');
 
 	// Mentor
 	Route::get('/admin/mentor', $namespacePrefix.'MentorController@index')->name('admin.mentor.index');

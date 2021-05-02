@@ -231,7 +231,7 @@
               </div>
             </div>
             @endif
-            @if(has_access('SliderController::index', Auth::user()->role, false) || has_access('DeskripsiController::index', Auth::user()->role, false) || has_access('FiturController::index', Auth::user()->role, false) || has_access('MitraController::index', Auth::user()->role, false) || has_access('MentorController::index', Auth::user()->role, false) || has_access('TestimoniController::index', Auth::user()->role, false))
+            @if(has_access('SliderController::index', Auth::user()->role, false) || has_access('DeskripsiController::index', Auth::user()->role, false) || has_access('FiturController::index', Auth::user()->role, false) || has_access('CabangController::index', Auth::user()->role, false) || has_access('MitraController::index', Auth::user()->role, false) || has_access('MentorController::index', Auth::user()->role, false) || has_access('TestimoniController::index', Auth::user()->role, false))
             <div class="col-12 col-lg-3 mb-3">
               <div class="heading">
                 <h5 class="m-0 font-weight-bold mb-3 d-flex align-items-center">
@@ -251,6 +251,9 @@
                 @endif
                 @if(has_access('FiturController::index', Auth::user()->role, false))
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.fitur.index') }}"><i class="fa fa-circle-o"></i> Fitur</a>
+                @endif
+                @if(has_access('CabangController::index', Auth::user()->role, false))
+                <a class="list-group-item list-group-item-action" href="{{ route('admin.cabang.index') }}"><i class="fa fa-circle-o"></i> Cabang</a>
                 @endif
                 @if(has_access('MitraController::index', Auth::user()->role, false))
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.mitra.index') }}"><i class="fa fa-circle-o"></i> Mitra</a>

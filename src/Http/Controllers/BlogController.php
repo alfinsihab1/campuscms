@@ -10,6 +10,7 @@ use App\User;
 use Ajifatur\FaturCMS\Models\Blog;
 use Ajifatur\FaturCMS\Models\KategoriArtikel;
 use Ajifatur\FaturCMS\Models\Komentar;
+use Ajifatur\FaturCMS\Models\Kontributor;
 use Ajifatur\FaturCMS\Models\Tag;
 
 class BlogController extends Controller
@@ -46,9 +47,13 @@ class BlogController extends Controller
         // Kategori
         $kategori = KategoriArtikel::orderBy('id_ka','desc')->get();
 
+        // Kontributor
+        $kontributor = Kontributor::orderBy('kontributor','asc')->get();
+
         // View
         return view('faturcms::admin.blog.create', [
             'kategori' => $kategori,
+            'kontributor' => $kontributor,
         ]);
     }
 
@@ -83,6 +88,7 @@ class BlogController extends Controller
             $blog->blog_gambar = generate_image_name("assets/images/blog/", $request->gambar, $request->gambar_url);
             $blog->blog_kategori = $request->kategori;
             $blog->blog_tag = generate_tag_by_name($request->get('tag'));
+            $blog->blog_kontributor = $request->kontributor != null ? $request->kontributor : 0;
             $blog->konten = htmlentities(upload_quill_image($request->konten, 'assets/images/konten-blog/'));
             $blog->author = Auth::user()->id_user;
             $blog->blog_at = date('Y-m-d H:i:s');
@@ -110,10 +116,14 @@ class BlogController extends Controller
         // Kategori
         $kategori = KategoriArtikel::orderBy('id_ka','desc')->get();
 
+        // Kontributor
+        $kontributor = Kontributor::orderBy('kontributor','asc')->get();
+
         // View
         return view('faturcms::admin.blog.edit', [
         	'blog' => $blog,
-        	'kategori' => $kategori,
+            'kategori' => $kategori,
+        	'kontributor' => $kontributor,
         ]);
     }
 
@@ -148,6 +158,7 @@ class BlogController extends Controller
             $blog->blog_gambar = generate_image_name("assets/images/blog/", $request->gambar, $request->gambar_url) != '' ? generate_image_name("assets/images/blog/", $request->gambar, $request->gambar_url) : $blog->blog_gambar;
             $blog->blog_kategori = $request->kategori;
             $blog->blog_tag = generate_tag_by_name($request->get('tag'));
+            $blog->blog_kontributor = $request->kontributor != null ? $request->kontributor : 0;
             $blog->konten = htmlentities(upload_quill_image($request->konten, 'assets/images/konten-blog/'));
             $blog->save();
         }

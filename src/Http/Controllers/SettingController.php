@@ -56,7 +56,7 @@ class SettingController extends Controller
         $kategori = KategoriSetting::where('slug','=',$category)->firstOrFail();
 
         // Setting
-        $setting = Setting::where('setting_category','=',$kategori->id_ks)->get();
+        $setting = Setting::where('setting_category','=',$kategori->id_ks)->orderBy('setting_order','asc')->get();
 
         // User
         $users = $category == 'referral' ? User::where('is_admin','=',0)->where('status','=',1)->where('email_verified','=',1)->orderBy('role','asc')->get() : null;

@@ -9,6 +9,7 @@
  * @method status(int $status)
  * @method gender(string $gender)
  * @method kategori_pelatihan(int $id)
+ * @method kategori_setting(string $slug)
  * @method psikolog(int $id)
  * @method tipe_halaman(int $id)
  * @method referral(string $ref, string $route, array $routeParams = [])
@@ -44,6 +45,7 @@ use App\User;
 use Ajifatur\FaturCMS\Models\KategoriArtikel;
 use Ajifatur\FaturCMS\Models\KategoriMateri;
 use Ajifatur\FaturCMS\Models\KategoriPelatihan;
+use Ajifatur\FaturCMS\Models\KategoriSetting;
 use Ajifatur\FaturCMS\Models\Permission;
 use Ajifatur\FaturCMS\Models\Role;
 use Ajifatur\FaturCMS\Models\RolePermission;
@@ -153,6 +155,14 @@ if(!function_exists('kategori_pelatihan')){
     function kategori_pelatihan($id){
         $data = KategoriPelatihan::find($id);
         return $data ? $data->kategori : '';
+    }
+}
+
+// Get kategori setting
+if(!function_exists('kategori_setting')){
+    function kategori_setting($slug){
+        $data = KategoriSetting::where('slug','=',$slug)->first();
+        return $data ? $data->id_ks : null;
     }
 }
 

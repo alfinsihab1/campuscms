@@ -93,7 +93,7 @@ class PackageController extends Controller
     // Check Access
     has_access(generate_method(__METHOD__), Auth::user()->role);
     
-    $process = new Process(['/opt/plesk/php/7.3/bin/php', '/usr/lib64/plesk-9.0/composer.phar', 'update', 'ajifatur/faturcms'], base_path());
+    $process = new Process([setting('site.server.php'), setting('site.server.composer'), 'update', 'ajifatur/faturcms'], base_path());
     $process->setTimeout(null);
     $process->run();
   

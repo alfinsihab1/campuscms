@@ -126,7 +126,7 @@ class SettingController extends Controller
                         $setting = Setting::where('setting_key','=',$kategori->prefix.$key)->first();
 
                         // Update
-                        if($key == 'google_analytics') $setting->setting_value = htmlentities($value);
+                        if($key == 'google_maps' || $key == 'google_analytics') $setting->setting_value = htmlentities($value);
                     	else $setting->setting_value = $category == 'price'? str_replace('.', '', $value) : $value;
                     	$setting->save();
                     }

@@ -26,6 +26,7 @@
 		#logo img {max-height: 90px;}
 		
 		/* Content Page 1 */
+		#qr-code {position: absolute; top: 35px; left: 15px; display: none;}
 		#nomor-seri {font-size: 12px; position: absolute; top: 5px; left: 15px;}
 		#text-sertifikat {font-family: 'Lato-Bold'; font-size: 66px; position: absolute; top: 145px; left: 88px; width: 950px; color: {{ setting('site.color.primary') }}; text-align: center; text-transform: uppercase;}
 		#nomor-sertifikat {font-size: 29px; position: absolute; top: 242px; left: 88px; width: 950px; text-align: center;}
@@ -84,6 +85,9 @@
 	<div id="logo"><img src="{{ asset('assets/images/logo/'.setting('site.logo')) }}"></div>
 	
 	<!-- Content Page 1 -->
+	<div id="qr-code">
+		<img width="80" src="data:image/png;base64, {!! $qrcode !!}">
+	</div>
 	<div id="nomor-seri">Nomor Seri: {{ $member->kode_sertifikat }}</div>
 	<div id="text-sertifikat">Sertifikat</div>
 	<div id="nomor-sertifikat">Nomor: {{ $pelatihan->nomor_pelatihan }}</div>

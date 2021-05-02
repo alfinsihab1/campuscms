@@ -33,6 +33,7 @@ class SettingController extends Controller
             ['title' => 'Halaman', 'description' => 'Pengaturan Halaman Login, Register, Sertifikat, dll', 'url' => route('admin.setting.edit', ['category' => 'view'])],
             ['title' => 'Penerima Notifikasi', 'description' => 'Pengaturan Penerima Notifikasi Email', 'url' => route('admin.setting.edit', ['category' => 'receivers'])],
             ['title' => 'Referral', 'description' => 'Pengaturan Default Referral', 'url' => route('admin.setting.edit', ['category' => 'referral'])],
+            ['title' => 'Server', 'description' => 'Pengaturan PHP Binary, Composer Binary', 'url' => route('admin.setting.edit', ['category' => 'server'])],
         ];
 
         // View

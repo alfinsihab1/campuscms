@@ -71,6 +71,20 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="col-md-2 col-form-label">Kontributor</label>
+                            <div class="col-md-10">
+                                <select name="kontributor" class="form-control {{ $errors->has('kontributor') ? 'is-invalid' : '' }}" >
+                                    <option value="" disabled selected>--Pilih--</option>
+                                    @foreach($kontributor as $data)
+                                    <option value="{{ $data->id_kontributor }}" {{ old('kontributor') === $data->id_kontributor ? 'selected' : '' }}>{{ $data->kontributor }}</option>
+                                    @endforeach
+                                </select>
+                                @if($errors->has('kontributor'))
+                                <div class="small text-danger mt-1">{{ ucfirst($errors->first('kontributor')) }}</div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-md-2 col-form-label">Konten</label>
                             <div class="col-md-10">
                                 <textarea name="konten" class="d-none"></textarea>

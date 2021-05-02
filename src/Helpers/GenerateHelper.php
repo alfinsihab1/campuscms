@@ -217,7 +217,7 @@ if(!function_exists('generate_materi_pelatihan')){
 if(!function_exists('generate_nomor_pelatihan')){
     function generate_nomor_pelatihan($kategori, $tanggal_pelatihan){
         // Cek data
-        $data = Pelatihan::where('kategori_pelatihan','=',$kategori)->whereYear('tanggal_pelatihan_from','=',date('Y', strtotime(generate_date_range('explode', $tanggal_pelatihan)['from'])))->latest('tanggal_pelatihan_from')->first();
+        $data = Pelatihan::where('kategori_pelatihan','=',$kategori)->whereYear('tanggal_pelatihan_from','=',date('Y', strtotime(generate_date_range('explode', $tanggal_pelatihan)['from'])))->latest('nomor_pelatihan')->first();
 
         // Generate Nomor
         if($data == null) $num = 1;
@@ -231,7 +231,7 @@ if(!function_exists('generate_nomor_pelatihan')){
         if($num < 10) $num = '0'.$num;
 
         // Return
-        return $num.'/'.kategori_pelatihan($kategori).'/'.setting('site.kode_sertifikat').'/'.date('Y', strtotime(generate_date_range('explode', $tanggal_pelatihan)['from']));
+        return $num.'/'.kategori_pelatihan($kategori).'/'.setting('site.sertifikat.kode').'/'.date('Y', strtotime(generate_date_range('explode', $tanggal_pelatihan)['from']));
     }
 }
 

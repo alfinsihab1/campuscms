@@ -270,6 +270,49 @@ class PelatihanController extends Controller
     }
 
     /**
+     * Menduplikat pelatihan
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function duplicate(Request $request)
+    {
+        // Get data pelatihan
+        $data = Pelatihan::find($request->id);
+
+        if($data){
+            // Menambah data
+            $pelatihan = new Pelatihan;
+            $pelatihan->nama_pelatihan = $data->nama_pelatihan;
+            $pelatihan->kategori_pelatihan = $data->kategori_pelatihan;
+            $pelatihan->tempat_pelatihan = $data->tempat_pelatihan;
+            $pelatihan->tanggal_pelatihan_from = $data->tanggal_pelatihan_from;
+            $pelatihan->tanggal_pelatihan_to = $data->tanggal_pelatihan_to;
+            $pelatihan->tanggal_sertifikat_from = $data->tanggal_sertifikat_from;
+            $pelatihan->tanggal_sertifikat_to = $data->tanggal_sertifikat_to;
+            $pelatihan->gambar_pelatihan = $data->gambar_pelatihan;
+            $pelatihan->nomor_pelatihan = generate_nomor_pelatihan($data->kategori_pelatihan, (date('d/m/Y H:i', strtotime($data->tanggal_pelatihan_from))." - ".date('d/m/Y H:i', strtotime($data->tanggal_pelatihan_to))));
+            $pelatihan->deskripsi_pelatihan = $data->deskripsi_pelatihan;
+            $pelatihan->trainer = $data->trainer;
+            $pelatihan->kode_trainer = str_replace('/', '.', $pelatihan->nomor_pelatihan).'.T';
+            $pelatihan->fee_member = $data->fee_member;
+            $pelatihan->fee_non_member = $data->fee_non_member;
+            $pelatihan->materi_pelatihan = $data->materi_pelatihan;
+            $pelatihan->total_jam_pelatihan = $data->total_jam_pelatihan;
+            $pelatihan->pelatihan_at = date('Y-m-d H:i:s');
+            $pelatihan->save();
+
+            // Redirect
+            return redirect()->route('admin.pelatihan.index')->with(['message' => 'Berhasil menduplikat data.']);
+        }
+        else{
+            // Redirect
+            return redirect()->route('admin.pelatihan.index')->with(['message' => 'Tidak ada data yang diduplikat.']);
+        }
+
+    }
+
+    /**
      * Menampilkan daftar peserta
      *
      * int $id

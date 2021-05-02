@@ -107,17 +107,20 @@
         <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.halaman.index'))) ? 'active' : '' }}" href="{{ route('admin.halaman.index') }}"><i class="app-menu__icon fa fa-newspaper-o"></i><span class="app-menu__label">Halaman</span></a></li>
         @endif
 
-        @if(has_access('BlogController::index', Auth::user()->role, false) || has_access('KategoriArtikelController::index', Auth::user()->role, false) || has_access('TagController::index', Auth::user()->role, false))
+        @if(has_access('BlogController::index', Auth::user()->role, false) || has_access('KategoriArtikelController::index', Auth::user()->role, false) || has_access('TagController::index', Auth::user()->role, false) || has_access('KontributorController::index', Auth::user()->role, false))
         <li class="treeview {{ is_int(strpos(Request::url(), route('admin.blog.index'))) ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-pencil"></i><span class="app-menu__label">Artikel</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
             @if(has_access('BlogController::index', Auth::user()->role, false))
-            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.blog.index'))) && !is_int(strpos(Request::url(), route('admin.blog.kategori.index'))) && !is_int(strpos(Request::url(), route('admin.blog.tag.index'))) ? 'active' : '' }}" href="{{ route('admin.blog.index') }}"><i class="icon fa fa-circle-o"></i> Data Artikel</a></li>
+            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.blog.index'))) && !is_int(strpos(Request::url(), route('admin.blog.kategori.index'))) && !is_int(strpos(Request::url(), route('admin.blog.tag.index'))) && !is_int(strpos(Request::url(), route('admin.blog.kontributor.index'))) ? 'active' : '' }}" href="{{ route('admin.blog.index') }}"><i class="icon fa fa-circle-o"></i> Data Artikel</a></li>
             @endif
             @if(has_access('KategoriArtikelController::index', Auth::user()->role, false))
             <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.blog.kategori.index'))) ? 'active' : '' }}" href="{{ route('admin.blog.kategori.index') }}"><i class="icon fa fa-circle-o"></i> Kategori</a></li>
             @endif
             @if(has_access('TagController::index', Auth::user()->role, false))
             <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.blog.tag.index'))) ? 'active' : '' }}" href="{{ route('admin.blog.tag.index') }}"><i class="icon fa fa-circle-o"></i> Tag</a></li>
+            @endif
+            @if(has_access('KontributorController::index', Auth::user()->role, false))
+            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.blog.kontributor.index'))) ? 'active' : '' }}" href="{{ route('admin.blog.kontributor.index') }}"><i class="icon fa fa-circle-o"></i> Kontributor</a></li>
             @endif
           </ul>
         </li>

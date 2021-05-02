@@ -120,6 +120,12 @@ class PermissionSeeder extends Seeder
             ['key' => 'TagController::edit', 'name' => 'Mengupdate Tag Artikel'],
             ['key' => 'TagController::delete', 'name' => 'Menghapus Tag Artikel'],
 
+            // Kontributor Artikel
+            ['key' => 'KontributorController::index', 'name' => 'Menampilkan Data Kontributor Artikel'],
+            ['key' => 'KontributorController::create', 'name' => 'Menambah Kontributor Artikel'],
+            ['key' => 'KontributorController::edit', 'name' => 'Mengupdate Kontributor Artikel'],
+            ['key' => 'KontributorController::delete', 'name' => 'Menghapus Kontributor Artikel'],
+
             // Acara
             ['key' => 'AcaraController::index', 'name' => 'Menampilkan Data Acara'],
             ['key' => 'AcaraController::create', 'name' => 'Menambah Acara'],
@@ -185,6 +191,12 @@ class PermissionSeeder extends Seeder
             ['key' => 'FiturController::create', 'name' => 'Menambah Fitur'],
             ['key' => 'FiturController::edit', 'name' => 'Mengupdate Fitur'],
             ['key' => 'FiturController::delete', 'name' => 'Menghapus Fitur'],
+
+            // Cabang
+            ['key' => 'CabangController::index', 'name' => 'Menampilkan Data Cabang'],
+            ['key' => 'CabangController::create', 'name' => 'Menambah Cabang'],
+            ['key' => 'CabangController::edit', 'name' => 'Mengupdate Cabang'],
+            ['key' => 'CabangController::delete', 'name' => 'Menghapus Cabang'],
 
             // Mitra
             ['key' => 'MitraController::index', 'name' => 'Menampilkan Data Mitra'],

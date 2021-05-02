@@ -160,8 +160,6 @@ class PsikologController extends Controller
         $psikolog->delete();
 
         // Redirect
-        if(Auth::user()->is_admin == 1){
-            return redirect()->route('admin.psikolog.index')->with(['message' => 'Berhasil menghapus data.']);
-        }
+        return redirect()->route('admin.psikolog.index')->with(['message' => 'Berhasil menghapus data.']);
     }
 }

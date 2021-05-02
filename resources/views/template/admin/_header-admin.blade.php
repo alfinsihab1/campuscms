@@ -228,6 +228,7 @@
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.setting.edit', ['category' => 'view']) }}"><i class="fa fa-circle-o"></i> Halaman</a>
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.setting.edit', ['category' => 'receivers']) }}"><i class="fa fa-circle-o"></i> Notifikasi</a>
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.setting.edit', ['category' => 'referral']) }}"><i class="fa fa-circle-o"></i> Referral</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('admin.setting.edit', ['category' => 'server']) }}"><i class="fa fa-circle-o"></i> Server</a>
               </div>
             </div>
             @endif

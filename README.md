@@ -5,7 +5,7 @@
 </p>
 
 
-## Tentang FaturCMS
+## Tentang Kami
 
 FaturCMS adalah Content Management System (CMS) yang menyediakan fitur referral untuk berjualan produk-produk digital seperti e-book, video, tools, dan lain sebagainya. CMS ini dibangun di atas framework [Laravel](https://laravel.com).
 
@@ -13,7 +13,31 @@ FaturCMS adalah Content Management System (CMS) yang menyediakan fitur referral 
 - PHP >= 7.2
 - Laravel >= 7.0
 
-## Mitra
+## Instalasi
+
+Untuk menginstal FaturCMS, jalankan perintah composer di bawah ini dan kamu akan mendapatkan versi terbaru
+
+```sh
+composer require ajifatur/faturcms
+```
+
+## Instal Konfigurasi
+
+Untuk menginstal konfigurasi FaturCMS, jalankan perintah composer di bawah ini:
+
+```sh
+php artisan faturcms:install
+```
+
+## Update Konfigurasi
+
+Untuk mengupdate konfigurasi FaturCMS, jalankan perintah composer di bawah ini:
+
+```sh
+php artisan faturcms:update
+```
+
+## Mitra Kami
 - [PersonalityTalk](https://psikologanda.com)
 - [Kompetensiku](https://kompetensiku.id)
 

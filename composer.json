@@ -31,6 +31,7 @@
         "laravel/ui": "^2.4",
         "barryvdh/laravel-dompdf": "^0.8.5",
         "maatwebsite/excel": "^3.1",
-        "simplesoftwareio/simple-qrcode": "^4.2"
+        "simplesoftwareio/simple-qrcode": "^4.2",
+        "jorenvanhocht/laravel-share": "^4.0"
     }
 }

@@ -1,4 +1,3 @@
-
 <!-- Main JavaScript -->
 <script src="{{ asset('templates/vali-admin/js/jquery-3.2.1.min.js') }}"></script>
 <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
@@ -52,7 +51,6 @@
     // Button Delete Folder
     $(document).on("click", ".btn-delete-folder", function(e){
         e.preventDefault();
-        // var url = $(this).data("url");
         var id = $(this).data("id");
         var ask = confirm("Anda yakin ingin menghapus data ini?");
         if(ask){
@@ -64,7 +62,6 @@
     // Button Delete File
     $(document).on("click", ".btn-delete-file", function(e){
         e.preventDefault();
-        // var url = $(this).data("url");
         var id = $(this).data("id");
         var ask = confirm("Anda yakin ingin menghapus data ini?");
         if(ask){

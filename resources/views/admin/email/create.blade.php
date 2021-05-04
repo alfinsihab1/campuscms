@@ -318,7 +318,7 @@
 
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/quill/quill.snow.css') }}">
 <style type="text/css">
-    .modal-content {max-height: 500px; overflow-y: hidden;}
+    #modal-search .modal-content, #modal-import .modal-content {max-height: 500px; overflow-y: hidden;}
     .modal-body {overflow-y: auto;}
     #table-receivers tr td {padding: .5rem!important;}
     #table-receivers tr:hover {background-color: #eeeeee!important;}

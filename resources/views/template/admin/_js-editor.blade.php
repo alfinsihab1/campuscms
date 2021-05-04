@@ -1,7 +1,7 @@
 <!-- Modal Quill Source Code -->
 <div class="modal fade" id="modal-quill-code" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-        <div class="modal-content">
+    <div class="modal-dialog modal-dialog-full modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content modal-content-full">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Edit HTML</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -9,7 +9,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <textarea class="form-control" rows="20"></textarea>
+            	<pre>
+            		<code class="html">
+		                <textarea class="form-control" rows="20"></textarea>
+		            </code>
+		        </pre>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success btn-set-quill">OK</button>
@@ -21,7 +25,7 @@
 <!-- /Modal Quill Source Code -->
 
 <!-- Quill JS -->
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<script type="text/javascript" src="{{ asset('assets/plugins/quill/quill.min.js') }}"></script>
 
 <script type="text/javascript">
 	// Generate Quill

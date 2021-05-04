@@ -142,6 +142,10 @@
 	.ql-editor h1, .ql-editor h2, .ql-editor h3, .ql-editor h4, .ql-editor h5, .ql-editor h6, .ql-editor p {margin-bottom: 1rem!important;}
     .ql-snow .ql-toolbar button, .ql-snow.ql-toolbar button.ql-button-html {width: 30px;}
 
+    /* Modal Quill Code */
+    #modal-quill-code .modal-dialog {max-width: 100%; margin-left: 1rem; margin-right: 1rem;}
+    #modal-quill-code .modal-dialog .modal-content {height: calc(100vh - 56px); max-height: auto!important;}
+
     /* Bootstrap Tagsinput */
     .bootstrap-tagsinput {width: 100%!important;}
     .bootstrap-tagsinput .tag {padding: 1px 2px; border-radius: 4px; background-color: var(--primary)!important;}

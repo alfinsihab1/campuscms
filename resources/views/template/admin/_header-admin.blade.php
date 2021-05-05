@@ -166,14 +166,47 @@
           @endif
           <h5><i class="fa fa-cog"></i> Lainnya</h5>
           <div class="row">
+            <div class="col-12 col-lg mb-3">
+              <div class="heading">
+                <h5 class="m-0 font-weight-bold mb-3 d-flex align-items-center">
+                  <i class="fa fa-list menu-btn-blue p-3 mr-2 rounded-1"></i>
+                  <div>
+                    <p class="m-0">Log</p>
+                  </div>
+                </h5>
+              </div>
+              <div class="list-group list-group-flush">
+                <a class="list-group-item list-group-item-action" href="{{ route('admin.log.index') }}"><i class="fa fa-circle-o"></i> Data Log</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('admin.log.login') }}"><i class="fa fa-circle-o"></i> Login Error</a>
+              </div>
+            </div>
+            @if(has_access('RoleController::index', Auth::user()->role, false) || has_access('RolePermissionController::index', Auth::user()->role, false))
+            <div class="col-12 col-lg mb-3">
+              <div class="heading">
+                <h5 class="m-0 font-weight-bold mb-3 d-flex align-items-center">
+                  <i class="fa fa-key menu-btn-green p-3 mr-2 rounded-1"></i>
+                  <div>
+                    <p class="m-0">Role</p>
+                  </div>
+                </h5>
+              </div>
+              <div class="list-group list-group-flush">
+                @if(has_access('RoleController::index', Auth::user()->role, false))
+                <a class="list-group-item list-group-item-action" href="{{ route('admin.role.index') }}"><i class="fa fa-circle-o"></i> Data Role</a>
+                @endif
+                @if(has_access('RolePermissionController::index', Auth::user()->role, false))
+                <a class="list-group-item list-group-item-action" href="{{ route('admin.rolepermission.index') }}"><i class="fa fa-circle-o"></i> Role Permission</a>
+                @endif
+              </div>
+            </div>
+            @endif
             @if(has_access('PackageController::index', Auth::user()->role, false) || has_access('PackageController::me', Auth::user()->role, false) || has_access('ArtisanController::index', Auth::user()->role, false))
-            <div class="col-12 col-lg-3 mb-3">
+            <div class="col-12 col-lg mb-3">
               <div class="heading">
                 <h5 class="m-0 font-weight-bold mb-3 d-flex align-items-center">
                   <i class="fa fa-wrench menu-btn-red p-3 mr-2 rounded-1"></i>
                   <div>
                     <p class="m-0">Sistem</p>
-                    <p class="m-0"><small>Manajemen Sistem</small></p>
                   </div>
                 </h5>
               </div>
@@ -190,35 +223,13 @@
               </div>
             </div>
             @endif
-            @if(has_access('RoleController::index', Auth::user()->role, false) || has_access('RolePermissionController::index', Auth::user()->role, false))
-            <div class="col-12 col-lg-3 mb-3">
-              <div class="heading">
-                <h5 class="m-0 font-weight-bold mb-3 d-flex align-items-center">
-                  <i class="fa fa-key menu-btn-green p-3 mr-2 rounded-1"></i>
-                  <div>
-                    <p class="m-0">Role</p>
-                    <p class="m-0"><small>Manajemen Role</small></p>
-                  </div>
-                </h5>
-              </div>
-              <div class="list-group list-group-flush">
-                @if(has_access('RoleController::index', Auth::user()->role, false))
-                <a class="list-group-item list-group-item-action" href="{{ route('admin.role.index') }}"><i class="fa fa-circle-o"></i> Data Role</a>
-                @endif
-                @if(has_access('RolePermissionController::index', Auth::user()->role, false))
-                <a class="list-group-item list-group-item-action" href="{{ route('admin.rolepermission.index') }}"><i class="fa fa-circle-o"></i> Role Permission</a>
-                @endif
-              </div>
-            </div>
-            @endif
             @if(has_access('SettingController::edit', Auth::user()->role, false))
-            <div class="col-12 col-lg-3 mb-3">
+            <div class="col-12 col-lg mb-3">
               <div class="heading">
                 <h5 class="m-0 font-weight-bold mb-3 d-flex align-items-center">
                   <i class="fa fa-cogs menu-btn-primary p-3 mr-2 rounded-1"></i>
                   <div>
                     <p class="m-0">Pengaturan</p>
-                    <p class="m-0"><small>Manajemen Pengaturan</small></p>
                   </div>
                 </h5>
               </div>
@@ -233,13 +244,12 @@
             </div>
             @endif
             @if(has_access('SliderController::index', Auth::user()->role, false) || has_access('DeskripsiController::index', Auth::user()->role, false) || has_access('FiturController::index', Auth::user()->role, false) || has_access('CabangController::index', Auth::user()->role, false) || has_access('MitraController::index', Auth::user()->role, false) || has_access('MentorController::index', Auth::user()->role, false) || has_access('TestimoniController::index', Auth::user()->role, false))
-            <div class="col-12 col-lg-3 mb-3">
+            <div class="col-12 col-lg mb-3">
               <div class="heading">
                 <h5 class="m-0 font-weight-bold mb-3 d-flex align-items-center">
                   <i class="fa fa-desktop menu-btn-blue p-3 mr-2 rounded-1"></i>
                   <div>
                     <p class="m-0">Konten Situs</p>
-                    <p class="m-0"><small>Manajemen Konten Situs</small></p>
                   </div>
                 </h5>
               </div>

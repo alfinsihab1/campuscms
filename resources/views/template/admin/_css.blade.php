@@ -35,7 +35,7 @@
     }
 
     /* Sidebar */
-    .app-sidebar{box-shadow: unset!important; background-color: var(--white);}
+    .app-sidebar{box-shadow: unset!important; background-color: var(--white); z-index: 1040;}
     .app-sidebar__toggle, .app-nav__item{color: var(--gray)!important; transition: var(--transition)!important;}
     .app-sidebar__toggle:focus, .app-sidebar__toggle:hover, .app-nav__item:hover, .app-nav__item:focus {background-color: transparent!important; color: var(--primary)!important;}
     .app-nav__item {color: var(--gray)!important;}
@@ -189,6 +189,7 @@
 
     .app-header{padding: 30px 30px 0px 30px; position: static; background-color: transparent!important; box-shadow: none;}
     .app-header.nav-sticky{padding: 10px 30px 10px 30px; position: sticky; top: 0; transition: var(--transition); background-color: var(--white)!important; box-shadow: var(--shadow); animation: topBottom var(--transition)}
+    .app-header.nav-sticky .dropdown{transform: translate();}
     .app-sidebar{padding-top: 0px; box-shadow: var(--shadow)!important}
     .app-content{min-height: unset; margin-top: unset; padding: 30px; background-color: unset; -webkit-transition: unset; -o-transition: unset; transition: }
     @media (min-width: 768px) {.app-content {margin-left: unset}}
@@ -263,6 +264,7 @@
     .sidenav-closed .wrap-b-app_logo{display: block; transition: var(--transition)}
     .sidenav-closed .wrap-b-app_logo:hover img{display: block; filter: brightness(0) invert(1);}
     .sidenav-closed .app-menu__item{text-align: center; justify-content: center;}
+    .sidenav-closed .app-menu-title{text-align: center;}
     .sidebar-mini.sidenav-closed .a-app-content {margin-left: 72px;}
     /*.app-title {display: none;}*/
     .app-breadcrumb{margin-top: 0!important}

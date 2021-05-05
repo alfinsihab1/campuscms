@@ -31,19 +31,6 @@
           </ul>
         </li>
         @endif
-        
-        @if(has_access('LogController::login', Auth::user()->role, false) || has_access('LogController::activity', Auth::user()->role, false))
-        <li class="treeview {{ is_int(strpos(Request::url(), route('admin.log.index'))) ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-list"></i><span class="app-menu__label">Log</span><i class="treeview-indicator fa fa-angle-right"></i></a>
-          <ul class="treeview-menu">
-            @if(has_access('LogController::index', Auth::user()->role, false))
-            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.log.index'))) && !is_int(strpos(Request::url(), route('admin.log.login'))) ? 'active' : '' }}" href="{{ route('admin.log.index') }}"><i class="icon fa fa-circle-o"></i> Data Log</a></li>
-            @endif
-            @if(has_access('LogController::login', Auth::user()->role, false))
-            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.log.login'))) ? 'active' : '' }}" href="{{ route('admin.log.login') }}"><i class="icon fa fa-circle-o"></i> Login Error</a></li>
-            @endif
-          </ul>
-        </li>
-        @endif
 
         @if(has_access('MediaController::index', Auth::user()->role, false))
         <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.media.index'))) ? 'active' : '' }}" href="{{ route('admin.media.index') }}"><i class="app-menu__icon fa fa-image"></i><span class="app-menu__label">Media</span></a></li>
@@ -84,7 +71,7 @@
 
         @if(has_access('FileController::index', Auth::user()->role, false))
           @if(status_kategori_folder('e-learning'))
-          <span class="font-weight-bold" style="color: var(--primary)">Materi</span>
+          <div class="app-menu-title"><span class="font-weight-bold" style="color: var(--primary)">Materi</span></div>
           <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.filemanager.index', ['kategori' => 'e-learning']))) ? 'active' : '' }}" href="{{ route('admin.filemanager.index', ['kategori' => 'e-learning']) }}"><i class="app-menu__icon fa fa-folder-open"></i><span class="app-menu__label">Materi E-Learning</span></a></li>
           @endif
           @if(status_kategori_folder('e-library'))
@@ -105,7 +92,7 @@
         @endif
 
         @if(has_access('HalamanController::index', Auth::user()->role, false))
-        <span class="font-weight-bold" style="color: var(--primary)">Konten</span>
+        <div class="app-menu-title"><span class="font-weight-bold" style="color: var(--primary)">Konten</span></div>
         <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.halaman.index'))) ? 'active' : '' }}" href="{{ route('admin.halaman.index') }}"><i class="app-menu__icon fa fa-newspaper-o"></i><span class="app-menu__label">Halaman</span></a></li>
         @endif
 

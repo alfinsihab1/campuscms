@@ -176,8 +176,8 @@
                 </h5>
               </div>
               <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action" href="{{ route('admin.slider.index') }}"><i class="fa fa-circle-o"></i> Data Log</a>
-                <a class="list-group-item list-group-item-action" href="{{ route('admin.deskripsi.index') }}"><i class="fa fa-circle-o"></i> Login Error</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('admin.log.index') }}"><i class="fa fa-circle-o"></i> Data Log</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('admin.log.login') }}"><i class="fa fa-circle-o"></i> Login Error</a>
               </div>
             </div>
             @if(has_access('RoleController::index', Auth::user()->role, false) || has_access('RolePermissionController::index', Auth::user()->role, false))

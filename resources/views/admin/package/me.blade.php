@@ -76,11 +76,12 @@
                 <h5 class="modal-title" id="exampleModalLabel">Output</h5>
             </div>
             <div class="modal-body">
-                <h5></h5>
+                <h5 class="mb-3"></h5>
                 <div class="output w-100 mb-3"></div>
-                <div class="text-center">
-                    <a class="btn btn-primary" href="{{ route('admin.package.me') }}"><i class="fa fa-refresh mr-1"></i>Refresh</a>
-                </div>
+			</div>
+            <div class="modal-footer justify-content-center">
+                <a class="btn btn-primary btn-refresh" href="{{ route('admin.package.me') }}"><i class="fa fa-refresh mr-1"></i>Refresh</a>
+                <a class="btn btn-primary btn-update-me" href="#"><i class="fa fa-level-up mr-1"></i>Update Ulang</a>
             </div>
         </div>
     </div>
@@ -109,16 +110,20 @@
                     html += '<li>' + array.class + '::' + array.function + ' (line ' + array.line + ')</li>';
                 });
                 html += '</ul>';
-                $("#modal-update-me .modal-body h5").html(response.status + ": " + response.statusText);
+                $("#modal-update-me .modal-body h5").html('<i class="fa fa-exclamation-circle mr-2"></i>' + response.status + ": " + response.statusText);
                 $("#modal-update-me .output").html(html);
+				$("#modal-update-me .btn-refresh").addClass("d-none");
+				$("#modal-update-me .btn-update-me").removeClass("d-none");
                 $("#modal-update-me").modal({
                     backdrop: 'static',
                     keyboard: false
                 });
             },
             success: function(response){
-                $("#modal-update-me .modal-body h5").html("");
+                $("#modal-update-me .modal-body h5").html('<i class="fa fa-check-circle mr-2"></i>200: success!');
                 $("#modal-update-me .output").html(response);
+				$("#modal-update-me .btn-refresh").removeClass("d-none");
+				$("#modal-update-me .btn-update-me").addClass("d-none");
                 $("#modal-update-me").modal({
                     backdrop: 'static',
                     keyboard: false

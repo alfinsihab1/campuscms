@@ -26,7 +26,7 @@
                   <span class="app-notification__icon p-0"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-success"></i><i class="fa fa-money fa-stack-1x fa-inverse"></i></span>
                   </span>
                   <span class="badge badge-pill badge-danger position-absolute">{{ count_notif_komisi() }}</span>
-                  <p class="app-notification__message">Verifikasi Komisi</p>
+                  <p class="app-notification__message">Verifikasi<br>Komisi</p>
                 </a>
               </div>
               <div class="col-6 border-bottom">
@@ -34,7 +34,7 @@
                   <span class="app-notification__icon p-0"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-warning"></i><i class="fa fa-money fa-stack-1x fa-inverse"></i></span></span>
                   <span class="badge badge-pill badge-danger position-absolute">{{ count_notif_withdrawal() }}</span>
                   <div>
-                    <p class="app-notification__message">Pengambilan Komisi</p>
+                    <p class="app-notification__message">Pengambilan<br>Komisi</p>
                   </div>
                 </a>
               </div>
@@ -43,7 +43,7 @@
                   <span class="app-notification__icon p-0"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-primary"></i><i class="fa fa-money fa-stack-1x fa-inverse"></i></span></span>
                   <span class="badge badge-pill badge-danger position-absolute">{{ count_notif_pelatihan() }}</span>
                   <div>
-                    <p class="app-notification__message">Pembayaran Pelatihan</p>
+                    <p class="app-notification__message">Pembayaran<br>Pelatihan</p>
                   </div>
                 </a>
               </div>

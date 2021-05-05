@@ -188,7 +188,7 @@
 
 
     .app-header{padding: 30px 30px 0px 30px; position: static; background-color: transparent!important; box-shadow: none;}
-    .app-header.nav-sticky{padding: 0px 30px 0px 30px; position: sticky; top: 0; transition: var(--transition); background-color: var(--white)!important; box-shadow: var(--shadow); animation: topBottom var(--transition)}
+    .app-header.nav-sticky{padding: 10px 30px 10px 30px; position: sticky; top: 0; transition: var(--transition); background-color: var(--white)!important; box-shadow: var(--shadow); animation: topBottom var(--transition)}
     .app-sidebar{padding-top: 0px; box-shadow: var(--shadow)!important}
     .app-content{min-height: unset; margin-top: unset; padding: 30px; background-color: unset; -webkit-transition: unset; -o-transition: unset; transition: }
     @media (min-width: 768px) {.app-content {margin-left: unset}}
@@ -235,6 +235,19 @@
             box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
         }
     }
+    @keyframes grow {
+      0% {
+        display: none;
+        opacity: 0;
+      }
+      1% {
+        display: block;
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
     .blob {
     position: absolute;
     border-radius: 50%;
@@ -253,7 +266,7 @@
     .sidebar-mini.sidenav-closed .a-app-content {margin-left: 72px;}
     /*.app-title {display: none;}*/
     .app-breadcrumb{margin-top: 0!important}
-    .dropdown-menu{width: fit-content}
+    .dropdown-menu{width: fit-content; min-width: 20rem; animation: grow var(--transition);}
     .dropdown-menu .card{border: 0; box-shadow: var(--shadow)}
     .dropdown-item{padding: 0; white-space: normal; text-align: center; width: 100%; padding-top: 1em; padding-bottom: 1em}
     .dropdown-item:active, .dropdown-item:focus,  .dropdown-item:hover{color: var(--primary)!important; background-color: transparent!important;}
@@ -284,6 +297,11 @@
     }
     @media (max-width: 767.98px) {
         .app-header{padding: 15px 15px 0px 15px}
+        .app-header.nav-sticky{padding: 15px 15px 15px 15px}
+        .menu-grid .media-body{border-left: unset!important}    
+        .dropdown{position: static;}
+        .dropdown-menu{width: 100%}
+    
     }
     @media (max-width: 991.98px) {
         .sidebar-mini.sidenav-closed .app-content{margin-left: unset}
@@ -293,7 +311,7 @@
         .app.sidebar-mini.pace-done.sidenav-closed{overflow-y: scroll;}
         .app.sidenav-closed .app-sidebar {left: -100%;}
         .sidebar-mini.sidenav-closed .a-app-content {margin-left: 0px;}
-        .a-app-content {margin-left: 0px;}
+        .a-app-content {margin-left: 0px}
     }
     @media (min-width: 768px) {
         .sidebar-mini.sidenav-closed .app-content{margin-left: 0}

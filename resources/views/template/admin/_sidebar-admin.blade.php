@@ -84,7 +84,7 @@
 
         @if(has_access('FileController::index', Auth::user()->role, false))
           @if(status_kategori_folder('e-learning'))
-          <span class="font-weight-bold" style="color: var(--primary)">Materi</span>
+          <div class="app-menu-title"><span class="font-weight-bold" style="color: var(--primary)">Materi</span></div>
           <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.filemanager.index', ['kategori' => 'e-learning']))) ? 'active' : '' }}" href="{{ route('admin.filemanager.index', ['kategori' => 'e-learning']) }}"><i class="app-menu__icon fa fa-folder-open"></i><span class="app-menu__label">Materi E-Learning</span></a></li>
           @endif
           @if(status_kategori_folder('e-library'))
@@ -105,7 +105,7 @@
         @endif
 
         @if(has_access('HalamanController::index', Auth::user()->role, false))
-        <span class="font-weight-bold" style="color: var(--primary)">Konten</span>
+        <div class="app-menu-title"><span class="font-weight-bold" style="color: var(--primary)">Konten</span></div>
         <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.halaman.index'))) ? 'active' : '' }}" href="{{ route('admin.halaman.index') }}"><i class="app-menu__icon fa fa-newspaper-o"></i><span class="app-menu__label">Halaman</span></a></li>
         @endif
 

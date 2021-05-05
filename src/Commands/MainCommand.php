@@ -32,20 +32,6 @@ class MainCommand extends Command
     {
         parent::__construct();
     }
-
-    /**
-     * Get the composer command for the environment.
-     *
-     * @return string
-     */
-    protected function findComposer()
-    {
-        if(file_exists(getcwd().'/composer.phar')){
-            return '"'.PHP_BINARY.'" '.getcwd().'/composer.phar';
-        }
-
-        return 'composer';
-    }
     
     /**
      * Execute the console command.

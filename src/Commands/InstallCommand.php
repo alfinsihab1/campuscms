@@ -3,6 +3,8 @@
 namespace Ajifatur\FaturCMS\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Composer;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\Process\Process;
 use Ajifatur\FaturCMS\FaturCMSServiceProvider;
@@ -38,7 +40,7 @@ class InstallCommand extends Command
      *
      * @return void
      */
-    public function handle()
+    public function handle(Filesystem $filesystem)
     {
         // First info
         $this->info('Installing FaturCMS package');
@@ -63,11 +65,9 @@ class InstallCommand extends Command
         // Run main command
         $this->call('faturcms:main');
 
-        // Find composer and dump autoload
-        $this->info('Dumping the autoloaded files and reloading all new files');
-        $process = new Process([setting('site.server.php'), setting('site.server.composer'), 'dump-autoload'], base_path());
-        $process->setTimeout(null); // Setting timeout to null to prevent installation from stopping at a certain point in time
-        $process->setWorkingDirectory(base_path())->run();
+        // Composer dump autoload
+        $composer = new Composer($filesystem);
+        $this->info($composer->dumpAutoloads());
 
         // Seed
         $this->call('db:seed');

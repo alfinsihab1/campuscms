@@ -16,7 +16,7 @@ FaturCMS adalah **Content Management System (CMS)** yang menyediakan fitur refer
 
 ## Instalasi
 
-### Instal dari Composer:
+### Download dari Composer:
 
 Untuk menginstal FaturCMS, jalankan perintah composer di bawah ini dan kamu akan mendapatkan versi terbaru:
 
@@ -24,25 +24,7 @@ Untuk menginstal FaturCMS, jalankan perintah composer di bawah ini dan kamu akan
 composer require ajifatur/faturcms
 ```
 
-### Instal Konfigurasi:
-
-Untuk menginstal konfigurasi FaturCMS, jalankan perintah composer di bawah ini:
-
-```sh
-php artisan faturcms:install
-```
-
-### Route Home:
-
-Tambahkan nama route __site.home__ pada halaman *home* Anda. Contohnya seperti ini:
-
-```php
-Route::get('/', function(){
-  return view('welcome');
-})->name('site.home');
-```
-
-### File .env:
+### Konfigurasi File .env:
 
 Ganti konfigurasi *database* pada file __.env___ Anda:
 
@@ -52,6 +34,24 @@ DB_PORT="your_database_port"
 DB_DATABASE="your_database_name"
 DB_USERNAME="your_database_username"
 DB_PASSWORD="your_database_password"
+```
+
+### Instal CMS:
+
+Untuk menginstal konfigurasi FaturCMS, jalankan perintah composer di bawah ini:
+
+```sh
+php artisan faturcms:install
+```
+
+### Edit File routes/web.php:
+
+Tambahkan nama route __site.home__ pada halaman *home* Anda. Contohnya seperti ini:
+
+```php
+Route::get('/', function(){
+  return view('welcome');
+})->name('site.home');
 ```
 
 ## Update

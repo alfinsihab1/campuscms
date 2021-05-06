@@ -66,6 +66,7 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::get('/admin/user/edit/{id}', $namespacePrefix.'UserController@edit')->name('admin.user.edit');
 	Route::post('/admin/user/update', $namespacePrefix.'UserController@update')->name('admin.user.update');
 	Route::post('/admin/user/delete', $namespacePrefix.'UserController@delete')->name('admin.user.delete');
+	Route::get('/admin/user/refer/{id}', $namespacePrefix.'UserController@refer')->name('admin.user.refer');
 	Route::get('/admin/user/export', $namespacePrefix.'UserController@export')->name('admin.user.export');
 	Route::post('/admin/user/update-photo', $namespacePrefix.'UserController@updatePhoto')->name('admin.user.updatephoto');
 	Route::get('/admin/user/images', $namespacePrefix.'UserController@showImages')->name('admin.user.images');

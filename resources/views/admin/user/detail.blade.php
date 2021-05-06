@@ -100,7 +100,7 @@
                         </div>
                         <div class="list-group-item d-sm-flex justify-content-between px-0 py-1">
                             <div class="font-weight-bold">Refer:</div>
-                            <div>{{ count_refer($user->username) }}</div>
+                            <div><a href="{{ route('admin.user.refer', ['id' => $user->id_user]) }}">{{ count_refer($user->username) }}</a></div>
                         </div>
                         <div class="list-group-item d-sm-flex justify-content-between px-0 py-1">
                             <div class="font-weight-bold">Refer Aktif:</div>

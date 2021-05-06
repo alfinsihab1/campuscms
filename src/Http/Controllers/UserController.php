@@ -263,6 +263,30 @@ class UserController extends Controller
     }
     
     /**
+     * Menampilkan data refer
+     * 
+     * int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function refer($id)
+    {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // Get data user
+        $user = User::join('role','users.role','=','role.id_role')->findOrFail($id);
+
+        // Refer
+        $refer = User::where('reference','=',$user->username)->orderBy('status','desc')->get();
+
+        // View
+        return view('faturcms::admin.user.refer', [
+            'user' => $user,
+            'refer' => $refer,
+        ]);
+    }
+    
+    /**
      * Menampilkan profil sendiri
      * 
      * @return \Illuminate\Http\Response

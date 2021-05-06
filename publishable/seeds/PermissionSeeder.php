@@ -46,6 +46,7 @@ class PermissionSeeder extends Seeder
             ['key' => 'UserController::detail', 'name' => 'Menampilkan Detail User'],
             ['key' => 'UserController::edit', 'name' => 'Mengupdate User'],
             ['key' => 'UserController::delete', 'name' => 'Menghapus User'],
+            ['key' => 'UserController::refer', 'name' => 'Menampilkan Data Refer User'],
             ['key' => 'UserController::profile', 'name' => 'Menampilkan Profil User'],
             ['key' => 'UserController::editProfile', 'name' => 'Mengupdate Profil User'],
             ['key' => 'UserController::export', 'name' => 'Mengekspor Data User'],

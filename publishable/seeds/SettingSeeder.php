@@ -30,8 +30,10 @@ class SettingSeeder extends Seeder
             ['key' => 'site.google_analytics', 'name' => 'Kode Google Analytics', 'category' => kategori_setting('general'), 'rules' => ''],
 
             // Color
-            ['key' => 'site.color.primary', 'name' => 'Warna Primer', 'category' => kategori_setting('color'), 'rules' => 'required'],
-            ['key' => 'site.color.secondary', 'name' => 'Warna Sekunder', 'category' => kategori_setting('color'), 'rules' => 'required'],
+            ['key' => 'site.color.primary_dark', 'name' => 'Warna Primer (Dark)', 'category' => kategori_setting('color'), 'rules' => 'required'],
+            ['key' => 'site.color.primary_light', 'name' => 'Warna Primer (Light)', 'category' => kategori_setting('color'), 'rules' => 'required'],
+            ['key' => 'site.color.secondary_dark', 'name' => 'Warna Sekunder (Dark)', 'category' => kategori_setting('color'), 'rules' => 'required'],
+            ['key' => 'site.color.secondary_light', 'name' => 'Warna Sekunder (Light)', 'category' => kategori_setting('color'), 'rules' => 'required'],
 
             // Price
             ['key' => 'site.komisi_student', 'name' => 'Komisi (Student)', 'category' => kategori_setting('price'), 'rules' => 'required'],
@@ -71,6 +73,14 @@ class SettingSeeder extends Seeder
 
         foreach($array as $key=>$data){
             Setting::updateOrCreate(['setting_key' => $data['key']], ['setting_name' => $data['name'], 'setting_category' => $data['category'], 'setting_rules' => $data['rules'], 'setting_order' => ($key+1)]);
+        }
+
+        // Unused
+        $unused = ['site.color.primary', 'site.color.secondary'];
+
+        foreach($unused as $data){
+            $setting = Setting::where('setting_key','=',$data)->first();
+            if($setting) $setting->delete();
         }
     }
 }

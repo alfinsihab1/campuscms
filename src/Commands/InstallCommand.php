@@ -69,6 +69,9 @@ class InstallCommand extends Command
         $composer = new Composer($filesystem);
         $this->info($composer->dumpAutoloads());
 
+        // Migrate
+        $this->call('migrate');
+
         // Seed
         $this->call('db:seed');
 

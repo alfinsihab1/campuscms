@@ -17,8 +17,11 @@ class FaturCMSServiceProvider extends ServiceProvider
 	 */
 	public function boot(Router $router)
 	{
-		// Add package's view.
+		// Add package's view
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'faturcms');
+
+        // Add package's migration
+        $this->loadMigrationsFrom(__DIR__.'/../migrations');
 
         // Add middlewares
         $router->aliasMiddleware('faturcms.admin', AdminMiddleware::class);
@@ -31,22 +34,22 @@ class FaturCMSServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // Load helpers.
+        // Load helpers
         $this->loadHelpers();
         
-        // Load commands.
+        // Load commands
         $this->commands(Commands\MainCommand::class);
         $this->commands(Commands\InstallCommand::class);
         $this->commands(Commands\UpdateCommand::class);
 
         if($this->app->runningInConsole()){
-            // Register publishable resources.
+            // Register publishable resources
             $this->registerPublishableResources();
 
-            // Register view resources.
+            // Register view resources
             $this->registerViewResources();
 
-            // Register console commands.
+            // Register console commands
             $this->registerConsoleCommands();
         }
     }

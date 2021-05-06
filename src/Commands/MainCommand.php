@@ -109,6 +109,14 @@ class MainCommand extends Command
             true
         );
 
+        // Get migration files
+        $migration_files = generate_file(database_path('migrations'));
+        if(count($migration_files)>0){
+            foreach($migration_files as $file){
+                File::delete(database_path('migrations/'.$file));
+            }
+        }
+
         // Create folder storage/fonts
         if(!File::exists(storage_path('fonts'))) File::makeDirectory(storage_path('fonts'));
     }

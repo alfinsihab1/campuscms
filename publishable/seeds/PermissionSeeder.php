@@ -29,7 +29,9 @@ class PermissionSeeder extends Seeder
 
             // Package
             ['key' => 'PackageController::index', 'name' => 'Menampilkan Data Package'],
+            ['key' => 'PackageController::detail', 'name' => 'Menampilkan Detail Package'],
             ['key' => 'PackageController::me', 'name' => 'Menampilkan My Package'],
+            ['key' => 'PackageController::updateMe', 'name' => 'Mengupdate My Package'],
 
             // Artisan
             ['key' => 'ArtisanController::index', 'name' => 'Menampilkan Data Command Artisan'],

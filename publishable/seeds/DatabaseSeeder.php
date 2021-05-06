@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PlatformSeeder::class);
         $this->call(KategoriArtikelSeeder::class);
         $this->call(KategoriPelatihanSeeder::class);
+        $this->call(UserSeeder::class);
     }
 }

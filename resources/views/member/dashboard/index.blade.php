@@ -50,8 +50,8 @@
                 <div class="card-header bg-transparent d-flex align-items-center">
                     <img width="40" class="mr-4" src="https://image.flaticon.com/icons/svg/4525/4525691.svg">
                     <div>
-                        <h5 class="m-0">Referal</h5>
-                        <p class="m-0">Link Referal</p>
+                        <h5 class="m-0">Referral</h5>
+                        <p class="m-0">Link Referral</p>
                     </div>
                 </div>
                 <div class="card-body">

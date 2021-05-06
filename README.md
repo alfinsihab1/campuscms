@@ -11,6 +11,7 @@ FaturCMS adalah **Content Management System (CMS)** yang menyediakan fitur refer
 
 ## Persyaratan
 - PHP >= 7.2
+- DBMS MySQL
 - Laravel >= 7.0
 
 ## Instalasi
@@ -41,9 +42,19 @@ Route::get('/', function(){
 })->name('site.home');
 ```
 
-Pada potongan source code di atas, saya menambahkan __->name('site.home')__ di akhir inisiasi kelas __Route__.
+### File .env:
 
-### Update Konfigurasi:
+Ganti konfigurasi *database* pada file __.env___ Anda:
+
+```sh
+DB_HOST="your_database_host"
+DB_PORT="your_database_port"
+DB_DATABASE="your_database_name"
+DB_USERNAME="your_database_username"
+DB_PASSWORD="your_database_password"
+```
+
+## Update
 
 Untuk mengupdate konfigurasi FaturCMS, jalankan perintah composer di bawah ini:
 

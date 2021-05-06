@@ -27,7 +27,7 @@ if(!function_exists('generate_date')){
     function generate_date($date){
         $explode = explode(" ", $date);
         $explode = explode("-", $explode[0]);
-        return count($explode) == 3 ? $explode[2]." ".array_indo_month()[$explode[1]-1]." ".$explode[0] : '';
+        return count($explode) == 3 ? ($explode[1]-1) >= 0 ? $explode[2]." ".array_indo_month()[$explode[1]-1]." ".$explode[0] : '' : '';
     }
 }
 
@@ -37,7 +37,7 @@ if(!function_exists('generate_date_time')){
         $explode = explode(" ", $datetime);
         if(count($explode) == 2){
             $date = explode("-", $explode[0]);
-            return count($date) == 3 ? $date[2]." ".array_indo_month()[$date[1]-1]." ".$date[0].", ".substr($explode[1],0,5) : '';
+            return count($date) == 3 ? ($date[1]-1) >= 0 ? $date[2]." ".array_indo_month()[$date[1]-1]." ".$date[0].", ".substr($explode[1],0,5) : '' : '';
         }
         else{
             return '';

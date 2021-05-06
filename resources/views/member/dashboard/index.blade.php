@@ -16,11 +16,58 @@
     ]])
     <!-- /Breadcrumb -->
 
-    <!-- Welcome Text -->
-    <div class="alert alert-success text-center shadow">
-        🔔 Selamat datang <span class="font-weight-bold">{{ Auth::user()->nama_user }}</span> di {{ setting('site.name') }}.
+    <div class="row">
+        <div class="col-12 col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <img width="90" class="mb-3" src="https://image.flaticon.com/icons/svg/3530/3530292.svg">
+                    <h5 class="m-0 font-weight-normal">Selamat datang <span class="font-weight-bold text-capitalize">{{ Auth::user()->nama_user }}</span> di {{ setting('site.name') }}.</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-8 mb-4">
+            <div class="card">
+                <div class="card-header bg-transparent d-flex align-items-center">
+                    <img width="40" class="mr-4" src="https://image.flaticon.com/icons/svg/4525/4525701.svg">
+                    <div>
+                        <h5 class="m-0">Komisi</h5>
+                        <p class="m-0">Pendapatan anda</p>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="media align-items-center">
+                        
+                        <div class="media-body">
+                            <h5>Saldo</h5>
+                            <h1 style="color: var(--green)">Rp {{ number_format(Auth::user()->saldo,0,'.','.') }}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 mb-4">
+            <div class="card">
+                <div class="card-header bg-transparent d-flex align-items-center">
+                    <img width="40" class="mr-4" src="https://image.flaticon.com/icons/svg/4525/4525691.svg">
+                    <div>
+                        <h5 class="m-0">Referal</h5>
+                        <p class="m-0">Link Referal</p>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="media align-items-center">
+                        
+                        <div class="media-body">
+                            <div class="menu-bg-red rounded-1 text-center py-2 mb-2" data-toggle="tooltip" data-placement="top" title="Klik Untuk Menyalin">
+                                <h3 class="m-0" id="clicktocopy">{{ URL::to('/') }}?ref={{ Auth::user()->username }}</h3>
+                            </div>
+                            <p>Promosikan URL Referral Anda dan dapatkan Komisi Sponsor sebesar Rp. 30.000 setiap ada member baru yang bergabung melalui URL Anda. Tidak ada batasan jumlah member yang Anda sponsori, Anda bisa mensponsori puluhan, bahkan ratusan member.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- /Welcome Text -->
 
     @if(Auth::user()->status == 1)
     <!-- User Aktif -->
@@ -38,48 +85,27 @@
         <!-- /Signature -->
         @endif
         <!-- Column -->
-        <div class="col-md-12 mb-2">
-            <!-- Tile -->
-            <div class="tile">
-                <!-- Tile Body -->
-                <div class="tile-body text-center">
-                    <p class="h5 mb-4">{{ $deskripsi->judul_deskripsi }}</p>
-                    <p>{{ $deskripsi->deskripsi }}</p>
-                </div>
-                <!-- /Tile Body -->
-            </div>
-            <!-- /Tile -->
-        </div>
+
         <!-- /Column -->
         <!-- Column -->
         <div class="col-md-12">
-            <!-- Tile -->
-            <div class="tile">
-                <!-- Tile Body -->
-                <div class="tile-body">
-                    <!-- Fitur -->
-                    <div class="row">
-                        @if(count($fitur)>0)
-                            @foreach($fitur as $data)
-                                <div class="col-md-3 col-sm-6 mb-3">
-                                    <div class="card">
-                                        <div class="card-body text-center">
-                                            <a href="{{ URL::to('member/'.$data->url_fitur) }}">
-                                                <img src="{{ image('assets/images/fitur/'.$data->gambar_fitur, 'fitur') }}" height="100" style="max-width: 100%;">
-                                            </a>
-                                            <p class="h6 mt-3 mb-0"><a href="{{ URL::to('member/'.$data->url_fitur) }}">{{ $data->nama_fitur }}</a></p>
-                                            <p class="mt-2 mb-0">{{ $data->deskripsi_fitur }}</p>
-                                        </div>
-                                    </div>
+            <div class="row">
+                @if(count($fitur)>0)
+                    @foreach($fitur as $data)
+                        <div class="col-md-3 col-sm-6 mb-3">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <a href="{{ URL::to('member/'.$data->url_fitur) }}">
+                                        <img src="{{ image('assets/images/fitur/'.$data->gambar_fitur, 'fitur') }}" height="100" style="max-width: 100%;">
+                                    </a>
+                                    <p class="h6 mt-3 mb-0"><a href="{{ URL::to('member/'.$data->url_fitur) }}">{{ $data->nama_fitur }}</a></p>
+                                    <p class="mt-2 mb-0">{{ $data->deskripsi_fitur }}</p>
                                 </div>
-                            @endforeach
-                        @endif
-                    </div>
-                    <!-- /Fitur -->
-                </div>
-                <!-- /Tile Body -->
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
             </div>
-            <!-- /Tile -->
         </div>
         <!-- /Column -->
     </div>
@@ -200,7 +226,27 @@
 </div>
 <!-- /Modal Konfirmasi -->
 @endif
-
+<div class="modal fade" id="modal-intro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header align-items-center">
+                <img width="30" class="mr-3" src="{{asset('assets/images/icon/'.setting('site.icon'))}}">
+                <h5 class="modal-title" id="exampleModalLabel">Selamat datang di {{ $deskripsi->judul_deskripsi }}</h5>
+                <button type="button" class="close menu-btn-green" data-dismiss="modal" aria-label="Close" style="padding: .5em .7em; border-radius: .5em; margin-right: 0">
+                    <span aria-hidden="true"><i class="fa fa-times"></i></span>
+                </button>
+            </div>
+            <form id="form-confirm" method="post" action="{{ route('member.komisi.confirm') }}" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <p>{{ $deskripsi->deskripsi }}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn menu-btn-red" data-dismiss="modal">Tutup</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('js-extra')
@@ -217,5 +263,26 @@
         change_file(this, "image", 2);
     });
 </script>
+<script type="text/javascript">
+    $(window).on('load', function() {
+        $('#modal-intro').modal('show');
+    });
+</script>
+<script type="text/javascript">
+const span = document.getElementById('clicktocopy');
 
+span.onclick = function() {
+  document.execCommand("copy");
+}
+
+span.addEventListener("copy", function(event) {
+  event.preventDefault();
+  if (event.clipboardData) {
+    event.clipboardData.setData("text/plain", span.textContent);
+    alert("Berhasil menyalin " + event.clipboardData.getData("text"))
+    // console.log(event.clipboardData.getData("text"))
+  }
+});
+
+</script>
 @endsection

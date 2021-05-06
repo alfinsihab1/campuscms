@@ -6,7 +6,7 @@
           <a class="app-nav__item menu-btn-green d-block d-lg-none" href="#" data-toggle="sidebar" style=><i class="fa fa-times" style="font-size: 1.5em"></i></a>
           <a class="h4 text-uppercase" href="{{ route('site.home') }}" target="_blank">
             <img class="a-app_logo" src="{{asset('assets/images/logo/'.setting('site.logo'))}}">
-            <div class="wrap-b-app_logo menu-bg-primary rounded-1 p-2"><img class="b-app_logo" src="{{asset('assets/images/icon/'.setting('site.icon'))}}"></div>
+            <div class="wrap-b-app_logo"><img class="b-app_logo" src="{{asset('assets/images/icon/'.setting('site.icon'))}}"></div>
           </a>
           <a class="d-block d-lg-none" href="#"></a>
         </li>

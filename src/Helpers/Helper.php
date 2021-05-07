@@ -17,6 +17,9 @@
  * @method message(string $key)
  * @method setting_rules(string $key)
  * @method package(string $package)
+ * @method browser_info()
+ * @method platform_info()
+ * @method device_info()
  * @method log_activity()
  * @method log_login(object $request)
  *
@@ -41,6 +44,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use hisorange\BrowserDetect\Parser as Browser;
 use App\User;
 use Ajifatur\FaturCMS\Models\KategoriArtikel;
 use Ajifatur\FaturCMS\Models\KategoriMateri;
@@ -239,6 +243,54 @@ if(!function_exists('package')){
             }
         }
         return array_key_exists($index, $array) ? $array[$index] : null;
+    }
+}
+
+// Browser Info
+if(!function_exists('browser_info')){
+    function browser_info(){
+        $browser = [
+            'name' => Browser::browserName(),
+            'family' => Browser::browserFamily(),
+            'version' => Browser::browserVersion(),
+            'engine' => Browser::browserEngine(),
+        ];
+
+        return json_encode($browser);
+    }
+}
+
+// Platform Info
+if(!function_exists('platform_info')){
+    function platform_info(){
+        $platform = [
+            'name' => Browser::platformName(),
+            'family' => Browser::platformFamily(),
+            'version' => Browser::platformVersion(),
+        ];
+
+        return json_encode($platform);
+    }
+}
+
+// Device Info
+if(!function_exists('device_info')){
+    function device_info(){
+        // Device type
+        $device_type = '';
+        if(Browser::isMobile()) $device_type = 'Mobile';
+        if(Browser::isTablet()) $device_type = 'Tablet';
+        if(Browser::isDesktop()) $device_type = 'Desktop';
+        if(Browser::isBot()) $device_type = 'Bot';
+
+        $device = [
+            'type' => $device_type,
+            'family' => Browser::deviceFamily(),
+            'model' => Browser::deviceModel(),
+            'grade' => Browser::mobileGrade(),
+        ];
+
+        return json_encode($device);
     }
 }
 

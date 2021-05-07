@@ -134,6 +134,9 @@ class LoginController extends Controller
         $visitor->id_user = $user->id_user;
         $visitor->ip_address = $request->ip();
         $visitor->visit_at = $account->last_visit;
+        $visitor->device = device_info();
+        $visitor->browser = browser_info();
+        $visitor->platform = platform_info();
         $visitor->save();
 
         // Redirect to URL intended

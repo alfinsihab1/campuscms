@@ -53,4 +53,28 @@ class VisitorController extends Controller
             'user' => $user,
         ]);
     }
+
+    /**
+     * Menampilkan info visitor
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function info(Request $request)
+    {
+        // Get data visitor
+        $visitor = Visitor::join('users','visitor.id_user','=','users.id_user')->where('visitor.id_user','=',$request->user)->whereDate('visit_at','=',generate_date_format($request->date,'y-m-d'))->get();
+
+        $array = [];
+        if(count($visitor)>0){
+            foreach($visitor as $data){
+                array_push($array, [
+                    'time' => generate_date_time($data->visit_at),
+                    'device' => json_decode($data->device, true),
+                    'browser' => json_decode($data->browser, true),
+                    'platform' => json_decode($data->platform, true),
+                ]);
+            }
+        }
+        echo json_encode($array);
+    }
 }

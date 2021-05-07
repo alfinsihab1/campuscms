@@ -30,7 +30,7 @@
                         <form method="get" action="{{ route('admin.visitor.index') }}">
                             <div class="input-group">
                               <div class="input-group-prepend">
-                                  <a href="#" class="btn btn-sm btn-secondary btn-date" data-toggle="tooltip" title="Pilih Tanggal"><i class="fa fa-calendar"></i></a>
+                                  <a href="#" class="btn btn-sm btn-dark btn-date" data-toggle="tooltip" title="Pilih Tanggal"><i class="fa fa-calendar"></i></a>
                               </div>
                               <input type="text" name="tanggal" class="form-control form-control-sm" value="{{ $tanggal }}" readonly>
                               <div class="input-group-append">
@@ -56,8 +56,9 @@
                                     <th>Identitas User</th>
                                     <th width="80">Role</th>
                                     <th width="100">IP Address</th>
+                                    <th width="50">Total</th>
                                     <th width="90">Kunjungan Terakhir</th>
-                                    <th width="40">Opsi</th>
+                                    <th width="60">Opsi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -73,15 +74,17 @@
                                     </td>
                                     <td>{{ role($data->role) }}</td>
                                     <td>{{ $data->ip_address }}</td>
+                                    <td>{{ number_format(count_kunjungan($data->id_user, 'today'),0,',',',') }}</td>
                                     <td>
-                                        <span class="d-none">{{ $data->visit_at }}</span>
-                                        {{ date('d/m/Y', strtotime($data->visit_at)) }}
+                                        <span class="d-none">{{ $data->last_visit }}</span>
+                                        {{ date('d/m/Y', strtotime($data->last_visit)) }}
                                         <br>
-                                        <small><i class="fa fa-clock-o mr-1"></i>{{ date('H:i', strtotime($data->visit_at)) }} WIB</small>
+                                        <small><i class="fa fa-clock-o mr-1"></i>{{ date('H:i', strtotime($data->last_visit)) }} WIB</small>
                                     </td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="{{ route('admin.log.activity', ['id' => $data->id_user]) }}" class="btn btn-sm btn-info" data-id="{{ $data->id_visitor }}" data-toggle="tooltip" title="Lihat Aktivitas"><i class="fa fa-eye"></i></a>
+                                            <a href="#" class="btn btn-sm btn-info btn-visitor" data-id="{{ $data->id_user }}" data-toggle="tooltip" title="Lihat Informasi"><i class="fa fa-desktop"></i></a>
+                                            <a href="{{ route('admin.log.activity', ['id' => $data->id_user]) }}" class="btn btn-sm btn-warning" data-id="{{ $data->id_visitor }}" data-toggle="tooltip" title="Lihat Aktivitas"><i class="fa fa-eye"></i></a>
                                         </div>
                                     </td>
                                 </tr>
@@ -99,6 +102,23 @@
     <!-- /Row -->
 </main>
 <!-- /Main -->
+
+<!-- Modal Visitor -->
+<div class="modal fade" id="modal-visitor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Info Visitor Hari Ini</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Modal Visitor -->
 
 @endsection
 
@@ -124,6 +144,39 @@
     $(document).on("click", ".btn-date", function(e){
         e.preventDefault();
         $("input[name=tanggal]").focus();
+    });
+
+    // Button Visitor
+    $(document).on("click", ".btn-visitor", function(e){
+        e.preventDefault();
+        var user = $(this).data("id");
+        $.ajax({
+            type: "post",
+            url: "{{ route('admin.visitor.info') }}",
+            data: {_token: "{{ csrf_token() }}", user: user, date: "{{ $tanggal }}"},
+            success: function(response){
+                var result = JSON.parse(response);
+                var html = '';
+                if(result.length > 0){
+                    $(result).each(function(key,data){
+                        html += '<div class="mb-3">';
+                        html += '<p class="h6 mb-2"><i class="fa fa-clock-o mr-1"></i>' + data.time + '</p>';
+                        html += data.device != null ? '<p class="mb-2"><strong>Device:</strong><br>' + data.device.type + ' ' + data.device.family + ' ' + data.device.model + ' ' + data.device.grade + '</p>' : '<p class="mb-2"><strong>Device:</strong><br>NULL</p>';
+                        html += data.browser != null ? '<p class="mb-2"><strong>Browser:</strong><br>' + data.browser.name + ' ' + ' (' + data.browser.family + '); ' + data.browser.engine + ' Engine</p>' : '<p class="mb-2"><strong>Browser:</strong><br>NULL</p>';
+                        html += data.platform != null ? '<p class="mb-2"><strong>Platform:</strong><br>' + data.platform.name + ' ' + ' (' + data.platform.family + ')</p>' : '<p class="mb-2"><strong>Platform:</strong><br>NULL</p>';
+                        html += '</div>';
+                        html += '<hr>';
+                    });
+                }
+                $("#modal-visitor .modal-body").html(html);
+                $("#modal-visitor").modal("show");
+            }
+        });
+    });
+    
+    // Hide Modal Visitor
+    $('#modal-visitor').on('hidden.bs.modal', function(){
+        $("#modal-visitor .modal-body").html("");
     });
 </script>
 

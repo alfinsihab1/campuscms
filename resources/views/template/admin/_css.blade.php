@@ -132,8 +132,8 @@
     #modal-croppie .modal-dialog {max-width: 100%; margin-left: 1rem; margin-right: 1rem;}
     #modal-croppie .modal-body .table-responsive {max-height: calc(100vh - 250px); overflow-y: auto;}
 
-    /* Modal Terminal, Modal Update Me */
-    #modal-terminal .modal-body, #modal-update-me .modal-body {max-height: 80vh; overflow-y: auto;}
+    /* Modal Terminal, Modal Update Me, Modal Visitor */
+    #modal-terminal .modal-body, #modal-update-me .modal-body, #modal-visitor .modal-body {max-height: 80vh; overflow-y: auto;}
 
     /* Quill Editor */
     #editor {height: 300px;}

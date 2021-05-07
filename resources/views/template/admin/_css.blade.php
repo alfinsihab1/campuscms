@@ -3,9 +3,9 @@
     :root{ 
         --primary-dark: {{ setting('site.color.primary_dark') }};
         --primary-light: {{ setting('site.color.primary_light') }};
-        --secondary: {{ setting('site.color.secondary') }};
+        --secondary-dark: {{ setting('site.color.secondary_dark') }};
+        --secondary-light: {{ setting('site.color.secondary_light') }};
         --primary: {{ setting('site.color.primary_dark') }}ff;
-        --secondary-hover: {{ setting('site.color.secondary') }}ff;
         --border-light: rgba(2555,255,255,.5); 
         --shadow: 0 .125rem .25rem rgba(0,0,0,.075);
         --transition: .25s ease;
@@ -66,10 +66,10 @@
     .app-title {padding: 20px;}
 
     /* Button */
-    .btn-primary, .btn-theme-1 {background-color: var(--primary-light)!important; border-color: var(--primary-light)!important; color: var(--primary-dark);}
-    .btn-primary:hover, .btn-theme-1:hover {background-color: var(--primary-dark)!important; border-color: var(--primary-dark)!important; color: var(--white);}
-    .btn-secondary {background-color: var(--secondary)!important; border-color: var(--secondary)!important;}
-    .btn-secondary:hover {background-color: var(--secondary-hover)!important; border-color: var(--secondary-hover)!important;}
+    .btn-primary, .btn-theme-1 {background-color: var(--primary-light)!important; border-color: var(--primary-light)!important; color: var(--primary-dark)!important;}
+    .btn-primary:hover, .btn-theme-1:hover {background-color: var(--primary-dark)!important; border-color: var(--primary-dark)!important; color: var(--primary-light)!important;}
+    .btn-secondary {background-color: var(--secondary-light)!important; border-color: var(--secondary-light)!important; color: var(--secondary-dark)!important;}
+    .btn-secondary:hover {background-color: var(--secondary-dark)!important; border-color: var(--secondary-dark)!important; color: var(--secondary-light)!important;}
     .btn-outline-primary {color: var(--primary-dark); background-color: transparent; background-image: none; border-color: var(--primary-dark);}
     .btn-outline-primary:hover {color: #FFF; background-color: var(--primary-dark); border-color: var(--primary-dark);}
     .btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled).active, .show > .btn-outline-primary.dropdown-toggle {color: #FFF; background-color: var(--primary-dark); border-color: var(--primary-dark);}

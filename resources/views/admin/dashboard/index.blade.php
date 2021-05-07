@@ -17,11 +17,6 @@
     ]])
     <!-- /Breadcrumb -->
 
-    <!-- Welcome Text -->
-<!--     <div class="alert alert-success text-center shadow">
-        🔔 Selamat datang <span class="font-weight-bold">{{ Auth::user()->nama_user }}</span> di {{ setting('site.name') }}.
-    </div> -->
-    <!-- /Welcome Text -->
     <div class="menu-grid">
     	<div class="row">
     		@php $colors = ["red", "green", "primary", "blue"]; @endphp
@@ -45,36 +40,44 @@
     		@endif
     	</div>
     </div>
-    <!-- Row -->
     <div class="row">
-        <!-- Column -->
-        <div class="col-lg-6">
-            <!-- Tile -->
+    	<div class="col-lg-8">
+		    <div class="experience mb-3">
+		    	<div class="card">
+		    		<div class="card-body">
+		    			<div class="media align-items-center">
+			    			<img class="mr-3" width="100" src="https://image.flaticon.com/icons/svg/3731/3731790.svg">
+			    			<div class="media-body">
+			    				<div class="d-flex align-items-center mb-1">
+					    			<span class="badge menu-bg-red mr-2" data-toggle="tooltip" data-placement="top" title="Percobaan untuk tema dark mode">BETA</span>
+					    			<h5 class="m-0">Experience with dark mode</h5>
+					    		</div>
+					    		<p class="m-0">Aktifkan dark mode untuk merasakan pengalaman baru</p>
+					    		<div class="d-flex align-items-center">
+									<dark-mode-toggle appearance="toggle"></dark-mode-toggle>
+									<span class="badge menu-bg-blue" data-toggle="tooltip" data-placement="top" title="Klik untuk mengaktifkan dark mode"><i class="fa fa-chevron-left mr-1"></i> Klik Untuk Mengaktifkan</span>
+								</div>
+				    		</div>
+			    		</div>
+		    		</div>
+		    	</div>
+		    </div>
+		    <div class="pengunjung">
+	            <div class="tile">
+	                <div class="tile-title">
+	                	<h5>Pengunjung 7 Hari Terakhir</h5>
+	                </div>
+	                <div class="tile-body">
+						<canvas id="myChart" width="400" height="270"></canvas>
+	                </div>
+	            </div>
+	        </div>
+    	</div>
+        <div class="col-lg-4">
             <div class="tile">
-                <!-- Tile Title -->
-                <div class="tile-title">
-                	<h5>Pengunjung 7 Hari Terakhir</h5>
-                </div>
-                <!-- /Tile Title -->
-                <!-- Tile Body -->
-                <div class="tile-body">
-					<canvas id="myChart" width="400" height="270"></canvas>
-                </div>
-                <!-- /Tile Body -->
-            </div>
-            <!-- /Tile -->
-        </div>
-        <!-- /Column -->
-        <!-- Column -->
-        <div class="col-lg-6">
-            <!-- Tile -->
-            <div class="tile">
-                <!-- Tile Title -->
                 <div class="tile-title">
                 	<h5>Statistik</h5>
                 </div>
-                <!-- /Tile Title -->
-                <!-- Tile Body -->
                 <div class="tile-body">
 					<div class="list-group mt-3">
 						@foreach($array as $key=>$data)
@@ -85,15 +88,10 @@
 						@endforeach
 					</div>
                 </div>
-                <!-- /Tile Body -->
             </div>
-            <!-- /Tile -->
         </div>
-        <!-- /Column -->
     </div>
-    <!-- /Row -->
 </main>
-<!-- /Main -->
 
 @endsection
 

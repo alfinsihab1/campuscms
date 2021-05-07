@@ -4,18 +4,23 @@
         --primary-dark: {{ setting('site.color.primary_dark') }};
         --primary-light: {{ setting('site.color.primary_light') }};
         --secondary: {{ setting('site.color.secondary') }};
-        --primary: {{ setting('site.color.primary_dark') }}ff;
-        --secondary-hover: {{ setting('site.color.secondary') }}ff;
+        --primary: {{ setting('site.color.primary_dark') }};
+        --secondary-hover: {{ setting('site.color.secondary') }};
         --border-light: rgba(2555,255,255,.5); 
         --shadow: 0 .125rem .25rem rgba(0,0,0,.075);
         --transition: .25s ease;
-        --font-family-sans-serif: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"!important;
+        --transition-1: .15s ease;
         --red: #DC3545;
         --red-s: #FAE3E5;
         --green: #28A745;
         --green-s: #CBF2D4;
         --blue: #17A2B8;
         --blue-s: #D9F6FA;
+        --dark-1: #414950;
+        --dark-2: #4E575F;
+        --dark-3: #5B656F;
+        --dark-4: #67737E;
+        --dark-5: #74818D;
     }
 
     /* Selection */
@@ -161,6 +166,7 @@
     .progress-bar {background-color: var(--primary-dark)!important;}
 
     /* Others */
+    .tile{transition: unset;}
     .tile, .widget-small, .dropdown-menu, .tile-topik, .card, .app-title {box-shadow: var(--shadow)!important;}
     .material-half-bg .cover {background-color: var(--primary-dark)!important;}
     .widget-small.primary.coloured-icon .icon {background-color: var(--primary-dark)!important;}
@@ -172,8 +178,6 @@
     .separator {width: 100%; margin: 1rem; border-top: 1px solid #ddd;}
     .cr-boundary {border: 3px dashed #bebebe;}
 
-
-    body{color: var(--dark)!important; background-color: var(--light)}
     .rounded-1{border-radius: .5em!important}
     .rounded-2{border-radius: 1em!important}
     .rounded-3{border-radius: 1.5em!important}
@@ -187,8 +191,8 @@
     .card, .tile-topik{border: unset!important}
 
 
-    .app-header{padding: 30px 30px 0px 30px; position: static; background-color: transparent!important; box-shadow: none;}
-    .app-header.nav-sticky{padding: 10px 30px 10px 30px; position: sticky; top: 0; transition: var(--transition); background-color: var(--white)!important; box-shadow: var(--shadow); animation: topBottom var(--transition)}
+    .app-header{padding: 30px 30px 0px 30px; position: static; background-color: transparent; box-shadow: none;}
+    .app-header.nav-sticky{padding: 10px 30px 10px 30px; position: sticky; top: 0; transition: var(--transition); background-color: var(--white); box-shadow: var(--shadow); animation: topBottom var(--transition)}
     .app-header.nav-sticky .dropdown{transform: translate();}
     .app-sidebar{padding-top: 0px; box-shadow: var(--shadow)!important}
     .app-content{min-height: unset; margin-top: unset; padding: 30px; background-color: unset; -webkit-transition: unset; -o-transition: unset; transition: }
@@ -292,8 +296,9 @@
     .menu-grid .card:hover .media-body{border-left: 1px solid rgba(255,255,255,.7)!important;}
     .modal-dialog-full{max-width: 100%!important; height: 100%; padding: 0; margin: 0;}
     .modal-content-full {height: 100%; min-height: 100%; height: auto; border-radius: 0;}
-    .modal-body a{color: var(--gray);}
-    .modal-body a:hover{color: var(--primary-dark); text-decoration: none;}
+    .experience .custom-switch{margin-left: 12.5px}
+    .list-group-item, .list-group-item:hover, .list-group-item:focus{background-color: unset;}
+    .list-group-item-action:hover{color: var(--primary-dark)}
     @media (max-width: 480px) {
         .app-content {padding: 15px;}
     }
@@ -322,3 +327,5 @@
         .a-app-content { margin: 0; padding: 0; background-color: #fff;}
     }
 </style>
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/dark.css') }}" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/light.css') }}" media="(prefers-color-scheme: light)">

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Ajifatur\FaturCMS\Models\Files;
+use Ajifatur\FaturCMS\Models\FileDetail;
 use Ajifatur\FaturCMS\Models\Folder;
 use Ajifatur\FaturCMS\Models\FolderKategori;
 
@@ -70,7 +71,7 @@ class FolderController extends Controller
         // Jika tidak ada error
         else{
         	// Nama folder
-        	$nama_folder = generate_file_name($request->nama_folder, 'folder', 'folder_nama', 'folder_parent', $request->folder_parent, 'id_folder', null);
+        	$nama_folder = generate_file_name($request->nama_folder, 'folder', 'folder_nama', 'folder_kategori', $request->folder_kategori, 'folder_parent', $request->folder_parent, 'id_folder', null);
 
 			// Generate dir folder
 			if($request->folder_parent == 1){
@@ -166,7 +167,7 @@ class FolderController extends Controller
         // Jika tidak ada error
         else{
         	// Nama folder
-        	$nama_folder = generate_file_name($request->nama_folder, 'folder', 'folder_nama', 'folder_parent', $request->folder_parent, 'id_folder', $request->id);
+        	$nama_folder = generate_file_name($request->nama_folder, 'folder', 'folder_nama', 'folder_kategori', $request->folder_kategori, 'folder_parent', $request->folder_parent, 'id_folder', $request->id);
 
 			// Generate dir folder
 			if($request->folder_parent == 1){
@@ -235,10 +236,10 @@ class FolderController extends Controller
                 $data->delete();
 
                 // Menghapus file
-		        $files = Files::where('id_folder','=',$child->id_folder)->get();
+		        $files = Files::join('folder_kategori','file.file_kategori','=','folder_kategori.id_fk')->where('id_folder','=',$child->id_folder)->get();
                 if(count($files)>0){
                     foreach($files as $file){
-                        if($file->file_kategori > 3){
+                        if($file->tipe_kategori == 'ebook'){
                             $file_detail = FileDetail::where('id_file','=',$file->file_konten)->get();
                             if(count($file_detail) > 0){
                                 foreach($file_detail as $data){
@@ -252,7 +253,7 @@ class FolderController extends Controller
                             }
                         }
                         // Menghapus file tools
-                        elseif($file->file_kategori == 3){
+                        elseif($file->tipe_kategori == 'tools'){
                             File::delete('assets/tools/'.$file->file_konten);
                         }
                         $file->delete();

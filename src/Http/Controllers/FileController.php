@@ -150,7 +150,7 @@ class FileController extends Controller
             $file = new Files;
             $file->id_folder = $request->id_folder;
             $file->id_user = Auth::user()->id_user;
-            $file->file_nama = generate_file_name($request->nama_file, 'file', 'file_nama', 'id_folder', $request->id_folder, 'id_file', null);
+            $file->file_nama = generate_file_name($request->nama_file, 'file', 'file_nama', 'file_kategori', $request->file_kategori, 'id_folder', $request->id_folder, 'id_file', null);
             $file->file_kategori = $request->file_kategori;
             $file->file_deskripsi = $request->file_deskripsi != '' ? $request->file_deskripsi : '';
             $file->file_konten = $request->file_konten;
@@ -287,7 +287,7 @@ class FileController extends Controller
             // Mengupdate data
             $file = Files::find($request->id);
             $file->id_folder = $request->id_folder;
-            $file->file_nama = generate_file_name($request->nama_file, 'file', 'file_nama', 'id_folder', $request->id_folder, 'id_file', $request->id);
+            $file->file_nama = generate_file_name($request->nama_file, 'file', 'file_nama', 'file_kategori', $request->file_kategori, 'id_folder', $request->id_folder, 'id_file', $request->id);
             $file->file_deskripsi = $request->file_deskripsi != '' ? $request->file_deskripsi : '';
             $file->file_konten = $request->file_kategori == tipe_file(1) ? $request->file_konten : $file->file_konten;
             $file->file_keterangan = $request->file_kategori == tipe_file(1) ? htmlentities($request->file_keterangan) : '';

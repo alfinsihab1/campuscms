@@ -76,7 +76,7 @@ class SettingSeeder extends Seeder
         }
 
         // Unused
-        $unused = ['site.color.primary', 'site.color.secondary'];
+        $unused = ['site.color.primary', 'site.color.secondary', 'site.color.tertiary'];
 
         foreach($unused as $data){
             $setting = Setting::where('setting_key','=',$data)->first();

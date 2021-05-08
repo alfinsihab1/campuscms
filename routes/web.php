@@ -354,6 +354,7 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	// Visitor
 	Route::get('/admin/visitor', $namespacePrefix.'VisitorController@index')->name('admin.visitor.index');
 	Route::get('/admin/visitor/top', $namespacePrefix.'VisitorController@topVisitor')->name('admin.visitor.top');
+	Route::post('/admin/visitor/info', $namespacePrefix.'VisitorController@info')->name('admin.visitor.info');
 
 	// Media
 	Route::get('/admin/media', $namespacePrefix.'MediaController@index')->name('admin.media.index');

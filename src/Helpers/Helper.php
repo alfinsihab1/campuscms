@@ -17,6 +17,7 @@
  * @method message(string $key)
  * @method setting_rules(string $key)
  * @method package(string $package)
+ * @method package_version()
  * @method browser_info()
  * @method platform_info()
  * @method device_info()
@@ -44,6 +45,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7;
+use GuzzleHttp\Exception\ClientException;
 use hisorange\BrowserDetect\Parser as Browser;
 use App\User;
 use Ajifatur\FaturCMS\Models\KategoriArtikel;
@@ -93,8 +97,13 @@ if(!function_exists('has_access')){
         }
         // Jika tidak ada akses
         else{
-            if($isAbort) abort(403);
-            else return false;
+            // Mengecek akses yang diizinkan untuk pengecualian
+            if(in_array($permission, config('faturcms.allowed_access'))) return true;
+            // Jika tidak ada dalam daftar pengecualian
+            else{
+                if($isAbort) abort(403);
+                else return false;
+            }
         }
     }
 }
@@ -243,6 +252,20 @@ if(!function_exists('package')){
             }
         }
         return array_key_exists($index, $array) ? $array[$index] : null;
+    }
+}
+
+// Package Version
+if(!function_exists('package_version')){
+    function package_version(){
+        try {
+            $client = new Client(['base_uri' => 'http://faturcms.faturmedia.xyz/api/']);
+            $request = $client->request('GET', 'version');
+        } catch (ClientException $e) {
+            return null;
+        }
+        $response = json_decode($request->getBody(), true);
+        return $response['data'];
     }
 }
 

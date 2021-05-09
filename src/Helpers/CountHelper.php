@@ -19,6 +19,7 @@ use App\User;
 use Ajifatur\FaturCMS\Models\Blog;
 use Ajifatur\FaturCMS\Models\Komentar;
 use Ajifatur\FaturCMS\Models\Komisi;
+use Ajifatur\FaturCMS\Models\Package;
 use Ajifatur\FaturCMS\Models\PelatihanMember;
 use Ajifatur\FaturCMS\Models\Visitor;
 use Ajifatur\FaturCMS\Models\Withdrawal;
@@ -35,7 +36,7 @@ if(!function_exists('count_existing_data')){
 // Menghitung semua notifikasi
 if(!function_exists('count_notif_all')){
     function count_notif_all(){
-        $data = count_notif_komisi() + count_notif_withdrawal() + count_notif_pelatihan();
+        $data = count_notif_komisi() + count_notif_withdrawal() + count_notif_pelatihan() + count_notif_package();
         return $data;
     }
 }
@@ -61,6 +62,17 @@ if(!function_exists('count_notif_pelatihan')){
     function count_notif_pelatihan(){
         $data = PelatihanMember::where('fee_status','=',0)->count();
         return $data;
+    }
+}
+
+// Menghitung notifikasi package
+if(!function_exists('count_notif_package')){
+    function count_notif_package(){
+        $package = Package::where('package_name','=',config('faturcms.name'))->first();
+        if($package){
+            return $package->package_version == package_version() ? 0 : 1;
+        }
+        return 1;
     }
 }
 
@@ -115,6 +127,9 @@ if(!function_exists('count_kunjungan')){
             $data = Visitor::join('users','visitor.id_user','=','users.id_user')->where('visitor.id_user','=',$user)->whereDate('visit_at','=',date('Y-m-d'))->count();
             return $data;
         }
-        else return 0;
+        else{
+            $data = Visitor::join('users','visitor.id_user','=','users.id_user')->where('visitor.id_user','=',$user)->whereDate('visit_at','=',generate_date_format($jenis, 'y-m-d'))->count();
+            return $data;
+        }
     }
 }

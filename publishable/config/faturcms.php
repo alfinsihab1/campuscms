@@ -53,6 +53,7 @@ return [
     */
 
     'allowed_access' => [
+        'DashboardController::admin',
         'DashboardController::member',
     ]
 ];

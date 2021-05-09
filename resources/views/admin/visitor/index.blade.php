@@ -74,7 +74,7 @@
                                     </td>
                                     <td>{{ role($data->role) }}</td>
                                     <td>{{ $data->ip_address }}</td>
-                                    <td>{{ number_format(count_kunjungan($data->id_user, 'today'),0,',',',') }}</td>
+                                    <td>{{ number_format(count_kunjungan($data->id_user, $tanggal),0,',',',') }}</td>
                                     <td>
                                         <span class="d-none">{{ $data->last_visit }}</span>
                                         {{ date('d/m/Y', strtotime($data->last_visit)) }}

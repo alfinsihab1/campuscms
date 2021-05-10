@@ -68,7 +68,7 @@
 	                	<h5>Pengunjung 7 Hari Terakhir</h5>
 	                </div>
 	                <div class="tile-body">
-						<canvas id="myChart" width="400" height="270"></canvas>
+						<canvas id="myChart" width="400" height="200"></canvas>
 	                </div>
 	            </div>
 	        </div>

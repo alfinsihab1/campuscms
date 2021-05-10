@@ -16,6 +16,8 @@
         --green-s: #CBF2D4;
         --blue: #17A2B8;
         --blue-s: #D9F6FA;
+        --yellow: #ffc107;
+        --yellow-s: #FFFBED;
         --dark-1: #414950;
         --dark-2: #4E575F;
         --dark-3: #5B656F;
@@ -28,7 +30,7 @@
     ::-moz-selection {background-color: var(--primary-dark)!important;}
 
     /* Header */
-    .app-nav .app-nav__item .badge {position: absolute; right: 0; bottom: 8px; font-size: 75%;}
+    .app-nav .app-nav__item .badge {position: absolute; font-size: 75%;}
     .app-header__logo {color: var(--primary-dark)!important; font-family: 'Lato'; text-transform: uppercase;}
     @media(min-width: 768px){
         .app-header__logo {background-color: var(--white)!important;}
@@ -69,6 +71,7 @@
     /* Breadcrumb */
     .app-title {margin-top: 0em; margin-right: 0em; margin-left: 0em; border-radius: .5em;}
     .app-title {padding: 20px;}
+    .breadcrumb{background-color: unset!important}
 
     /* Button */
     .btn-primary, .btn-theme-1 {background-color: var(--primary-light)!important; border-color: var(--primary-light)!important; color: var(--primary-dark)!important;}
@@ -146,6 +149,8 @@
     .ql-editor {white-space: normal!important;}
 	.ql-editor h1, .ql-editor h2, .ql-editor h3, .ql-editor h4, .ql-editor h5, .ql-editor h6, .ql-editor p {margin-bottom: 1rem!important;}
     .ql-snow .ql-toolbar button, .ql-snow.ql-toolbar button.ql-button-html {width: 30px;}
+    .ql-toolbar.ql-snow{border: 2px solid #ced4da!important; border-radius: 4px}
+    .ql-container.ql-snow{border: 2px solid #ced4da!important; border-radius: 4px}
 
     /* Modal Quill Code */
     #modal-quill-code .modal-dialog {max-width: 100%; margin-left: 1rem; margin-right: 1rem;}
@@ -276,6 +281,14 @@
     .dropdown-menu .card{border: 0; box-shadow: var(--shadow)}
     .dropdown-item{padding: 0; white-space: normal; text-align: center; width: 100%; padding-top: 1em; padding-bottom: 1em}
     .dropdown-item:active, .dropdown-item:focus,  .dropdown-item:hover{color: var(--primary-dark)!important; background-color: transparent!important;}
+    .btn-danger{background-color: var(--red-s)!important; color: var(--red)!important; border-color: var(--red-s)!important;}
+    .btn-danger:hover, .btn-danger:focus{background-color: var(--red)!important; color: var(--white)!important; border-color: var(--red)!important;}
+    .btn-warning{background-color: var(--yellow-s)!important; color: var(--yellow)!important; border-color: var(--yellow-s)!important;}
+    .btn-warning:hover, .btn-warning:focus{background-color: var(--yellow)!important; color: var(--white)!important; border-color: var(--yellow)!important;}
+    .btn-info{background-color: var(--blue-s)!important; color: var(--blue)!important; border-color: var(--blue-s)!important;}
+    .btn-info:hover, .btn-info:focus{background-color: var(--blue)!important; color: var(--white)!important; border-color: var(--blue)!important;}
+    .btn-success{background-color: var(--green-s)!important; color: var(--green)!important; border-color: var(--green-s)!important;}
+    .btn-success:hover, .btn-success:focus{background-color: var(--green)!important; color: var(--white)!important; border-color: var(--green)!important;}
     .menu-btn-red{background-color: var(--red-s)!important; color: var(--red)!important; border-radius: 1em}
     .menu-btn-red:hover, .menu-btn-red:focus{background-color: var(--red)!important; color: var(--white)!important}
     .menu-btn-green{background-color: var(--green-s)!important; color: var(--green)!important; border-radius: 1em}
@@ -293,6 +306,7 @@
     .menu-bg-blue{background-color: var(--blue-s)!important; color: var(--blue)!important; transition: var(--transition)}
     .menu-bg-blue:hover, .menu-bg-blue:focus{background-color: var(--blue)!important; color: var(--white)!important}
     .btn:not([disabled]):not(.disabled):not(.btn-link):hover, .btn:not([disabled]):not(.disabled):not(.btn-link):focus{transform: unset; box-shadow: unset;}
+    .btn-toggle-password{background-color: var(--primary-light); color: var(--primary-dark)}
     .menu-grid .card:hover .media-body{border-left: 1px solid rgba(255,255,255,.7)!important;}
     .modal-dialog-full{max-width: 100%!important; height: 100%; padding: 0; margin: 0;}
     .modal-content-full {height: 100%; min-height: 100%; height: auto; border-radius: 0;}

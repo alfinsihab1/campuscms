@@ -12,8 +12,8 @@
 		<span class="fw-bold">Contact Us</span>
 	</div>
 	<a class="fab" href="https://wa.me/{{setting('site.whatsapp')}}" target="blank">
-	<div class="rounded-circle shadow-sm float-end text-center d-flex align-items-center justify-content-center mr-2 mb-2" style="width: 50px; height: 50px; background-color: var(--green)">
-		<i class="fa fa-whatsapp fa-2x text-white"></i>
+	<div class="rounded-circle shadow-sm float-end text-center d-flex align-items-center justify-content-center mr-2 mb-2 btn-success" style="width: 50px; height: 50px;">
+		<i class="fa fa-whatsapp fa-2x"></i>
 	</div>
 	</a>
 </div>

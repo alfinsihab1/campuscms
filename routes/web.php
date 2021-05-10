@@ -39,18 +39,11 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 
 	// Dashboard
 	Route::get('/admin', $namespacePrefix.'DashboardController@admin')->name('admin.dashboard');
-
-	Route::get('/admin/version', function(){
-		var_dump(package_version());
-	});
 	
 	// Profil
 	Route::get('/admin/profile', $namespacePrefix.'UserController@profile')->name('admin.profile');
 	Route::get('/admin/profile/edit', $namespacePrefix.'UserController@editProfile')->name('admin.profile.edit');
 	Route::post('/admin/profile/update', $namespacePrefix.'UserController@updateProfile')->name('admin.profile.update');
-
-	// AJAX
-	Route::get('/admin/ajax/count-visitor', $namespacePrefix.'DashboardController@countVisitor')->name('admin.ajax.countvisitor');
 
 	// Package
 	Route::get('/admin/sistem/package', $namespacePrefix.'PackageController@index')->name('admin.package.index');
@@ -370,6 +363,10 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::get('/admin/log', $namespacePrefix.'LogController@index')->name('admin.log.index');
 	Route::get('/admin/log/activity/{id}', $namespacePrefix.'LogController@activity')->name('admin.log.activity');
 	Route::get('/admin/log/login-error', $namespacePrefix.'LogController@login')->name('admin.log.login');
+
+	// API
+	Route::get('/admin/api/visitor/count/last-week', $namespacePrefix.'APIController@visitorLastWeek')->name('api.visitor.count.last-week');
+	Route::get('/admin/api/visitor/count/last-month', $namespacePrefix.'APIController@visitorLastMonth')->name('api.visitor.count.last-month');
 });
 
 // Member Capabilities

@@ -104,14 +104,14 @@
     a:hover {color: var(--primary-dark);}
 
     /* Form */
-    .form-control:focus {border-color: var(--primary-dark)!important;}
+    .form-control:focus {border-color: var(--primary-light)!important;}
     .animated-checkbox input[type="checkbox"]:checked + .label-text:before {color: var(--primary-dark)!important;}
 
     /* Pagination */
     .page-link {color: var(--primary-dark)!important;}
     .page-link:hover {color: var(--primary-dark);}
     .page-item.active .page-link {background-color: var(--primary-light)!important; border-color: var(--primary-light)!important; color: var(--primary-dark)!important;}
-    .page-item.disabled .page-link {border-color: var(--primary-light)!important}
+    .page-item.disabled .page-link {border-color: var(--primary-light)}
 
     /* List Group */
     .list-group-item.active {background-color: var(--primary-dark); border-color: var(--primary-dark);}

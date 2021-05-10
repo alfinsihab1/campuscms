@@ -32,14 +32,9 @@
                             <div class="embed-responsive embed-responsive-16by9 mb-3">
                                 <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{ $file->file_konten }}?rel=0&modestbranding=1&autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                             </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <p class="text-secondary"><i class="fa fa-user mr-2"></i>{{ $file->nama_user }}</p>
-                                </div>
-                                <div class="col-6">
-                                    <p class="text-secondary"><i class="fa fa-calendar mr-2"></i>{{ generate_date_time($file->file_at) }}</p>
-                                    <!-- <p class="text-secondary"><i class="fa fa-calendar mr-2"></i>{{ generate_date(date('Y-m-j', strtotime($file->file_at))) }}</p> -->
-                                </div>
+                            <div class="d-flex justify-content-between mb-3">
+                                <span class="text-secondary"><i class="fa fa-user mr-2"></i>{{ $file->nama_user }}</span>
+                                <span class="text-secondary"><i class="fa fa-calendar mr-2"></i>{{ generate_date_time($file->file_at) }}</span>
                             </div>
                             <p class="h3">{{ $file->file_nama }}</p>
                             <p>{!! html_entity_decode($file->file_deskripsi) !!}</p>

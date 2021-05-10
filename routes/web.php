@@ -39,6 +39,10 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 
 	// Dashboard
 	Route::get('/admin', $namespacePrefix.'DashboardController@admin')->name('admin.dashboard');
+
+	Route::get('/admin/version', function(){
+		var_dump(package_version());
+	});
 	
 	// Profil
 	Route::get('/admin/profile', $namespacePrefix.'UserController@profile')->name('admin.profile');

@@ -20,19 +20,22 @@ class RolePermissionController extends Controller
     public function index()
     {
         // Check Access
-        has_access(generate_method(__METHOD__), Auth::user()->role);
+        if(Auth::user()->role == role('it')){
+            // Get data permission
+            $permissions = Permission::whereNotIn('key_permission',config('faturcms.allowed_access'))->orderBy('order_permission','asc')->get();
 
-		// Get data permission
-		$permissions = Permission::orderBy('order_permission','asc')->get();
-
-        // Get data role
-        $roles = Role::all();
-        
-        // View
-        return view('faturcms::admin.role-permission.index', [
-            'permissions' => $permissions,
-            'roles' => $roles,
-        ]);
+            // Get data role
+            $roles = Role::all();
+            
+            // View
+            return view('faturcms::admin.role-permission.index', [
+                'permissions' => $permissions,
+                'roles' => $roles,
+            ]);
+        }
+        else{
+            abort(403);
+        }
     }
 
     /**

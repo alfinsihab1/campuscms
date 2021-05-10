@@ -6,10 +6,10 @@ use Ajifatur\FaturCMS\Models\FolderKategori;
 
 // Generate file name
 if(!function_exists('generate_file_name')){
-    function generate_file_name($text, $table, $field, $parentField, $parentValue, $primaryKey, $id = null){
+    function generate_file_name($text, $table, $field, $categoryField, $categoryValue, $parentField, $parentValue, $primaryKey, $id = null){
         $name = $text;
         $i = 1;
-        while(count_existing_file($table, $field, $name, $parentField, $parentValue, $primaryKey, $id) > 0){
+        while(count_existing_file($table, $field, $name, $categoryField, $categoryValue, $parentField, $parentValue, $primaryKey, $id) > 0){
             $name = rename_file($text, $i);
             $i++;
         }
@@ -19,9 +19,9 @@ if(!function_exists('generate_file_name')){
 
 // Menghitung jumlah file / folder duplikat
 if(!function_exists('count_existing_file')){
-    function count_existing_file($table, $field, $keyword, $parentField, $parentValue, $primaryKey, $id = null){
-        if($id == null) $data = DB::table($table)->where($field,'=',$keyword)->where($parentField,'=',$parentValue)->get();
-        else $data = DB::table($table)->where($field,'=',$keyword)->where($parentField,'=',$parentValue)->where($primaryKey,'!=',$id)->get();
+    function count_existing_file($table, $field, $keyword, $categoryField, $categoryValue, $parentField, $parentValue, $primaryKey, $id = null){
+        if($id == null) $data = DB::table($table)->where($field,'=',$keyword)->where($categoryField,'=',$categoryValue)->where($parentField,'=',$parentValue)->get();
+        else $data = DB::table($table)->where($field,'=',$keyword)->where($categoryField,'=',$categoryValue)->where($parentField,'=',$parentValue)->where($primaryKey,'!=',$id)->get();
         return count($data);
     }
 }

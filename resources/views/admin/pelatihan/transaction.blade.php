@@ -1,6 +1,6 @@
 @extends('faturcms::template.admin.main')
 
-@section('title', 'Pelatihan')
+@section('title', 'Transaksi Pelatihan')
 
 @section('content')
 
@@ -9,7 +9,7 @@
 
     <!-- Breadcrumb -->
     @include('faturcms::template.admin._breadcrumb', ['breadcrumb' => [
-        'title' => 'Pelatihan',
+        'title' => 'Transaksi Pelatihan',
         'items' => [
             ['text' => 'Transaksi', 'url' => '#'],
             ['text' => 'Pelatihan', 'url' => '#'],

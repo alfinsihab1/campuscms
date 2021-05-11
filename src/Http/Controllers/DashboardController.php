@@ -81,8 +81,8 @@ class DashboardController extends Controller
 
         // Data Pelatihan
         if(has_access('PelatihanController::index', Auth::user()->role, false)){
-        // Data Pelatihan
-        $data_pelatihan = Pelatihan::join('kategori_pelatihan','pelatihan.kategori_pelatihan','=','kategori_pelatihan.id_kp')->count();
+            // Data Pelatihan
+            $data_pelatihan = Pelatihan::join('kategori_pelatihan','pelatihan.kategori_pelatihan','=','kategori_pelatihan.id_kp')->join('users','pelatihan.trainer','=','users.id_user')->count();
             // Array Push
             array_push($array, ['title' => 'Pelatihan', 'total' => $data_pelatihan, 'url' => route('admin.pelatihan.index')]);
         }

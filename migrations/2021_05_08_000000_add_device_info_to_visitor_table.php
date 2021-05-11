@@ -23,6 +23,9 @@ class AddDeviceInfoToVisitorTable extends Migration
             if (!Schema::hasColumn('visitor', 'platform')) {
                 $table->text('platform')->nullable();
             }
+            if (!Schema::hasColumn('visitor', 'location')) {
+                $table->text('location')->nullable();
+            }
         });
     }
 
@@ -33,6 +36,6 @@ class AddDeviceInfoToVisitorTable extends Migration
      */
     public function down()
     {
-        // Schema::dropIfExists('absensi');
+        //
     }
 }

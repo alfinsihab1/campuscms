@@ -6,7 +6,7 @@
     <p class="m-0 text-muted"><small><i class="fa fa-home"></i> > Dashboard</small></p>
   </li></ul> -->
   <ul class="app-nav ml-auto ml-md">
-    @if(has_access('KomisiController::index', Auth::user()->role, false) || has_access('WithdrawalController::index', Auth::user()->role, false) || has_access('PelatihanController::transaction', Auth::user()->role, false))
+    @if(has_access('KomisiController::index', Auth::user()->role, false) || has_access('WithdrawalController::index', Auth::user()->role, false) || has_access('PelatihanController::transaction', Auth::user()->role, false) || has_access('PackageController::me', Auth::user()->role, false))
     <li class="dropdown">
       <a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Show notifications">
         <i class="fa fa-bell fa-lg" data-toggle="tooltip" title="Notifikasi"></i>
@@ -21,6 +21,7 @@
           </div>
           <div class="card-body">
             <div class="row">
+              @if(has_access('KomisiController::index', Auth::user()->role, false))
               <div class="col-6 border-right border-bottom">
                 <a class="dropdown-item" href="{{ route('admin.komisi.index') }}">
                   <span class="app-notification__icon p-0"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-success"></i><i class="fa fa-money fa-stack-1x fa-inverse"></i></span>
@@ -29,6 +30,8 @@
                   <p class="app-notification__message">Verifikasi<br>Komisi</p>
                 </a>
               </div>
+              @endif
+              @if(has_access('WithdrawalController::index', Auth::user()->role, false))
               <div class="col-6 border-bottom">
                 <a class="dropdown-item" href="{{ route('admin.withdrawal.index') }}">
                   <span class="app-notification__icon p-0"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-warning"></i><i class="fa fa-money fa-stack-1x fa-inverse"></i></span></span>
@@ -38,6 +41,8 @@
                   </div>
                 </a>
               </div>
+              @endif
+              @if(has_access('PelatihanController::transaction', Auth::user()->role, false))
               <div class="col-6 border-right">
                 <a class="dropdown-item" href="{{ route('admin.pelatihan.transaction') }}">
                   <span class="app-notification__icon p-0"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-primary"></i><i class="fa fa-money fa-stack-1x fa-inverse"></i></span></span>
@@ -47,6 +52,8 @@
                   </div>
                 </a>
               </div>
+              @endif
+              @if(has_access('PackageController::me', Auth::user()->role, false))
               <div class="col-6">
                 <a class="dropdown-item" href="{{ route('admin.package.me') }}">
                   <span class="app-notification__icon p-0"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-info"></i><i class="fa fa-level-up fa-stack-1x fa-inverse"></i></span></span>
@@ -56,6 +63,7 @@
                   </div>
                 </a>
               </div>
+              @endif
             </div>
           </div>
         </div>
@@ -174,6 +182,7 @@
           @endif
           <h5><i class="fa fa-cog"></i> Lainnya</h5>
           <div class="row">
+            @if(has_access('LogController::index', Auth::user()->role, false) || has_access('LogController::login', Auth::user()->role, false))
             <div class="col-12 col-lg mb-3">
               <div class="heading">
                 <h5 class="m-0 font-weight-bold mb-3 d-flex align-items-center">
@@ -184,10 +193,15 @@
                 </h5>
               </div>
               <div class="list-group list-group-flush">
+                @if(has_access('LogController::index', Auth::user()->role, false))
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.log.index') }}"><i class="fa fa-circle-o"></i> Data Log</a>
+                @endif
+                @if(has_access('LogController::login', Auth::user()->role, false))
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.log.login') }}"><i class="fa fa-circle-o"></i> Login Error</a>
+                @endif
               </div>
             </div>
+            @endif
             @if(has_access('RoleController::index', Auth::user()->role, false) || has_access('RolePermissionController::index', Auth::user()->role, false))
             <div class="col-12 col-lg mb-3">
               <div class="heading">

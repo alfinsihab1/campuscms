@@ -70,26 +70,9 @@
         <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.email.index'))) ? 'active' : '' }}" href="{{ route('admin.email.index') }}"><i class="app-menu__icon fa fa-envelope"></i><span class="app-menu__label">Email</span></a></li>
         @endif
 
-        @if(has_access('SertifikatController::indexTrainer', Auth::user()->role, false) || has_access('SertifikatController::indexParticipant', Auth::user()->role, false))
-        <li class="treeview {{ is_int(strpos(Request::url(), route('admin.sertifikat.trainer.index'))) || is_int(strpos(Request::url(), route('admin.sertifikat.peserta.index'))) ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-certificate"></i><span class="app-menu__label">E-Sertifikat</span><i class="treeview-indicator fa fa-angle-right"></i></a>
-          <ul class="treeview-menu">
-            @if(has_access('SertifikatController::indexTrainer', Auth::user()->role, false))
-            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.sertifikat.trainer.index'))) ? 'active' : '' }}" href="{{ route('admin.sertifikat.trainer.index') }}"><i class="icon fa fa-circle-o"></i> Trainer</a></li>
-            @endif
-            @if(has_access('SertifikatController::indexParticipant', Auth::user()->role, false))
-            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.sertifikat.peserta.index'))) ? 'active' : '' }}" href="{{ route('admin.sertifikat.peserta.index') }}"><i class="icon fa fa-circle-o"></i> Peserta</a></li>
-            @endif
-          </ul>
-        </li>
-        @endif
-
-        @if(has_access('SignatureController::index', Auth::user()->role, false))
-        <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.signature.index'))) ? 'active' : '' }}" href="{{ route('admin.signature.index') }}"><i class="app-menu__icon fa fa-tint"></i><span class="app-menu__label">Tandatangan Digital</span></a></li>
-        @endif
-
         @if(has_access('FileController::index', Auth::user()->role, false))
-          @if(status_kategori_folder('e-learning'))
           <div class="app-menu-title"><span class="font-weight-bold" style="color: var(--primary)">Materi</span></div>
+          @if(status_kategori_folder('e-learning'))
           <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.filemanager.index', ['kategori' => 'e-learning']))) ? 'active' : '' }}" href="{{ route('admin.filemanager.index', ['kategori' => 'e-learning']) }}"><i class="app-menu__icon fa fa-folder-open"></i><span class="app-menu__label">Materi E-Learning</span></a></li>
           @endif
           @if(status_kategori_folder('e-library'))
@@ -178,6 +161,25 @@
 
         @if(has_access('PsikologController::index', Auth::user()->role, false))
         <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.psikolog.index'))) ? 'active' : '' }}" href="{{ route('admin.psikolog.index') }}"><i class="app-menu__icon fa fa-skyatlas"></i><span class="app-menu__label">Psikolog</span></a></li>
+        @endif
+
+        <div class="app-menu-title"><span class="font-weight-bold" style="color: var(--primary)">Lainnya</span></div>
+
+        @if(has_access('SertifikatController::indexTrainer', Auth::user()->role, false) || has_access('SertifikatController::indexParticipant', Auth::user()->role, false))
+        <li class="treeview {{ is_int(strpos(Request::url(), route('admin.sertifikat.trainer.index'))) || is_int(strpos(Request::url(), route('admin.sertifikat.peserta.index'))) ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-certificate"></i><span class="app-menu__label">E-Sertifikat</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+          <ul class="treeview-menu">
+            @if(has_access('SertifikatController::indexTrainer', Auth::user()->role, false))
+            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.sertifikat.trainer.index'))) ? 'active' : '' }}" href="{{ route('admin.sertifikat.trainer.index') }}"><i class="icon fa fa-circle-o"></i> Trainer</a></li>
+            @endif
+            @if(has_access('SertifikatController::indexParticipant', Auth::user()->role, false))
+            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.sertifikat.peserta.index'))) ? 'active' : '' }}" href="{{ route('admin.sertifikat.peserta.index') }}"><i class="icon fa fa-circle-o"></i> Peserta</a></li>
+            @endif
+          </ul>
+        </li>
+        @endif
+
+        @if(has_access('SignatureController::index', Auth::user()->role, false))
+        <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.signature.index'))) ? 'active' : '' }}" href="{{ route('admin.signature.index') }}"><i class="app-menu__icon fa fa-tint"></i><span class="app-menu__label">Tandatangan Digital</span></a></li>
         @endif
 
         @if(has_access('AbsensiController::index', Auth::user()->role, false))

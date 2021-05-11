@@ -5,17 +5,21 @@ namespace Ajifatur\FaturCMS\Http\Controllers;
 use Auth;
 use Illuminate\Http\Request;
 use App\User;
+use Ajifatur\FaturCMS\Models\Acara;
 use Ajifatur\FaturCMS\Models\Blog;
 use Ajifatur\FaturCMS\Models\Deskripsi;
 use Ajifatur\FaturCMS\Models\DefaultRekening;
 use Ajifatur\FaturCMS\Models\Files;
 use Ajifatur\FaturCMS\Models\Fitur;
 use Ajifatur\FaturCMS\Models\FolderKategori;
+use Ajifatur\FaturCMS\Models\Halaman;
+use Ajifatur\FaturCMS\Models\Karir;
 use Ajifatur\FaturCMS\Models\Komisi;
 use Ajifatur\FaturCMS\Models\Pelatihan;
 use Ajifatur\FaturCMS\Models\Popup;
+use Ajifatur\FaturCMS\Models\Program;
+use Ajifatur\FaturCMS\Models\Psikolog;
 use Ajifatur\FaturCMS\Models\Signature;
-use Ajifatur\FaturCMS\Models\Visitor;
 
 class DashboardController extends Controller
 {
@@ -29,22 +33,75 @@ class DashboardController extends Controller
         // Check Access
         has_access(generate_method(__METHOD__), Auth::user()->role);
 
-        // Data Member Aktif
-        $data_student_aktif = User::where('is_admin','=',0)->where('status','=',1)->count();
-        // Data Member Belum Aktif
-        $data_student_belum_aktif = User::where('is_admin','=',0)->where('status','=',0)->count();
+        // Array
+        $array = [];
+
+        // Data User
+        if(has_access('UserController::index', Auth::user()->role, false)){
+            // Data Member Aktif
+            $data_student_aktif = User::where('is_admin','=',0)->where('status','=',1)->count();
+            // Data Member Belum Aktif
+            $data_student_belum_aktif = User::where('is_admin','=',0)->where('status','=',0)->count();
+            // Array Push
+            array_push($array, ['title' => 'Member Aktif', 'total' => $data_student_aktif, 'url' => route('admin.user.index', ['filter' => 'aktif'])]);
+            array_push($array, ['title' => 'Member Belum Aktif', 'total' => $data_student_belum_aktif, 'url' => route('admin.user.index', ['filter' => 'belum-aktif'])]);
+        }
+
+        // Data Halaman
+        if(has_access('HalamanController::index', Auth::user()->role, false)){
+            // Data Halaman
+            $data_halaman = Halaman::count();
+            // Array Push
+            array_push($array, ['title' => 'Halaman', 'total' => $data_halaman, 'url' => route('admin.halaman.index')]);
+        }
+
         // Data Artikel
-        $data_artikel = Blog::join('kategori_artikel','blog.blog_kategori','=','kategori_artikel.id_ka')->count();
+        if(has_access('BlogController::index', Auth::user()->role, false)){
+            // Data Artikel
+            $data_artikel = Blog::join('kategori_artikel','blog.blog_kategori','=','kategori_artikel.id_ka')->count();
+            // Array Push
+            array_push($array, ['title' => 'Artikel', 'total' => $data_artikel, 'url' => route('admin.blog.index')]);
+        }
+
+        // Data Acara
+        if(has_access('AcaraController::index', Auth::user()->role, false)){
+            // Data Acara
+            $data_acara = Acara::join('kategori_acara','acara.kategori_acara','=','kategori_acara.id_ka')->count();
+            // Array Push
+            array_push($array, ['title' => 'Acara', 'total' => $data_acara, 'url' => route('admin.acara.index')]);
+        }
+
+        // Data Program
+        if(has_access('ProgramController::index', Auth::user()->role, false)){
+            // Data Program
+            $data_program = Program::join('users','program.author','=','users.id_user')->join('kategori_program','program.program_kategori','=','kategori_program.id_kp')->count();
+            // Array Push
+            array_push($array, ['title' => 'Program', 'total' => $data_program, 'url' => route('admin.program.index')]);
+        }
+
+        // Data Pelatihan
+        if(has_access('PelatihanController::index', Auth::user()->role, false)){
         // Data Pelatihan
         $data_pelatihan = Pelatihan::join('kategori_pelatihan','pelatihan.kategori_pelatihan','=','kategori_pelatihan.id_kp')->count();
-        
-        // New Array
-        $array = [
-            ['title' => 'Member Aktif', 'total' => $data_student_aktif, 'url' => route('admin.user.index', ['filter' => 'aktif'])],
-            ['title' => 'Member Belum Aktif', 'total' => $data_student_belum_aktif, 'url' => route('admin.user.index', ['filter' => 'belum-aktif'])],
-            ['title' => 'Artikel', 'total' => $data_artikel, 'url' => route('admin.blog.index')],
-            ['title' => 'Pelatihan', 'total' => $data_pelatihan, 'url' => route('admin.pelatihan.index')],
-        ];
+            // Array Push
+            array_push($array, ['title' => 'Pelatihan', 'total' => $data_pelatihan, 'url' => route('admin.pelatihan.index')]);
+        }
+
+        // Data Karir
+        if(has_access('KarirController::index', Auth::user()->role, false)){
+            // Data Karir
+            $data_karir = Karir::join('users','karir.author','=','users.id_user')->count();
+            // Array Push
+            array_push($array, ['title' => 'Karir', 'total' => $data_karir, 'url' => route('admin.karir.index')]);
+        }
+
+        // Data Psikolog
+        if(has_access('PsikologController::index', Auth::user()->role, false)){
+            // Data Psikolog
+            $data_psikolog = Psikolog::count();
+            // Array Push
+            array_push($array, ['title' => 'Psikolog', 'total' => $data_psikolog, 'url' => route('admin.psikolog.index')]);
+        }
         
         // Array Push Data File
         $array_card = [];
@@ -108,29 +165,5 @@ class DashboardController extends Controller
             'popup' => $popup,
             'signature' => $signature,
         ]);
-    }
-    
-    /**
-     * Count visitor
-     * 
-     * @return \Illuminate\Http\Response
-     */
-    public function countVisitor()
-    {
-        // Get data last 7 days
-        $array = array();
-        for($i=7; $i>=0; $i--){
-            $date = date('Y-m-d', strtotime('-'.$i.' days'));
-            $visitor_admin = Visitor::join('users','visitor.id_user','=','users.id_user')->where('is_admin','=',1)->whereDate('visit_at','=',$date)->groupBy('visitor.id_user')->get();
-            $visitor_member = Visitor::join('users','visitor.id_user','=','users.id_user')->where('is_admin','=',0)->whereDate('visit_at','=',$date)->groupBy('visitor.id_user')->get();
-            array_push($array, array(
-                'date' => $date,
-                'date_str' => date('d/m/y', strtotime($date)),
-                'visitor_all' => count($visitor_admin) + count($visitor_member),
-                'visitor_admin' => count($visitor_admin),
-                'visitor_member' => count($visitor_member),
-            ));
-        }
-        echo json_encode($array);
     }
 }

@@ -64,16 +64,23 @@
 		    </div>
 		    <div class="pengunjung">
 	            <div class="tile">
-	                <div class="tile-title">
-	                	<h5>Pengunjung 7 Hari Terakhir</h5>
+	                <div class="tile-title-w-btn">
+	                	<h5>Statistik Pengunjung</h5>
+	                    <div>
+	                        <select id="filter-visitor" class="form-control form-control-sm">
+	                            <option value="week">Seminggu Terakhir</option>
+	                            <option value="month">Sebulan Terakhir</option>
+	                        </select>
+	                    </div>
 	                </div>
 	                <div class="tile-body">
-						<canvas id="myChart" width="400" height="200"></canvas>
+						<canvas id="chartVisitor" width="400" height="270"></canvas>
 	                </div>
 	            </div>
 	        </div>
     	</div>
         <div class="col-lg-4">
+        	@if(count($array)>0)
             <div class="tile">
                 <div class="tile-title">
                 	<h5>Statistik</h5>
@@ -89,6 +96,7 @@
 					</div>
                 </div>
             </div>
+            @endif
         </div>
     </div>
 </main>
@@ -100,77 +108,99 @@
 <script type="text/javascript" src="{{ asset('assets/plugins/chart.js/chart.min.js') }}"></script>
 <script>
 	$(window).on("load", function(){
-		count_visitor();
+		count_visitor("chartVisitor", "{{ route('api.visitor.count.last-week') }}");
+	});
+
+	var chart;
+
+	// Update chart
+	$(document).on("change", "#filter-visitor", function(){
+		var value = $(this).val();
+		if(value == "week"){
+			chart.destroy();
+			count_visitor("chartVisitor", "{{ route('api.visitor.count.last-week') }}");
+		}
+		else if(value == "month"){
+			chart.destroy();
+			count_visitor("chartVisitor", "{{ route('api.visitor.count.last-month') }}");
+		}
 	});
 	
-	function count_visitor(){
+	function count_visitor(selector, url){
 		$.ajax({
 			type: "get",
-			url: "{{ route('admin.ajax.countvisitor') }}",
+			url: url,
 			success: function(response){
-				var result = JSON.parse(response);
-				var date = [];
-				var date_str = [];
-				var visitor_all = [];
-				var visitor_admin = [];
-				var visitor_member = [];
-				$(result).each(function(key,data){
-					date.push(data.date);
-					date_str.push(data.date_str);
-					visitor_all.push(data.visitor_all);
-					visitor_admin.push(data.visitor_admin);
-					visitor_member.push(data.visitor_member);
+				var dateString = [];
+				var visitorAll = [];
+				var visitorAdmin = [];
+				var visitorMember = [];
+				$(response.data).each(function(key,data){
+					dateString.push(data.dateString);
+					visitorAll.push(data.visitorAll);
+					visitorAdmin.push(data.visitorAdmin);
+					visitorMember.push(data.visitorMember);
 				});
-				chart_js("myChart", "line", date_str, visitor_all, visitor_admin, visitor_member);
+				var data = {
+					labels: dateString,
+					datasets: [
+						{
+							label: 'Semua',
+							data: visitorAll,
+							backgroundColor: '#28b779',
+							borderColor: '#28b779',
+							fill: false,
+							borderWidth: 1
+						},
+						{
+							label: 'Admin',
+							data: visitorAdmin,
+							backgroundColor: '#da542e',
+							borderColor: '#da542e',
+							fill: false,
+							borderWidth: 1
+						},
+						{
+							label: 'Member',
+							data: visitorMember,
+							backgroundColor: '#27a9e3',
+							borderColor: '#27a9e3',
+							fill: false,
+							borderWidth: 1
+						}
+					]
+				};
+				chart = generate_chart_line(selector, data);
 			}
 		});
 	}
-	
-	function chart_js(selector, type, labels, data1, data2, data3){
+
+	function generate_chart_line(selector, data){
 		var ctx = document.getElementById(selector);
 		var myChart = new Chart(ctx, {
-			type: type,
+			type: "line",
 			data: {
-				labels: labels,
-				datasets: [
-					{
-						label: 'Semua',
-						data: data1,
-						backgroundColor: '#28b779',
-						borderColor: '#28b779',
-						fill: false,
-						borderWidth: 1
-					},
-					{
-						label: 'Admin',
-						data: data2,
-						backgroundColor: '#da542e',
-						borderColor: '#da542e',
-						fill: false,
-						borderWidth: 1
-					},
-					{
-						label: 'Member',
-						data: data3,
-						backgroundColor: '#27a9e3',
-						borderColor: '#27a9e3',
-						fill: false,
-						borderWidth: 1
-					},
-				]
+				labels: data.labels,
+				datasets: data.datasets
 			},
 			options: {
 				responsive: true,
 				scales: {
 					yAxes: [{
 						ticks: {
+							min: 0,
 							beginAtZero: true,
-							//stepSize: 2
+							callback: function(value, index, values){
+						        if(Math.floor(value) === value){
+						            return value;
+						        }
+						    }
 						}
 					}]
 				}
 			}
 		});
+		return myChart;
 	}
 </script>
 

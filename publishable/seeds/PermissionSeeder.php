@@ -51,6 +51,10 @@ class PermissionSeeder extends Seeder
             ['key' => 'UserController::editProfile', 'name' => 'Mengupdate Profil User'],
             ['key' => 'UserController::export', 'name' => 'Mengekspor Data User'],
 
+            // Statistik
+            ['key' => 'StatistikController::member', 'name' => 'Menampilkan Statistik Member'],
+            ['key' => 'StatistikController::device', 'name' => 'Menampilkan Statistik Perangkat'],
+
             // Visitor
             ['key' => 'VisitorController::index', 'name' => 'Menampilkan Data Visitor'],
             ['key' => 'VisitorController::topVisitor', 'name' => 'Menampilkan Data Top Visitor'],

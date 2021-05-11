@@ -73,7 +73,11 @@
                                     </td>
                                     <td>{{ $user->nama_role }}</td>
                                     <td>{{ $user->is_admin == 0 ? number_format($user->saldo,0,',',',') : '-' }}</td>
-                                    <td><a href="{{ route('admin.user.refer', ['id' => $user->id_user]) }}">{{ $user->is_admin == 0 ? number_format(count_refer($user->username),0,',',',') : '-' }}</a></td>
+                                    <td>
+                                        @if($user->is_admin == 0)
+                                            <a href="{{ route('admin.user.refer', ['id' => $user->id_user]) }}" data-toggle="tooltip" title="Lihat Data Refer">{{ number_format(count_refer($user->username),0,',',',') }}</a>
+                                        @endif
+                                    </td>
                                     <td>
                                         <span class="d-none">{{ $user->register_at }}</span>
                                         {{ date('d/m/Y', strtotime($user->register_at)) }}

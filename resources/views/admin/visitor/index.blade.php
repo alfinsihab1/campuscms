@@ -83,7 +83,7 @@
                                     </td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="#" class="btn btn-sm btn-info btn-visitor" data-id="{{ $data->id_user }}" data-toggle="tooltip" title="Lihat Informasi"><i class="fa fa-desktop"></i></a>
+                                            <a href="#" class="btn btn-sm btn-info btn-visitor" data-id="{{ $data->id_user }}" data-toggle="tooltip" title="Lihat Informasi"><i class="fa fa-info"></i></a>
                                             <a href="{{ route('admin.log.activity', ['id' => $data->id_user]) }}" class="btn btn-sm btn-warning" data-id="{{ $data->id_visitor }}" data-toggle="tooltip" title="Lihat Aktivitas"><i class="fa fa-eye"></i></a>
                                         </div>
                                     </td>
@@ -108,7 +108,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Info Visitor Hari Ini</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Info Visitor</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

@@ -21,6 +21,7 @@
  * @method browser_info()
  * @method platform_info()
  * @method device_info()
+ * @method location_info(string $ip)
  * @method log_activity()
  * @method log_login(object $request)
  *
@@ -49,6 +50,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\ClientException;
 use hisorange\BrowserDetect\Parser as Browser;
+use Stevebauman\Location\Facades\Location;
 use App\User;
 use Ajifatur\FaturCMS\Models\KategoriArtikel;
 use Ajifatur\FaturCMS\Models\KategoriMateri;
@@ -314,6 +316,16 @@ if(!function_exists('device_info')){
         ];
 
         return json_encode($device);
+    }
+}
+
+// Location Info
+if(!function_exists('location_info')){
+    function location_info($ip){
+        // Data location
+        $location = Location::get($ip);
+
+        return $location ? json_encode($location) : '';
     }
 }
 

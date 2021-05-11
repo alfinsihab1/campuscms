@@ -6,6 +6,7 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Stevebauman\Location\Facades\Location;
 use App\User;
 use Ajifatur\FaturCMS\Models\Visitor;
 
@@ -57,6 +58,7 @@ class VisitorController extends Controller
     /**
      * Menampilkan info visitor
      *
+     * @return \Illuminate\Http\Request
      * @return \Illuminate\Http\Response
      */
     public function info(Request $request)
@@ -72,9 +74,37 @@ class VisitorController extends Controller
                     'device' => json_decode($data->device, true),
                     'browser' => json_decode($data->browser, true),
                     'platform' => json_decode($data->platform, true),
+                    'location' => json_decode($data->location, true),
                 ]);
             }
         }
         echo json_encode($array);
+    }
+
+    /**
+     * Mengupdate lokasi berdasarkan IP Address
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function updateLocation()
+    {
+        ini_set('max_execution_time', -1);
+
+        // Get data visitor
+        $visitor = Visitor::whereNotIn('ip_address',['','127.0.0.1'])->get();
+
+        // Update lokasi
+        if(count($visitor)>0){
+            foreach($visitor as $row){
+                $data = Visitor::find($row->id_visitor);
+                if($data){
+                    $data->location = location_info($data->ip_address);
+                    $data->save();
+                }
+            }
+        }
+
+        // Redirect
+        return redirect()->route('admin.visitor.index')->with(['message' => 'Berhasil mengupdate data.']);
     }
 }

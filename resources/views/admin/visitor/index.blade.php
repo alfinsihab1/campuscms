@@ -164,6 +164,7 @@
                         html += data.device != null ? '<p class="mb-2"><strong>Device:</strong><br>' + data.device.type + ' ' + data.device.family + ' ' + data.device.model + ' ' + data.device.grade + '</p>' : '<p class="mb-2"><strong>Device:</strong><br>NULL</p>';
                         html += data.browser != null ? '<p class="mb-2"><strong>Browser:</strong><br>' + data.browser.name + ' ' + ' (' + data.browser.family + '); ' + data.browser.engine + ' Engine</p>' : '<p class="mb-2"><strong>Browser:</strong><br>NULL</p>';
                         html += data.platform != null ? '<p class="mb-2"><strong>Platform:</strong><br>' + data.platform.name + ' ' + ' (' + data.platform.family + ')</p>' : '<p class="mb-2"><strong>Platform:</strong><br>NULL</p>';
+                        html += data.location != null ? '<p class="mb-2"><strong>Lokasi:</strong><br>' + data.location.cityName + ', ' + data.location.regionName + ', ' + data.location.countryName + '</p>' : '<p class="mb-2"><strong>Lokasi:</strong><br>NULL</p>';
                         html += '</div>';
                         html += '<hr>';
                     });

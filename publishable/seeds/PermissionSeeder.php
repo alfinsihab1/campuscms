@@ -54,6 +54,7 @@ class PermissionSeeder extends Seeder
             // Statistik
             ['key' => 'StatistikController::member', 'name' => 'Menampilkan Statistik Member'],
             ['key' => 'StatistikController::device', 'name' => 'Menampilkan Statistik Perangkat'],
+            ['key' => 'StatistikController::finance', 'name' => 'Menampilkan Statistik Keuangan'],
 
             // Visitor
             ['key' => 'VisitorController::index', 'name' => 'Menampilkan Data Visitor'],

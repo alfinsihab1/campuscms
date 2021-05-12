@@ -31,7 +31,7 @@
                 <!-- Tile Body -->
                 <div class="tile-body">
 					<canvas id="chartDevice" width="400" height="270"></canvas>
-                    <p class="text-center mt-2">Total: <strong id="total-device">0</strong></p>
+                    <p class="text-center mt-2 mb-0">Total: <strong id="total-device">0</strong></p>
                 </div>
                 <!-- /Tile Body -->
             </div>
@@ -50,7 +50,7 @@
                 <!-- Tile Body -->
                 <div class="tile-body">
 					<canvas id="chartBrowser" width="400" height="270"></canvas>
-                    <p class="text-center mt-2">Total: <strong id="total-browser">0</strong></p>
+                    <p class="text-center mt-2 mb-0">Total: <strong id="total-browser">0</strong></p>
                 </div>
                 <!-- /Tile Body -->
             </div>
@@ -69,7 +69,7 @@
                 <!-- Tile Body -->
                 <div class="tile-body">
 					<canvas id="chartPlatform" width="400" height="270"></canvas>
-                    <p class="text-center mt-2">Total: <strong id="total-platform">0</strong></p>
+                    <p class="text-center mt-2 mb-0">Total: <strong id="total-platform">0</strong></p>
                 </div>
                 <!-- /Tile Body -->
             </div>
@@ -103,7 +103,7 @@
                     }]
                 };
                 generate_chart_doughnut("chartDevice", data);
-                $("#total-device").text(response.data.total);
+                $("#total-device").text(thousand_format(response.data.total));
             }
         });
 
@@ -121,7 +121,7 @@
                     }]
                 };
                 generate_chart_doughnut("chartBrowser", data);
-                $("#total-browser").text(response.data.total);
+                $("#total-browser").text(thousand_format(response.data.total));
             }
         });
 
@@ -134,12 +134,12 @@
                     labels: response.data.labels,
                     datasets: [{
                         data: response.data.data,
-                        backgroundColor: ["#00a8e8", "#f7c700", "#444", "#a3acb3"],
+                        backgroundColor: ["#00a8e8", "#f7c700", "#444", "#a4c639", "#a3acb3"],
                         borderWidth: 0
                     }]
                 };
                 generate_chart_doughnut("chartPlatform", data);
-                $("#total-platform").text(response.data.total);
+                $("#total-platform").text(thousand_format(response.data.total));
             }
         });
     });

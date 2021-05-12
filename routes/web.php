@@ -351,6 +351,7 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	// Statistik
 	Route::get('/admin/statistik/member', $namespacePrefix.'StatistikController@member')->name('admin.statistik.member');
 	Route::get('/admin/statistik/device', $namespacePrefix.'StatistikController@device')->name('admin.statistik.device');
+	Route::get('/admin/statistik/finance', $namespacePrefix.'StatistikController@finance')->name('admin.statistik.finance');
 
 	// Visitor
 	Route::get('/admin/visitor', $namespacePrefix.'VisitorController@index')->name('admin.visitor.index');
@@ -369,15 +370,24 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::get('/admin/log/activity/{id}', $namespacePrefix.'LogController@activity')->name('admin.log.activity');
 	Route::get('/admin/log/login-error', $namespacePrefix.'LogController@login')->name('admin.log.login');
 
-	// API
+	// API Visitor Total
 	Route::get('/admin/api/visitor/count/last-week', $namespacePrefix.'APIController@visitorLastWeek')->name('api.visitor.count.last-week');
 	Route::get('/admin/api/visitor/count/last-month', $namespacePrefix.'APIController@visitorLastMonth')->name('api.visitor.count.last-month');
+
+	// API Member
 	Route::get('/admin/api/member/status', $namespacePrefix.'APIController@memberStatus')->name('api.member.status');
 	Route::get('/admin/api/member/gender', $namespacePrefix.'APIController@memberGender')->name('api.member.gender');
 	Route::get('/admin/api/member/age', $namespacePrefix.'APIController@memberAge')->name('api.member.age');
+
+	// API Visitor Device
 	Route::get('/admin/api/visitor/device', $namespacePrefix.'APIController@visitorDevice')->name('api.visitor.device');
 	Route::get('/admin/api/visitor/browser', $namespacePrefix.'APIController@visitorBrowser')->name('api.visitor.browser');
 	Route::get('/admin/api/visitor/platform', $namespacePrefix.'APIController@visitorPlatform')->name('api.visitor.platform');
+
+	// API Finance
+	Route::get('/admin/api/finance/income', $namespacePrefix.'APIController@income')->name('api.finance.income');
+	Route::get('/admin/api/finance/outcome', $namespacePrefix.'APIController@outcome')->name('api.finance.outcome');
+	Route::get('/admin/api/finance/revenue/{month}/{year}', $namespacePrefix.'APIController@revenue')->name('api.finance.revenue');
 });
 
 // Member Capabilities

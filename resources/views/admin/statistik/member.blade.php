@@ -31,7 +31,7 @@
                 <!-- Tile Body -->
                 <div class="tile-body">
 					<canvas id="chartStatus" width="400" height="270"></canvas>
-                    <p class="text-center mt-2">Total: <strong id="total-status">0</strong></p>
+                    <p class="text-center mt-2 mb-0">Total: <strong id="total-status">0</strong></p>
                 </div>
                 <!-- /Tile Body -->
             </div>
@@ -50,7 +50,7 @@
                 <!-- Tile Body -->
                 <div class="tile-body">
 					<canvas id="chartGender" width="400" height="270"></canvas>
-                    <p class="text-center mt-2">Total: <strong id="total-gender">0</strong></p>
+                    <p class="text-center mt-2 mb-0">Total: <strong id="total-gender">0</strong></p>
                 </div>
                 <!-- /Tile Body -->
             </div>
@@ -69,7 +69,7 @@
                 <!-- Tile Body -->
                 <div class="tile-body">
 					<canvas id="chartAge" width="400" height="270"></canvas>
-                    <p class="text-center mt-2">Total: <strong id="total-age">0</strong></p>
+                    <p class="text-center mt-2 mb-0">Total: <strong id="total-age">0</strong></p>
                 </div>
                 <!-- /Tile Body -->
             </div>
@@ -103,7 +103,7 @@
                     }]
                 };
                 generate_chart_doughnut("chartStatus", data);
-                $("#total-status").text(response.data.total);
+                $("#total-status").text(thousand_format(response.data.total));
             }
         });
 
@@ -121,7 +121,7 @@
                     }]
                 };
                 generate_chart_doughnut("chartGender", data);
-                $("#total-gender").text(response.data.total);
+                $("#total-gender").text(thousand_format(response.data.total));
             }
         });
 
@@ -139,7 +139,7 @@
                     }]
                 };
                 generate_chart_doughnut("chartAge", data);
-                $("#total-age").text(response.data.total);
+                $("#total-age").text(thousand_format(response.data.total));
             }
         });
     });

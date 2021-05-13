@@ -10,8 +10,8 @@
     <li class="dropdown">
       <a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Show notifications">
         <i class="fa fa-bell fa-lg" data-toggle="tooltip" title="Notifikasi"></i>
-        @if(count_notif_all() > 0)
-        <span class="badge badge-info">{{ count_notif_all() }}</span>
+        @if(count_notif_admin() > 0)
+        <span class="badge badge-info">{{ count_notif_admin() }}</span>
         @endif
       </a>
       <ul class="app-notification dropdown-menu dropdown-menu-right">

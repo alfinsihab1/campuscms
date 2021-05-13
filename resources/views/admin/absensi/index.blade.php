@@ -32,7 +32,7 @@
                         <form method="get" action="{{ route('admin.absensi.index') }}">
                             <div class="input-group">
                               <div class="input-group-prepend">
-                                  <a href="#" class="btn btn-sm btn-secondary btn-date" data-toggle="tooltip" title="Pilih Tanggal"><i class="fa fa-calendar"></i></a>
+                                  <a href="#" class="btn btn-sm btn-dark btn-date" data-toggle="tooltip" title="Pilih Tanggal"><i class="fa fa-calendar"></i></a>
                               </div>
                               <input type="text" name="tanggal" class="form-control form-control-sm" value="{{ $tanggal }}" readonly>
                               <div class="input-group-append">

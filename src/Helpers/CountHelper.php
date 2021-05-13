@@ -2,24 +2,29 @@
 
 /**
  * Count Helpers:
- * @method count_existing_data(string $table, string $field, string $keyword, string $primaryKey, int $id = null)
- * @method count_notif_all()
- * @method count_notif_komisi()
- * @method count_notif_withdrawal()
- * @method count_notif_pelatihan()
- * @method count_refer(string $username)
- * @method count_refer_aktif(string $username)
- * @method count_peserta_pelatihan(int $pelatihan)
- * @method count_artikel_by_kategori(int $kategori)
- * @method count_komentar(int $artikel)
- * @method count_kunjungan(int $user, string $jenis)
+ * @method int count_existing_data(string $table, string $field, string $keyword, string $primaryKey, int $id = null)
+ * @method int count_notif_admin()
+ * @method int count_notif_komisi()
+ * @method int count_notif_withdrawal()
+ * @method int count_notif_pelatihan()
+ * @method int count_notif_member()
+ * @method int count_notif_file(string $kategori)
+ * @method int count_notif_pelatihan_member()
+ * @method int count_refer(string $username)
+ * @method int count_refer_aktif(string $username)
+ * @method int count_peserta_pelatihan(int $pelatihan)
+ * @method int count_artikel_by_kategori(int $kategori)
+ * @method int count_komentar(int $artikel)
+ * @method int count_kunjungan(int $user, string $jenis)
  */
 
 use App\User;
 use Ajifatur\FaturCMS\Models\Blog;
+use Ajifatur\FaturCMS\Models\Files;
 use Ajifatur\FaturCMS\Models\Komentar;
 use Ajifatur\FaturCMS\Models\Komisi;
 use Ajifatur\FaturCMS\Models\Package;
+use Ajifatur\FaturCMS\Models\Pelatihan;
 use Ajifatur\FaturCMS\Models\PelatihanMember;
 use Ajifatur\FaturCMS\Models\Visitor;
 use Ajifatur\FaturCMS\Models\Withdrawal;
@@ -33,9 +38,9 @@ if(!function_exists('count_existing_data')){
     }
 }
 
-// Menghitung semua notifikasi
-if(!function_exists('count_notif_all')){
-    function count_notif_all(){
+// Menghitung semua notifikasi (admin)
+if(!function_exists('count_notif_admin')){
+    function count_notif_admin(){
         $data = count_notif_komisi() + count_notif_withdrawal() + count_notif_pelatihan() + count_notif_package();
         return $data;
     }
@@ -73,6 +78,30 @@ if(!function_exists('count_notif_package')){
             return $package->package_version == package_version() ? 0 : 1;
         }
         return 1;
+    }
+}
+
+// Menghitung semua notifikasi (member)
+if(!function_exists('count_notif_member')){
+    function count_notif_member(){
+        $data = count_notif_file('e-learning') + count_notif_file('e-library') + count_notif_file('e-competence') + count_notif_file('e-course') + count_notif_pelatihan_member();
+        return $data;
+    }
+}
+
+// Menghitung notifikasi file
+if(!function_exists('count_notif_file')){
+    function count_notif_file($kategori){
+        $data = Files::join('folder_kategori','file.file_kategori','=','folder_kategori.id_fk')->where('slug_kategori','=',$kategori)->whereDate('file_at','=',date('Y-m-d'))->count();
+        return $data;
+    }
+}
+
+// Menghitung notifikasi pelatihan member
+if(!function_exists('count_notif_pelatihan_member')){
+    function count_notif_pelatihan_member(){
+        $data = Pelatihan::join('users','pelatihan.trainer','=','users.id_user')->whereDate('pelatihan_at','=',date('Y-m-d'))->count();
+        return $data;
     }
 }
 

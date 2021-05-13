@@ -357,7 +357,7 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::get('/admin/visitor', $namespacePrefix.'VisitorController@index')->name('admin.visitor.index');
 	Route::get('/admin/visitor/top', $namespacePrefix.'VisitorController@topVisitor')->name('admin.visitor.top');
 	Route::post('/admin/visitor/info', $namespacePrefix.'VisitorController@info')->name('admin.visitor.info');
-	Route::get('/admin/visitor/update-location', $namespacePrefix.'VisitorController@updateLocation')->name('admin.visitor.update-location');
+	// Route::get('/admin/visitor/update-location', $namespacePrefix.'VisitorController@updateLocation')->name('admin.visitor.update-location');
 
 	// Media
 	Route::get('/admin/media', $namespacePrefix.'MediaController@index')->name('admin.media.index');
@@ -437,6 +437,7 @@ Route::group(['middleware' => ['faturcms.member']], function() use ($namespacePr
 	Route::get('/member/pelatihan/peserta/{id}', $namespacePrefix.'PelatihanController@participant')->name('member.pelatihan.participant');
 	Route::post('/member/pelatihan/register', $namespacePrefix.'PelatihanController@register')->name('member.pelatihan.register');
 	Route::post('/member/pelatihan/update-status', $namespacePrefix.'PelatihanController@updateStatus')->name('member.pelatihan.updatestatus');
+	Route::get('/member/user/trainer/{id}', $namespacePrefix.'UserController@trainer')->name('member.user.trainer');
 
 	// Sertifikat
 	Route::get('/member/e-sertifikat/trainer', $namespacePrefix.'SertifikatController@indexTrainer')->name('member.sertifikat.trainer.index');

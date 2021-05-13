@@ -10,6 +10,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Ajifatur\FaturCMS\Exports\UserExport;
 use App\User;
 use Ajifatur\FaturCMS\Models\Komisi;
+use Ajifatur\FaturCMS\Models\PelatihanMember;
 use Ajifatur\FaturCMS\Models\ProfilePhoto;
 use Ajifatur\FaturCMS\Models\Rekening;
 use Ajifatur\FaturCMS\Models\Role;
@@ -147,10 +148,14 @@ class UserController extends Controller
         // Sponsor
         $sponsor = User::where('username','=',$user->reference)->first();
 
+        // Pelatihan member
+        $pelatihan = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->where('id_user','=',$id)->orderBy('tanggal_pelatihan_from','desc')->get();
+
         // View
         return view('faturcms::admin.user.detail', [
             'user' => $user,
             'sponsor' => $sponsor,
+            'pelatihan' => $pelatihan,
             'id_direct' => $id,
         ]);
     }
@@ -287,6 +292,34 @@ class UserController extends Controller
     }
     
     /**
+     * Menampilkan detail trainer
+     * 
+     * int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function trainer($id)
+    {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // Get data user
+        $user = User::join('role','users.role','=','role.id_role')->where('role','=',role('trainer'))->findOrFail($id);
+
+        // Sponsor
+        $sponsor = User::where('username','=',$user->reference)->first();
+
+        // Pelatihan member
+        $pelatihan = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->where('trainer','=',$id)->orderBy('tanggal_pelatihan_from','desc')->get();
+
+        // View
+        return view('faturcms::member.user.trainer', [
+            'user' => $user,
+            'sponsor' => $sponsor,
+            'pelatihan' => $pelatihan,
+        ]);
+    }
+    
+    /**
      * Menampilkan profil sendiri
      * 
      * @return \Illuminate\Http\Response
@@ -302,6 +335,9 @@ class UserController extends Controller
         // Sponsor
         $sponsor = User::where('username','=',$user->reference)->first();
 
+        // Pelatihan member
+        $pelatihan = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->where('id_user','=',Auth::user()->id_user)->orderBy('tanggal_pelatihan_from','desc')->get();
+
         // View
         if(Auth::user()->is_admin == 1){
             return view('faturcms::admin.user.profile', [
@@ -314,6 +350,7 @@ class UserController extends Controller
             return view('faturcms::member.user.profile', [
                 'user' => $user,
                 'sponsor' => $sponsor,
+                'pelatihan' => $pelatihan,
                 'id_direct' => Auth::user()->id_user,
             ]);
         }

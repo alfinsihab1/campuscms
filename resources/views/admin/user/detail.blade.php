@@ -100,11 +100,11 @@
                         </div>
                         <div class="list-group-item d-sm-flex justify-content-between px-0 py-1">
                             <div class="font-weight-bold">Refer:</div>
-                            <div><a href="{{ route('admin.user.refer', ['id' => $user->id_user]) }}">{{ count_refer($user->username) }}</a></div>
+                            <div><a href="{{ route('admin.user.refer', ['id' => $user->id_user]) }}">{{ count_refer($user->username) }} orang</a></div>
                         </div>
                         <div class="list-group-item d-sm-flex justify-content-between px-0 py-1">
                             <div class="font-weight-bold">Refer Aktif:</div>
-                            <div>{{ count_refer_aktif($user->username) }}</div>
+                            <div><a href="{{ route('admin.user.refer', ['id' => $user->id_user]) }}">{{ count_refer_aktif($user->username) }} orang</a></div>
                         </div>
                         @endif
                         <div class="list-group-item d-sm-flex justify-content-between px-0 py-1">
@@ -124,6 +124,73 @@
         <!-- /Column -->
     </div>
     <!-- /Row -->
+
+    @if($user->is_admin == 0)
+    <!-- Row -->
+    <div class="row">
+        <!-- Column -->
+        <div class="col-lg-12">
+            <!-- Tile -->
+            <div class="tile">
+                <!-- Tile Title -->
+                <div class="tile-title">
+                    <h5>Pelatihan yang Diikuti</h5>
+                </div>
+                <!-- /Tile Title -->
+                <!-- Tile Body -->
+                <div class="tile-body">
+                    <div class="table-responsive">
+                        <table id="dataTable" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th width="40">No.</th>
+                                    <th width="100">Waktu</th>
+                                    <th>Pelatihan</th>
+                                    <th width="60">Status</th>
+                                    <th width="40">Opsi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if(count($pelatihan)>0)
+                                    @php $i = 1; @endphp
+                                    @foreach($pelatihan as $data)
+                                    <tr>
+                                        <td>{{ $i }}</td>
+                                        <td>
+                                            <span class="d-none">{{ $data->tanggal_pelatihan_from }}</span>
+                                            {{ date('d/m/Y', strtotime($data->tanggal_pelatihan_from)) }}
+                                            <br>
+                                            <small><i class="fa fa-clock-o mr-1"></i>{{ date('H:i', strtotime($data->tanggal_pelatihan_from)) }} WIB</small>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('admin.pelatihan.detail', ['id' => $data->id_pelatihan]) }}">{{ $data->nama_pelatihan }}</a>
+                                            <br>
+                                            <small><i class="fa fa-tag mr-1"></i>{{ $data->nomor_pelatihan }}</small>
+                                        </td>
+                                        <td><span class="badge {{ $data->status_pelatihan == 1 ? 'badge-success' : 'badge-danger' }}">{{ $data->status_pelatihan == 1 ? 'Lulus' : 'Belum Lulus' }}</span></td>
+                                        <td>
+                                            @if($data->status_pelatihan != 0)
+                                            <div class="btn-group">
+                                                <a href="{{ route('admin.sertifikat.peserta.detail', ['id' => $data->id_pm]) }}" target="_blank" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Cetak"><i class="fa fa-print"></i></a>
+                                            </div>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    @php $i++; @endphp
+                                    @endforeach
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- /Tile Body -->
+            </div>
+            <!-- /Tile -->
+        </div>
+        <!-- /Column -->
+    </div>
+    <!-- /Row -->
+    @endif
 </main>
 <!-- /Main -->
 
@@ -132,6 +199,13 @@
 @endsection
 
 @section('js-extra')
+
+@include('faturcms::template.admin._js-table')
+
+<script type="text/javascript">
+    // DataTable
+    generate_datatable("#dataTable");
+</script>
 
 @include('faturcms::template.admin._js-image', ['imageType' => 'user', 'croppieWidth' => 300, 'croppieHeight' => 300, 'id' => $id_direct])
 

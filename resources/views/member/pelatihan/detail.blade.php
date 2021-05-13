@@ -68,7 +68,7 @@
                         </div>
                         <div class="list-group-item d-sm-flex justify-content-between px-0 py-1">
                             <div class="font-weight-bold">Trainer:</div>
-                            <div>{{ $pelatihan->nama_user }}</div>
+                            <div><a href="{{ route('member.user.trainer', ['id' => $pelatihan->trainer ]) }}">{{ $pelatihan->nama_user }}</a></div>
                         </div>
                         <div class="list-group-item d-sm-flex justify-content-between px-0 py-1">
                             <div class="font-weight-bold">Tempat:</div>

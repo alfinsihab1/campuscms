@@ -1,6 +1,6 @@
 @extends('faturcms::template.admin.main')
 
-@section('title', 'Profil')
+@section('title', 'Trainer')
 
 @section('content')
 
@@ -9,9 +9,9 @@
 
     <!-- Breadcrumb -->
     @include('faturcms::template.admin._breadcrumb', ['breadcrumb' => [
-        'title' => 'Profil',
+        'title' => 'Trainer',
         'items' => [
-            ['text' => 'Profil', 'url' => '#'],
+            ['text' => 'Trainer', 'url' => '#'],
         ]
     ]])
     <!-- /Breadcrumb -->
@@ -34,9 +34,7 @@
                 <!-- Tile Body -->
                 <div class="tile-body">
                     <div class="text-center">
-                        <a href="#" class="btn-image">
-                            <img src="{{ image('assets/images/user/'.$user->foto, 'user') }}" class="img-fluid rounded-circle" height="175" width="175">
-                        </a>
+                        <img src="{{ image('assets/images/user/'.$user->foto, 'user') }}" class="img-fluid rounded-circle" height="175" width="175">
                     </div>
                 </div>
                 <!-- /Tile Body -->
@@ -59,7 +57,6 @@
             <div class="tile">
                 <!-- Tile Body -->
                 <div class="tile-body">
-                    <a class="btn btn-sm btn-primary" href="{{ route('member.profile.edit') }}"><i class="fa fa-edit mr-1"></i>Edit Profil</a>
                     <div class="list-group list-group-flush mt-3">
                         <div class="list-group-item d-sm-flex justify-content-between px-0 py-1">
                             <div class="font-weight-bold">Nama:</div>
@@ -132,7 +129,7 @@
             <div class="tile">
                 <!-- Tile Title -->
                 <div class="tile-title">
-                    <h5>Pelatihan yang Diikuti</h5>
+                    <h5>Pelatihan yang Diampu</h5>
                 </div>
                 <!-- /Tile Title -->
                 <!-- Tile Body -->
@@ -144,7 +141,6 @@
                                     <th width="40">No.</th>
                                     <th width="100">Waktu</th>
                                     <th>Pelatihan</th>
-                                    <th width="60">Status</th>
                                     <th width="40">Opsi</th>
                                 </tr>
                             </thead>
@@ -165,14 +161,7 @@
                                             <br>
                                             <small><i class="fa fa-tag mr-1"></i>{{ $data->nomor_pelatihan }}</small>
                                         </td>
-                                        <td><span class="badge {{ $data->status_pelatihan == 1 ? 'badge-success' : 'badge-danger' }}">{{ $data->status_pelatihan == 1 ? 'Lulus' : 'Belum Lulus' }}</span></td>
-                                        <td>
-                                            @if($data->status_pelatihan != 0)
-                                            <div class="btn-group">
-                                                <a href="{{ route('member.sertifikat.peserta.detail', ['id' => $data->id_pm]) }}" target="_blank" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Cetak"><i class="fa fa-print"></i></a>
-                                            </div>
-                                            @endif
-                                        </td>
+                                        <td>-</td>
                                     </tr>
                                     @php $i++; @endphp
                                     @endforeach
@@ -191,7 +180,6 @@
 </main>
 <!-- /Main -->
 
-@include('faturcms::template.admin._modal-image', ['croppieWidth' => 300, 'croppieHeight' => 300])
 
 @endsection
 
@@ -203,13 +191,5 @@
     // DataTable
     generate_datatable("#dataTable");
 </script>
-
-@include('faturcms::template.admin._js-image', ['imageType' => 'user', 'croppieWidth' => 300, 'croppieHeight' => 300, 'id' => $id_direct])
-
-@endsection
-
-@section('css-extra')
-
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/croppie/croppie.css') }}">
 
 @endsection

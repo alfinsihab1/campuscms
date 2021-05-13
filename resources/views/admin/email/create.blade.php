@@ -179,11 +179,20 @@
         var ids = $("input[name=ids]").val();
         var arrayId = ids.length > 0 ? ids.split(",") : [];
         arrayId.forEach(function(item){
-            $(".input-receivers[data-id="+item+"]").attr("checked", "checked");
+            $(".input-receivers[data-id="+item+"]").prop("checked", true);
             actionChecked($(".input-receivers[data-id="+item+"]"), true);
         });
         countChecked(arrayId);
         $("#modal-search").modal("show");
+    });
+    
+      // Hide Modal Search
+    $('#modal-search').on('hidden.bs.modal', function(){
+        $(".input-receivers").each(function(key,elem){
+            $(elem).prop("checked", false);
+            actionChecked($(elem), false);
+        });
+        countChecked($(".input-receivers:checked"));
     });
     
     // Checkbox Batch

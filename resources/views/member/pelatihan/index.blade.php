@@ -36,7 +36,9 @@
                                         </a>
                                         <div class="card-body text-center">
                                             <p class="h6 my-0"><a href="{{ route('member.pelatihan.detail', ['id' => $data->id_pelatihan]) }}">{{ $data->nama_pelatihan }}</a></p>
-                                            <p class="mt-2 mb-0"><i class="fa fa-user mr-1"></i>{{ $data->nama_user }}</p>
+                                            <p class="mt-2 mb-0">
+                                                <a href="{{ route('member.user.trainer', ['id' => $data->trainer ]) }}"><i class="fa fa-user mr-1"></i>{{ $data->nama_user }}</a>
+                                            </p>
                                         </div>
                                         <div class="card-footer d-flex justify-content-between">
                                             <span><i class="fa fa-calendar mr-1"></i>{{ date('d/m/Y', strtotime($data->tanggal_pelatihan_from)) }}</span>

@@ -6,6 +6,69 @@
     <p class="m-0 text-muted"><small><i class="fa fa-home"></i> > Dashboard</small></p>
   </li></ul> -->
   <ul class="app-nav ml-auto ml-md">
+    <li class="dropdown">
+      <a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Show notifications">
+        <i class="fa fa-bell fa-lg" data-toggle="tooltip" title="Notifikasi"></i>
+        @if(count_notif_member() > 0)
+        <span class="badge badge-info">{{ count_notif_member() }}</span>
+        @endif
+      </a>
+      <ul class="app-notification dropdown-menu dropdown-menu-right">
+        <div class="card">
+          <div class="card-header">
+            <p class="m-0 font-weight-bold">Notifikasi</p>  
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-6 border-right border-bottom">
+                <a class="dropdown-item" href="{{ route('member.filemanager.index', ['kategori' => 'e-course']) }}">
+                  <span class="app-notification__icon p-0"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-success"></i><i class="fa fa-video-camera fa-stack-1x fa-inverse"></i></span>
+                  </span>
+                  <span class="badge badge-pill badge-danger position-absolute">{{ count_notif_file('e-course') }}</span>
+                  <p class="app-notification__message">E-Course<br>Terbaru</p>
+                </a>
+              </div>
+              <div class="col-6 border-bottom">
+                <a class="dropdown-item" href="{{ route('member.filemanager.index', ['kategori' => 'e-learning']) }}">
+                  <span class="app-notification__icon p-0"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-warning"></i><i class="fa fa-folder-open fa-stack-1x fa-inverse"></i></span></span>
+                  <span class="badge badge-pill badge-danger position-absolute">{{ count_notif_file('e-learning') }}</span>
+                  <div>
+                    <p class="app-notification__message">E-Learning<br>Terbaru</p>
+                  </div>
+                </a>
+              </div>
+              <div class="col-6 border-right border-bottom">
+                <a class="dropdown-item" href="{{ route('member.filemanager.index', ['kategori' => 'e-library']) }}">
+                  <span class="app-notification__icon p-0"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-primary"></i><i class="fa fa-folder-open fa-stack-1x fa-inverse"></i></span></span>
+                  <span class="badge badge-pill badge-danger position-absolute">{{ count_notif_file('e-library') }}</span>
+                  <div>
+                    <p class="app-notification__message">E-Library<br>Terbaru</p>
+                  </div>
+                </a>
+              </div>
+              <div class="col-6 border-bottom">
+                <a class="dropdown-item" href="{{ route('member.filemanager.index', ['kategori' => 'e-competence']) }}">
+                  <span class="app-notification__icon p-0"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-info"></i><i class="fa fa-folder-open fa-stack-1x fa-inverse"></i></span></span>
+                  <span class="badge badge-pill badge-danger position-absolute">{{ count_notif_file('e-competence') }}</span>
+                  <div>
+                    <p class="app-notification__message">E-Competence<br>Terbaru</p>
+                  </div>
+                </a>
+              </div>
+              <div class="col-6 border-right">
+                <a class="dropdown-item" href="{{ route('member.pelatihan.index') }}">
+                  <span class="app-notification__icon p-0"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-secondary"></i><i class="fa fa-graduation-cap fa-stack-1x fa-inverse"></i></span></span>
+                  <span class="badge badge-pill badge-danger position-absolute">{{ count_notif_pelatihan_member() }}</span>
+                  <div>
+                    <p class="app-notification__message">Pelatihan<br>Terbaru</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ul>
+    </li>
     <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown"><i class="fa fa-user fa-lg" data-toggle="tooltip" title="Akun"></i></a>
       <ul class="dropdown-menu settings-menu dropdown-menu-right">
         <div class="card">

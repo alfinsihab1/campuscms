@@ -1,10 +1,12 @@
 <header class="app-header align-items-center">
   <a class="app-sidebar__toggle menu-btn-primary d-block" href="#" data-toggle="sidebar"></a>
 
-<!--   <ul class="app-nav d-block"><li class="app-nav__item" style="line-height: 15px">
-    <h5 class="d-inline-block text-truncate m-0" style="max-width: 150px; color: var(--primary)">Dashboard</h5>
-    <p class="m-0 text-muted"><small><i class="fa fa-home"></i> > Dashboard</small></p>
-  </li></ul> -->
+  <ul class="app-nav d-block">
+    <li class="app-nav__item nav-breadcrumb" style="line-height: 15px">
+      <h5 class="d-inline-block text-truncate m-0">Dashboard</h5>
+      <p class="m-0"><small><i class="fa fa-home"></i> > Dashboard</small></p>
+    </li>
+  </ul>
   <ul class="app-nav ml-auto ml-md">
     @if(has_access('KomisiController::index', Auth::user()->role, false) || has_access('WithdrawalController::index', Auth::user()->role, false) || has_access('PelatihanController::transaction', Auth::user()->role, false) || has_access('PackageController::me', Auth::user()->role, false))
     <li class="dropdown">
@@ -159,7 +161,7 @@
             <div class="col-6 col-lg-3 mb-3">
               <a href="{{ route('admin.setting.edit', ['category' => 'icon']) }}">
               <div class="card">
-                <div class="card-body menu-btn-primary rounded-1">
+                <div class="card-body menu-btn-yellow rounded-1">
                   <i class="fa fa-gamepad" style="font-size: 2em"></i>
                   <h5 class="m-0">Icon</h5>
                   <p class="m-0"><small>Icon Website</small></p>
@@ -249,7 +251,7 @@
             <div class="col-12 col-lg mb-3">
               <div class="heading">
                 <h5 class="m-0 font-weight-bold mb-3 d-flex align-items-center">
-                  <i class="fa fa-cogs menu-btn-primary p-3 mr-2 rounded-1"></i>
+                  <i class="fa fa-cogs menu-btn-yellow p-3 mr-2 rounded-1"></i>
                   <div>
                     <p class="m-0">Pengaturan</p>
                   </div>

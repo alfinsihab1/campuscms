@@ -197,7 +197,7 @@
 
 
     .app-header{padding: 30px 30px 0px 30px; position: static; background-color: transparent; box-shadow: none;}
-    .app-header.nav-sticky{padding: 10px 30px 10px 30px; position: sticky; top: 0; transition: var(--transition); background-color: var(--white); box-shadow: var(--shadow); animation: topBottom var(--transition)}
+    .app-header.nav-sticky{padding: 0px 30px 0px 30px; position: sticky; top: 0; transition: var(--transition); background-color: var(--white); box-shadow: var(--shadow); animation: topBottom var(--transition)}
     .app-header.nav-sticky .dropdown{transform: translate();}
     .app-sidebar{padding-top: 0px; box-shadow: var(--shadow)!important}
     .app-content{min-height: unset; margin-top: unset; padding: 30px; background-color: unset; -webkit-transition: unset; -o-transition: unset; transition: }
@@ -213,6 +213,10 @@
 
     a.fab:hover{text-decoration: none;}
     a.fab i{transition: var(--transition)}
+    #top-button{display: inline-block; text-align: center; border-radius: .5em; position: fixed; bottom: 6em; right: 1em; transition: all var(--transition); opacity: 0; visibility: hidden; z-index: 1000;}
+    #top-button:hover{opacity: 1!important; cursor: pointer}
+    #top-button:active{opacity: 1;}
+    #top-button.show{opacity: 1; visibility: visible; animation: bottomTop var(--transition)}
     @keyframes fab{
         0% {transform: scale(1);}
         25% {transform: scale(1);}
@@ -297,6 +301,8 @@
     .menu-btn-primary:hover, .menu-btn-primary:focus{background-color: var(--primary-dark)!important; color: var(--white)!important}
     .menu-btn-blue{background-color: var(--blue-s)!important; color: var(--blue)!important; border-radius: 1em}
     .menu-btn-blue:hover, .menu-bg-blue:focus{background-color: var(--blue)!important; color: var(--white)!important}
+    .menu-btn-yellow{background-color: var(--yellow-s)!important; color: var(--yellow)!important; border-radius: 1em}
+    .menu-btn-yellow:hover, .menu-bg-yellow:focus{background-color: var(--yellow)!important; color: var(--white)!important}
     .menu-bg-red{background-color: var(--red-s)!important; color: var(--red)!important; transition: var(--transition)}
     .menu-bg-red:hover, .menu-bg-red:focus{background-color: var(--red)!important; color: var(--white)!important}
     .menu-bg-green{background-color: var(--green-s)!important; color: var(--green)!important; transition: var(--transition)}
@@ -305,6 +311,8 @@
     .menu-bg-primary:hover, .menu-bg-primary:focus{background-color: var(--primary-dark)!important; color: var(--white)!important}
     .menu-bg-blue{background-color: var(--blue-s)!important; color: var(--blue)!important; transition: var(--transition)}
     .menu-bg-blue:hover, .menu-bg-blue:focus{background-color: var(--blue)!important; color: var(--white)!important}
+    .menu-bg-yellow{background-color: var(--yellow-s)!important; color: var(--yellow)!important; transition: var(--transition)}
+    .menu-bg-yellow:hover, .menu-bg-yellow:focus{background-color: var(--yellow)!important; color: var(--white)!important}
     .btn:not([disabled]):not(.disabled):not(.btn-link):hover, .btn:not([disabled]):not(.disabled):not(.btn-link):focus{transform: unset; box-shadow: unset;}
     .btn-toggle-password{background-color: var(--primary-light); color: var(--primary-dark)}
     .menu-grid .card:hover .media-body{border-left: 1px solid rgba(255,255,255,.7)!important;}
@@ -313,12 +321,15 @@
     .experience .custom-switch{margin-left: 12.5px}
     .list-group-item, .list-group-item:hover, .list-group-item:focus{background-color: unset;}
     .list-group-item-action:hover{color: var(--primary-dark)}
+    .weather{width: 80px}
+    .nav-breadcrumb h5{max-width: 150px; color: var(--primary-dark)}
+    .nav-breadcrumb p{color: var(--gray)}
     @media (max-width: 480px) {
         .app-content {padding: 15px;}
     }
     @media (max-width: 767.98px) {
         .app-header{padding: 15px 15px 0px 15px}
-        .app-header.nav-sticky{padding: 15px 15px 15px 15px}
+        .app-header.nav-sticky{padding: 0px 15px 0px 15px}
         .menu-grid .media-body{border-left: unset!important}    
         .dropdown{position: static;}
         .dropdown-menu{width: 100%}

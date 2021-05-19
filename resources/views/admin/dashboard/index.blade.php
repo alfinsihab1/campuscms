@@ -9,17 +9,31 @@
 
 
     <!-- Breadcrumb -->
-    @include('faturcms::template.admin._breadcrumb', ['breadcrumb' => [
+<!--     @include('faturcms::template.admin._breadcrumb', ['breadcrumb' => [
         'title' => 'Dashboard',
         'items' => [
             ['text' => 'Dashboard', 'url' => '#'],
         ]
-    ]])
+    ]]) -->
     <!-- /Breadcrumb -->
 
+    <div class="greeting">
+    	<div class="card mb-3">
+    		<div class="card-body d-flex flex-column flex-md-row justify-content-between align-items-center">
+    			<div class="order-2 order-md-1">
+    				<h5>Selamat Datang Kembali {{ Auth::user()->nama_user }}</h5>
+	    			<p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit<br>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+	    		</div>	
+    			<div class="order-1 order-md-2 d-flex align-items-center mb-3 mb-md-0"> 
+    				<h1 style="font-size: 4rem" class="m-0">23°</h1>
+    				<span id="demo"></span>
+    			</div>
+    		</div>
+    	</div>
+    </div>
     <div class="menu-grid">
     	<div class="row">
-    		@php $colors = ["red", "green", "primary", "blue"]; @endphp
+    		@php $colors = ["red", "green", "yellow", "blue"]; @endphp
     		@if(count($array_card)>0)
     			@foreach($array_card as $key=>$data)
 		    		<div class="col-6 col-lg-3 mb-3">
@@ -48,13 +62,16 @@
 		    			<div class="media align-items-center">
 			    			<img class="mr-3" width="100" src="https://image.flaticon.com/icons/svg/3731/3731790.svg">
 			    			<div class="media-body">
-			    				<div class="d-flex align-items-center mb-1">
+			    				<div class="d-block d-md-flex align-items-center mb-1">
 					    			<span class="badge menu-bg-red mr-2" data-toggle="tooltip" data-placement="top" title="Percobaan untuk tema dark mode">BETA</span>
 					    			<h5 class="m-0">Experience with dark mode</h5>
 					    		</div>
 					    		<p class="m-0">Aktifkan dark mode untuk merasakan pengalaman baru</p>
 					    		<div class="d-flex align-items-center">
-									<dark-mode-toggle appearance="toggle"></dark-mode-toggle>
+									<dark-mode-toggle
+										appearance="toggle" 
+										remember="" 
+										></dark-mode-toggle>
 									<span class="badge menu-bg-blue" data-toggle="tooltip" data-placement="top" title="Klik untuk mengaktifkan dark mode"><i class="fa fa-chevron-left mr-1"></i> Klik Untuk Mengaktifkan</span>
 								</div>
 				    		</div>
@@ -177,7 +194,20 @@
 		return myChart;
 	}
 </script>
+<script type="text/javascript">
+var today = new Date()
+var curHr = today.getHours()
 
+if (curHr >= 0 && curHr < 6) {
+    document.getElementById("demo").innerHTML = 'What are you doing that early?';
+} else if (curHr >= 6 && curHr < 12) {
+    document.getElementById("demo").innerHTML = '<img class="weather" src="https://image.flaticon.com/icons/svg/3731/3731715.svg">';
+} else if (curHr >= 12 && curHr < 17) {
+    document.getElementById("demo").innerHTML = '<img class="weather" src="https://image.flaticon.com/icons/svg/3731/3731894.svg">';
+} else {
+    document.getElementById("demo").innerHTML = '<img class="weather" src="https://image.flaticon.com/icons/svg/3731/3731916.svg">';
+}
+</script>
 @endsection
 
 @section('css-extra')

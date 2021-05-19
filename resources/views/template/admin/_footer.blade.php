@@ -1,11 +1,5 @@
 <!-- top -->
 <a id="top-button" class="btn btn-primary text-white"><i class="fa fa-arrow-up"></i></a>
-<style type="text/css">
-#top-button{display: inline-block; text-align: center; border-radius: .5em; position: fixed; bottom: 6em; right: 1em; transition: all var(--transition); opacity: 0; visibility: hidden; z-index: 1000;}
-#top-button:hover{opacity: 1!important; cursor: pointer}
-#top-button:active{opacity: 1;}
-#top-button.show{opacity: .5; visibility: visible; animation: bottomTop var(--transition)}
-</style>
 <!-- fab -->
 <div class="fab-wrapper position-fixed d-flex align-items-center justify-content-end text-right" style="bottom: 0; right: 0; z-index: 1;">
 	<div class="bg-white shadow-sm px-3 py-2 mr-2" style="width: fit-content; animation: fab 2s infinite ease; border-radius: 1.5em">

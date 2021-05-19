@@ -9,4 +9,4 @@
 <!-- darkmode -->
 <link rel="manifest" href="{{ asset('manifest-light.webmanifest') }}" data-href-light="{{ asset('manifest-light.webmanifest') }}" data-href-dark="{{ asset('manifest-dark.webmanifest') }}"> 
 <link rel="icon" href="https://cdn.glitch.com/791b2241-459b-4a2e-8cca-c0fdc21f0487%2Flight.png" data-href-light="https://cdn.glitch.com/791b2241-459b-4a2e-8cca-c0fdc21f0487%2Flight.png" data-href-dark="https://cdn.glitch.com/791b2241-459b-4a2e-8cca-c0fdc21f0487%2Fdark.png" sizes="144x144">
-<script type="module" src="{{asset('assets/js/dark-mode.js')}}"></script>
+<script id="dm-script" type="module" src="{{asset('assets/js/dark-mode.js')}}"></script>

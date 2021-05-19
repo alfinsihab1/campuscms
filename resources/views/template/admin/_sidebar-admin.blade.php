@@ -15,14 +15,26 @@
         <li><a class="app-menu__item {{ Request::path() == 'admin' ? 'active' : '' }}" href="{{ route('admin.dashboard') }}"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
         @endif
 
+        @if(has_access('UserController::index', Auth::user()->role, false) || has_access('VisitorController::index', Auth::user()->role, false) || has_access('MediaController::index', Auth::user()->role, false) || has_access('RekeningController::index', Auth::user()->role, false) || has_access('DefaultRekeningController::index', Auth::user()->role, false) || has_access('KomisiController::index', Auth::user()->role, false) || has_access('WithdrawalController::index', Auth::user()->role, false) || has_access('PelatihanController::transaction', Auth::user()->role, false) || has_access('EmailController::index', Auth::user()->role, false))
         <div class="app-menu-title"><span class="font-weight-bold" style="color: var(--primary)">Data</span></div>
+        @endif
+
         @if(has_access('UserController::index', Auth::user()->role, false))
         <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.user.index'))) ? 'active' : '' }}" href="{{ route('admin.user.index') }}"><i class="app-menu__icon fa fa-users"></i><span class="app-menu__label">User</span></a></li>
         @endif
         
-        @if(has_access('VisitorController::index', Auth::user()->role, false) || has_access('VisitorController::topVisitor', Auth::user()->role, false))
-        <li class="treeview {{ is_int(strpos(Request::url(), route('admin.visitor.index'))) ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Statistik</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+        @if(has_access('StatistikController::member', Auth::user()->role, false) || has_access('StatistikController::device', Auth::user()->role, false) || has_access('StatistikController::finance', Auth::user()->role, false) || has_access('VisitorController::index', Auth::user()->role, false) || has_access('VisitorController::topVisitor', Auth::user()->role, false))
+        <li class="treeview {{ is_int(strpos(Request::url(), '/admin/statistik')) || is_int(strpos(Request::url(), route('admin.visitor.index'))) ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Statistik</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
+            @if(has_access('StatistikController::member', Auth::user()->role, false))
+            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.statistik.member'))) ? 'active' : '' }}" href="{{ route('admin.statistik.member') }}"><i class="icon fa fa-circle-o"></i> Member</a></li>
+            @endif
+            @if(has_access('StatistikController::device', Auth::user()->role, false))
+            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.statistik.device'))) ? 'active' : '' }}" href="{{ route('admin.statistik.device') }}"><i class="icon fa fa-circle-o"></i> Perangkat</a></li>
+            @endif
+            @if(has_access('StatistikController::finance', Auth::user()->role, false))
+            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.statistik.finance'))) ? 'active' : '' }}" href="{{ route('admin.statistik.finance') }}"><i class="icon fa fa-circle-o"></i> Keuangan</a></li>
+            @endif
             @if(has_access('VisitorController::index', Auth::user()->role, false))
             <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.visitor.index'))) && !is_int(strpos(Request::url(), route('admin.visitor.top'))) ? 'active' : '' }}" href="{{ route('admin.visitor.index') }}"><i class="icon fa fa-circle-o"></i> Visitor</a></li>
             @endif
@@ -92,8 +104,11 @@
           @endif
         @endif
 
-        @if(has_access('HalamanController::index', Auth::user()->role, false))
+        @if(has_access('HalamanController::index', Auth::user()->role, false) || has_access('BlogController::index', Auth::user()->role, false) || has_access('AcaraController::index', Auth::user()->role, false) || has_access('ProgramController::index', Auth::user()->role, false) || has_access('PelatihanController::index', Auth::user()->role, false) || has_access('KarirController::index', Auth::user()->role, false) || has_access('PsikologController::index', Auth::user()->role, false))
         <div class="app-menu-title"><span class="font-weight-bold" style="color: var(--primary)">Konten</span></div>
+        @endif
+
+        @if(has_access('HalamanController::index', Auth::user()->role, false))
         <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.halaman.index'))) ? 'active' : '' }}" href="{{ route('admin.halaman.index') }}"><i class="app-menu__icon fa fa-newspaper-o"></i><span class="app-menu__label">Halaman</span></a></li>
         @endif
 
@@ -163,7 +178,9 @@
         <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.psikolog.index'))) ? 'active' : '' }}" href="{{ route('admin.psikolog.index') }}"><i class="app-menu__icon fa fa-skyatlas"></i><span class="app-menu__label">Psikolog</span></a></li>
         @endif
 
+        @if(has_access('SertifikatController::indexTrainer', Auth::user()->role, false) || has_access('SertifikatController::indexParticipant', Auth::user()->role, false) || has_access('SignatureController::index', Auth::user()->role, false) || has_access('AbsensiController::index', Auth::user()->role, false))
         <div class="app-menu-title"><span class="font-weight-bold" style="color: var(--primary)">Lainnya</span></div>
+        @endif
 
         @if(has_access('SertifikatController::indexTrainer', Auth::user()->role, false) || has_access('SertifikatController::indexParticipant', Auth::user()->role, false))
         <li class="treeview {{ is_int(strpos(Request::url(), route('admin.sertifikat.trainer.index'))) || is_int(strpos(Request::url(), route('admin.sertifikat.peserta.index'))) ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-certificate"></i><span class="app-menu__label">E-Sertifikat</span><i class="treeview-indicator fa fa-angle-right"></i></a>

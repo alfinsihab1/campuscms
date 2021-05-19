@@ -105,7 +105,8 @@
 
 @section('js-extra')
 
-<script type="text/javascript" src="{{ asset('assets/plugins/chart.js/chart.min.js') }}"></script>
+@include('faturcms::template.admin._js-chart')
+
 <script>
 	$(window).on("load", function(){
 		count_visitor("chartVisitor", "{{ route('api.visitor.count.last-week') }}");
@@ -171,33 +172,6 @@
 					]
 				};
 				chart = generate_chart_line(selector, data);
-			}
-		});
-	}
-
-	function generate_chart_line(selector, data){
-		var ctx = document.getElementById(selector);
-		var myChart = new Chart(ctx, {
-			type: "line",
-			data: {
-				labels: data.labels,
-				datasets: data.datasets
-			},
-			options: {
-				responsive: true,
-				scales: {
-					yAxes: [{
-						ticks: {
-							min: 0,
-							beginAtZero: true,
-							callback: function(value, index, values){
-						        if(Math.floor(value) === value){
-						            return value;
-						        }
-						    }
-						}
-					}]
-				}
 			}
 		});
 		return myChart;

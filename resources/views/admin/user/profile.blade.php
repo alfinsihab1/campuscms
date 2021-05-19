@@ -100,11 +100,11 @@
                         </div>
                         <div class="list-group-item d-sm-flex justify-content-between px-0 py-1">
                             <div class="font-weight-bold">Refer:</div>
-                            <div>{{ count_refer($user->username) }}</div>
+                            <div>{{ count_refer($user->username) }} orang</div>
                         </div>
                         <div class="list-group-item d-sm-flex justify-content-between px-0 py-1">
                             <div class="font-weight-bold">Refer Aktif:</div>
-                            <div>{{ count_refer_aktif($user->username) }}</div>
+                            <div>{{ count_refer_aktif($user->username) }} orang</div>
                         </div>
                         @endif
                         <div class="list-group-item d-sm-flex justify-content-between px-0 py-1">

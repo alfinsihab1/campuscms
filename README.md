@@ -11,7 +11,7 @@ FaturCMS adalah **Content Management System (CMS)** yang menyediakan fitur refer
 
 ## Persyaratan
 - PHP >= 7.2
-- DBMS MySQL
+- DBMS MySQL >= 6.0
 - Laravel >= 7.0
 
 ## Instalasi
@@ -26,7 +26,7 @@ composer require ajifatur/faturcms
 
 ### Konfigurasi File .env:
 
-Ganti konfigurasi *database* pada file __.env___ Anda:
+Ganti konfigurasi *database* pada file __.env__ Anda:
 
 ```sh
 DB_HOST="your_database_host"

@@ -348,10 +348,16 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::get('/admin/logo/images', $namespacePrefix.'SettingController@showLogos')->name('admin.logo.images');
 	Route::get('/admin/icon/images', $namespacePrefix.'SettingController@showIcons')->name('admin.icon.images');
 
+	// Statistik
+	Route::get('/admin/statistik/member', $namespacePrefix.'StatistikController@member')->name('admin.statistik.member');
+	Route::get('/admin/statistik/device', $namespacePrefix.'StatistikController@device')->name('admin.statistik.device');
+	Route::get('/admin/statistik/finance', $namespacePrefix.'StatistikController@finance')->name('admin.statistik.finance');
+
 	// Visitor
 	Route::get('/admin/visitor', $namespacePrefix.'VisitorController@index')->name('admin.visitor.index');
 	Route::get('/admin/visitor/top', $namespacePrefix.'VisitorController@topVisitor')->name('admin.visitor.top');
 	Route::post('/admin/visitor/info', $namespacePrefix.'VisitorController@info')->name('admin.visitor.info');
+	// Route::get('/admin/visitor/update-location', $namespacePrefix.'VisitorController@updateLocation')->name('admin.visitor.update-location');
 
 	// Media
 	Route::get('/admin/media', $namespacePrefix.'MediaController@index')->name('admin.media.index');
@@ -364,9 +370,24 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::get('/admin/log/activity/{id}', $namespacePrefix.'LogController@activity')->name('admin.log.activity');
 	Route::get('/admin/log/login-error', $namespacePrefix.'LogController@login')->name('admin.log.login');
 
-	// API
+	// API Visitor Total
 	Route::get('/admin/api/visitor/count/last-week', $namespacePrefix.'APIController@visitorLastWeek')->name('api.visitor.count.last-week');
 	Route::get('/admin/api/visitor/count/last-month', $namespacePrefix.'APIController@visitorLastMonth')->name('api.visitor.count.last-month');
+
+	// API Member
+	Route::get('/admin/api/member/status', $namespacePrefix.'APIController@memberStatus')->name('api.member.status');
+	Route::get('/admin/api/member/gender', $namespacePrefix.'APIController@memberGender')->name('api.member.gender');
+	Route::get('/admin/api/member/age', $namespacePrefix.'APIController@memberAge')->name('api.member.age');
+
+	// API Visitor Device
+	Route::get('/admin/api/visitor/device', $namespacePrefix.'APIController@visitorDevice')->name('api.visitor.device');
+	Route::get('/admin/api/visitor/browser', $namespacePrefix.'APIController@visitorBrowser')->name('api.visitor.browser');
+	Route::get('/admin/api/visitor/platform', $namespacePrefix.'APIController@visitorPlatform')->name('api.visitor.platform');
+
+	// API Finance
+	Route::get('/admin/api/finance/income', $namespacePrefix.'APIController@income')->name('api.finance.income');
+	Route::get('/admin/api/finance/outcome', $namespacePrefix.'APIController@outcome')->name('api.finance.outcome');
+	Route::get('/admin/api/finance/revenue/{month}/{year}', $namespacePrefix.'APIController@revenue')->name('api.finance.revenue');
 });
 
 // Member Capabilities
@@ -416,6 +437,7 @@ Route::group(['middleware' => ['faturcms.member']], function() use ($namespacePr
 	Route::get('/member/pelatihan/peserta/{id}', $namespacePrefix.'PelatihanController@participant')->name('member.pelatihan.participant');
 	Route::post('/member/pelatihan/register', $namespacePrefix.'PelatihanController@register')->name('member.pelatihan.register');
 	Route::post('/member/pelatihan/update-status', $namespacePrefix.'PelatihanController@updateStatus')->name('member.pelatihan.updatestatus');
+	Route::get('/member/user/trainer/{id}', $namespacePrefix.'UserController@trainer')->name('member.user.trainer');
 
 	// Sertifikat
 	Route::get('/member/e-sertifikat/trainer', $namespacePrefix.'SertifikatController@indexTrainer')->name('member.sertifikat.trainer.index');

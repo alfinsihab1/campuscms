@@ -231,7 +231,7 @@ if(!function_exists('generate_nomor_pelatihan')){
         if($num < 10) $num = '0'.$num;
 
         // Return
-        return $num.'/'.kategori_pelatihan($kategori).'/'.setting('site.sertifikat.kode').'/'.date('Y', strtotime(generate_date_range('explode', $tanggal_pelatihan)['from']));
+        return $num.'/'.str_replace(' ', '-', kategori_pelatihan($kategori)).'/'.setting('site.sertifikat.kode').'/'.date('Y', strtotime(generate_date_range('explode', $tanggal_pelatihan)['from']));
     }
 }
 

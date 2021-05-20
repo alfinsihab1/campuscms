@@ -137,6 +137,7 @@
 
     // Thousand format
     function thousand_format(angka, prefix = ''){
+        var isPositive = angka >= 0 ? true : false;
         var number_string = angka.toString().replace(/\D/g,'');
         number_string = (number_string.length > 1) ? number_string.replace(/^(0+)/g, '') : number_string;
         var split = number_string.split(',');
@@ -150,7 +151,7 @@
         }
      
         rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-        return prefix + "" + rupiah;
+        return isPositive ? prefix + "" + rupiah : prefix + "-" + rupiah;
     }
 
     // Get file extension

@@ -226,31 +226,52 @@
 </div>
 <!-- /Modal Konfirmasi -->
 @endif
+
+<!-- Modal Intro -->
 <div class="modal fade" id="modal-intro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header align-items-center">
                 <img width="30" class="mr-3" src="{{asset('assets/images/icon/'.setting('site.icon'))}}">
-                <h5 class="modal-title" id="exampleModalLabel">Selamat datang di {{ $deskripsi->judul_deskripsi }}</h5>
+                <h5 class="modal-title" id="exampleModalLabel">{{ count($popup)>0 && Auth::user()->status == 1 ? 'Informasi' : $deskripsi->judul_deskripsi }}</h5>
                 <button type="button" class="close menu-btn-green" data-dismiss="modal" aria-label="Close" style="padding: .5em .7em; border-radius: .5em; margin-right: 0">
                     <span aria-hidden="true"><i class="fa fa-times"></i></span>
                 </button>
             </div>
-            <form id="form-confirm" method="post" action="{{ route('member.komisi.confirm') }}" enctype="multipart/form-data">
-                <div class="modal-body">
-                    <p>{{ $deskripsi->deskripsi }}</p>
+            <div class="modal-body">
+                @if(count($popup)>0 && Auth::user()->status == 1)
+                <div class="owl-carousel owl-theme carousel-popup">
+                    @foreach($popup as $data)
+                        @if($data->popup_tipe == 1)
+                        <div class="item">
+                            <a href="#" title="{{ $data->popup_judul }}. Klik untuk info lebih lanjut">
+                                <img src="{{ asset('assets/images/pop-up/'.$data->popup) }}" class="img-fluid">
+                            </a>
+                        </div>
+                        @elseif($data->popup_tipe == 2)
+                        <div class="item item-video">
+                            <a class="owl-video" href="{{ $data->popup }}" title="{{ $data->popup_judul }}. Klik untuk info lebih lanjut"></a>
+                        </div>
+                        @endif
+                    @endforeach
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn menu-btn-red" data-dismiss="modal">Tutup</button>
-                </div>
-            </form>
+                @else
+                <p>{{ $deskripsi->deskripsi }}</p>
+                @endif
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn menu-btn-red" data-dismiss="modal">Tutup</button>
+            </div>
         </div>
     </div>
 </div>
+<!-- /Modal Intro -->
+
 @endsection
 
 @section('js-extra')
 
+<script type="text/javascript" src="{{ asset('assets/plugins/owlcarousel/owl.carousel.min.js') }}"></script>
 <script type="text/javascript">
     // Button Confirm
     $(document).on("click", ".btn-confirm", function(e){
@@ -268,6 +289,31 @@
         $('#modal-intro').modal('show');
     });
 </script>
+@if(count($popup)>0 && Auth::user()->status == 1)
+<script type="text/javascript">
+    var owl = $(".carousel-popup").owlCarousel({
+        loop: true,
+        nav: true,
+        dots: false,
+        items: 1,
+        autoHeight: true,
+        autoplay: true,
+        autoplayTimeout: 5000,
+        autoplayHoverPause: true,
+        video: true,
+    });
+    owl.on('changed.owl.carousel', function(event) {
+        if($(".owl-item.active iframe", this.$element).length > 0){
+            $(".owl-item.active iframe", this.$element).remove();
+        }
+    });
+    
+    // Hide Modal Intro
+    $('#modal-intro').on('hidden.bs.modal', function(){
+        owl.trigger('destroy.owl.carousel');
+    });
+</script>
+@endif
 <script type="text/javascript">
 const span = document.getElementById('clicktocopy');
 
@@ -285,4 +331,20 @@ span.addEventListener("copy", function(event) {
 });
 
 </script>
+
+@endsection
+
+@section('css-extra')
+
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/owlcarousel/owl.carousel.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/owlcarousel/owl.theme.default.min.css') }}">
+<style type="text/css">
+    #modal-intro .modal-body {height: 70vh; overflow-y: auto;}
+    .owl-nav {position: absolute; width: 100%; top: 45%;}
+    .owl-carousel .owl-nav button.owl-prev {position: absolute; font-size: 30px; top: 0; left: -10px; width: 20px; background-color: var(--primary-light); color: var(--primary-dark);}
+    .owl-carousel .owl-nav button.owl-next {position: absolute; font-size: 30px; top: 0; right: -10px; width: 20px; background-color: var(--primary-light); color: var(--primary-dark);}
+    .owl-carousel .owl-nav button.owl-prev:hover, .owl-carousel .owl-nav button.owl-next:hover {background-color: var(--primary-dark); color: var(--primary-light);}
+    .item-video, .item-video iframe {height: 400px;}
+</style>
+
 @endsection

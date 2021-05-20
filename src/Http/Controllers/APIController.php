@@ -195,10 +195,11 @@ class APIController extends Controller
     public function visitorBrowser()
     {
         // Data visitor
+        $visitorAll = Visitor::join('users','visitor.id_user','=','users.id_user')->count();
         $visitorChrome = Visitor::join('users','visitor.id_user','=','users.id_user')->where('browser','like','%'.'"family":"Chrome"'.'%')->orWhere('browser','like','%'.'"family":"Chrome Mobile"'.'%')->count();
         $visitorFirefox = Visitor::join('users','visitor.id_user','=','users.id_user')->where('browser','like','%'.'"family":"Firefox"'.'%')->count();
         $visitorOpera = Visitor::join('users','visitor.id_user','=','users.id_user')->where('browser','like','%'.'"family":"Opera"'.'%')->count();
-        $visitorLainnya = Visitor::join('users','visitor.id_user','=','users.id_user')->where('browser','=',null)->count();
+        $visitorLainnya = $visitorAll - ($visitorChrome + $visitorFirefox + $visitorOpera);
 
         // Response
         return response()->json([
@@ -220,11 +221,12 @@ class APIController extends Controller
     public function visitorPlatform()
     {
         // Data visitor
+        $visitorAll = Visitor::join('users','visitor.id_user','=','users.id_user')->count();
         $visitorWindows = Visitor::join('users','visitor.id_user','=','users.id_user')->where('platform','like','%'.'"family":"Windows"'.'%')->count();
         $visitorLinux = Visitor::join('users','visitor.id_user','=','users.id_user')->where('platform','like','%'.'"family":"Linux"'.'%')->count();
         $visitorMac = Visitor::join('users','visitor.id_user','=','users.id_user')->where('platform','like','%'.'"family":"Mac"'.'%')->count();
         $visitorAndroid = Visitor::join('users','visitor.id_user','=','users.id_user')->where('platform','like','%'.'"family":"Android"'.'%')->count();
-        $visitorLainnya = Visitor::join('users','visitor.id_user','=','users.id_user')->where('platform','=',null)->count();
+        $visitorLainnya = $visitorAll - ($visitorWindows + $visitorLinux + $visitorMac + $visitorAndroid);
 
         // Response
         return response()->json([

@@ -16,11 +16,13 @@
  * @method int count_artikel_by_kategori(int $kategori)
  * @method int count_komentar(int $artikel)
  * @method int count_kunjungan(int $user, string $jenis)
+ * @method int count_anggota_kelompok(int $id)
  */
 
 use App\User;
 use Ajifatur\FaturCMS\Models\Blog;
 use Ajifatur\FaturCMS\Models\Files;
+use Ajifatur\FaturCMS\Models\Kelompok;
 use Ajifatur\FaturCMS\Models\Komentar;
 use Ajifatur\FaturCMS\Models\Komisi;
 use Ajifatur\FaturCMS\Models\Package;
@@ -159,6 +161,27 @@ if(!function_exists('count_kunjungan')){
         else{
             $data = Visitor::join('users','visitor.id_user','=','users.id_user')->where('visitor.id_user','=',$user)->whereDate('visit_at','=',generate_date_format($jenis, 'y-m-d'))->count();
             return $data;
+        }
+    }
+}
+
+// Menghitung jumlah anggota dalam kelompok
+if(!function_exists('count_anggota_kelompok')){
+    function count_anggota_kelompok($id){
+        // Kelompok
+        $kelompok = Kelompok::find($id);
+
+        // Check kelompok
+        if(!$kelompok) return 0;
+        else{
+            // Explode if exists
+            $ids = explode(',', $kelompok->anggota_kelompok);
+
+            if(count($ids)>0){
+                $anggota = User::where('is_admin','=',0)->where('status','=',1)->whereIn('id_user',$ids)->count();
+                return $anggota;
+            }
+            else return 0;
         }
     }
 }

@@ -50,7 +50,9 @@
                             beginAtZero: true,
                             callback: function(value, index, values){
                                 if(moneyFormat == true){
-                                    return thousand_format(value.toString(), 'Rp ');
+                                    if(Math.floor(value) === value){
+                                        return thousand_format(value.toString(), 'Rp ');
+                                    } 
                                 }
                                 else{
                                     if(Math.floor(value) === value){

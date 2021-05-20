@@ -4,21 +4,21 @@ namespace Ajifatur\FaturCMS\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Popup extends Model
+class Kelompok extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'popup';
+    protected $table = 'kelompok';
 
     /**
      * The primary key for the model.
      *
      * @var string
      */
-    protected $primaryKey = 'id_popup';
+    protected $primaryKey = 'id_kelompok';
 
     /**
      * The attributes that are mass assignable.
@@ -26,7 +26,7 @@ class Popup extends Model
      * @var array
      */
     protected $fillable = [
-        'popup_judul', 'popup_tipe', 'popup', 'popup_konten', 'popup_from', 'popup_to', 'popup_at',
+        'nama_kelompok', 'anggota_kelompok', 'kelompok_at',
     ];
 
     /**

@@ -23,6 +23,11 @@
         <div class="col-md-12">
             <!-- Tile -->
             <div class="tile">
+                <!-- Tile Title -->
+                <div class="tile-title-w-btn">
+                    <h5>Pelatihan: {{ $pelatihan->nama_pelatihan }}</h5>
+                </div>
+                <!-- /Tile Title -->
                 <!-- Tile Body -->
                 <div class="tile-body">
                     @if(Session::get('message') != null)

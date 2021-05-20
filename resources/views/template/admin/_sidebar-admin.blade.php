@@ -20,7 +20,16 @@
         @endif
 
         @if(has_access('UserController::index', Auth::user()->role, false))
-        <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.user.index'))) ? 'active' : '' }}" href="{{ route('admin.user.index') }}"><i class="app-menu__icon fa fa-users"></i><span class="app-menu__label">User</span></a></li>
+        <li class="treeview {{ is_int(strpos(Request::url(), '/admin/user')) || is_int(strpos(Request::url(), route('admin.user.index'))) ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-users"></i><span class="app-menu__label">User</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+          <ul class="treeview-menu">
+            @if(has_access('UserController::index', Auth::user()->role, false))
+            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.user.index'))) && !is_int(strpos(Request::url(), route('admin.user.kelompok.index'))) ? 'active' : '' }}" href="{{ route('admin.user.index') }}"><i class="icon fa fa-circle-o"></i> Data User</a></li>
+            @endif
+            @if(has_access('KelompokController::index', Auth::user()->role, false))
+            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.user.kelompok.index'))) ? 'active' : '' }}" href="{{ route('admin.user.kelompok.index') }}"><i class="icon fa fa-circle-o"></i> Kelompok</a></li>
+            @endif
+          </ul>
+        </li>
         @endif
         
         @if(has_access('StatistikController::member', Auth::user()->role, false) || has_access('StatistikController::device', Auth::user()->role, false) || has_access('StatistikController::finance', Auth::user()->role, false) || has_access('VisitorController::index', Auth::user()->role, false) || has_access('VisitorController::topVisitor', Auth::user()->role, false))
@@ -104,7 +113,7 @@
           @endif
         @endif
 
-        @if(has_access('HalamanController::index', Auth::user()->role, false) || has_access('BlogController::index', Auth::user()->role, false) || has_access('AcaraController::index', Auth::user()->role, false) || has_access('ProgramController::index', Auth::user()->role, false) || has_access('PelatihanController::index', Auth::user()->role, false) || has_access('KarirController::index', Auth::user()->role, false) || has_access('PsikologController::index', Auth::user()->role, false))
+        @if(has_access('HalamanController::index', Auth::user()->role, false) || has_access('BlogController::index', Auth::user()->role, false) || has_access('AcaraController::index', Auth::user()->role, false) || has_access('ProgramController::index', Auth::user()->role, false) || has_access('PelatihanController::index', Auth::user()->role, false) || has_access('KarirController::index', Auth::user()->role, false) || has_access('PsikologController::index', Auth::user()->role, false) || has_access('PopupController::index', Auth::user()->role, false))
         <div class="app-menu-title"><span class="font-weight-bold" style="color: var(--primary)">Konten</span></div>
         @endif
 
@@ -176,6 +185,10 @@
 
         @if(has_access('PsikologController::index', Auth::user()->role, false))
         <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.psikolog.index'))) ? 'active' : '' }}" href="{{ route('admin.psikolog.index') }}"><i class="app-menu__icon fa fa-skyatlas"></i><span class="app-menu__label">Psikolog</span></a></li>
+        @endif
+
+        @if(has_access('PopupController::index', Auth::user()->role, false))
+        <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.pop-up.index'))) ? 'active' : '' }}" href="{{ route('admin.pop-up.index') }}"><i class="app-menu__icon fa fa-info-circle"></i><span class="app-menu__label">Pop-Up</span></a></li>
         @endif
 
         @if(has_access('SertifikatController::indexTrainer', Auth::user()->role, false) || has_access('SertifikatController::indexParticipant', Auth::user()->role, false) || has_access('SignatureController::index', Auth::user()->role, false) || has_access('AbsensiController::index', Auth::user()->role, false))

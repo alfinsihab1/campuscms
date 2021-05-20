@@ -149,7 +149,7 @@ class SertifikatController extends Controller
 			$member = PelatihanMember::join('users','pelatihan_member.id_user','=','users.id_user')->where('pelatihan_member.id_user','=',Auth::user()->id_user)->where('status_pelatihan','!=',0)->findOrFail($id);
 		}
 		
-		$qrcode = base64_encode(QrCode::format('png')->size(200)->backgroundColor(0,0,0,0)->errorCorrection('H')->generate(url()->to('/cek-sertifikat/'.$member->id_pm)));
+		$qrcode = base64_encode(QrCode::format('png')->size(200)->backgroundColor(0,0,0,0)->errorCorrection('H')->generate(url()->to('/check-certificate/'.$member->id_pm)));
 
 		// Data pelatihan
 		$pelatihan = Pelatihan::join('users','pelatihan.trainer','=','users.id_user')->join('kategori_pelatihan','pelatihan.kategori_pelatihan','=','kategori_pelatihan.id_kp')->find($member->id_pelatihan);
@@ -187,45 +187,19 @@ class SertifikatController extends Controller
     }
 	
     /**
-     * Menampilkan ID Card Member
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function idcard()
-    {
-        ini_set('max_execution_time', 300);
-		
-		if(Auth::user()->is_admin == 0){
-			// Data Member
-			$member = User::join('role','users.role','=','role.id_role')->find(Auth::user()->id_user);
-
-			// Jika tidak ada
-			if(!$member){
-				abort(404);
-			}
-		}
-
-		// View PDF
-		$pdf = PDF::loadview('id-card', [
-			'member' => $member,
-		]);
-		//$pdf->setPaper('A4', 'landscape');
-		
-        return $pdf->stream("ID Card.pdf");
-    }
-	
-    /**
      * Cek Sertifikat Peserta
      *
      * int $id
      * @return \Illuminate\Http\Response
      */
-    public function checkParticipant($id)
+    public function check($id)
     {
 		// Data Member
-		$member = PelatihanMember::join('users','pelatihan_member.id_user','=','users.id_user')->where('status_pelatihan','!=',0)->find($id);
+		$member = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->join('users','pelatihan_member.id_user','=','users.id_user')->where('status_pelatihan','!=',0)->find($id);
 		
 		// View
-		return view('front/cek-sertifikat', ['member' => $member]);
+		return view('auth.'.setting('site.view.check_certificate'), [
+			'member' => $member
+		]);
     }
 }

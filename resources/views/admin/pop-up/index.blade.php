@@ -44,8 +44,8 @@
                                     <th width="20"><input type="checkbox"></th>
                                     <th>Judul</th>
                                     <th width="150">Gambar / Video</th>
-                                    <th width="100">Waktu Awal</th>
-                                    <th width="100">Waktu Akhir</th>
+                                    <th width="90">Waktu Awal</th>
+                                    <th width="90">Waktu Akhir</th>
                                     <th width="60">Opsi</th>
                                 </tr>
                             </thead>
@@ -54,7 +54,15 @@
                                 <tr>
                                     <td><input type="checkbox"></td>
                                     <td>{{ $data->popup_judul }}</td>
-                                    <td>{{ $data->popup }}</td>
+                                    <td>
+                                        @if($data->popup_tipe == 1)
+                                        <a href="{{ asset('assets/images/pop-up/'.$data->popup) }}" class="btn-magnify-popup" title="Gambar Pop-Up">
+                                            <img src="{{ asset('assets/images/pop-up/'.$data->popup) }}" class="img-thumbnail" style="max-width: 150px;">
+                                        </a>
+                                        @elseif($data->popup_tipe == 2)
+                                        <a href="{{ $data->popup }}" class="btn btn-sm btn-secondary btn-magnify-popup video-link" data-toggle="tooltip" title="Video Pop-Up"><i class="fa fa-video-camera"></i></a>
+                                        @endif
+                                    </td>
                                     <td>
                                         <span class="d-none">{{ $data->popup_from }}</span>
                                         {{ date('d/m/Y', strtotime($data->popup_from)) }}
@@ -100,5 +108,11 @@
     // DataTable
     generate_datatable("#dataTable");
 </script>
+
+@endsection
+
+@section('css-extra')
+
+<link rel="stylesheet" type="text/css" href="{{ asset('templates/vali-admin/vendor/magnific-popup/magnific-popup.css') }}">
 
 @endsection

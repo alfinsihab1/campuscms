@@ -1,6 +1,6 @@
 @extends('faturcms::template.admin.main')
 
-@section('title', 'Tambah Pop-Up')
+@section('title', 'Edit Pop-Up')
 
 @section('content')
 
@@ -9,10 +9,10 @@
 
     <!-- Breadcrumb -->
     @include('faturcms::template.admin._breadcrumb', ['breadcrumb' => [
-        'title' => 'Tambah Pop-Up',
+        'title' => 'Edit Pop-Up',
         'items' => [
             ['text' => 'Pop-Up', 'url' => route('admin.pop-up.index')],
-            ['text' => 'Tambah Pop-Up', 'url' => '#'],
+            ['text' => 'Edit Pop-Up', 'url' => '#'],
         ]
     ]])
     <!-- /Breadcrumb -->
@@ -25,12 +25,13 @@
             <div class="tile">
                 <!-- Tile Body -->
                 <div class="tile-body">
-                    <form id="form" method="post" action="{{ route('admin.pop-up.store') }}" enctype="multipart/form-data">
+                    <form id="form" method="post" action="{{ route('admin.pop-up.update') }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
+                        <input type="hidden" name="id" value="{{ $popup->id_popup }}">
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label">Judul <span class="text-danger">*</span></label>
                             <div class="col-md-10">
-                                <input type="text" name="popup_judul" class="form-control {{ $errors->has('popup_judul') ? 'is-invalid' : '' }}" value="{{ old('popup_judul') }}">
+                                <input type="text" name="popup_judul" class="form-control {{ $errors->has('popup_judul') ? 'is-invalid' : '' }}" value="{{ $popup->popup_judul }}">
                                 @if($errors->has('popup_judul'))
                                 <div class="small text-danger mt-1">{{ ucfirst($errors->first('popup_judul')) }}</div>
                                 @endif
@@ -40,11 +41,11 @@
                             <label class="col-md-2 col-form-label">Tipe <span class="text-danger">*</span></label>
                             <div class="col-md-10">
                                 <div class="form-check">
-                                  <input class="form-check-input" type="radio" name="popup_tipe" id="tipe-1" value="1" {{ old('popup_tipe') == 1 || old('popup_tipe') == null ? 'checked' : '' }}>
+                                  <input class="form-check-input" type="radio" name="popup_tipe" id="tipe-1" value="1" {{ $popup->popup_tipe == 1 ? 'checked' : '' }}>
                                   <label class="form-check-label" for="tipe-1">Gambar</label>
                                 </div>
                                 <div class="form-check">
-                                  <input class="form-check-input" type="radio" name="popup_tipe" id="tipe-2" value="2" {{ old('popup_tipe') == 2 ? 'checked' : '' }}>
+                                  <input class="form-check-input" type="radio" name="popup_tipe" id="tipe-2" value="2" {{ $popup->popup_tipe == 2 ? 'checked' : '' }}>
                                   <label class="form-check-label" for="tipe-2">Video</label>
                                 </div>
                                 @if($errors->has('popup_tipe'))
@@ -52,19 +53,19 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group row {{ old('popup_tipe') == 1 || old('popup_tipe') == null ? '' : 'd-none' }}" id="input-tipe-1">
+                        <div class="form-group row {{ $popup->popup_tipe == 1 ? '' : 'd-none' }}" id="input-tipe-1">
                             <label class="col-md-2 col-form-label">Gambar <span class="text-danger">*</span></label>
                             <div class="col-md-10">
                                 <input type="file" id="file" name="foto" class="d-none" accept="image/*">
                                 <a class="btn btn-sm btn-secondary btn-browse-file" href="#"><i class="fa fa-image mr-2"></i>Pilih Gambar...</a>
                                 <br>
-                                <img id="img-file" class="mt-2 img-thumbnail d-none" style="max-height: 150px">
+                                <img id="img-file" class="mt-2 img-thumbnail {{ $popup->popup_tipe == 1 ? '' : 'd-none' }}" src="{{ $popup->popup_tipe == 1 ? asset('assets/images/pop-up/'.$popup->popup) : '' }}" style="max-height: 150px">
                                 @if($errors->has('foto'))
                                 <div class="small text-danger mt-1">{{ ucfirst($errors->first('foto')) }}</div>
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group row {{ old('popup_tipe') == 2 ? '' : 'd-none' }}" id="input-tipe-2">
+                        <div class="form-group row {{ $popup->popup_tipe == 2 ? '' : 'd-none' }}" id="input-tipe-2">
                             <label class="col-md-2 col-form-label">Video <span class="text-danger">*</span></label>
                             <div class="col-md-10">
                                 <input type="text" name="popup" class="form-control {{ $errors->has('popup') ? 'is-invalid' : '' }}" value="{{ old('popup') }}">
@@ -77,7 +78,7 @@
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label">Waktu Aktif Pop-Up <span class="text-danger">*</span></label>
                             <div class="col-md-10">
-                                <input type="text" name="popup_waktu" class="form-control {{ $errors->has('popup_waktu') ? 'is-invalid' : '' }}" value="{{ old('popup_waktu') }}">
+                                <input type="text" name="popup_waktu" class="form-control {{ $errors->has('popup_waktu') ? 'is-invalid' : '' }}">
                                 @if($errors->has('popup_waktu'))
                                 <div class="small text-danger mt-1">{{ ucfirst($errors->first('popup_waktu')) }}</div>
                                 @endif
@@ -87,7 +88,7 @@
                             <label class="col-md-2 col-form-label">Deskripsi</label>
                             <div class="col-md-10">
                                 <textarea name="deskripsi" class="d-none"></textarea>
-                                <div id="editor"></div> 
+                                <div id="editor">{!! html_entity_decode($popup->popup_konten) !!}</div> 
                                 @if($errors->has('deskripsi'))
                                 <div class="small text-danger mt-1">{{ ucfirst($errors->first('deskripsi')) }}</div>
                                 @endif
@@ -128,8 +129,8 @@
         $("input[name=popup_waktu]").daterangepicker({
             showDropdowns: true,
             autoApply: true,
-            startDate: "{{ date('d/m/Y') }}",
-            endDate: "{{ date('d/m/Y') }}",
+            startDate: "{{ date('d/m/Y', strtotime($popup->popup_from)) }}",
+            endDate: "{{ date('d/m/Y', strtotime($popup->popup_to)) }}",
             locale: {
               format: 'DD/MM/YYYY'
             }

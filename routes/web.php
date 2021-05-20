@@ -259,6 +259,7 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::get('/admin/pop-up', $namespacePrefix.'PopupController@index')->name('admin.pop-up.index');
 	Route::get('/admin/pop-up/create', $namespacePrefix.'PopupController@create')->name('admin.pop-up.create');
 	Route::post('/admin/pop-up/store', $namespacePrefix.'PopupController@store')->name('admin.pop-up.store');
+	Route::get('/admin/pop-up/detail/{id}', $namespacePrefix.'PopupController@detail')->name('admin.pop-up.detail');
 	Route::get('/admin/pop-up/edit/{id}', $namespacePrefix.'PopupController@edit')->name('admin.pop-up.edit');
 	Route::post('/admin/pop-up/update', $namespacePrefix.'PopupController@update')->name('admin.pop-up.update');
 	Route::post('/admin/pop-up/delete', $namespacePrefix.'PopupController@delete')->name('admin.pop-up.delete');

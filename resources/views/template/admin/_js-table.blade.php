@@ -37,7 +37,13 @@
                     },
                     gallery: {
                         enabled: true
-                    }
+                    },
+                    callbacks: {
+                        elementParse: function(item) {
+                            // Change type if video
+                            item.type = $(item.el).hasClass("video-link") ? "iframe" : "image";
+                        }
+                    },
                 });
             },
             columnDefs: [

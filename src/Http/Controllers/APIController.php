@@ -4,7 +4,10 @@ namespace Ajifatur\FaturCMS\Http\Controllers;
 
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use App\User;
+use Ajifatur\FaturCMS\Models\Files;
+use Ajifatur\FaturCMS\Models\Kelompok;
 use Ajifatur\FaturCMS\Models\Komisi;
 use Ajifatur\FaturCMS\Models\PelatihanMember;
 use Ajifatur\FaturCMS\Models\Visitor;
@@ -478,5 +481,287 @@ class APIController extends Controller
                 ]
             ]
         ]);
+    }
+
+    /**
+     * Kunjungan berdasarkan tanggal
+     * 
+     * @return \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function byTanggalKunjungan(Request $request)
+    {
+        // User total
+        $userTotal = User::where('is_admin','=',0)->where('status','=',1)->get();
+
+        $userLoginA = $userLoginB = $userLoginC = $userLoginD = 0;
+        if(count($userTotal)>0){
+            foreach($userTotal as $user){
+                if(count_kunjungan($user->id_user, [generate_date_format($request->query('tanggal1'), 'y-m-d'), generate_date_format($request->query('tanggal2'), 'y-m-d')]) == 0) $userLoginA++;
+                elseif(count_kunjungan($user->id_user, [generate_date_format($request->query('tanggal1'), 'y-m-d'), generate_date_format($request->query('tanggal2'), 'y-m-d')]) >= 1 && count_kunjungan($user->id_user, [generate_date_format($request->query('tanggal1'), 'y-m-d'), generate_date_format($request->query('tanggal2'), 'y-m-d')]) <= 5) $userLoginB++;
+                elseif(count_kunjungan($user->id_user, [generate_date_format($request->query('tanggal1'), 'y-m-d'), generate_date_format($request->query('tanggal2'), 'y-m-d')]) >= 6 && count_kunjungan($user->id_user, [generate_date_format($request->query('tanggal1'), 'y-m-d'), generate_date_format($request->query('tanggal2'), 'y-m-d')]) <= 10) $userLoginC++;
+                elseif(count_kunjungan($user->id_user, [generate_date_format($request->query('tanggal1'), 'y-m-d'), generate_date_format($request->query('tanggal2'), 'y-m-d')]) > 10) $userLoginD++;
+            }
+        }
+
+        // Response
+        return response()->json([
+            'status' => 200,
+            'message' => 'Success!',
+            'data' => [
+                'labels' => ['Tidak Login', 'Login 1-5 kali', 'Login 6-10 kali', 'Login >10 kali'],
+                'data' => [$userLoginA, $userLoginB, $userLoginC, $userLoginD],
+                'total' => number_format(count($userTotal),0,'.','.')
+            ]
+        ]);
+    }
+
+    /**
+     * Ikut pelatihan berdasarkan tanggal
+     * 
+     * @return \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function byTanggalIkutPelatihan(Request $request)
+    {
+        // Data total
+        $userTotal = User::where('is_admin','=',0)->where('status','=',1)->get();
+
+        $userPelatihan0 = $userPelatihan1 = $userPelatihan2 = $userPelatihan3 = $userPelatihan4 = $userPelatihanMore = 0;
+        if(count($userTotal)>0){
+            foreach($userTotal as $user){
+                if(count_pelatihan_member($user->id_user, [generate_date_format($request->query('tanggal1'), 'y-m-d'), generate_date_format($request->query('tanggal2'), 'y-m-d')]) == 0) $userPelatihan0++;
+                elseif(count_pelatihan_member($user->id_user, [generate_date_format($request->query('tanggal1'), 'y-m-d'), generate_date_format($request->query('tanggal2'), 'y-m-d')]) == 1) $userPelatihan1++;
+                elseif(count_pelatihan_member($user->id_user, [generate_date_format($request->query('tanggal1'), 'y-m-d'), generate_date_format($request->query('tanggal2'), 'y-m-d')]) == 2) $userPelatihan2++;
+                elseif(count_pelatihan_member($user->id_user, [generate_date_format($request->query('tanggal1'), 'y-m-d'), generate_date_format($request->query('tanggal2'), 'y-m-d')]) == 3) $userPelatihan3++;
+                elseif(count_pelatihan_member($user->id_user, [generate_date_format($request->query('tanggal1'), 'y-m-d'), generate_date_format($request->query('tanggal2'), 'y-m-d')]) == 4) $userPelatihan4++;
+                elseif(count_pelatihan_member($user->id_user, [generate_date_format($request->query('tanggal1'), 'y-m-d'), generate_date_format($request->query('tanggal2'), 'y-m-d')]) > 4) $userPelatihanMore++;
+            }
+        }
+
+        // Response
+        return response()->json([
+            'status' => 200,
+            'message' => 'Success!',
+            'data' => [
+                'labels' => ['Tidak Pernah Ikut', 'Ikut 1 kali', 'Ikut 2 kali', 'Ikut 3 kali', 'Ikut 4 kali', 'Ikut > 4'],
+                'data' => [$userPelatihan0, $userPelatihan1, $userPelatihan2, $userPelatihan3, $userPelatihan4, $userPelatihanMore],
+                'total' => number_format(count($userTotal),0,'.','.')
+            ]
+        ]);
+    }
+
+    /**
+     * Churn Rate
+     * 
+     * @return \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function byTanggalChurnRate(Request $request)
+    {
+        // Response
+        return response()->json([
+            'status' => 200,
+            'message' => 'Success!',
+            'data' => [
+                'labels' => ['Tidak Login 1 bulan terakhir', 'Tidak Login 2 bulan terakhir', 'Tidak Login 3 bulan terakhir'],
+                'data' => [count_churn_rate(1), count_churn_rate(2), count_churn_rate(3)],
+                'total' => number_format(count_churn_rate(1) + count_churn_rate(2) + count_churn_rate(3),0,'.','.')
+            ]
+        ]);
+    }
+
+    /**
+     * Get user by kelompok
+     * 
+     * @return \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function getUserByKelompok(Request $request)
+    {
+        // Data kelompok
+        $kelompok = Kelompok::findOrFail($request->query('id'));
+
+        // Data anggota
+        $ids = explode(',', $kelompok->anggota_kelompok);
+        $anggota = User::where('is_admin','=',0)->where('status','=',1)->whereIn('id_user',$ids)->orderBy('nama_user','asc')->get();
+
+        // Response
+        return response()->json([
+            'status' => 200,
+            'message' => 'Success!',
+            'data' => $anggota
+        ]);
+    }
+
+    /**
+     * Get pelatihan by user
+     * 
+     * @return \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function getPelatihanByUser(Request $request)
+    {
+        // Data user
+        $user = User::findOrFail($request->query('id'));
+
+        // Data pelatihan
+        $pelatihan = PelatihanMember::join('users','pelatihan_member.id_user','=','users.id_user')->join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->where('pelatihan_member.id_user','=',$user->id_user)->orderBy('nama_pelatihan','desc')->get();
+
+        // Response
+        return response()->json([
+            'status' => 200,
+            'message' => 'Success!',
+            'data' => $pelatihan
+        ]);
+    }
+
+    /**
+     * Login by kelompok - user - pelatihan
+     * 
+     * @return \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function byKelompokLogin(Request $request)
+    {
+        ini_set('max_execution_time', '300');
+
+        // Data member pelatihan
+        $member = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->join('users','pelatihan_member.id_user','=','users.id_user')->where('pelatihan_member.id_pelatihan','=',$request->query('id'))->first();
+
+        if($member){
+            // Array data
+            $tanggal = [];
+            $visit = [];
+            $tanggal_awal = $member->tanggal_pelatihan_from;
+            $tanggal_akhir = $member->tanggal_pelatihan_to;
+            while(strtotime($tanggal_awal) < strtotime($tanggal_akhir)){
+                // Custom data
+                $count_visit = Visitor::where('id_user','=',$member->id_user)->whereDate('visit_at','=',$tanggal_awal)->count();
+
+                // Push first
+                array_push($tanggal, date('d/m/y', strtotime($tanggal_awal)));
+                array_push($visit, $count_visit);
+
+                // Replace then
+                $tanggal_awal = date("Y-m-d", strtotime("+1 day", strtotime($tanggal_awal)));
+            }
+
+            // Response
+            return response()->json([
+                'status' => 200,
+                'message' => 'Success!',
+                'data' => [
+                    'tanggal' => $tanggal,
+                    'visit' => $visit,
+                ]
+            ]);
+        }
+        else{
+            // Response
+            return response()->json([
+                'status' => 404,
+                'message' => 'Not Found!',
+                'data' => [],
+            ]);
+        }
+    }
+
+    /**
+     * Aktivitas by kelompok - user - pelatihan
+     * 
+     * @return \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function byKelompokAktivitas(Request $request)
+    {
+        ini_set('max_execution_time', '300');
+
+        // Data member pelatihan
+        $member = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->join('users','pelatihan_member.id_user','=','users.id_user')->where('pelatihan_member.id_pelatihan','=',$request->query('pelatihan'))->where('pelatihan_member.id_user','=',$request->query('user'))->first();
+
+        if($member){
+            // Logs
+            $logs = $this->toObject('logs/user-activities/'.$member->id_user.'.log');
+
+            // Array data
+            $tanggal = [];
+            $view_ebook = [];
+            $view_video = [];
+
+            $tanggal_awal = $member->tanggal_pelatihan_from;
+            $tanggal_akhir = $member->tanggal_pelatihan_to;
+            while(strtotime($tanggal_awal) < strtotime($tanggal_akhir)){
+                // Custom data
+                $count_view_ebook = 0;
+                $count_view_video = 0;
+
+                // Aktivitas
+                if($logs != false){
+                    if(count($logs)>0){
+                        // Loop logs
+                        foreach($logs as $log){
+                            if(is_int(strpos($log->url, '/file/detail/')) && date('d/m/y', $log->time) == date('d/m/y', strtotime($tanggal_awal))){
+                                // Get last segment
+                                $segments = explode('/', $log->url);
+                                $id_file = end($segments);
+
+                                // Get file
+                                $file = Files::join('folder_kategori','file.file_kategori','=','folder_kategori.id_fk')->find($id_file);
+                                if($file){
+                                    if($file->tipe_kategori == 'ebook') $count_view_ebook++;
+                                    elseif($file->tipe_kategori == 'video') $count_view_video++;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Push first
+                array_push($tanggal, date('d/m/y', strtotime($tanggal_awal)));
+                array_push($view_ebook, $count_view_ebook);
+                array_push($view_video, $count_view_video);
+
+                // Replace then
+                $tanggal_awal = date("Y-m-d", strtotime("+1 day", strtotime($tanggal_awal)));
+            }
+
+            // Response
+            return response()->json([
+                'status' => 200,
+                'message' => 'Success!',
+                'data' => [
+                    'tanggal' => $tanggal,
+                    'view_ebook' => $view_ebook,
+                    'view_video' => $view_video,
+                ]
+            ]);
+        }
+        else{
+            // Response
+            return response()->json([
+                'status' => 404,
+                'message' => 'Not Found!',
+                'data' => [],
+            ]);
+        }
+    }
+
+    /**
+     * Mengkonversi konten file log ke object
+     *
+     * string $path
+     * @return \Illuminate\Http\Response
+     */
+    public function toObject($path)
+    {
+        if(File::exists(storage_path($path))){
+            $logs = File::get(storage_path($path));
+            $logs = substr($logs, 0, -1);
+            $logs = "[".$logs."]";
+            $logs = json_decode($logs);
+            return $logs;
+        }
+        else return false;   
     }
 }

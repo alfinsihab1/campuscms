@@ -63,6 +63,8 @@ class PermissionSeeder extends Seeder
             ['key' => 'StatistikController::member', 'name' => 'Menampilkan Statistik Member'],
             ['key' => 'StatistikController::device', 'name' => 'Menampilkan Statistik Perangkat'],
             ['key' => 'StatistikController::finance', 'name' => 'Menampilkan Statistik Keuangan'],
+            ['key' => 'StatistikController::byTanggal', 'name' => 'Menampilkan Statistik Berdasarkan Tanggal'],
+            ['key' => 'StatistikController::byKelompok', 'name' => 'Menampilkan Statistik Berdasarkan Kelompok'],
 
             // Visitor
             ['key' => 'VisitorController::index', 'name' => 'Menampilkan Data Visitor'],
@@ -71,6 +73,7 @@ class PermissionSeeder extends Seeder
             // Log
             ['key' => 'LogController::index', 'name' => 'Menampilkan Data Log'],
             ['key' => 'LogController::activity', 'name' => 'Menampilkan Log Aktivitas'],
+            ['key' => 'LogController::deleteActivity', 'name' => 'Menghapus Log Aktivitas'],
             ['key' => 'LogController::login', 'name' => 'Menampilkan Log Login'],
 
             // Media

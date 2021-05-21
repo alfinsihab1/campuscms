@@ -32,7 +32,7 @@
         </li>
         @endif
         
-        @if(has_access('StatistikController::member', Auth::user()->role, false) || has_access('StatistikController::device', Auth::user()->role, false) || has_access('StatistikController::finance', Auth::user()->role, false) || has_access('VisitorController::index', Auth::user()->role, false) || has_access('VisitorController::topVisitor', Auth::user()->role, false))
+        @if(has_access('StatistikController::member', Auth::user()->role, false) || has_access('StatistikController::device', Auth::user()->role, false) || has_access('StatistikController::finance', Auth::user()->role, false) || has_access('StatistikController::byTanggal', Auth::user()->role, false) || has_access('StatistikController::byKelompok', Auth::user()->role, false) || has_access('VisitorController::index', Auth::user()->role, false) || has_access('VisitorController::topVisitor', Auth::user()->role, false))
         <li class="treeview {{ is_int(strpos(Request::url(), '/admin/statistik')) || is_int(strpos(Request::url(), route('admin.visitor.index'))) ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Statistik</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
             @if(has_access('StatistikController::member', Auth::user()->role, false))
@@ -43,6 +43,12 @@
             @endif
             @if(has_access('StatistikController::finance', Auth::user()->role, false))
             <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.statistik.finance'))) ? 'active' : '' }}" href="{{ route('admin.statistik.finance') }}"><i class="icon fa fa-circle-o"></i> Keuangan</a></li>
+            @endif
+            @if(has_access('StatistikController::byTanggal', Auth::user()->role, false))
+            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.statistik.by-tanggal'))) ? 'active' : '' }}" href="{{ route('admin.statistik.by-tanggal') }}"><i class="icon fa fa-circle-o"></i> Berdasarkan Tanggal</a></li>
+            @endif
+            @if(has_access('StatistikController::byKelompok', Auth::user()->role, false))
+            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.statistik.by-kelompok'))) ? 'active' : '' }}" href="{{ route('admin.statistik.by-kelompok') }}"><i class="icon fa fa-circle-o"></i> Berdasarkan Kelompok</a></li>
             @endif
             @if(has_access('VisitorController::index', Auth::user()->role, false))
             <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.visitor.index'))) && !is_int(strpos(Request::url(), route('admin.visitor.top'))) ? 'active' : '' }}" href="{{ route('admin.visitor.index') }}"><i class="icon fa fa-circle-o"></i> Visitor</a></li>

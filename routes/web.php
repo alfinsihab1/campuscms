@@ -149,6 +149,14 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::post('/admin/file-manager/{kategori}/folder/move', $namespacePrefix.'FolderController@move')->name('admin.folder.move');
 	Route::get('/admin/folder/images', $namespacePrefix.'FolderController@showImages')->name('admin.folder.images');
 
+	// Kategori Folder
+	Route::get('/admin/folder/kategori', $namespacePrefix.'FolderKategoriController@index')->name('admin.folder.kategori.index');
+	Route::get('/admin/folder/kategori/create', $namespacePrefix.'FolderKategoriController@create')->name('admin.folder.kategori.create');
+	Route::post('/admin/folder/kategori/store', $namespacePrefix.'FolderKategoriController@store')->name('admin.folder.kategori.store');
+	Route::get('/admin/folder/kategori/edit/{id}', $namespacePrefix.'FolderKategoriController@edit')->name('admin.folder.kategori.edit');
+	Route::post('/admin/folder/kategori/update', $namespacePrefix.'FolderKategoriController@update')->name('admin.folder.kategori.update');
+	Route::post('/admin/folder/kategori/delete', $namespacePrefix.'FolderKategoriController@delete')->name('admin.folder.kategori.delete');
+
 	// Artikel
 	Route::get('/admin/blog', $namespacePrefix.'BlogController@index')->name('admin.blog.index');
 	Route::get('/admin/blog/create', $namespacePrefix.'BlogController@create')->name('admin.blog.create');
@@ -404,6 +412,9 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::get('/admin/api/visitor/device', $namespacePrefix.'APIController@visitorDevice')->name('api.visitor.device');
 	Route::get('/admin/api/visitor/browser', $namespacePrefix.'APIController@visitorBrowser')->name('api.visitor.browser');
 	Route::get('/admin/api/visitor/platform', $namespacePrefix.'APIController@visitorPlatform')->name('api.visitor.platform');
+	Route::get('/admin/api/visitor/city', $namespacePrefix.'APIController@visitorCity')->name('api.visitor.city');
+	Route::get('/admin/api/visitor/region', $namespacePrefix.'APIController@visitorRegion')->name('api.visitor.region');
+	Route::get('/admin/api/visitor/country', $namespacePrefix.'APIController@visitorCountry')->name('api.visitor.country');
 
 	// API Finance
 	Route::get('/admin/api/finance/income', $namespacePrefix.'APIController@income')->name('api.finance.income');

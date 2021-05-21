@@ -111,6 +111,10 @@ class PermissionSeeder extends Seeder
             ['key' => 'FolderController::create', 'name' => 'Menambah Folder'],
             ['key' => 'FolderController::edit', 'name' => 'Mengupdate Folder'],
             ['key' => 'FolderController::delete', 'name' => 'Menghapus Folder'],
+            ['key' => 'FolderKategoriController::index', 'name' => 'Menampilkan Data Kategori Folder'],
+            ['key' => 'FolderKategoriController::create', 'name' => 'Menambah Kategori Folder'],
+            ['key' => 'FolderKategoriController::edit', 'name' => 'Mengupdate Kategori Folder'],
+            ['key' => 'FolderKategoriController::delete', 'name' => 'Menghapus Kategori Folder'],
 
             // Halaman
             ['key' => 'HalamanController::index', 'name' => 'Menampilkan Data Halaman'],

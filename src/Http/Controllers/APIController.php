@@ -241,6 +241,83 @@ class APIController extends Controller
     }
 
     /**
+     * Kota visitor
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function visitorCity()
+    {
+        // Data visitor
+        $visitorAll = Visitor::join('users','visitor.id_user','=','users.id_user')->count();
+        $visitorJakarta = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','like','%'.'"cityName":"Jakarta"'.'%')->count();
+        $visitorSemarang = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','like','%'.'"cityName":"Semarang"'.'%')->count();
+        $visitorYogyakarta = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','like','%'.'"cityName":"Yogyakarta"'.'%')->count();
+        $visitorLainnya = $visitorAll - ($visitorJakarta + $visitorSemarang + $visitorYogyakarta);
+
+        // Response
+        return response()->json([
+            'status' => 200,
+            'message' => 'Success!',
+            'data' => [
+                'labels' => ['Jakarta', 'Semarang', 'Yogyakarta', 'Lainnya'],
+                'data' => [$visitorJakarta, $visitorSemarang, $visitorYogyakarta, $visitorLainnya],
+                'total' => number_format($visitorJakarta + $visitorSemarang + $visitorYogyakarta + $visitorLainnya,0,'.','.')
+            ]
+        ]);
+    }
+
+    /**
+     * Region visitor
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function visitorRegion()
+    {
+        // Data visitor
+        $visitorAll = Visitor::join('users','visitor.id_user','=','users.id_user')->count();
+        $visitorJakarta = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','like','%'.'"regionName":"Jakarta"'.'%')->count();
+        $visitorWestJava = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','like','%'.'"regionName":"West Java"'.'%')->count();
+        $visitorCentralJava = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','like','%'.'"regionName":"Central Java"'.'%')->count();
+        $visitorEastJava = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','like','%'.'"regionName":"East Java"'.'%')->count();
+        $visitorLainnya = $visitorAll - ($visitorJakarta + $visitorWestJava + $visitorCentralJava + $visitorEastJava);
+
+        // Response
+        return response()->json([
+            'status' => 200,
+            'message' => 'Success!',
+            'data' => [
+                'labels' => ['Jakarta', 'Jabar', 'Jateng', 'Jatim', 'Lainnya'],
+                'data' => [$visitorJakarta, $visitorWestJava, $visitorCentralJava, $visitorEastJava, $visitorLainnya],
+                'total' => number_format($visitorJakarta + $visitorWestJava + $visitorCentralJava + $visitorEastJava + $visitorLainnya,0,'.','.')
+            ]
+        ]);
+    }
+
+    /**
+     * Negara visitor
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function visitorCountry()
+    {
+        // Data visitor
+        $visitorAll = Visitor::join('users','visitor.id_user','=','users.id_user')->count();
+        $visitorIndonesia = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','like','%'.'"countryName":"Indonesia"'.'%')->count();
+        $visitorLainnya = $visitorAll - ($visitorIndonesia);
+
+        // Response
+        return response()->json([
+            'status' => 200,
+            'message' => 'Success!',
+            'data' => [
+                'labels' => ['Indonesia', 'Lainnya'],
+                'data' => [$visitorIndonesia, $visitorLainnya],
+                'total' => number_format($visitorIndonesia + $visitorLainnya,0,'.','.')
+            ]
+        ]);
+    }
+
+    /**
      * Income
      * 
      * @return \Illuminate\Http\Response

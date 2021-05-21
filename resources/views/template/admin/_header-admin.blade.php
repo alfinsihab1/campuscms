@@ -247,7 +247,7 @@
               </div>
             </div>
             @endif
-            @if(has_access('SettingController::edit', Auth::user()->role, false))
+            @if(has_access('SettingController::edit', Auth::user()->role, false) || has_access('FolderKategoriController::index', Auth::user()->role, false))
             <div class="col-12 col-lg mb-3">
               <div class="heading">
                 <h5 class="m-0 font-weight-bold mb-3 d-flex align-items-center">
@@ -264,6 +264,7 @@
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.setting.edit', ['category' => 'receivers']) }}"><i class="fa fa-circle-o"></i> Notifikasi</a>
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.setting.edit', ['category' => 'referral']) }}"><i class="fa fa-circle-o"></i> Referral</a>
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.setting.edit', ['category' => 'server']) }}"><i class="fa fa-circle-o"></i> Server</a>
+                <a class="list-group-item list-group-item-action" href="{{ route('admin.folder.kategori.index') }}"><i class="fa fa-circle-o"></i> Kategori Folder</a>
               </div>
             </div>
             @endif

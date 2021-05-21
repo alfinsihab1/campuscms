@@ -195,10 +195,11 @@ class APIController extends Controller
     public function visitorBrowser()
     {
         // Data visitor
+        $visitorAll = Visitor::join('users','visitor.id_user','=','users.id_user')->count();
         $visitorChrome = Visitor::join('users','visitor.id_user','=','users.id_user')->where('browser','like','%'.'"family":"Chrome"'.'%')->orWhere('browser','like','%'.'"family":"Chrome Mobile"'.'%')->count();
         $visitorFirefox = Visitor::join('users','visitor.id_user','=','users.id_user')->where('browser','like','%'.'"family":"Firefox"'.'%')->count();
         $visitorOpera = Visitor::join('users','visitor.id_user','=','users.id_user')->where('browser','like','%'.'"family":"Opera"'.'%')->count();
-        $visitorLainnya = Visitor::join('users','visitor.id_user','=','users.id_user')->where('browser','=',null)->count();
+        $visitorLainnya = $visitorAll - ($visitorChrome + $visitorFirefox + $visitorOpera);
 
         // Response
         return response()->json([
@@ -220,11 +221,12 @@ class APIController extends Controller
     public function visitorPlatform()
     {
         // Data visitor
+        $visitorAll = Visitor::join('users','visitor.id_user','=','users.id_user')->count();
         $visitorWindows = Visitor::join('users','visitor.id_user','=','users.id_user')->where('platform','like','%'.'"family":"Windows"'.'%')->count();
         $visitorLinux = Visitor::join('users','visitor.id_user','=','users.id_user')->where('platform','like','%'.'"family":"Linux"'.'%')->count();
         $visitorMac = Visitor::join('users','visitor.id_user','=','users.id_user')->where('platform','like','%'.'"family":"Mac"'.'%')->count();
         $visitorAndroid = Visitor::join('users','visitor.id_user','=','users.id_user')->where('platform','like','%'.'"family":"Android"'.'%')->count();
-        $visitorLainnya = Visitor::join('users','visitor.id_user','=','users.id_user')->where('platform','=',null)->count();
+        $visitorLainnya = $visitorAll - ($visitorWindows + $visitorLinux + $visitorMac + $visitorAndroid);
 
         // Response
         return response()->json([
@@ -234,6 +236,83 @@ class APIController extends Controller
                 'labels' => ['Windows', 'Linux', 'Mac', 'Android', 'Lainnya'],
                 'data' => [$visitorWindows, $visitorLinux, $visitorMac, $visitorAndroid, $visitorLainnya],
                 'total' => number_format($visitorWindows + $visitorLinux + $visitorMac + $visitorAndroid + $visitorLainnya,0,'.','.')
+            ]
+        ]);
+    }
+
+    /**
+     * Kota visitor
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function visitorCity()
+    {
+        // Data visitor
+        $visitorAll = Visitor::join('users','visitor.id_user','=','users.id_user')->count();
+        $visitorJakarta = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','like','%'.'"cityName":"Jakarta"'.'%')->count();
+        $visitorSemarang = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','like','%'.'"cityName":"Semarang"'.'%')->count();
+        $visitorYogyakarta = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','like','%'.'"cityName":"Yogyakarta"'.'%')->count();
+        $visitorLainnya = $visitorAll - ($visitorJakarta + $visitorSemarang + $visitorYogyakarta);
+
+        // Response
+        return response()->json([
+            'status' => 200,
+            'message' => 'Success!',
+            'data' => [
+                'labels' => ['Jakarta', 'Semarang', 'Yogyakarta', 'Lainnya'],
+                'data' => [$visitorJakarta, $visitorSemarang, $visitorYogyakarta, $visitorLainnya],
+                'total' => number_format($visitorJakarta + $visitorSemarang + $visitorYogyakarta + $visitorLainnya,0,'.','.')
+            ]
+        ]);
+    }
+
+    /**
+     * Region visitor
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function visitorRegion()
+    {
+        // Data visitor
+        $visitorAll = Visitor::join('users','visitor.id_user','=','users.id_user')->count();
+        $visitorJakarta = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','like','%'.'"regionName":"Jakarta"'.'%')->count();
+        $visitorWestJava = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','like','%'.'"regionName":"West Java"'.'%')->count();
+        $visitorCentralJava = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','like','%'.'"regionName":"Central Java"'.'%')->count();
+        $visitorEastJava = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','like','%'.'"regionName":"East Java"'.'%')->count();
+        $visitorLainnya = $visitorAll - ($visitorJakarta + $visitorWestJava + $visitorCentralJava + $visitorEastJava);
+
+        // Response
+        return response()->json([
+            'status' => 200,
+            'message' => 'Success!',
+            'data' => [
+                'labels' => ['Jakarta', 'Jabar', 'Jateng', 'Jatim', 'Lainnya'],
+                'data' => [$visitorJakarta, $visitorWestJava, $visitorCentralJava, $visitorEastJava, $visitorLainnya],
+                'total' => number_format($visitorJakarta + $visitorWestJava + $visitorCentralJava + $visitorEastJava + $visitorLainnya,0,'.','.')
+            ]
+        ]);
+    }
+
+    /**
+     * Negara visitor
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function visitorCountry()
+    {
+        // Data visitor
+        $visitorAll = Visitor::join('users','visitor.id_user','=','users.id_user')->count();
+        $visitorIndonesia = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','like','%'.'"countryName":"Indonesia"'.'%')->count();
+        $visitorLainnya = $visitorAll - ($visitorIndonesia);
+
+        // Response
+        return response()->json([
+            'status' => 200,
+            'message' => 'Success!',
+            'data' => [
+                'labels' => ['Indonesia', 'Lainnya'],
+                'data' => [$visitorIndonesia, $visitorLainnya],
+                'total' => number_format($visitorIndonesia + $visitorLainnya,0,'.','.')
             ]
         ]);
     }

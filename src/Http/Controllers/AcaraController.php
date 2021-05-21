@@ -96,7 +96,7 @@ class AcaraController extends Controller
     }
 
     /**
-     * Menampilkan form detail acara
+     * Menampilkan detail acara
      *
      * int $id
      * @return \Illuminate\Http\Response

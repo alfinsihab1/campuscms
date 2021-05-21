@@ -76,6 +76,63 @@
             <!-- /Tile -->
         </div>
         <!-- /Column -->
+        <!-- Column -->
+        <div class="col-xl-4 col-md-6">
+            <!-- Tile -->
+            <div class="tile">
+                <!-- Tile Title -->
+                <div class="tile-title-w-btn">
+                    <h5>Lokasi (Kota)</h5>
+                </div>
+                <!-- /Tile Title -->
+                <!-- Tile Body -->
+                <div class="tile-body">
+                    <canvas id="chartCity" width="400" height="270"></canvas>
+                    <p class="text-center mt-2 mb-0">Total: <strong id="total-city">0</strong></p>
+                </div>
+                <!-- /Tile Body -->
+            </div>
+            <!-- /Tile -->
+        </div>
+        <!-- /Column -->
+        <!-- Column -->
+        <div class="col-xl-4 col-md-6">
+            <!-- Tile -->
+            <div class="tile">
+                <!-- Tile Title -->
+                <div class="tile-title-w-btn">
+                    <h5>Lokasi (Region)</h5>
+                </div>
+                <!-- /Tile Title -->
+                <!-- Tile Body -->
+                <div class="tile-body">
+                    <canvas id="chartRegion" width="400" height="270"></canvas>
+                    <p class="text-center mt-2 mb-0">Total: <strong id="total-region">0</strong></p>
+                </div>
+                <!-- /Tile Body -->
+            </div>
+            <!-- /Tile -->
+        </div>
+        <!-- /Column -->
+        <!-- Column -->
+        <div class="col-xl-4 col-md-6">
+            <!-- Tile -->
+            <div class="tile">
+                <!-- Tile Title -->
+                <div class="tile-title-w-btn">
+                    <h5>Lokasi (Negara)</h5>
+                </div>
+                <!-- /Tile Title -->
+                <!-- Tile Body -->
+                <div class="tile-body">
+                    <canvas id="chartCountry" width="400" height="270"></canvas>
+                    <p class="text-center mt-2 mb-0">Total: <strong id="total-country">0</strong></p>
+                </div>
+                <!-- /Tile Body -->
+            </div>
+            <!-- /Tile -->
+        </div>
+        <!-- /Column -->
     </div>
     <!-- /Row -->
 </main>
@@ -140,6 +197,60 @@
                 };
                 generate_chart_doughnut("chartPlatform", data);
                 $("#total-platform").text(thousand_format(response.data.total));
+            }
+        });
+
+        // Load chart city
+        $.ajax({
+            type: "get",
+            url: "{{ route('api.visitor.city') }}",
+            success: function(response){
+                var data = {
+                    labels: response.data.labels,
+                    datasets: [{
+                        data: response.data.data,
+                        backgroundColor: ["#034c9d", "#df2028", "#f7d800", "#a3acb3"],
+                        borderWidth: 0
+                    }]
+                };
+                generate_chart_doughnut("chartCity", data);
+                $("#total-city").text(thousand_format(response.data.total));
+            }
+        });
+
+        // Load chart region
+        $.ajax({
+            type: "get",
+            url: "{{ route('api.visitor.region') }}",
+            success: function(response){
+                var data = {
+                    labels: response.data.labels,
+                    datasets: [{
+                        data: response.data.data,
+                        backgroundColor: ["#034c9d", "#f7c700", "#444", "#a4c639", "#a3acb3"],
+                        borderWidth: 0
+                    }]
+                };
+                generate_chart_doughnut("chartRegion", data);
+                $("#total-region").text(thousand_format(response.data.total));
+            }
+        });
+
+        // Load chart country
+        $.ajax({
+            type: "get",
+            url: "{{ route('api.visitor.country') }}",
+            success: function(response){
+                var data = {
+                    labels: response.data.labels,
+                    datasets: [{
+                        data: response.data.data,
+                        backgroundColor: ["#f70000", "#a3acb3"],
+                        borderWidth: 0
+                    }]
+                };
+                generate_chart_doughnut("chartCountry", data);
+                $("#total-country").text(thousand_format(response.data.total));
             }
         });
     });

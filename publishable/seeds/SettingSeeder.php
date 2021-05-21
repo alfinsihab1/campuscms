@@ -54,6 +54,7 @@ class SettingSeeder extends Seeder
             ['key' => 'site.view.register', 'name' => 'View Register', 'category' => kategori_setting('view'), 'rules' => 'required'],
             ['key' => 'site.view.forgot_password', 'name' => 'View Forgot Password', 'category' => kategori_setting('view'), 'rules' => 'required'],
             ['key' => 'site.view.email_verification', 'name' => 'View Email Verification', 'category' => kategori_setting('view'), 'rules' => 'required'],
+            ['key' => 'site.view.check_certificate', 'name' => 'View Cek Sertifikat', 'category' => kategori_setting('view'), 'rules' => 'required'],
             ['key' => 'site.view.sertifikat_trainer', 'name' => 'View Sertifikat Trainer', 'category' => kategori_setting('view'), 'rules' => 'required'],
             ['key' => 'site.view.sertifikat_peserta', 'name' => 'View Sertifikat Peserta', 'category' => kategori_setting('view'), 'rules' => 'required'],
 

@@ -16,6 +16,9 @@ $namespacePrefix = '\\'.config('faturcms.controllers.namespace').'\\';
 
 // Guest Capabilities
 Route::group(['middleware' => ['faturcms.guest']], function() use ($namespacePrefix){
+	// Cek Sertifikat
+	Route::get('/check-certificate/{id}', $namespacePrefix.'SertifikatController@check')->name('site.check-certificate');
+
 	// Login
 	Route::get('/login', $namespacePrefix.'LoginController@showLoginForm')->name('auth.login');
 	Route::post('/login', $namespacePrefix.'LoginController@login')->name('auth.postlogin');
@@ -67,6 +70,15 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::get('/admin/user/export', $namespacePrefix.'UserController@export')->name('admin.user.export');
 	Route::post('/admin/user/update-photo', $namespacePrefix.'UserController@updatePhoto')->name('admin.user.updatephoto');
 	Route::get('/admin/user/images', $namespacePrefix.'UserController@showImages')->name('admin.user.images');
+
+	// Kelompok User
+	Route::get('/admin/user/kelompok', $namespacePrefix.'KelompokController@index')->name('admin.user.kelompok.index');
+	Route::get('/admin/user/kelompok/create', $namespacePrefix.'KelompokController@create')->name('admin.user.kelompok.create');
+	Route::post('/admin/user/kelompok/store', $namespacePrefix.'KelompokController@store')->name('admin.user.kelompok.store');
+	Route::get('/admin/user/kelompok/detail/{id}', $namespacePrefix.'KelompokController@detail')->name('admin.user.kelompok.detail');
+	Route::get('/admin/user/kelompok/edit/{id}', $namespacePrefix.'KelompokController@edit')->name('admin.user.kelompok.edit');
+	Route::post('/admin/user/kelompok/update', $namespacePrefix.'KelompokController@update')->name('admin.user.kelompok.update');
+	Route::post('/admin/user/kelompok/delete', $namespacePrefix.'KelompokController@delete')->name('admin.user.kelompok.delete');
 
 	// Rekening
 	Route::get('/admin/rekening', $namespacePrefix.'RekeningController@index')->name('admin.rekening.index');
@@ -136,6 +148,14 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::post('/admin/file-manager/{kategori}/folder/delete', $namespacePrefix.'FolderController@delete')->name('admin.folder.delete');
 	Route::post('/admin/file-manager/{kategori}/folder/move', $namespacePrefix.'FolderController@move')->name('admin.folder.move');
 	Route::get('/admin/folder/images', $namespacePrefix.'FolderController@showImages')->name('admin.folder.images');
+
+	// Kategori Folder
+	Route::get('/admin/folder/kategori', $namespacePrefix.'FolderKategoriController@index')->name('admin.folder.kategori.index');
+	Route::get('/admin/folder/kategori/create', $namespacePrefix.'FolderKategoriController@create')->name('admin.folder.kategori.create');
+	Route::post('/admin/folder/kategori/store', $namespacePrefix.'FolderKategoriController@store')->name('admin.folder.kategori.store');
+	Route::get('/admin/folder/kategori/edit/{id}', $namespacePrefix.'FolderKategoriController@edit')->name('admin.folder.kategori.edit');
+	Route::post('/admin/folder/kategori/update', $namespacePrefix.'FolderKategoriController@update')->name('admin.folder.kategori.update');
+	Route::post('/admin/folder/kategori/delete', $namespacePrefix.'FolderKategoriController@delete')->name('admin.folder.kategori.delete');
 
 	// Artikel
 	Route::get('/admin/blog', $namespacePrefix.'BlogController@index')->name('admin.blog.index');
@@ -242,6 +262,15 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::get('/admin/psikolog/edit/{id}', $namespacePrefix.'PsikologController@edit')->name('admin.psikolog.edit');
 	Route::post('/admin/psikolog/update', $namespacePrefix.'PsikologController@update')->name('admin.psikolog.update');
 	Route::post('/admin/psikolog/delete', $namespacePrefix.'PsikologController@delete')->name('admin.psikolog.delete');
+
+	// Pop-Up
+	Route::get('/admin/pop-up', $namespacePrefix.'PopupController@index')->name('admin.pop-up.index');
+	Route::get('/admin/pop-up/create', $namespacePrefix.'PopupController@create')->name('admin.pop-up.create');
+	Route::post('/admin/pop-up/store', $namespacePrefix.'PopupController@store')->name('admin.pop-up.store');
+	Route::get('/admin/pop-up/detail/{id}', $namespacePrefix.'PopupController@detail')->name('admin.pop-up.detail');
+	Route::get('/admin/pop-up/edit/{id}', $namespacePrefix.'PopupController@edit')->name('admin.pop-up.edit');
+	Route::post('/admin/pop-up/update', $namespacePrefix.'PopupController@update')->name('admin.pop-up.update');
+	Route::post('/admin/pop-up/delete', $namespacePrefix.'PopupController@delete')->name('admin.pop-up.delete');
 
 	// Sertifikat
 	Route::get('/admin/e-sertifikat/trainer', $namespacePrefix.'SertifikatController@indexTrainer')->name('admin.sertifikat.trainer.index');
@@ -383,6 +412,9 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::get('/admin/api/visitor/device', $namespacePrefix.'APIController@visitorDevice')->name('api.visitor.device');
 	Route::get('/admin/api/visitor/browser', $namespacePrefix.'APIController@visitorBrowser')->name('api.visitor.browser');
 	Route::get('/admin/api/visitor/platform', $namespacePrefix.'APIController@visitorPlatform')->name('api.visitor.platform');
+	Route::get('/admin/api/visitor/city', $namespacePrefix.'APIController@visitorCity')->name('api.visitor.city');
+	Route::get('/admin/api/visitor/region', $namespacePrefix.'APIController@visitorRegion')->name('api.visitor.region');
+	Route::get('/admin/api/visitor/country', $namespacePrefix.'APIController@visitorCountry')->name('api.visitor.country');
 
 	// API Finance
 	Route::get('/admin/api/finance/income', $namespacePrefix.'APIController@income')->name('api.finance.income');

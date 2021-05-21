@@ -52,6 +52,13 @@ class PermissionSeeder extends Seeder
             ['key' => 'UserController::editProfile', 'name' => 'Mengupdate Profil User'],
             ['key' => 'UserController::export', 'name' => 'Mengekspor Data User'],
 
+            // Kelompok User
+            ['key' => 'KelompokController::index', 'name' => 'Menampilkan Data Kelompok User'],
+            ['key' => 'KelompokController::create', 'name' => 'Menambah Kelompok User'],
+            ['key' => 'KelompokController::detail', 'name' => 'Menampilkan Detail Kelompok User'],
+            ['key' => 'KelompokController::edit', 'name' => 'Mengupdate Kelompok User'],
+            ['key' => 'KelompokController::delete', 'name' => 'Menghapus Kelompok User'],
+
             // Statistik
             ['key' => 'StatistikController::member', 'name' => 'Menampilkan Statistik Member'],
             ['key' => 'StatistikController::device', 'name' => 'Menampilkan Statistik Perangkat'],
@@ -104,6 +111,10 @@ class PermissionSeeder extends Seeder
             ['key' => 'FolderController::create', 'name' => 'Menambah Folder'],
             ['key' => 'FolderController::edit', 'name' => 'Mengupdate Folder'],
             ['key' => 'FolderController::delete', 'name' => 'Menghapus Folder'],
+            ['key' => 'FolderKategoriController::index', 'name' => 'Menampilkan Data Kategori Folder'],
+            ['key' => 'FolderKategoriController::create', 'name' => 'Menambah Kategori Folder'],
+            ['key' => 'FolderKategoriController::edit', 'name' => 'Mengupdate Kategori Folder'],
+            ['key' => 'FolderKategoriController::delete', 'name' => 'Menghapus Kategori Folder'],
 
             // Halaman
             ['key' => 'HalamanController::index', 'name' => 'Menampilkan Data Halaman'],
@@ -185,6 +196,13 @@ class PermissionSeeder extends Seeder
             ['key' => 'PsikologController::create', 'name' => 'Menambah Psikolog'],
             ['key' => 'PsikologController::edit', 'name' => 'Mengupdate Psikolog'],
             ['key' => 'PsikologController::delete', 'name' => 'Menghapus Psikolog'],
+
+            // Pop-Up
+            ['key' => 'PopupController::index', 'name' => 'Menampilkan Data Pop-Up'],
+            ['key' => 'PopupController::create', 'name' => 'Menambah Pop-Up'],
+            ['key' => 'PopupController::detail', 'name' => 'Menampilkan Detail Pop-Up'],
+            ['key' => 'PopupController::edit', 'name' => 'Mengupdate Pop-Up'],
+            ['key' => 'PopupController::delete', 'name' => 'Menghapus Pop-Up'],
 
             // Slider
             ['key' => 'SliderController::index', 'name' => 'Menampilkan Data Slider'],

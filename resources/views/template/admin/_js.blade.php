@@ -287,3 +287,22 @@ $(function() {
       toggleTheme({detail: {colorScheme: darkModeToggle.mode}});
     })();
 </script>
+<script>
+    var x = document.getElementById("loc");
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+      }
+    }
+
+    function showPosition(position) {
+      x.innerHTML = "Latitude: " + position.coords.latitude +
+      "<br>Longitude: " + position.coords.longitude;
+    }
+
+    getLocation();
+    console.log(x);
+</script>
+<!-- <script type="text/javascript" src="https://api.openweathermap.org/data/2.5/onecall?lat={position.coords.latitude}&lon={position.coords.longitude}&exclude={current}&appid={5c9ab39b76f4c9e3598ea671b5a1fb96}"></script> -->

@@ -7,7 +7,6 @@
 <!-- Main -->
 <main class="app-content">
 
-
     <!-- Breadcrumb -->
 <!--     @include('faturcms::template.admin._breadcrumb', ['breadcrumb' => [
         'title' => 'Dashboard',

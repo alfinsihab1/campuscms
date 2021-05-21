@@ -28,7 +28,7 @@
     /* Selection */
     ::selection {background-color: var(--primary-dark)!important;}
     ::-moz-selection {background-color: var(--primary-dark)!important;}
-
+    body{background-color: var(--background-color); color: var(--color)}
     /* Header */
     .app-nav .app-nav__item .badge {position: absolute; font-size: 75%;}
     .app-header__logo {color: var(--primary-dark)!important; font-family: 'Lato'; text-transform: uppercase;}

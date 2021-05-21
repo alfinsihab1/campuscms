@@ -15,7 +15,9 @@
  * @method int count_peserta_pelatihan(int $pelatihan)
  * @method int count_artikel_by_kategori(int $kategori)
  * @method int count_komentar(int $artikel)
- * @method int count_kunjungan(int $user, string $jenis)
+ * @method int count_kunjungan(int $user, string|array $jenis)
+ * @method int count_churn_rate(int $month)
+ * @method int count_pelatihan_member(int $user, array $tanggal)
  * @method int count_anggota_kelompok(int $id)
  */
 
@@ -158,10 +160,43 @@ if(!function_exists('count_kunjungan')){
             $data = Visitor::join('users','visitor.id_user','=','users.id_user')->where('visitor.id_user','=',$user)->whereDate('visit_at','=',date('Y-m-d'))->count();
             return $data;
         }
+        elseif(is_array($jenis)){
+            if(count($jenis) == 2){
+                $data = Visitor::join('users','visitor.id_user','=','users.id_user')->where('visitor.id_user','=',$user)->whereDate('visit_at','>=',$jenis[0])->whereDate('visit_at','<=',$jenis[1])->count();
+                return $data;
+            }
+            else return 0;
+        }
         else{
             $data = Visitor::join('users','visitor.id_user','=','users.id_user')->where('visitor.id_user','=',$user)->whereDate('visit_at','=',generate_date_format($jenis, 'y-m-d'))->count();
             return $data;
         }
+    }
+}
+
+// Menghitung churn rate
+if(!function_exists('count_churn_rate')){
+    function count_churn_rate($month){
+        if($month == 1 || $month == 2)
+            $data = User::where('is_admin','=',0)->where('status','=',1)->whereDate('last_visit','<=',date('Y-m-d', strtotime('-'.$month.' month')))->whereDate('last_visit','>=',date('Y-m-d', strtotime('-'.($month + 1).' month')))->count();
+        elseif($month == 3)
+            $data = User::where('is_admin','=',0)->where('status','=',1)->whereDate('last_visit','<=',date('Y-m-d', strtotime('-'.$month.' month')))->count();
+        return $data;
+    }
+}
+
+// Menghitung jumlah pelatihan member
+if(!function_exists('count_pelatihan_member')){
+    function count_pelatihan_member($user, $tanggal = []){
+        if($tanggal == [])
+            $data = PelatihanMember::where('id_user','=',$user)->count();
+        else{
+            if(count($tanggal) == 2)
+                $data = PelatihanMember::where('id_user','=',$user)->whereDate('pm_at','>=',$tanggal[0])->whereDate('pm_at','<=',$tanggal[1])->count();
+            else
+                $data = PelatihanMember::where('id_user','=',$user)->count();
+        }
+        return $data;
     }
 }
 

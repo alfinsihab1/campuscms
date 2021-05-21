@@ -23,28 +23,50 @@
         <div class="col-lg-12">
             <!-- Tile -->
             <div class="tile">
+                <!-- Tile Title -->
+                <div class="tile-title-w-btn">
+                    <h5>Log: {{ $user->nama_user }}</h5>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-sm btn-danger btn-delete-log"><i class="fa fa-trash mr-2"></i> Hapus Log ({{ generate_size(\File::size(storage_path('logs/user-activities/'.$user->id_user.'.log'))) }})</a>
+                    </div>
+                    <form id="form-delete-log" class="d-none" method="post" action="{{ route('admin.log.activity.delete') }}">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="id" value="{{ $user->id_user }}">
+                    </form>
+                </div>
+                <!-- /Tile Title -->
                 <!-- Tile Body -->
                 <div class="tile-body">
+                    @if(Session::get('message') != null)
+                        <div class="alert alert-success alert-dismissible mb-4 fade show" role="alert">
+                            {{ Session::get('message') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    @endif
                     <!-- Identitas -->
                     <div class="mb-4">
-                        <h5>{{ $user->nama_user }}</h5>
                         <p class="mb-1"><i class="fa fa-envelope mr-2"></i>{{ $user->email }}</p>
                         <p class="mb-1"><i class="fa fa-globe mr-2"></i>{{ number_format(count_kunjungan($user->id_user, 'all'),0,',',',') }}x Kunjungan</p>
+                        <p class="mb-1"><i class="fa fa-refresh mr-2"></i>{{ number_format(count($logs),0,',',',') }}x Request</p>
                         <p class="mb-1"><i class="fa fa-clock-o mr-2"></i>Terakhir Kunjungan pada {{ generate_date_time($user->last_visit) }}</p>
                     </div>
                     <!-- /Identitas -->
                     <!-- Logs -->
                     @if($logs != false)
-                    <div class="list-group list-group-flush">
                         @if(count($logs) > 0)
-                            @foreach($logs as $log)
-                            <div class="list-group-item d-sm-flex justify-content-between px-0 py-1">
-                                <div class="font-weight-bold"><a href="{{ URL::to($log->url) }}" target="_blank">{{ URL::to($log->url) }}</a></div>
-                                <div>{{ generate_date(date('Y-m-d H:i:s', $log->time)).', '.date('H:i:s', $log->time) }}</div>
-                            </div>
-                            @endforeach
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped table-borderless">
+                                @foreach($logs as $log)
+                                <tr>
+                                    <td><a href="{{ URL::to($log->url) }}" target="_blank">{{ URL::to($log->url) }}</a></td>
+                                    <td width="150">{{ date('d/m/Y', $log->time).', '.date('H:i:s', $log->time) }}</td>
+                                </tr>
+                                @endforeach
+                            </table>
+                        </div>
                         @endif
-                    </div>
                     @else
                     <div class="alert alert-danger text-center mb-0">Belum ada aktivitas yang tercatat.</div>
                     @endif
@@ -69,6 +91,23 @@
     $(window).on("load", function(){
        $("html, body").animate({scrollTop: $(document).height()}, 1000); 
     });
+
+    // Button Delete Log
+    $(document).on("click", ".btn-delete-log", function(e){
+        e.preventDefault();
+        var ask = confirm("Anda yakin ingin menghapus log ini?");
+        if(ask){
+            $("#form-delete-log").submit();
+        }
+    });
 </script>
+
+@endsection
+
+@section('css-extra')
+
+<style type="text/css">
+    .table tr td {padding: .25rem;}
+</style>
 
 @endsection

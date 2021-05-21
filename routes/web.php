@@ -381,6 +381,8 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::get('/admin/statistik/member', $namespacePrefix.'StatistikController@member')->name('admin.statistik.member');
 	Route::get('/admin/statistik/device', $namespacePrefix.'StatistikController@device')->name('admin.statistik.device');
 	Route::get('/admin/statistik/finance', $namespacePrefix.'StatistikController@finance')->name('admin.statistik.finance');
+	Route::get('/admin/statistik/by-tanggal', $namespacePrefix.'StatistikController@byTanggal')->name('admin.statistik.by-tanggal');
+	Route::get('/admin/statistik/by-kelompok', $namespacePrefix.'StatistikController@byKelompok')->name('admin.statistik.by-kelompok');
 
 	// Visitor
 	Route::get('/admin/visitor', $namespacePrefix.'VisitorController@index')->name('admin.visitor.index');
@@ -397,6 +399,7 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	// Log Aktivitas
 	Route::get('/admin/log', $namespacePrefix.'LogController@index')->name('admin.log.index');
 	Route::get('/admin/log/activity/{id}', $namespacePrefix.'LogController@activity')->name('admin.log.activity');
+	Route::post('/admin/log/activity-delete', $namespacePrefix.'LogController@deleteActivity')->name('admin.log.activity.delete');
 	Route::get('/admin/log/login-error', $namespacePrefix.'LogController@login')->name('admin.log.login');
 
 	// API Visitor Total
@@ -420,6 +423,19 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::get('/admin/api/finance/income', $namespacePrefix.'APIController@income')->name('api.finance.income');
 	Route::get('/admin/api/finance/outcome', $namespacePrefix.'APIController@outcome')->name('api.finance.outcome');
 	Route::get('/admin/api/finance/revenue/{month}/{year}', $namespacePrefix.'APIController@revenue')->name('api.finance.revenue');
+
+	// API By Tanggal
+	Route::get('/admin/api/by-tanggal/kunjungan', $namespacePrefix.'APIController@byTanggalKunjungan')->name('api.by-tanggal.kunjungan');
+	Route::get('/admin/api/by-tanggal/ikut-pelatihan', $namespacePrefix.'APIController@byTanggalIkutPelatihan')->name('api.by-tanggal.ikut-pelatihan');
+	Route::get('/admin/api/by-tanggal/churn-rate', $namespacePrefix.'APIController@byTanggalChurnRate')->name('api.by-tanggal.churn-rate');
+
+	// API By Kelompok
+	Route::get('/admin/api/by-kelompok/login', $namespacePrefix.'APIController@byKelompokLogin')->name('api.by-kelompok.login');
+	Route::get('/admin/api/by-kelompok/aktivitas', $namespacePrefix.'APIController@byKelompokAktivitas')->name('api.by-kelompok.aktivitas');
+
+	// API Get
+	Route::get('/admin/api/get/user-by-kelompok', $namespacePrefix.'APIController@getUserByKelompok')->name('api.get.user-by-kelompok');
+	Route::get('/admin/api/get/pelatihan-by-user', $namespacePrefix.'APIController@getPelatihanByUser')->name('api.get.pelatihan-by-user');
 });
 
 // Member Capabilities

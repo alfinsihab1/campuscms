@@ -107,7 +107,7 @@
                             <label class="col-md-2 col-form-label">Materi <span class="text-danger">*</span></label>
                             <div class="col-md-10">
                                 <a class="btn btn-sm btn-secondary btn-add-materi" href="#"><i class="fa fa-plus mr-2"></i>Tambah Materi</a>
-                                <div class="table-responsive-sm konten-materi mt-3">
+                                <div class="table-responsive-sm konten-materi mt-3 mb-3 mb-md-0">
                                     @foreach($pelatihan->materi_pelatihan as $key=>$materi)
                                     <div class="form-row" data-id="{{ ($key+1) }}">
                                         <div class="form-group col-4">
@@ -125,6 +125,7 @@
                                     </div>
                                     @endforeach
                                 </div>
+                                <a class="btn btn-sm btn-secondary btn-add-materi" href="#"><i class="fa fa-plus mr-2"></i>Tambah Materi</a>
                             </div>
                         </div>
                         <div class="form-group row">

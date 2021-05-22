@@ -404,13 +404,12 @@ class PelatihanController extends Controller
         $pm = PelatihanMember::where('pm_at','=',$pelatihan_member->pm_at)->first();
         
         // Send Mail Notification
-        // if($request->fee > 0){
-        //     // $receivers = ["ajifatur2@gmail.com", "dwinurkholisoh1@gmail.com", "randyrahmanhussen@gmail.com", "farisfanani.id@gmail.com"];
-        //     $receivers = get_penerima_notifikasi();
-        //     foreach($receivers as $receiver){
-        //         Mail::to($receiver)->send(new TrainingPaymentMail($pm->id_pm, Auth::user()->id_user));
-        //     }
-        // }
+        if($request->fee > 0){
+            $receivers = array_receivers();
+            foreach($receivers as $receiver){
+                Mail::to($receiver)->send(new TrainingPaymentMail($pm->id_pm, Auth::user()->id_user));
+            }
+        }
 
         // Redirect
         return redirect()->route('member.pelatihan.detail', ['id' => $request->id]);

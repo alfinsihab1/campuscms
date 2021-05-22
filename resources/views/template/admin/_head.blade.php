@@ -7,6 +7,17 @@
 <!-- Icon -->
 <link rel="shortcut icon" href="{{ asset('assets/images/icon/'.setting('site.icon')) }}">
 <!-- darkmode -->
-<link rel="manifest" href="{{ asset('manifest-light.webmanifest') }}" data-href-light="{{ asset('manifest-light.webmanifest') }}" data-href-dark="{{ asset('manifest-dark.webmanifest') }}"> 
-<link rel="icon" href="https://cdn.glitch.com/791b2241-459b-4a2e-8cca-c0fdc21f0487%2Flight.png" data-href-light="https://cdn.glitch.com/791b2241-459b-4a2e-8cca-c0fdc21f0487%2Flight.png" data-href-dark="https://cdn.glitch.com/791b2241-459b-4a2e-8cca-c0fdc21f0487%2Fdark.png" sizes="144x144">
-<script id="dm-script" type="module" src="{{asset('assets/js/dark-mode.js')}}"></script>
+<script>
+  // if (window.location.protocol === 'http:') {
+  //   window.location.protocol = 'https:';
+  // }
+  // If `prefers-color-scheme` is not supported, fall back to light mode.
+  // In this case, light.css will be downloaded with `highest` priority.
+  if (!window.matchMedia('(prefers-color-scheme)').matches) {
+    document.documentElement.style.display = 'none';
+    document.head.insertAdjacentHTML(
+        'beforeend',
+        '<link rel="stylesheet" href="{{ asset('assets/css/light.css') }}" onload="document.documentElement.style.display = ``">'
+    );
+  }
+</script>

@@ -68,9 +68,9 @@
 					    		<p class="m-0">Aktifkan dark mode untuk merasakan pengalaman baru</p>
 					    		<div class="d-flex align-items-center">
 									<dark-mode-toggle
-										appearance="toggle" 
-										remember="" 
-										></dark-mode-toggle>
+									    appearance="toggle"
+									    remember=""
+									></dark-mode-toggle>
 									<span class="badge menu-bg-blue" data-toggle="tooltip" data-placement="top" title="Klik untuk mengaktifkan dark mode"><i class="fa fa-chevron-left mr-1"></i> Klik Untuk Mengaktifkan</span>
 								</div>
 				    		</div>

@@ -1,6 +1,10 @@
 <style type="text/css">
     /* Root */
     :root{ 
+        color-scheme: light dark;
+        supported-color-schemes: light dark;
+        --duration: 0.5s;
+        --timing: ease; 
         --primary-dark: {{ setting('site.color.primary_dark') }};
         --primary-light: {{ setting('site.color.primary_light') }};
         --secondary-dark: {{ setting('site.color.secondary_dark') }};
@@ -18,17 +22,11 @@
         --blue-s: #D9F6FA;
         --yellow: #ffc107;
         --yellow-s: #FFFBED;
-        --dark-1: #414950;
-        --dark-2: #4E575F;
-        --dark-3: #5B656F;
-        --dark-4: #67737E;
-        --dark-5: #74818D;
     }
 
     /* Selection */
     ::selection {background-color: var(--primary-dark)!important;}
     ::-moz-selection {background-color: var(--primary-dark)!important;}
-    body{background-color: var(--background-color); color: var(--color)}
     /* Header */
     .app-nav .app-nav__item .badge {position: absolute; font-size: 75%;}
     .app-header__logo {color: var(--primary-dark)!important; font-family: 'Lato'; text-transform: uppercase;}
@@ -352,5 +350,7 @@
         .a-app-content { margin: 0; padding: 0; background-color: #fff;}
     }
 </style>
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/dark.css') }}" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="{{ asset('assets/css/manifest-light.webmanifest') }}" data-href-light="{{ asset('assets/css/manifest-light.webmanifest') }}" data-href-dark="{{ asset('assets/css/manifest-dark.webmanifest') }}"> 
+<link rel="icon" href="https://cdn.glitch.com/791b2241-459b-4a2e-8cca-c0fdc21f0487%2Flight.png" data-href-light="https://cdn.glitch.com/791b2241-459b-4a2e-8cca-c0fdc21f0487%2Flight.png" data-href-dark="https://cdn.glitch.com/791b2241-459b-4a2e-8cca-c0fdc21f0487%2Fdark.png" sizes="144x144">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/light.css') }}" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/dark.css') }}" media="(prefers-color-scheme: dark)">

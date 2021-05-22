@@ -10,4 +10,4 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="supported-color-schemes" content="dark light">
 <meta name="color-scheme" content="dark light">
-<meta name="theme-color" content="light">
+<meta name="theme-color" content="">

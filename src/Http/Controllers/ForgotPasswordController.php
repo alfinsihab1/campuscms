@@ -67,7 +67,7 @@ class ForgotPasswordController extends Controller
             }
             else{
                 // Send Mail
-                // Mail::to($request->email)->send(new ForgotPasswordMail($user->id_user));
+                Mail::to($request->email)->send(new ForgotPasswordMail($user->id_user));
                 
                 // Redirect
                 return redirect()->route('auth.forgotpassword', ['ref' => $request->referral])->with(['message' => 'Permintaan berhasil. Periksa inbox atau spam dan ikuti instruksi recovery password. Jika email masih belum muncul, hubungi Kami.']);

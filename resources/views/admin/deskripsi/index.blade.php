@@ -34,7 +34,7 @@
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label">Judul Deskripsi <span class="text-danger">*</span></label>
                             <div class="col-md-10">
-                                <input type="text" name="judul_deskripsi" class="form-control {{ $errors->has('judul_deskripsi') ? 'is-invalid' : '' }}" value="{{ $deskripsi->judul_deskripsi }}">
+                                <input type="text" name="judul_deskripsi" class="form-control {{ $errors->has('judul_deskripsi') ? 'is-invalid' : '' }}" value="{{ $deskripsi ? $deskripsi->judul_deskripsi : '' }}">
                                 @if($errors->has('judul_deskripsi'))
                                 <div class="small text-danger mt-1">{{ ucfirst($errors->first('judul_deskripsi')) }}</div>
                                 @endif
@@ -43,7 +43,7 @@
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label">Deskripsi <span class="text-danger">*</span></label>
                             <div class="col-md-10">
-                                <textarea name="deskripsi" class="form-control" rows="10">{{ $deskripsi->deskripsi }}</textarea>
+                                <textarea name="deskripsi" class="form-control" rows="10">{{ $deskripsi ? $deskripsi->deskripsi : '' }}</textarea>
                                 @if($errors->has('deskripsi'))
                                 <div class="small text-danger mt-1">{{ ucfirst($errors->first('deskripsi')) }}</div>
                                 @endif

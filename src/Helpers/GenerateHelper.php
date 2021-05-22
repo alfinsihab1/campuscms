@@ -64,60 +64,93 @@ if(!function_exists('generate_date_format')){
 // Generate tanggal (range)
 if(!function_exists('generate_date_range')){
     function generate_date_range($type, $date){
-		// Join date range
-		if($type == 'join'){
-			$explode_dash = explode(" - ", $date);
-			$explode_from = explode(" ", $explode_dash[0]);
-			$explode_date_from = explode("-", $explode_from[0]);
-			$from = $explode_date_from[2].'/'.$explode_date_from[1].'/'.$explode_date_from[0].' '.substr($explode_from[1],0,5);
-			$explode_to = explode(" ", $explode_dash[1]);
-			$explode_date_to = explode("-", $explode_to[0]);
-			$to = $explode_date_to[2].'/'.$explode_date_to[1].'/'.$explode_date_to[0].' '.substr($explode_to[1],0,5);
-			return array('from' => $from, 'to' => $to);
-		}
-		elseif($type == 'explode'){
-			$explode_dash = explode(" - ", $date);
-			$explode_from = explode(" ", $explode_dash[0]);
-			$explode_date_from = explode("/", $explode_from[0]);
-			$from = $explode_date_from[2].'-'.$explode_date_from[1].'-'.$explode_date_from[0].' '.$explode_from[1].':00';
-			$explode_to = explode(" ", $explode_dash[1]);
-			$explode_date_to = explode("/", $explode_to[0]);
-			$to = $explode_date_to[2].'-'.$explode_date_to[1].'-'.$explode_date_to[0].' '.$explode_to[1].':00';
-			return array('from' => $from, 'to' => $to);
-		}
+        // Join date range
+        if($type == 'join'){
+            $explode_dash = explode(" - ", $date);
+            $explode_from = explode(" ", $explode_dash[0]);
+            $explode_date_from = explode("-", $explode_from[0]);
+            $from = $explode_date_from[2].'/'.$explode_date_from[1].'/'.$explode_date_from[0].' '.substr($explode_from[1],0,5);
+            $explode_to = explode(" ", $explode_dash[1]);
+            $explode_date_to = explode("-", $explode_to[0]);
+            $to = $explode_date_to[2].'/'.$explode_date_to[1].'/'.$explode_date_to[0].' '.substr($explode_to[1],0,5);
+            return array('from' => $from, 'to' => $to);
+        }
+        elseif($type == 'explode'){
+            $explode_dash = explode(" - ", $date);
+            $explode_from = explode(" ", $explode_dash[0]);
+            $explode_date_from = explode("/", $explode_from[0]);
+            $from = $explode_date_from[2].'-'.$explode_date_from[1].'-'.$explode_date_from[0].' '.$explode_from[1].':00';
+            $explode_to = explode(" ", $explode_dash[1]);
+            $explode_date_to = explode("/", $explode_to[0]);
+            $to = $explode_date_to[2].'-'.$explode_date_to[1].'-'.$explode_date_to[0].' '.$explode_to[1].':00';
+            return array('from' => $from, 'to' => $to);
+        }
     }
 }
 
 // Generate time
 if(!function_exists('generate_time')){
     function generate_time($time){
-		if($time < 60)
-			return $time." detik";
-		elseif($time >= 60 && $time < 3600)
-			return floor($time / 60)." menit ".fmod($time, 60)." detik";
-		else
-			return floor($time / 3600)." jam ".(floor($time / 60) - (floor($time / 3600) * 60))." menit ".fmod($time, 60)." detik";
+        if($time < 60)
+            return $time." detik";
+        elseif($time >= 60 && $time < 3600)
+            return floor($time / 60)." menit ".fmod($time, 60)." detik";
+        else
+            return floor($time / 3600)." jam ".(floor($time / 60) - (floor($time / 3600) * 60))." menit ".fmod($time, 60)." detik";
+    }
+}
+
+// Generate time elapsed
+if(!function_exists('generate_time_elapsed')){
+    function generate_time_elapsed($datetime, $full = false) {
+        $now = new DateTime;
+        $ago = new DateTime($datetime);
+        $diff = $now->diff($ago);
+
+        $diff->w = floor($diff->d / 7);
+        $diff->d -= $diff->w * 7;
+
+        $string = array(
+            'y' => 'tahun',
+            'm' => 'bulan',
+            'w' => 'minggu',
+            'd' => 'hari',
+            'h' => 'jam',
+            'i' => 'menit',
+            's' => 'detik',
+        );
+        foreach ($string as $k => &$v) {
+            if ($diff->$k) {
+                // $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+                $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? '' : '');
+            } else {
+                unset($string[$k]);
+            }
+        }
+
+        if (!$full) $string = array_slice($string, 0, 1);
+        return $string ? implode(', ', $string) . ' yang lalu' : 'Baru saja';
     }
 }
 
 // Generate file dari folder
 if(!function_exists('generate_file')){
     function generate_file($path, $exception_array = []){
-		$dir = $path;
-		$array = [];
-		if(is_dir($dir)){
-			if($handle = opendir($dir)){
-    			// Loop file
-           		while(($file = readdir($handle)) !== false){
+        $dir = $path;
+        $array = [];
+        if(is_dir($dir)){
+            if($handle = opendir($dir)){
+                // Loop file
+                while(($file = readdir($handle)) !== false){
                     // Pilih jika nama file bukan ".", "..", file bukan folder, serta file tidak dikecualikan
                     if($file != '.' && $file != '..' && !is_dir($dir.'/'.$file) && !in_array($file, $exception_array)){
                         array_push($array, $file);
                     }
-            	}
-            	closedir($handle);
-        	}
-    	}
-		return $array;
+                }
+                closedir($handle);
+            }
+        }
+        return $array;
     }
 }
 

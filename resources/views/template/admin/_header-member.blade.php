@@ -6,6 +6,7 @@
     <p class="m-0 text-muted"><small><i class="fa fa-home"></i> > Dashboard</small></p>
   </li></ul> -->
   <ul class="app-nav ml-auto ml-md">
+    @if(Auth::user()->status == 1)
     <li class="dropdown">
       <a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Show notifications">
         <i class="fa fa-bell fa-lg" data-toggle="tooltip" title="Notifikasi"></i>
@@ -69,6 +70,7 @@
         </div>
       </ul>
     </li>
+    @endif
     <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown"><i class="fa fa-user fa-lg" data-toggle="tooltip" title="Akun"></i></a>
       <ul class="dropdown-menu settings-menu dropdown-menu-right">
         <div class="card">

@@ -16,7 +16,7 @@ class CreateKontributorTable extends Migration
         if(!Schema::hasTable('kontributor')) {
             Schema::create('kontributor', function (Blueprint $table) {
                 $table->bigIncrements('id_kontributor');
-                $table->string('kategori');
+                $table->string('kontributor');
                 $table->string('slug');
             });
         }

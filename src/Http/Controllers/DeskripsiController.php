@@ -55,6 +55,7 @@ class DeskripsiController extends Controller
         else{
             // Mengupdate data
             $deskripsi = Deskripsi::first();
+            if(!$deskripsi) $deskripsi = new Deskripsi;
             $deskripsi->judul_deskripsi = $request->judul_deskripsi;
             $deskripsi->deskripsi = $request->deskripsi;
             $deskripsi->save();

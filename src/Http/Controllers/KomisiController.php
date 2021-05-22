@@ -104,12 +104,10 @@ class KomisiController extends Controller
             $new_withdrawal->save();
 		
 			// Send Mail Notification
-            /*
             $receivers = array_receivers();
 			foreach($receivers as $receiver){
 				Mail::to($receiver)->send(new WithdrawalMail(Auth::user()->id_user, $new_withdrawal->id_withdrawal));
 			}
-            */
         }
 
         // Redirect
@@ -155,7 +153,7 @@ class KomisiController extends Controller
 			}
 		
 			// Send Mail
-			// Mail::to($user->email)->send(new VerificationMail($user->id_user));
+			Mail::to($user->email)->send(new VerificationMail($user->id_user));
 
 			// Redirect
 			return redirect()->route('admin.komisi.index')->with(['message' => 'Berhasil mengonfirmasi member baru.']);
@@ -173,12 +171,10 @@ class KomisiController extends Controller
 			$komisi->save();
 
 			// Send Mail Notification
-            /*
             $receivers = array_receivers();
 			foreach($receivers as $receiver){
 				Mail::to($receiver)->send(new ConfirmationMail(Auth::user()->id_user, $komisi->id_komisi));
 			}
-            */
 
 			// Redirect
 			return redirect()->route('member.dashboard');
@@ -216,7 +212,7 @@ class KomisiController extends Controller
         }
 		
 		// Send Mail
-		// Mail::to($user->email)->send(new VerificationMail($user->id_user));
+		Mail::to($user->email)->send(new VerificationMail($user->id_user));
 
         // Redirect
         return redirect()->route('admin.komisi.index')->with(['message' => 'Berhasil memverifikasi komisi.']);

@@ -262,7 +262,9 @@
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.setting.edit', ['category' => 'receivers']) }}"><i class="fa fa-circle-o"></i> Notifikasi</a>
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.setting.edit', ['category' => 'referral']) }}"><i class="fa fa-circle-o"></i> Referral</a>
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.setting.edit', ['category' => 'server']) }}"><i class="fa fa-circle-o"></i> Server</a>
+                @if(has_access('FolderKategoriController::index', Auth::user()->role, false))
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.folder.kategori.index') }}"><i class="fa fa-circle-o"></i> Kategori Folder</a>
+                @endif
               </div>
             </div>
             @endif

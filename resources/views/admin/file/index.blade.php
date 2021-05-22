@@ -100,7 +100,7 @@
                                     </td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="{{ asset('assets/images/file/'.$data->file_thumbnail) }}" class="btn btn-sm btn-info btn-magnify-popup" data-toggle="tooltip" title="Thumbnail"><i class="fa fa-image"></i></a>
+                                            <a href="{{ image('assets/images/file/'.$data->file_thumbnail, $data->tipe_kategori) }}" class="btn btn-sm btn-info btn-magnify-popup" data-toggle="tooltip" title="Thumbnail"><i class="fa fa-image"></i></a>
                                             <a href="#" class="btn btn-sm btn-success btn-move" data-id="{{ $data->id_file }}" data-type="file" data-toggle="tooltip" title="Pindah"><i class="fa fa-arrow-right"></i></a>
                                             <a href="{{ route('admin.file.edit', ['kategori' => $kategori->slug_kategori, 'id' => $data->id_file, 'dir' => $directory->folder_dir]) }}" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>
                                             <a href="#" class="btn btn-sm btn-danger btn-delete-file" data-id="{{ $data->id_file }}" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>

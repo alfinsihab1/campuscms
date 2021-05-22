@@ -73,7 +73,7 @@
                                 <div class="col-md-3 col-sm-6 mb-3">
                                     <div class="card">
                                         <a href="{{ $data->tipe_kategori == 'tools' ? asset('assets/tools/'.$data->file_konten) : route('member.file.detail', ['kategori' => $kategori->slug_kategori, 'id' => $data->id_file]) }}">
-                                            <img class="card-img-top" src="{{ $data->tipe_kategori == 'ebook' ? image('assets/images/file/'.$data->file_thumbnail, 'pdf') : image('assets/images/file/'.$data->file_thumbnail, 'file') }}" height="{{ $data->tipe_kategori == 'ebook' ? 100 : 'auto' }}">
+                                            <img class="card-img-top" src="{{ image('assets/images/file/'.$data->file_thumbnail, $data->tipe_kategori) }}" height="100">
                                         </a>
                                         <div class="card-body text-center">
                                             <p class="h6 my-0"><a href="{{ $data->tipe_kategori == 'tools' ? asset('assets/tools/'.$data->file_konten) : route('member.file.detail', ['kategori' => $kategori->slug_kategori, 'id' => $data->id_file]) }}">{{ $data->file_nama }}</a></p>

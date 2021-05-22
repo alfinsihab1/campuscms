@@ -78,7 +78,7 @@
               <img width="50" height="50" class="rounded mr-3" src="{{ image('assets/images/user/'.Auth::user()->foto, 'user') }}">
               <div class="media-body">
                 <p class="m-0 font-weight-bold">{{ Auth::user()->nama_user }}</p>
-                <p class="m-0"><small><i class="fa fa-bookmark"></i> {{ role(Auth::user()->role) }}</small></p>
+                <p class="m-0"><small><i class="fa fa-bookmark mr-2"></i>{{ role(Auth::user()->role) }}</small></p>
               </div>
             </div>  
           </div>

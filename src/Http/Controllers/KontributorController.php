@@ -22,7 +22,7 @@ class KontributorController extends Controller
         has_access(generate_method(__METHOD__), Auth::user()->role);
 
         // Data kontributor
-        $kontributor = Kontributor::all();
+        $kontributor = Kontributor::where('id_kontributor','>',0)->get();
         
         // View
         return view('faturcms::admin.kontributor.index', [
@@ -87,7 +87,7 @@ class KontributorController extends Controller
         has_access(generate_method(__METHOD__), Auth::user()->role);
 
         // kontributor
-        $kontributor = Kontributor::findOrFail($id);
+        $kontributor = Kontributor::where('id_kontributor','>',0)->findOrFail($id);
         
         // View
         return view('faturcms::admin.kontributor.edit', [
@@ -116,7 +116,7 @@ class KontributorController extends Controller
         // Jika tidak ada error
         else{
             // Mengupdate data
-            $kontributor = Kontributor::find($request->id);
+            $kontributor = Kontributor::where('id_kontributor','>',0)->find($request->id);
             $kontributor->kontributor = $request->kontributor;
             $kontributor->slug = slugify($request->kontributor, 'kontributor', 'slug', 'id_kontributor', $request->id);
             $kontributor->save();
@@ -138,7 +138,7 @@ class KontributorController extends Controller
         has_access(generate_method(__METHOD__), Auth::user()->role);
         
     	// Menghapus data
-        $kontributor = Kontributor::find($request->id);
+        $kontributor = Kontributor::where('id_kontributor','>',0)->find($request->id);
         $kontributor->delete();
 
         // Redirect

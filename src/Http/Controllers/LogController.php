@@ -56,6 +56,24 @@ class LogController extends Controller
     }
 
     /**
+     * Menghapus log aktivitas
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteActivity(Request $request)
+    {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // Menghapus file
+        File::delete(storage_path('logs/user-activities/'.$request->id.'.log'));
+
+        // Redirect
+        return redirect()->route('admin.log.activity', ['id' => $request->id])->with(['message' => 'Berhasil menghapus log.']);
+    }
+
+    /**
      * Menampilkan log login
      *
      * @return \Illuminate\Http\Response
@@ -89,6 +107,6 @@ class LogController extends Controller
             $logs = json_decode($logs);
             return $logs;
         }
-        else return false;            
+        else return false;
     }
 }

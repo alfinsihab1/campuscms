@@ -89,6 +89,9 @@
             options: {
                 responsive: true,
                 cutoutPercentage: 75,
+                legend: {
+                    // display: false
+                },
                 tooltips: {
                     callbacks: {
                         title: function(tooltipItem, data) {

@@ -67,7 +67,7 @@
                                 <tr>
                                     <td><input type="checkbox"></td>
                                     <td>
-                                        <a href="{{ route('admin.user.detail', ['id' => $data->id_absensi]) }}">{{ $data->nama_absensi }}</a>
+                                        <a href="{{ route('admin.user.detail', ['id' => $data->id_absensi]) }}">{{ $data->nama_user }}</a>
                                         <br>
                                         <small><i class="fa fa-envelope mr-1"></i>{{ $data->email }}</small>
                                         <br>

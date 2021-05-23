@@ -40,6 +40,20 @@ class StatistikController extends Controller
     }
 
     /**
+     * Menampilkan statistik lokasi
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function location()
+    {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+        
+        // View
+        return view('faturcms::admin.statistik.location');
+    }
+
+    /**
      * Menampilkan statistik keuangan
      *
      * @return \Illuminate\Http\Response

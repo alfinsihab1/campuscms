@@ -62,6 +62,7 @@ class PermissionSeeder extends Seeder
             // Statistik
             ['key' => 'StatistikController::member', 'name' => 'Menampilkan Statistik Member'],
             ['key' => 'StatistikController::device', 'name' => 'Menampilkan Statistik Perangkat'],
+            ['key' => 'StatistikController::location', 'name' => 'Menampilkan Statistik Lokasi'],
             ['key' => 'StatistikController::finance', 'name' => 'Menampilkan Statistik Keuangan'],
             ['key' => 'StatistikController::byTanggal', 'name' => 'Menampilkan Statistik Berdasarkan Tanggal'],
             ['key' => 'StatistikController::byKelompok', 'name' => 'Menampilkan Statistik Berdasarkan Kelompok'],

@@ -250,21 +250,40 @@ class APIController extends Controller
      */
     public function visitorCity()
     {
-        // Data visitor
-        $visitorAll = Visitor::join('users','visitor.id_user','=','users.id_user')->count();
-        $visitorJakarta = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','like','%'.'"cityName":"Jakarta"'.'%')->count();
-        $visitorSemarang = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','like','%'.'"cityName":"Semarang"'.'%')->count();
-        $visitorYogyakarta = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','like','%'.'"cityName":"Yogyakarta"'.'%')->count();
-        $visitorLainnya = $visitorAll - ($visitorJakarta + $visitorSemarang + $visitorYogyakarta);
+        // Array lokasi
+        $location = [];
+
+        // Data visitor yang diketahui lokasinya
+        $visitorKnown = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','!=',null)->where('location','!=','')->pluck('location');
+
+        if(count($visitorKnown)){
+            foreach($visitorKnown as $data){
+                $data = json_decode($data, true);
+                if(array_key_exists('cityName', $data)){
+                    if($data['cityName'] != null) array_push($location, $data['cityName']);
+                }
+            }
+        }
+
+        // Data visitor yang tidak diketahui lokasinya
+        $visitorUnknown = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','=',null)->orWhere('location','=','')->count();
+
+        // Array count values
+        $array = array_count_values($location);
+
+        // Push
+        $array['Tidak Diketahui'] = $visitorUnknown;
+
+        // Sort Array
+        arsort($array);
 
         // Response
         return response()->json([
             'status' => 200,
             'message' => 'Success!',
             'data' => [
-                'labels' => ['Jakarta', 'Semarang', 'Yogyakarta', 'Lainnya'],
-                'data' => [$visitorJakarta, $visitorSemarang, $visitorYogyakarta, $visitorLainnya],
-                'total' => number_format($visitorJakarta + $visitorSemarang + $visitorYogyakarta + $visitorLainnya,0,'.','.')
+                'data' => $array,
+                'total' => array_sum($array)
             ]
         ]);
     }
@@ -276,22 +295,40 @@ class APIController extends Controller
      */
     public function visitorRegion()
     {
-        // Data visitor
-        $visitorAll = Visitor::join('users','visitor.id_user','=','users.id_user')->count();
-        $visitorJakarta = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','like','%'.'"regionName":"Jakarta"'.'%')->count();
-        $visitorWestJava = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','like','%'.'"regionName":"West Java"'.'%')->count();
-        $visitorCentralJava = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','like','%'.'"regionName":"Central Java"'.'%')->count();
-        $visitorEastJava = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','like','%'.'"regionName":"East Java"'.'%')->count();
-        $visitorLainnya = $visitorAll - ($visitorJakarta + $visitorWestJava + $visitorCentralJava + $visitorEastJava);
+        // Array lokasi
+        $location = [];
+
+        // Data visitor yang diketahui lokasinya
+        $visitorKnown = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','!=',null)->where('location','!=','')->pluck('location');
+
+        if(count($visitorKnown)){
+            foreach($visitorKnown as $data){
+                $data = json_decode($data, true);
+                if(array_key_exists('regionName', $data)){
+                    if($data['regionName'] != null) array_push($location, $data['regionName']);
+                }
+            }
+        }
+
+        // Data visitor yang tidak diketahui lokasinya
+        $visitorUnknown = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','=',null)->orWhere('location','=','')->count();
+
+        // Array count values
+        $array = array_count_values($location);
+
+        // Push
+        $array['Tidak Diketahui'] = $visitorUnknown;
+
+        // Sort Array
+        arsort($array);
 
         // Response
         return response()->json([
             'status' => 200,
             'message' => 'Success!',
             'data' => [
-                'labels' => ['Jakarta', 'Jabar', 'Jateng', 'Jatim', 'Lainnya'],
-                'data' => [$visitorJakarta, $visitorWestJava, $visitorCentralJava, $visitorEastJava, $visitorLainnya],
-                'total' => number_format($visitorJakarta + $visitorWestJava + $visitorCentralJava + $visitorEastJava + $visitorLainnya,0,'.','.')
+                'data' => $array,
+                'total' => array_sum($array)
             ]
         ]);
     }
@@ -303,19 +340,40 @@ class APIController extends Controller
      */
     public function visitorCountry()
     {
-        // Data visitor
-        $visitorAll = Visitor::join('users','visitor.id_user','=','users.id_user')->count();
-        $visitorIndonesia = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','like','%'.'"countryName":"Indonesia"'.'%')->count();
-        $visitorLainnya = $visitorAll - ($visitorIndonesia);
+        // Array lokasi
+        $location = [];
+
+        // Data visitor yang diketahui lokasinya
+        $visitorKnown = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','!=',null)->where('location','!=','')->pluck('location');
+
+        if(count($visitorKnown)){
+            foreach($visitorKnown as $data){
+                $data = json_decode($data, true);
+                if(array_key_exists('countryName', $data)){
+                    if($data['countryName'] != null) array_push($location, $data['countryName']);
+                }
+            }
+        }
+
+        // Data visitor yang tidak diketahui lokasinya
+        $visitorUnknown = Visitor::join('users','visitor.id_user','=','users.id_user')->where('location','=',null)->orWhere('location','=','')->count();
+
+        // Array count values
+        $array = array_count_values($location);
+
+        // Push
+        $array['Tidak Diketahui'] = $visitorUnknown;
+
+        // Sort Array
+        arsort($array);
 
         // Response
         return response()->json([
             'status' => 200,
             'message' => 'Success!',
             'data' => [
-                'labels' => ['Indonesia', 'Lainnya'],
-                'data' => [$visitorIndonesia, $visitorLainnya],
-                'total' => number_format($visitorIndonesia + $visitorLainnya,0,'.','.')
+                'data' => $array,
+                'total' => array_sum($array)
             ]
         ]);
     }

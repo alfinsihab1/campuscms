@@ -108,7 +108,7 @@ class PackageController extends Controller
       throw new ProcessFailedException($process);
     }
 
-    // Mencoba melakukan request package
+    // Mencoba melakukan request package ke github
     try {
       $client = new Client(['base_uri' => 'https://api.github.com/repos/']);
       $package_request = $client->request('GET', config('faturcms.name').'/releases/latest');
@@ -132,6 +132,20 @@ class PackageController extends Controller
       $package->package_at = date('Y-m-d H:i:s');
       $package->package_up = date('Y-m-d H:i:s');
       $package->save();
+    }
+
+    // Mencoba melakukan request ke main package (mengupdate version)
+    try {
+      $client = new Client(['base_uri' => 'http:/faturcms.faturmedia.xyz/api/']);
+      $faturcms_request = $client->request('PUT', 'version/update', [
+        'query' => [
+          'url' => url()->to('/'),
+          'key' => env('FATURCMS_APP_KEY'),
+        ]
+      ]);
+    } catch (ClientException $e) {
+      echo Psr7\Message::toString($e->getResponse());
+      return;
     }
 
     // Update FaturCMS

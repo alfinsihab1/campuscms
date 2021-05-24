@@ -136,7 +136,7 @@ class PackageController extends Controller
 
     // Mencoba melakukan request ke main package (mengupdate version)
     try {
-      $client = new Client(['base_uri' => 'http:/faturcms.faturmedia.xyz/api/']);
+      $client = new Client(['base_uri' => 'http://faturcms.faturmedia.xyz/api/']);
       $faturcms_request = $client->request('PUT', 'version/update', [
         'query' => [
           'url' => url()->to('/'),

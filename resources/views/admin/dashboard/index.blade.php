@@ -24,7 +24,7 @@
 	    			<p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit<br>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 	    		</div>	
     			<div class="order-1 order-md-2 d-flex align-items-center mb-3 mb-md-0"> 
-    				<h1 style="font-size: 4rem" class="m-0">23°</h1>
+    				<h1 style="font-size: 4rem" class="m-0" id="hours"></h1>
     				<span id="greetings"></span>
     			</div>
     		</div>
@@ -212,6 +212,10 @@ if (curHr >= 0 && curHr < 6) {
 } else {
     document.getElementById("greetings").innerHTML = '<img class="weather" src="https://image.flaticon.com/icons/svg/3731/3731916.svg">';
 }
+
+// var a = new Date();
+// console.log(a);
+// document.getElementById("hours").append(a);
 </script>
 @endsection
 

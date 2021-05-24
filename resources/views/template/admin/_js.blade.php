@@ -274,8 +274,8 @@ $(function() {
     var id_b = "free";
     var a = document.getElementsByTagName('body')[0];
     var b = document.getElementById('exp');
-    if (id_a == "{{ setting('site.color.primary_dark') }}") {
-        a.setAttribute('class', id_a);
+    if (id_a != "{{ setting('site.color.primary_dark') }}") {
+        a.setAttribute('class', a.getAttribute('class') + ' ' + id_a);
         b.setAttribute('data-exp', id_a);
         activateDarkMode();
     }else{
@@ -283,7 +283,7 @@ $(function() {
         b.setAttribute('data-exp', id_b);
     }
 </script>
-<script>
+<!-- <script>
     var x = document.getElementById("loc");
     function getLocation() {
       if (navigator.geolocation) {
@@ -300,5 +300,5 @@ $(function() {
 
     // getLocation();
     // console.log(x);
-</script>
+</script> -->
 <!-- <script type="text/javascript" src="https://api.openweathermap.org/data/2.5/onecall?lat={position.coords.latitude}&lon={position.coords.longitude}&exclude={current}&appid={5c9ab39b76f4c9e3598ea671b5a1fb96}"></script> -->

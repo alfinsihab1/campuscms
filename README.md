@@ -63,6 +63,7 @@ php artisan faturcms:update
 ```
 
 ## Mitra Kami
+- [Campus Digital](https://campusdigital.id)
 - [PersonalityTalk](https://psikologanda.com)
 - [Kompetensiku](https://kompetensiku.id)
 

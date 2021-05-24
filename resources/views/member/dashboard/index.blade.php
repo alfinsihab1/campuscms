@@ -16,6 +16,7 @@
     ]])
     <!-- /Breadcrumb -->
 
+    @if(Auth::user()->status == 1)
     <div class="row">
         <div class="col-12 col-md-4 mb-4">
             <div class="card">
@@ -68,6 +69,7 @@
             </div>
         </div>
     </div>
+    @endif
 
     @if(Auth::user()->status == 1)
     <!-- User Aktif -->
@@ -284,11 +286,13 @@
         change_file(this, "image", 2);
     });
 </script>
+@if(Auth::user()->status == 1)
 <script type="text/javascript">
     $(window).on('load', function() {
         $('#modal-intro').modal('show');
     });
 </script>
+@endif
 @if(count($popup)>0 && Auth::user()->status == 1)
 <script type="text/javascript">
     var owl = $(".carousel-popup").owlCarousel({

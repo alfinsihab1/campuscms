@@ -43,7 +43,7 @@
                                 <tr>
                                     <th width="20"><input type="checkbox"></th>
                                     <th>Judul Halaman</th>
-                                    <th width="100">Tipe</th>
+                                    <th width="80">Tipe</th>
                                     <th width="100">Waktu</th>
                                     <th width="60">Opsi</th>
                                 </tr>
@@ -53,11 +53,11 @@
                                 <tr>
                                     <td><input type="checkbox"></td>
                                     <td>
-                                        <a href="{{ URL::to($data->halaman_permalink) }}">{{ $data->halaman_title }}</a>
+                                        <a href="{{ URL::to($data->halaman_permalink) }}" target="_blank">{{ $data->halaman_title }}</a>
                                         <br>
                                         <small><i class="fa fa-link mr-1"></i>{{ URL::to($data->halaman_permalink) }}</small>
                                     </td>
-                                    <td>{{ tipe_halaman($data->halaman_tipe) }}</td>
+                                    <td><span class="badge {{ $data->halaman_tipe == 1 ? 'badge-success' : 'badge-info' }}">{{ tipe_halaman($data->halaman_tipe) }}</span></td>
                                     <td>
                                         <span class="d-none">{{ $data->halaman_at }}</span>
                                         {{ date('d/m/Y', strtotime($data->halaman_at)) }}
@@ -66,7 +66,7 @@
                                     </td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="/{{ $data->halaman_permalink }}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail"><i class="fa fa-eye"></i></a>
+                                            <a href="/{{ $data->halaman_permalink }}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail" target="_blank"><i class="fa fa-eye"></i></a>
                                             <a href="{{ route('admin.halaman.edit', ['id' => $data->id_halaman]) }}" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>
                                             <a href="#" class="btn btn-sm btn-danger btn-delete" data-id="{{ $data->id_halaman }}" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>
                                         </div>

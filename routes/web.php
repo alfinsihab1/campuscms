@@ -380,6 +380,7 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	// Statistik
 	Route::get('/admin/statistik/member', $namespacePrefix.'StatistikController@member')->name('admin.statistik.member');
 	Route::get('/admin/statistik/device', $namespacePrefix.'StatistikController@device')->name('admin.statistik.device');
+	Route::get('/admin/statistik/location', $namespacePrefix.'StatistikController@location')->name('admin.statistik.location');
 	Route::get('/admin/statistik/finance', $namespacePrefix.'StatistikController@finance')->name('admin.statistik.finance');
 	Route::get('/admin/statistik/by-tanggal', $namespacePrefix.'StatistikController@byTanggal')->name('admin.statistik.by-tanggal');
 	Route::get('/admin/statistik/by-kelompok', $namespacePrefix.'StatistikController@byKelompok')->name('admin.statistik.by-kelompok');

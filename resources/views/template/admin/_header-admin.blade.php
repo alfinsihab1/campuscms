@@ -88,7 +88,7 @@
               <img width="50" height="50" class="rounded mr-3" src="{{ image('assets/images/user/'.Auth::user()->foto, 'user') }}">
               <div class="media-body">
                 <p class="m-0 font-weight-bold">{{ Auth::user()->nama_user }}</p>
-                <p class="m-0"><small><i class="fa fa-bookmark"></i> {{ role(Auth::user()->role) }}</small></p>
+                <p class="m-0"><small><i class="fa fa-bookmark mr-2"></i>{{ role(Auth::user()->role) }}</small></p>
               </div>
             </div>  
           </div>
@@ -272,7 +272,9 @@
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.setting.edit', ['category' => 'receivers']) }}"><i class="fa fa-circle-o"></i> Notifikasi</a>
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.setting.edit', ['category' => 'referral']) }}"><i class="fa fa-circle-o"></i> Referral</a>
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.setting.edit', ['category' => 'server']) }}"><i class="fa fa-circle-o"></i> Server</a>
+                @if(has_access('FolderKategoriController::index', Auth::user()->role, false))
                 <a class="list-group-item list-group-item-action" href="{{ route('admin.folder.kategori.index') }}"><i class="fa fa-circle-o"></i> Kategori Folder</a>
+                @endif
               </div>
             </div>
             @endif

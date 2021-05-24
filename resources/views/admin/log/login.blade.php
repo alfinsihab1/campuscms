@@ -27,15 +27,17 @@
                 <div class="tile-body">
                     <!-- Logs -->
                     @if($logs != false)
-                    <div class="list-group list-group-flush">
+                    <div class="table-responsive">
                         @if(count($logs) > 0)
-                            @foreach($logs as $log)
-                            <div class="list-group-item d-sm-flex justify-content-between px-0 py-1">
-                                <div>{{ $log->username }}</div>
-                                <div>{{ $log->ip }}</div>
-                                <div>{{ generate_date(date('Y-m-d H:i:s', $log->time)).', '.date('H:i:s', $log->time) }}</div>
-                            </div>
-                            @endforeach
+                            <table class="table table-hover table-striped table-borderless table-stretch">
+                                @foreach($logs as $log)
+                                <tr>
+                                    <td>{{ $log->username != '' ? $log->username : '-' }}</td>
+                                    <td width="150">{{ $log->ip }}</td>
+                                    <td width="150">{{ date('d/m/Y', $log->time).', '.date('H:i:s', $log->time) }}</td>
+                                </tr>
+                                @endforeach
+                            </table>
                         @endif
                     </div>
                     @else

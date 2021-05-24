@@ -485,7 +485,7 @@ class FileController extends Controller
     public function getChildren($category, $id)
     {
         $array = [];
-        $children = Folder::where('folder_kategori','=',$category)->where('folder_parent','=',$id)->get();
+        $children = Folder::where('folder_kategori','=',$category)->where('folder_parent','=',$id)->orderBy('folder_nama','asc')->get();
         if(count($children) > 0){
             foreach($children as $child){
                 array_push($array, [

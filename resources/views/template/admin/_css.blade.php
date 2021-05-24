@@ -93,6 +93,7 @@
     #dataTable td .btn-group a.btn:last-child {border-top-right-radius: .25rem; border-bottom-right-radius: .25rem;}
     #dataTable td a.btn {width: 36px;}
     div.dataTables_wrapper div.dataTables_processing {background-color: #eeeeee;}
+    .table-stretch tr th, .table-stretch tr td {padding: .25rem;}
 
     /* Anchor */
     a {color: var(--primary-dark);}

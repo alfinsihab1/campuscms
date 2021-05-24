@@ -44,7 +44,7 @@
                                     <th width="20"><input type="checkbox"></th>
                                     <th>Judul Artikel</th>
                                     <th width="100">Kategori</th>
-                                    <th width="150">Author</th>
+                                    <th width="150">Author / Kontributor</th>
                                     <th width="100">Waktu</th>
                                     <th width="60">Opsi</th>
                                 </tr>
@@ -54,15 +54,19 @@
                                 <tr>
                                     <td><input type="checkbox"></td>
                                     <td>
-                                        <a href="/artikel/{{ $data->blog_permalink }}">{{ $data->blog_title }}</a>
+                                        <a href="/artikel/{{ $data->blog_permalink }}" target="_blank">{{ $data->blog_title }}</a>
                                     </td>
                                     <td>{{ $data->kategori }}</td>
                                     <td>
-                                        <a href="{{ $data->id_user == Auth::user()->id_user ? route('admin.profile') : route('admin.user.detail', ['id' => $data->id_user]) }}">{{ $data->nama_user }}</a>
-                                        <br>
-                                        <small><i class="fa fa-envelope mr-1"></i>{{ $data->email }}</small>
-                                        <br>
-                                        <small><i class="fa fa-phone mr-1"></i>{{ $data->nomor_hp }}</small>
+                                        @if($data->blog_kontributor == 0)
+                                            <a href="{{ $data->id_user == Auth::user()->id_user ? route('admin.profile') : route('admin.user.detail', ['id' => $data->id_user]) }}">{{ $data->nama_user }}</a>
+                                            <br>
+                                            <small><i class="fa fa-envelope mr-1"></i>{{ $data->email }}</small>
+                                            <br>
+                                            <small><i class="fa fa-phone mr-1"></i>{{ $data->nomor_hp }}</small>
+                                        @else
+                                            {{ $data->kontributor }}
+                                        @endif
                                     </td>
                                     <td>
                                         <span class="d-none">{{ $data->blog_at }}</span>
@@ -72,7 +76,7 @@
                                     </td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="/artikel/{{ $data->blog_permalink }}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail"><i class="fa fa-eye"></i></a>
+                                            <a href="/artikel/{{ $data->blog_permalink }}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail" target="_blank"><i class="fa fa-eye"></i></a>
                                             <a href="{{ route('admin.blog.edit', ['id' => $data->id_blog]) }}" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>
                                             <a href="#" class="btn btn-sm btn-danger btn-delete" data-id="{{ $data->id_blog }}" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>
                                         </div>

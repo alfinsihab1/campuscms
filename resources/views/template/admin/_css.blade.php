@@ -14,6 +14,7 @@
         --shadow: 0 .125rem .25rem rgba(0,0,0,.075);
         --transition: .25s ease;
         --transition-1: .15s ease;
+        --alpha: 88;
         --red: #DC3545;
         --red-s: #FAE3E5;
         --green: #28A745;
@@ -23,7 +24,7 @@
         --yellow: #ffc107;
         --yellow-s: #FFFBED;
     }
-
+    body{background-color: var(--light)}
     /* Selection */
     ::selection {background-color: var(--primary-dark)!important;}
     ::-moz-selection {background-color: var(--primary-dark)!important;}
@@ -215,6 +216,7 @@
     #top-button:hover{opacity: 1!important; cursor: pointer}
     #top-button:active{opacity: 1;}
     #top-button.show{opacity: 1; visibility: visible; animation: bottomTop var(--transition)}
+
     @keyframes fab{
         0% {transform: scale(1);}
         25% {transform: scale(1);}
@@ -316,7 +318,15 @@
     .menu-grid .card:hover .media-body{border-left: 1px solid rgba(255,255,255,.7)!important;}
     .modal-dialog-full{max-width: 100%!important; height: 100%; padding: 0; margin: 0;}
     .modal-content-full {height: 100%; min-height: 100%; height: auto; border-radius: 0;}
+    .experience{position: relative; width: 100%}
     .experience .custom-switch{margin-left: 12.5px}
+    .experience .card{opacity: 1; display: block; width: 100%; height: auto; backface-visibility: hidden;}
+    /*set id unik for overlay*/
+    .experience [data-exp='{{ setting('site.color.primary_dark') }}']{display: none;}
+    .experience [data-exp='free']{position: absolute; top: 0; bottom: 0; left: 0; right: 0; height: 100%; width: 100%; transition: .5s ease; background-color: #343a4099; border-radius: .5em}
+    .experience .text{position: absolute;top: 50%;left: 50%;-webkit-transform: translate(-50%, -50%);-ms-transform: translate(-50%, -50%);transform: translate(-50%, -50%);text-align: center;}
+    .experience .btn:not([disabled]):not(.disabled):not(.btn-link):hover, 
+    .experience .btn:not([disabled]):not(.disabled):not(.btn-link):focus{transform: translate(-50%, -50%)}
     .list-group-item, .list-group-item:hover, .list-group-item:focus{background-color: unset;}
     .list-group-item-action:hover{color: var(--primary-dark)}
     .weather{width: 80px}
@@ -350,7 +360,3 @@
         .a-app-content { margin: 0; padding: 0; background-color: #fff;}
     }
 </style>
-<link rel="manifest" href="{{ asset('assets/css/manifest-light.webmanifest') }}" data-href-light="{{ asset('assets/css/manifest-light.webmanifest') }}" data-href-dark="{{ asset('assets/css/manifest-dark.webmanifest') }}"> 
-<link rel="icon" href="https://cdn.glitch.com/791b2241-459b-4a2e-8cca-c0fdc21f0487%2Flight.png" data-href-light="https://cdn.glitch.com/791b2241-459b-4a2e-8cca-c0fdc21f0487%2Flight.png" data-href-dark="https://cdn.glitch.com/791b2241-459b-4a2e-8cca-c0fdc21f0487%2Fdark.png" sizes="144x144">
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/light.css') }}" media="(prefers-color-scheme: light)">
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/dark.css') }}" media="(prefers-color-scheme: dark)">

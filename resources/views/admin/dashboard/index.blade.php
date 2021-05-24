@@ -25,7 +25,7 @@
 	    		</div>	
     			<div class="order-1 order-md-2 d-flex align-items-center mb-3 mb-md-0"> 
     				<h1 style="font-size: 4rem" class="m-0">23°</h1>
-    				<span id="demo"></span>
+    				<span id="greetings"></span>
     			</div>
     		</div>
     	</div>
@@ -69,13 +69,19 @@
 					    		<div class="d-flex align-items-center">
 									<dark-mode-toggle
 									    appearance="toggle"
-									    remember=""
+									    permanent=""
 									></dark-mode-toggle>
 									<span class="badge menu-bg-blue" data-toggle="tooltip" data-placement="top" title="Klik untuk mengaktifkan dark mode"><i class="fa fa-chevron-left mr-1"></i> Klik Untuk Mengaktifkan</span>
 								</div>
 				    		</div>
 			    		</div>
 		    		</div>
+		    	</div>
+		    	<div id="exp">
+		    		<button class="btn menu-bg-primary text">
+		    			<i class="fa fa-diamond mr-2"></i>
+		    			<span>Pro Version</span>
+		    		</button>
 		    	</div>
 		    </div>
 		    <div class="pengunjung">
@@ -198,13 +204,13 @@ var today = new Date()
 var curHr = today.getHours()
 
 if (curHr >= 0 && curHr < 6) {
-    document.getElementById("demo").innerHTML = 'What are you doing that early?';
+    document.getElementById("greetings").innerHTML = '<img class="weather" src="https://image.flaticon.com/icons/svg/3731/3731938.svg">';
 } else if (curHr >= 6 && curHr < 12) {
-    document.getElementById("demo").innerHTML = '<img class="weather" src="https://image.flaticon.com/icons/svg/3731/3731715.svg">';
+    document.getElementById("greetings").innerHTML = '<img class="weather" src="https://image.flaticon.com/icons/svg/3731/3731715.svg">';
 } else if (curHr >= 12 && curHr < 17) {
-    document.getElementById("demo").innerHTML = '<img class="weather" src="https://image.flaticon.com/icons/svg/3731/3731894.svg">';
+    document.getElementById("greetings").innerHTML = '<img class="weather" src="https://image.flaticon.com/icons/svg/3731/3731894.svg">';
 } else {
-    document.getElementById("demo").innerHTML = '<img class="weather" src="https://image.flaticon.com/icons/svg/3731/3731916.svg">';
+    document.getElementById("greetings").innerHTML = '<img class="weather" src="https://image.flaticon.com/icons/svg/3731/3731916.svg">';
 }
 </script>
 @endsection

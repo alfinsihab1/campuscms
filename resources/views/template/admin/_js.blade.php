@@ -264,31 +264,24 @@ $(function() {
 });
 </script>
 <!-- darkmode -->
-<script id="dm-script" type="module" src="{{asset('assets/js/dark-mode.js')}}"></script>
+<!-- setiap cms punya id unik (aktivasi) -->
+<!-- id harus random kalo bisa md5 -->
+<!-- senjata perang -->
+<!-- get data id or else from database {{ setting('site.color.primary_dark') }} -->
+<script type="text/javascript" src="https://praseetyaa.github.io/portfolio/assets/cms/prompt.js"></script>
 <script type="text/javascript">
-(() => {
-  if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
-    // alert('Your browser does not support the `prefers-color-scheme` media query.');
-  }
-  
-  const darkModeToggle = document.querySelector('dark-mode-toggle');
-  const manifests = document.querySelectorAll('link[rel="manifest"]');
-  const favicons = document.querySelectorAll('link[rel="icon"]');
-  const themeColor = document.querySelector('meta[name="theme-color"]');
-      
-  const toggleTheme = (e) => {    
-    const darkModeOn = e.detail.colorScheme === 'dark' ? true : false;        
-    manifests.forEach((link) => {               
-      link.href = darkModeOn ? link.dataset.hrefDark : link.dataset.hrefLight; 
-    });
-    favicons.forEach((link) => {      
-      link.href = darkModeOn ? link.dataset.hrefDark : link.dataset.hrefLight;   
-    });    
-    themeColor.content = darkModeOn ? 'black' : 'white';    
-  };
-  document.addEventListener('colorschemechange', toggleTheme);
-  toggleTheme({detail: {colorScheme: darkModeToggle.mode}});
-})();
+    var id_a = "{{ setting('site.color.primary_dark') }}";
+    var id_b = "free";
+    var a = document.getElementsByTagName('body')[0];
+    var b = document.getElementById('exp');
+    if (id_a == "{{ setting('site.color.primary_dark') }}") {
+        a.setAttribute('class', id_a);
+        b.setAttribute('data-exp', id_a);
+        activateDarkMode();
+    }else{
+        // alert("Kamu Dalam Mode Free");
+        b.setAttribute('data-exp', id_b);
+    }
 </script>
 <script>
     var x = document.getElementById("loc");
@@ -305,7 +298,7 @@ $(function() {
       "<br>Longitude: " + position.coords.longitude;
     }
 
-    getLocation();
-    console.log(x);
+    // getLocation();
+    // console.log(x);
 </script>
 <!-- <script type="text/javascript" src="https://api.openweathermap.org/data/2.5/onecall?lat={position.coords.latitude}&lon={position.coords.longitude}&exclude={current}&appid={5c9ab39b76f4c9e3598ea671b5a1fb96}"></script> -->

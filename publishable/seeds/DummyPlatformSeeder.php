@@ -1,9 +1,11 @@
 <?php
 
+namespace Ajifatur\FaturCMS\DummySeeder;
+
 use Illuminate\Database\Seeder;
 use Ajifatur\FaturCMS\Models\Platform;
 
-class PlatformSeeder extends Seeder
+class DummyPlatformSeeder extends Seeder
 {
     /**
      * Run the database seeds.

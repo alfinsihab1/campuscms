@@ -15,9 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionSeeder::class);
         $this->call(KategoriSettingSeeder::class);
         $this->call(SettingSeeder::class);
-        $this->call(PlatformSeeder::class);
-        $this->call(KategoriArtikelSeeder::class);
         $this->call(KategoriPelatihanSeeder::class);
-        $this->call(UserSeeder::class);
     }
 }

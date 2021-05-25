@@ -6,7 +6,7 @@
     <p class="m-0 text-muted"><small><i class="fa fa-home"></i> > Dashboard</small></p>
   </li></ul> -->
   <ul class="app-nav ml-auto ml-md">
-    @if(has_access('KomisiController::index', Auth::user()->role, false) || has_access('WithdrawalController::index', Auth::user()->role, false) || has_access('PelatihanController::transaction', Auth::user()->role, false) || has_access('PackageController::me', Auth::user()->role, false))
+    @if(has_access('KomisiController::index', Auth::user()->role, false) || has_access('WithdrawalController::index', Auth::user()->role, false) || has_access('PelatihanController::transaction', Auth::user()->role, false))
     <li class="dropdown">
       <a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Show notifications">
         <i class="fa fa-bell fa-lg" data-toggle="tooltip" title="Notifikasi"></i>

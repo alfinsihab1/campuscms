@@ -45,7 +45,7 @@ if(!function_exists('count_existing_data')){
 // Menghitung semua notifikasi (admin)
 if(!function_exists('count_notif_admin')){
     function count_notif_admin(){
-        $data = count_notif_komisi() + count_notif_withdrawal() + count_notif_pelatihan() + count_notif_package();
+        $data = count_notif_komisi() + count_notif_withdrawal() + count_notif_pelatihan();
         return $data;
     }
 }
@@ -71,17 +71,6 @@ if(!function_exists('count_notif_pelatihan')){
     function count_notif_pelatihan(){
         $data = PelatihanMember::where('fee_status','=',0)->count();
         return $data;
-    }
-}
-
-// Menghitung notifikasi package
-if(!function_exists('count_notif_package')){
-    function count_notif_package(){
-        $package = Package::where('package_name','=',config('faturcms.name'))->first();
-        if($package){
-            return $package->package_version == package_version() ? 0 : 1;
-        }
-        return 1;
     }
 }
 

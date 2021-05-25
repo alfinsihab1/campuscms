@@ -53,17 +53,6 @@
                 </a>
               </div>
               @endif
-              @if(has_access('PackageController::me', Auth::user()->role, false))
-              <div class="col-6">
-                <a class="dropdown-item" href="{{ route('admin.package.me') }}">
-                  <span class="app-notification__icon p-0"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-info"></i><i class="fa fa-level-up fa-stack-1x fa-inverse"></i></span></span>
-                  <span class="badge badge-pill badge-danger position-absolute">{{ count_notif_package() }}</span>
-                  <div>
-                    <p class="app-notification__message">Update<br>Sistem</p>
-                  </div>
-                </a>
-              </div>
-              @endif
             </div>
           </div>
         </div>

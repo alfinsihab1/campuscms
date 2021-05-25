@@ -29,9 +29,6 @@
                         Kamu saat ini menggunakan versi <strong>{{ $my_package->package_version }}</strong>.
                     @endif
                 </div>
-                @if($my_package->package_version != package_version())
-                <!-- <div class="mt-2 mt-md-0"><a class="btn btn-primary btn-update-me" href="#"><i class="fa fa-level-up mr-1"></i>Update</a></div> -->
-                @endif
             </div>
         </div>
     </div>

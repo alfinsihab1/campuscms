@@ -217,6 +217,17 @@ if (curHr >= 0 && curHr < 6) {
 // console.log(a);
 // document.getElementById("hours").append(a);
 </script>
+<script type="text/javascript">
+	$.ajax({
+		url: "{{route('api.get.coordinate')}}",
+		type: 'GET',
+		success: function(response){
+			var data = JSON.parse(response);
+			console.log(data.latitude);
+			console.log(data.longitude);
+		}
+	})
+</script>
 @endsection
 
 @section('css-extra')

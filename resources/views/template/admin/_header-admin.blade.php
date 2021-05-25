@@ -1,10 +1,13 @@
 <header class="app-header align-items-center">
   <a class="app-sidebar__toggle menu-btn-primary d-block" href="#" data-toggle="sidebar"></a>
   <ul class="app-nav d-block">
+    @if( Request::path() == 'admin' )
     <li class="app-nav__item nav-breadcrumb" style="line-height: 15px">
       <h5 class="d-inline-block text-truncate m-0">Dashboard</h5>
       <p class="m-0"><small><i class="fa fa-home"></i> > Dashboard</small></p>
     </li>
+    @else
+    @endif
     @if( Request::path() == 'admin' )
     @else
       <dark-mode-toggle

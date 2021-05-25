@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Ajifatur\FaturCMS\Models\Package;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,9 @@ use Illuminate\Http\Request;
 
 // Namespace Prefix
 $namespacePrefix = '\\'.config('faturcms.controllers.namespace').'\\';
+
+// Update Package
+Route::post('/package/update', $namespacePrefix.'PackageController@updateMe');
 
 // Slider
 Route::get('/slider', $namespacePrefix.'SliderController@json')->name('api.slider.index');

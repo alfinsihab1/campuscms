@@ -30,7 +30,7 @@
                     @endif
                 </div>
                 @if($my_package->package_version != package_version())
-                <div class="mt-2 mt-md-0"><a class="btn btn-primary btn-update-me" href="#"><i class="fa fa-level-up mr-1"></i>Update</a></div>
+                <!-- <div class="mt-2 mt-md-0"><a class="btn btn-primary btn-update-me" href="#"><i class="fa fa-level-up mr-1"></i>Update</a></div> -->
                 @endif
             </div>
         </div>
@@ -80,79 +80,5 @@
     <!-- /Row -->
 </main>
 <!-- /Main -->
-
-<!-- Modal Update Me -->
-<div class="modal fade" id="modal-update-me" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Output</h5>
-            </div>
-            <div class="modal-body">
-                <h5 class="mb-3"></h5>
-                <div class="output w-100 mb-3"></div>
-			</div>
-            <div class="modal-footer justify-content-center">
-                <a class="btn btn-primary btn-refresh" href="{{ route('admin.package.me') }}"><i class="fa fa-refresh mr-1"></i>Refresh</a>
-                <a class="btn btn-primary btn-update-me" href="#"><i class="fa fa-level-up mr-1"></i>Update Ulang</a>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /Modal Update Me -->
-
-@endsection
-
-@section('js-extra')
-
-<script type="text/javascript">
-    // Button Update Me
-    $(document).on("click", ".btn-update-me", function(e){
-        e.preventDefault();
-        $.ajax({
-            type: "get",
-            url: "{{ route('admin.package.update-me') }}",
-            error: function(response){
-                var responseText = JSON.parse(response.responseText);
-                var html = '';
-                html += '<div class="alert alert-danger">' + responseText.message + '</div>';
-                html += '<p class="mb-1">File:<br>' + responseText.file + ' on line ' + responseText.line + '</p>';
-                html += '<p class="mb-1">Exception:<br>' + responseText.exception + '</p>';
-                html += '<ul>';
-                $(responseText.trace).each(function(key, array){
-                    html += '<li>' + array.class + '::' + array.function + ' (line ' + array.line + ')</li>';
-                });
-                html += '</ul>';
-                $("#modal-update-me .modal-body h5").html('<i class="fa fa-exclamation-circle mr-2"></i>' + response.status + ": " + response.statusText);
-                $("#modal-update-me .output").html(html);
-				$("#modal-update-me .btn-refresh").addClass("d-none");
-				$("#modal-update-me .btn-update-me").removeClass("d-none");
-                $("#modal-update-me").modal({
-                    backdrop: 'static',
-                    keyboard: false
-                });
-            },
-            success: function(response){
-                $("#modal-update-me .modal-body h5").html('<i class="fa fa-check-circle mr-2"></i>200: success!');
-                $("#modal-update-me .output").html(response);
-				$("#modal-update-me .btn-refresh").removeClass("d-none");
-				$("#modal-update-me .btn-update-me").addClass("d-none");
-                $("#modal-update-me").modal({
-                    backdrop: 'static',
-                    keyboard: false
-                });
-            }
-        });
-    });
-</script>
-
-@endsection
-
-@section('css-extra')
-
-<style type="text/css">
-    #modal-update-me .modal-body a {color: #fff;}
-    #modal-update-me .modal-body a:hover {color: #fff;}
-</style>
 
 @endsection

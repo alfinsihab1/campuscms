@@ -101,7 +101,7 @@
 			</div>
             <div class="modal-footer justify-content-center">
                 <a class="btn btn-primary btn-refresh" href="{{ route('admin.subscriber.index') }}"><i class="fa fa-refresh mr-1"></i>Refresh</a>
-                <a class="btn btn-primary btn-update-me" href="#"><i class="fa fa-level-up mr-1"></i>Update Ulang</a>
+                <a class="btn btn-primary btn-update" href="#"><i class="fa fa-level-up mr-1"></i>Update Ulang</a>
             </div>
         </div>
     </div>
@@ -123,6 +123,7 @@
     $(document).on("click", ".btn-update", function(e){
         e.preventDefault();
         var url = $(this).data("url");
+		$("#modal-update-me .btn-update").attr("data-url",url);
         $.ajax({
             type: "get",
             url: "{{ route('admin.package.update') }}",
@@ -141,17 +142,19 @@
                 $("#modal-update-me .modal-body h5").html('<i class="fa fa-exclamation-circle mr-2"></i>' + response.status + ": " + response.statusText);
                 $("#modal-update-me .output").html(html);
 				$("#modal-update-me .btn-refresh").addClass("d-none");
-				$("#modal-update-me .btn-update-me").removeClass("d-none");
+				$("#modal-update-me .btn-update").removeClass("d-none");
                 $("#modal-update-me").modal({
                     backdrop: 'static',
                     keyboard: false
                 });
             },
             success: function(response){
-                $("#modal-update-me .modal-body h5").html('<i class="fa fa-check-circle mr-2"></i>200: success!');
-                $("#modal-update-me .output").html(response);
+				var responseString = response.toString();
+				// Jika sukses
+				if(responseString.search('API KEY tidak valid') == -1) $("#modal-update-me .modal-body h5").html('<i class="fa fa-check-circle mr-2"></i>200: Sukses!');
+                $("#modal-update-me .output").html(responseString);
 				$("#modal-update-me .btn-refresh").removeClass("d-none");
-				$("#modal-update-me .btn-update-me").addClass("d-none");
+				$("#modal-update-me .btn-update").addClass("d-none");
                 $("#modal-update-me").modal({
                     backdrop: 'static',
                     keyboard: false

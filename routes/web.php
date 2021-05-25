@@ -51,7 +51,8 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	// Package
 	Route::get('/admin/sistem/package', $namespacePrefix.'PackageController@index')->name('admin.package.index');
 	Route::get('/admin/sistem/package/me', $namespacePrefix.'PackageController@me')->name('admin.package.me');
-	Route::get('/admin/sistem/package/update-me', $namespacePrefix.'PackageController@updateMe')->name('admin.package.update-me');
+	Route::get('/admin/sistem/package/update', $namespacePrefix.'PackageController@update')->name('admin.package.update');
+	// Route::get('/admin/sistem/package/update-me', $namespacePrefix.'PackageController@updateMe')->name('admin.package.update-me');
 	Route::get('/admin/sistem/package/detail', $namespacePrefix.'PackageController@detail')->name('admin.package.detail');
 
 	// Subscriber

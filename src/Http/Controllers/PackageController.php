@@ -89,6 +89,26 @@ class PackageController extends Controller
   }
 
   /**
+   * Mengupdate package dari remote
+   *
+   * @return \Illuminate\Http\Request
+   * @return \Illuminate\Http\Response
+   */
+  public function update(Request $request)
+  {
+	  $url = $request->query('url');
+
+	  try {
+		  $client = new Client(['base_uri' => $url.'/api/']);
+		  $request = $client->request('POST', 'package/update');
+	  } catch (ClientException $e) {
+		  echo Psr7\Message::toString($e->getResponse());
+		  return;
+	  }
+	  echo $request->getBody();
+  }
+
+  /**
    * Update my package
    *
    * @return \Illuminate\Http\Request

@@ -40,6 +40,7 @@
                                     <th>Subscriber</th>
                                     <th width="100">Email</th>
                                     <th width="30">Versi</th>
+                                    <th width="100">Update Terakhir</th>
                                     <th width="60">Opsi</th>
                                 </tr>
                             </thead>
@@ -54,6 +55,12 @@
                                     </td>
                                     <td>{{ $data->subscriber_email }}</td>
                                     <td>{{ $data->subscriber_version }}</td>
+                                    <td>
+                                        <span class="d-none">{{ $data->subscriber_up }}</span>
+                                        {{ date('d/m/Y', strtotime($data->subscriber_up)) }}
+                                        <br>
+                                        <small><i class="fa fa-clock-o mr-1"></i>{{ date('H:i', strtotime($data->subscriber_up)) }} WIB</small>
+                                    </td>
                                     <td>
                                         <div class="btn-group">
                                             <a href="#" class="btn btn-sm btn-success btn-update" data-id="{{ $data->id_subscriber }}" data-url="{{ $data->subscriber_url }}" data-toggle="tooltip" title="Update"><i class="fa fa-level-up"></i></a>
@@ -93,7 +100,7 @@
                 <div class="output w-100 mb-3"></div>
 			</div>
             <div class="modal-footer justify-content-center">
-                <a class="btn btn-primary btn-refresh" href="{{ route('admin.package.me') }}"><i class="fa fa-refresh mr-1"></i>Refresh</a>
+                <a class="btn btn-primary btn-refresh" href="{{ route('admin.subscriber.index') }}"><i class="fa fa-refresh mr-1"></i>Refresh</a>
                 <a class="btn btn-primary btn-update-me" href="#"><i class="fa fa-level-up mr-1"></i>Update Ulang</a>
             </div>
         </div>
@@ -117,9 +124,9 @@
         e.preventDefault();
         var url = $(this).data("url");
         $.ajax({
-            type: "post",
-            url: url + "/api/package/update",
-            data: {_token: "{{ csrf_token() }}"},
+            type: "get",
+            url: "{{ route('admin.package.update') }}",
+            data: {url: url},
             error: function(response){
                 var responseText = JSON.parse(response.responseText);
                 var html = '';

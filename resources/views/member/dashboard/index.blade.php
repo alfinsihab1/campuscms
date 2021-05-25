@@ -343,7 +343,7 @@ span.addEventListener("copy", function(event) {
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/owlcarousel/owl.carousel.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/owlcarousel/owl.theme.default.min.css') }}">
 <style type="text/css">
-    #modal-intro .modal-body {height: 70vh; overflow-y: auto;}
+    #modal-intro .modal-body {max-height: 70vh; overflow-y: auto;}
     .owl-nav {position: absolute; width: 100%; top: 45%;}
     .owl-carousel .owl-nav button.owl-prev {position: absolute; font-size: 30px; top: 0; left: -10px; width: 20px; background-color: var(--primary-light); color: var(--primary-dark);}
     .owl-carousel .owl-nav button.owl-next {position: absolute; font-size: 30px; top: 0; right: -10px; width: 20px; background-color: var(--primary-light); color: var(--primary-dark);}

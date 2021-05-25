@@ -26,7 +26,7 @@ class BlogController extends Controller
         has_access(generate_method(__METHOD__), Auth::user()->role);
 
         // Data blog
-        $blog = Blog::join('users','blog.author','=','users.id_user')->join('kategori_artikel','blog.blog_kategori','=','kategori_artikel.id_ka')->orderBy('blog_at','desc')->get();
+        $blog = Blog::join('users','blog.author','=','users.id_user')->join('kategori_artikel','blog.blog_kategori','=','kategori_artikel.id_ka')->join('kontributor','blog.blog_kontributor','=','kontributor.id_kontributor')->orderBy('blog_at','desc')->get();
 		
         // View
         return view('faturcms::admin.blog.index', [

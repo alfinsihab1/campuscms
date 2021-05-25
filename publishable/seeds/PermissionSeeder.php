@@ -33,6 +33,12 @@ class PermissionSeeder extends Seeder
             ['key' => 'PackageController::me', 'name' => 'Menampilkan My Package'],
             ['key' => 'PackageController::updateMe', 'name' => 'Mengupdate My Package'],
 
+            // Subscriber
+            ['key' => 'SubscriberController::index', 'name' => 'Menampilkan Data Subscriber'],
+            ['key' => 'SubscriberController::create', 'name' => 'Menambah Subscriber'],
+            ['key' => 'SubscriberController::edit', 'name' => 'Mengupdate Subscriber'],
+            ['key' => 'SubscriberController::delete', 'name' => 'Menghapus Subscriber'],
+
             // Artisan
             ['key' => 'ArtisanController::index', 'name' => 'Menampilkan Data Command Artisan'],
 

@@ -57,7 +57,7 @@
                     @if($logs != false)
                         @if(count($logs) > 0)
                         <div class="table-responsive">
-                            <table class="table table-hover table-striped table-borderless">
+                            <table class="table table-hover table-striped table-borderless table-stretch">
                                 @foreach($logs as $log)
                                 <tr>
                                     <td><a href="{{ URL::to($log->url) }}" target="_blank">{{ URL::to($log->url) }}</a></td>
@@ -101,13 +101,5 @@
         }
     });
 </script>
-
-@endsection
-
-@section('css-extra')
-
-<style type="text/css">
-    .table tr td {padding: .25rem;}
-</style>
 
 @endsection

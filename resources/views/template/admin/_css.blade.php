@@ -333,6 +333,16 @@
     .weather{width: 80px}
     .nav-breadcrumb h5{max-width: 150px; color: var(--primary-dark)}
     .nav-breadcrumb p{color: var(--gray)}
+    .modal-dialog-scrollable .modal-body::-webkit-scrollbar
+    {
+        width: 6px;
+    }
+
+    .modal-dialog-scrollable .modal-body::-webkit-scrollbar-thumb
+    {
+        border-radius: 10px;
+        background-color: rgba(0, 0, 0, 0.2);
+    }
     @media (max-width: 480px) {
         .app-content {padding: 15px;}
     }

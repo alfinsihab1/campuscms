@@ -2,7 +2,6 @@
 
 /**
  * Count Helpers:
- * @method int count_existing_data(string $table, string $field, string $keyword, string $primaryKey, int $id = null)
  * @method int count_notif_admin()
  * @method int count_notif_komisi()
  * @method int count_notif_withdrawal()
@@ -32,15 +31,6 @@ use Ajifatur\FaturCMS\Models\Pelatihan;
 use Ajifatur\FaturCMS\Models\PelatihanMember;
 use Ajifatur\FaturCMS\Models\Visitor;
 use Ajifatur\FaturCMS\Models\Withdrawal;
-
-// Menghitung jumlah data duplikat
-if(!function_exists('count_existing_data')){
-    function count_existing_data($table, $field, $keyword, $primaryKey, $id = null){
-        if($id == null) $data = DB::table($table)->where($field,'=',$keyword)->count();
-        else $data = DB::table($table)->where($field,'=',$keyword)->where($primaryKey,'!=',$id)->count();
-        return $data;
-    }
-}
 
 // Menghitung semua notifikasi (admin)
 if(!function_exists('count_notif_admin')){

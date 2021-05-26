@@ -4,6 +4,7 @@ namespace Ajifatur\FaturCMS;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\File;
 use Ajifatur\FaturCMS\Http\Middleware\AdminMiddleware;
 use Ajifatur\FaturCMS\Http\Middleware\MemberMiddleware;
 use Ajifatur\FaturCMS\Http\Middleware\GuestMiddleware;
@@ -61,8 +62,16 @@ class FaturCMSServiceProvider extends ServiceProvider
      */
     protected function loadHelpers()
     {
+        // Load helpers from FaturCMS
         foreach(glob(__DIR__.'/Helpers/*.php') as $filename){
             require_once $filename;
+        }
+
+        // Load helpers from FaturHelper
+        if(File::exists(base_path('vendor/ajifatur/faturhelper/src'))){
+            foreach(glob(base_path('vendor/ajifatur/faturhelper/src').'/Helpers/*.php') as $filename){
+                require_once $filename;
+            }
         }
     }
 

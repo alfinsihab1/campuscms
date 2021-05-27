@@ -22,7 +22,7 @@ class FolderKategoriController extends Controller
         has_access(generate_method(__METHOD__), Auth::user()->role);
 
         // Data kategori
-        $kategori = FolderKategori::orderBy('status_kategori','desc')->get();
+        $kategori = FolderKategori::orderBy('status_kategori','desc')->orderBy('order_kategori','asc')->get();
         
         // View
         return view('faturcms::admin.folder-kategori.index', [
@@ -66,12 +66,16 @@ class FolderKategoriController extends Controller
         }
         // Jika tidak ada error
         else{
+            // Latest data
+            $latest = FolderKategori::latest('order_kategori')->first();
+
             // Menambah data
             $kategori = new FolderKategori;
             $kategori->folder_kategori = $request->kategori;
             $kategori->slug_kategori = slugify($request->kategori, 'folder_kategori', 'slug_kategori', 'id_fk', null);
             $kategori->tipe_kategori = $request->tipe;
             $kategori->status_kategori = $request->status;
+            $kategori->order_kategori = $latest ? $latest->order_kategori + 1 : 1;
             $kategori->save();
         }
 
@@ -151,5 +155,24 @@ class FolderKategoriController extends Controller
 
         // Redirect
         return redirect()->route('admin.folder.kategori.index')->with(['message' => 'Berhasil menghapus data.']);
+    }
+
+    /**
+     * Mengurutkan kategori folder
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function sorting(Request $request)
+    {
+        // Mengurutkan kategori
+        foreach($request->get('ids') as $key=>$id){
+            $kategori = FolderKategori::find($id);
+            if($kategori){
+                $kategori->order_kategori = $key + 1;
+                $kategori->save();
+            }
+        }
+        echo 'Sukses mengupdate urutan kategori!';
     }
 }

@@ -47,24 +47,17 @@
         @endif
         
         @if(has_access('FileController::index', Auth::user()->role, false))
-          @if(status_kategori_folder('e-learning'))
-          <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('member.filemanager.index', ['kategori' => 'e-learning']))) ? 'active' : '' }}" href="{{ route('member.filemanager.index', ['kategori' => 'e-learning']) }}"><i class="app-menu__icon fa fa-folder-open"></i><span class="app-menu__label">Materi E-Learning</span></a></li>
-          @endif
-          @if(status_kategori_folder('e-library'))
-          <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('member.filemanager.index', ['kategori' => 'e-library']))) ? 'active' : '' }}" href="{{ route('member.filemanager.index', ['kategori' => 'e-library']) }}"><i class="app-menu__icon fa fa-folder-open"></i><span class="app-menu__label">Materi E-Library</span></a></li>
-          @endif
-          @if(status_kategori_folder('e-competence'))
-          <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('member.filemanager.index', ['kategori' => 'e-competence']))) ? 'active' : '' }}" href="{{ route('member.filemanager.index', ['kategori' => 'e-competence']) }}"><i class="app-menu__icon fa fa-folder-open"></i><span class="app-menu__label">Materi E-Competence</span></a></li>
-          @endif
-          @if(status_kategori_folder('e-course'))
-          <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('member.filemanager.index', ['kategori' => 'e-course']))) ? 'active' : '' }}" href="{{ route('member.filemanager.index', ['kategori' => 'e-course']) }}"><i class="app-menu__icon fa fa-video-camera"></i><span class="app-menu__label">Materi E-Course</span></a></li>
-          @endif
-          @if(status_kategori_folder('script'))
-          <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('member.filemanager.index', ['kategori' => 'script']))) ? 'active' : '' }}" href="{{ route('member.filemanager.index', ['kategori' => 'script']) }}"><i class="app-menu__icon fa fa-file-text-o"></i><span class="app-menu__label">Kumpulan Copywriting</span></a></li>
-          @endif
-          @if(status_kategori_folder('tools'))
-          <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('member.filemanager.index', ['kategori' => 'tools']))) ? 'active' : '' }}" href="{{ route('member.filemanager.index', ['kategori' => 'tools']) }}"><i class="app-menu__icon fa fa-wrench"></i><span class="app-menu__label">Kumpulan Tools</span></a></li>
-          @endif
+          @foreach(array_kategori_folder() as $kategori)
+            @php
+              if($kategori->tipe_kategori == 'ebook') $fa_icon = 'fa-folder-open';
+              elseif($kategori->tipe_kategori == 'video') $fa_icon = 'fa-video-camera';
+              elseif($kategori->tipe_kategori == 'script') $fa_icon = 'fa-file-text-o';
+              elseif($kategori->tipe_kategori == 'tools') $fa_icon = 'fa-wrench';
+            @endphp
+            @if(status_kategori_folder($kategori->slug_kategori))
+            <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('member.filemanager.index', ['kategori' => $kategori->slug_kategori]))) ? 'active' : '' }}" href="{{ route('member.filemanager.index', ['kategori' => $kategori->slug_kategori]) }}"><i class="app-menu__icon fa {{ $fa_icon }}"></i><span class="app-menu__label">{{ $kategori->tipe_kategori == 'ebook' || $kategori->tipe_kategori == 'video' ? 'Materi' : 'Kumpulan' }} {{ $kategori->folder_kategori }}</span></a></li>
+            @endif
+          @endforeach
         @endif
 
         @if(has_access('PelatihanController::index', Auth::user()->role, false) || has_access('PelatihanController::trainer', Auth::user()->role, false))

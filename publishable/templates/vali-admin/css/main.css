@@ -5665,8 +5665,8 @@ button.close {
     }
     .modal-dialog-scrollable .modal-content {
         max-height: calc(100vh - 3.5rem)
+  }
 }
-
 .modal-content {
   position: relative;
   display: -webkit-box;
@@ -10445,7 +10445,7 @@ body.stop-scrolling {
   overflow: hidden;
   padding: 0 10px;
   max-height: 0;
-  webkit-transition: padding 0.15s, max-height 0.15s;
+  -webkit-transition: padding 0.15s, max-height 0.15s;
   -webkit-transition: padding 0.15s, max-height 0.15s;
   -o-transition: padding 0.15s, max-height 0.15s;
   transition: padding 0.15s, max-height 0.15s;
@@ -10454,7 +10454,7 @@ body.stop-scrolling {
 .sweet-alert .sa-error-container.show {
   padding: 10px 0;
   max-height: 100px;
-  webkit-transition: padding 0.2s, max-height 0.2s;
+  -webkit-transition: padding 0.2s, max-height 0.2s;
   -webkit-transition: padding 0.25s, max-height 0.25s;
   -o-transition: padding 0.25s, max-height 0.25s;
   transition: padding 0.25s, max-height 0.25s;
@@ -12188,8 +12188,8 @@ body .fc {
 
 /*
 Acceptable font-family overrides for individual icons:
-  "Arial", sans-serif
-  "Times New Roman", serif
+	"Arial", sans-serif
+	"Times New Roman", serif
 
 NOTE: use percentage font sizes or else old IE chokes
 */
@@ -12507,7 +12507,7 @@ hr.fc-divider {
 
 .fc-row table {
   /* don't put left/right border on anything within a fake row.
-     the outer tbody will worry about this */
+	   the outer tbody will worry about this */
   border-left: 0 hidden transparent;
   border-right: 0 hidden transparent;
   /* no bottom borders on rows */
@@ -12928,8 +12928,8 @@ a.fc-more:hover {
   filter: alpha(opacity=30);
   /* for IE */
   /* opacity with small font can sometimes look too faded
-     might want to set the 'color' property instead
-     making day-numbers bold also fixes the problem */
+	   might want to set the 'color' property instead
+	   making day-numbers bold also fixes the problem */
 }
 
 /* AgendaView all-day area

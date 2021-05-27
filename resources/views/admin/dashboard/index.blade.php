@@ -58,20 +58,25 @@
 		    <div class="experience mb-3">
 		    	<div class="card">
 		    		<div class="card-body">
-		    			<div class="media align-items-center">
-			    			<img class="mr-3" width="100" src="https://image.flaticon.com/icons/svg/3731/3731790.svg">
+		    			<div class="media d-block d-md-flex align-items-center">
+							<div class="text-center text-md-left">
+								<img class="mr-0 mr-md-3 mb-3 mb-md-0 " width="100" src="https://image.flaticon.com/icons/svg/3731/3731790.svg">
+							</div>
 			    			<div class="media-body">
 			    				<div class="d-block d-md-flex align-items-center mb-1">
 					    			<span class="badge menu-bg-red mr-2" data-toggle="tooltip" data-placement="top" title="Percobaan untuk tema dark mode">BETA</span>
 					    			<h5 class="m-0">Experience with dark mode</h5>
 					    		</div>
 					    		<p class="m-0">Aktifkan dark mode untuk merasakan pengalaman baru</p>
-					    		<div class="d-flex align-items-center">
-									<dark-mode-toggle
+					    		<div class=" ">
+<!-- 									<dark-mode-toggle
 									    appearance="toggle"
 									    permanent=""
-									></dark-mode-toggle>
-									<span class="badge menu-bg-blue" data-toggle="tooltip" data-placement="top" title="Klik untuk mengaktifkan dark mode"><i class="fa fa-chevron-left mr-1"></i> Klik Untuk Mengaktifkan</span>
+									></dark-mode-toggle> -->
+<div class="custom-control custom-switch">
+  <input type="checkbox" class="custom-control-input" id="customSwitch1">
+  <label class="custom-control-label" for="customSwitch1"><span class="badge menu-bg-blue" data-toggle="tooltip" data-placement="top" title="Klik untuk mengaktifkan dark mode"><i class="fa fa-chevron-left mr-1"></i> Klik Untuk Mengaktifkan</span></label>
+</div>
 								</div>
 				    		</div>
 			    		</div>
@@ -217,7 +222,7 @@ if (curHr >= 0 && curHr < 6) {
 // console.log(a);
 // document.getElementById("hours").append(a);
 </script>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	$.ajax({
 		url: "{{route('api.get.coordinate')}}",
 		type: 'GET',
@@ -227,7 +232,7 @@ if (curHr >= 0 && curHr < 6) {
 			console.log(data.longitude);
 		}
 	})
-</script>
+</script> -->
 @endsection
 
 @section('css-extra')

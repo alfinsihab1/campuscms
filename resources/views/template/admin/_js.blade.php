@@ -272,14 +272,14 @@ $(function() {
 <script type="text/javascript">
     var id_a = "{{ setting('site.color.primary_dark') }}";
     var id_b = "free";
-    var a = document.getElementsByTagName('body')[0];
+    var a = document.getElementsByTagName('html')[0];
     var b = document.getElementById('exp');
-    if (id_a != "{{ setting('site.color.primary_dark') }}") {
-        a.setAttribute('class', a.getAttribute('class') + ' ' + id_a);
+    if (id_a == "{{ setting('site.color.primary_dark') }}") {
+        a.setAttribute('class', id_a);
         b.setAttribute('data-exp', id_a);
         activateDarkMode();
     }else{
-        // alert("Kamu Dalam Mode Free");
+        alert("Kamu Dalam Mode Free");
         b.setAttribute('data-exp', id_b);
     }
 </script>

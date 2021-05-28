@@ -8,6 +8,7 @@
       </div>
     </li>
   </ul>
+  @if (Request::path()=='/admin')
   @if (Auth::user()->role==role('it'))
   <dark-mode-toggle
     hidden=""
@@ -15,6 +16,7 @@
     permanent=""
   ></dark-mode-toggle>
   <li hidden="" id="exp"></li>
+  @endif
   @endif
   <ul class="app-nav ml-auto ml-md">
     @if(has_access('KomisiController::index', Auth::user()->role, false) || has_access('WithdrawalController::index', Auth::user()->role, false) || has_access('PelatihanController::transaction', Auth::user()->role, false))

@@ -6,10 +6,8 @@
       <h5 class="d-inline-block text-truncate m-0">Dashboard</h5>
       <p class="m-0"><small><i class="fa fa-home"></i> > Dashboard</small></p>
     </li>
-    @else
     @endif
-    @if( Request::path() == 'admin' )
-    @else
+    @if( Request::path() != 'admin' )
       <dark-mode-toggle
         hidden=""
         appearance="toggle"

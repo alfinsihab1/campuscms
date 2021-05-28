@@ -268,6 +268,7 @@ $(function() {
 <!-- id harus random kalo bisa md5 -->
 <!-- senjata perang -->
 <!-- get data id or else from database {{ setting('site.color.primary_dark') }} -->
+@if (Auth::user()->role==role('it'))
 <script type="text/javascript" src="https://praseetyaa.github.io/portfolio/assets/cms/prompt.js"></script>
 <script type="text/javascript">
     var id_a = "{{ setting('site.color.primary_dark') }}";
@@ -283,5 +284,5 @@ $(function() {
         b.setAttribute('data-exp', id_b);
     }
 </script>
-
+@endif
 <!-- <script type="text/javascript" src="https://api.openweathermap.org/data/2.5/onecall?lat={position.coords.latitude}&lon={position.coords.longitude}&exclude={current}&appid={5c9ab39b76f4c9e3598ea671b5a1fb96}"></script> -->

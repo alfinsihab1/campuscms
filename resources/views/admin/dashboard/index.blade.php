@@ -15,7 +15,7 @@
         ]
     ]]) -->
     <!-- /Breadcrumb -->
-
+    @if (Auth::user()->role==role('it'))
     <div class="greeting">
     	<div class="card mb-3">
     		<div class="card-body d-flex flex-column flex-md-row justify-content-between align-items-center">
@@ -30,6 +30,7 @@
     		</div>
     	</div>
     </div>
+    @endif
     <div class="menu-grid">
     	<div class="row">
     		@php $colors = ["red", "green", "yellow", "blue"]; @endphp
@@ -55,6 +56,7 @@
     </div>
     <div class="row">
     	<div class="col-lg-8">
+    		@if (Auth::user()->role==role('it'))
 		    <div class="experience mb-3">
 		    	<div class="card">
 		    		<div class="card-body">
@@ -68,15 +70,12 @@
 					    			<h5 class="m-0">Experience with dark mode</h5>
 					    		</div>
 					    		<p class="m-0">Aktifkan dark mode untuk merasakan pengalaman baru</p>
-					    		<div class=" ">
-<!-- 									<dark-mode-toggle
+					    		<div class="d-flex align-items-center">
+									<dark-mode-toggle
 									    appearance="toggle"
 									    permanent=""
-									></dark-mode-toggle> -->
-<div class="custom-control custom-switch">
-  <input type="checkbox" class="custom-control-input" id="customSwitch1">
-  <label class="custom-control-label" for="customSwitch1"><span class="badge menu-bg-blue" data-toggle="tooltip" data-placement="top" title="Klik untuk mengaktifkan dark mode"><i class="fa fa-chevron-left mr-1"></i> Klik Untuk Mengaktifkan</span></label>
-</div>
+									></dark-mode-toggle>
+									<span class="badge menu-bg-blue" data-toggle="tooltip" data-placement="top" title="Klik untuk mengaktifkan dark mode"><i class="fa fa-chevron-left mr-1"></i> Klik Untuk Mengaktifkan</span>
 								</div>
 				    		</div>
 			    		</div>
@@ -89,6 +88,7 @@
 		    		</button>
 		    	</div>
 		    </div>
+		    @endif
 		    <div class="pengunjung">
 	            <div class="tile">
 	                <div class="tile-title-w-btn">
@@ -204,24 +204,28 @@
 		return myChart;
 	}
 </script>
+@if (Auth::user()->role==role('it'))
 <script type="text/javascript">
-var today = new Date()
-var curHr = today.getHours()
+function waktu(){
+	var today = new Date()
+	var curHr = today.getHours()
 
-if (curHr >= 0 && curHr < 6) {
-    document.getElementById("greetings").innerHTML = '<img class="weather" src="https://image.flaticon.com/icons/svg/3731/3731938.svg">';
-} else if (curHr >= 6 && curHr < 12) {
-    document.getElementById("greetings").innerHTML = '<img class="weather" src="https://image.flaticon.com/icons/svg/3731/3731715.svg">';
-} else if (curHr >= 12 && curHr < 17) {
-    document.getElementById("greetings").innerHTML = '<img class="weather" src="https://image.flaticon.com/icons/svg/3731/3731894.svg">';
-} else {
-    document.getElementById("greetings").innerHTML = '<img class="weather" src="https://image.flaticon.com/icons/svg/3731/3731916.svg">';
+	if (curHr >= 0 && curHr < 6) {
+	    document.getElementById("greetings").innerHTML = '<img class="weather" src="https://image.flaticon.com/icons/svg/3731/3731938.svg">';
+	} else if (curHr >= 6 && curHr < 12) {
+	    document.getElementById("greetings").innerHTML = '<img class="weather" src="https://image.flaticon.com/icons/svg/3731/3731715.svg">';
+	} else if (curHr >= 12 && curHr < 17) {
+	    document.getElementById("greetings").innerHTML = '<img class="weather" src="https://image.flaticon.com/icons/svg/3731/3731894.svg">';
+	} else {
+	    document.getElementById("greetings").innerHTML = '<img class="weather" src="https://image.flaticon.com/icons/svg/3731/3731916.svg">';
+	}
 }
-
+window.setInterval(waktu, 1000);
 // var a = new Date();
 // console.log(a);
 // document.getElementById("hours").append(a);
 </script>
+@endif
 <!-- <script type="text/javascript">
 	$.ajax({
 		url: "{{route('api.get.coordinate')}}",

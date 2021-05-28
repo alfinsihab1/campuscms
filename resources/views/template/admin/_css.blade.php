@@ -1,7 +1,9 @@
 <style type="text/css">
     /* Root */
     :root{ 
+      @if (Auth::user()->role==role('it'))
       color-scheme: light dark;
+      @endif
       --duration: 0.5s;
       --timing: ease; 
       --primary-dark: {{ setting('site.color.primary_dark') }};

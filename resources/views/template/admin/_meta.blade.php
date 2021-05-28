@@ -8,6 +8,10 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+@if (Auth::check())
+@if (Auth::user()->role==role('it'))
 <meta name="supported-color-schemes" content="dark light">
 <meta name="color-scheme" content="dark light">
 <meta name="theme-color" content="">
+@endif
+@endif

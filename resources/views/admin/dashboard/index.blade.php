@@ -7,7 +7,6 @@
 <!-- Main -->
 <main class="app-content">
 
-
     <!-- Breadcrumb -->
     @include('faturcms::template.admin._breadcrumb', ['breadcrumb' => [
         'title' => 'Dashboard',
@@ -17,11 +16,6 @@
     ]])
     <!-- /Breadcrumb -->
 
-    <!-- Welcome Text -->
-<!--     <div class="alert alert-success text-center shadow">
-        🔔 Selamat datang <span class="font-weight-bold">{{ Auth::user()->nama_user }}</span> di {{ setting('site.name') }}.
-    </div> -->
-    <!-- /Welcome Text -->
     <div class="menu-grid">
     	<div class="row">
     		@php $colors = ["red", "green", "primary", "blue"]; @endphp

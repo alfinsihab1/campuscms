@@ -1,6 +1,6 @@
 <!-- Main JavaScript -->
 <script src="{{ asset('templates/vali-admin/js/jquery-3.2.1.min.js') }}"></script>
-<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="{{ asset('assets/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('templates/vali-admin/js/popper.min.js') }}"></script>
 <script src="{{ asset('templates/vali-admin/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('templates/vali-admin/js/main.js') }}"></script>
@@ -10,6 +10,8 @@
 
 <script type="text/javascript">
     $(function(){
+        // Breadcrumb
+        breadcrumb();
         // Sidebar Scroll
         sidebar_scroll();
         // Manage Screen
@@ -229,6 +231,12 @@
 	function manage_screen(){
 		screen.width <= 768 ? $("body").addClass("sidenav-closed") : $("body").removeClass("sidenav-closed");
 	}
+
+    // Breadcrumb
+    function breadcrumb(){
+        var html = $(".app-title .breadcrumb").html();
+        $(".breadcrumb-nav").html(html);
+    }
 </script>
 <!-- Go Top -->
 <script type="text/javascript">

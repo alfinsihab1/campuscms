@@ -1,4 +1,4 @@
-<div class="app-title">
+<div class="app-title d-none">
   <div>
     <h1>{{ $breadcrumb['title'] }}</h1>
   </div>

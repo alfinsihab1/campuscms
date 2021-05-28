@@ -8,13 +8,14 @@
 <main class="app-content">
 
     <!-- Breadcrumb -->
-<!--     @include('faturcms::template.admin._breadcrumb', ['breadcrumb' => [
+    @include('faturcms::template.admin._breadcrumb', ['breadcrumb' => [
         'title' => 'Dashboard',
         'items' => [
             ['text' => 'Dashboard', 'url' => '#'],
         ]
-    ]]) -->
+    ]])
     <!-- /Breadcrumb -->
+
     @if (Auth::user()->role==role('it'))
     <div class="greeting">
     	<div class="card mb-3">

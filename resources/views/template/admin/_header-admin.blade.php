@@ -1,21 +1,21 @@
 <header class="app-header align-items-center">
   <a class="app-sidebar__toggle menu-btn-primary d-block" href="#" data-toggle="sidebar"></a>
   <ul class="app-nav d-block">
-    @if( Request::path() == 'admin' )
-    <li class="app-nav__item nav-breadcrumb" style="line-height: 15px">
-      <h5 class="d-inline-block text-truncate m-0">Dashboard</h5>
-      <p class="m-0"><small><i class="fa fa-home"></i> > Dashboard</small></p>
+    <li class="app-nav__item" style="line-height: 15px">
+      <h5 class="d-inline-block text-truncate m-0" style="color: var(--primary)">@yield('title')</h5>
+      <div class="m-0 text-muted small">
+        <ul class="breadcrumb breadcrumb-nav mb-0 p-0 bg-transparent"></ul>
+      </div>
     </li>
-    @endif
-    @if( Request::path() != 'admin' )
-      <dark-mode-toggle
-        hidden=""
-        appearance="toggle"
-        permanent=""
-      ></dark-mode-toggle>
-      <li hidden="" id="exp"></li>
-    @endif
   </ul>
+  @if (Auth::user()->role==role('it'))
+  <dark-mode-toggle
+    hidden=""
+    appearance="toggle"
+    permanent=""
+  ></dark-mode-toggle>
+  <li hidden="" id="exp"></li>
+  @endif
   <ul class="app-nav ml-auto ml-md">
     @if(has_access('KomisiController::index', Auth::user()->role, false) || has_access('WithdrawalController::index', Auth::user()->role, false) || has_access('PelatihanController::transaction', Auth::user()->role, false))
     <li class="dropdown">

@@ -16,9 +16,25 @@
     ]])
     <!-- /Breadcrumb -->
 
+    @if (Auth::user()->role==role('it'))
+    <div class="greeting">
+    	<div class="card mb-3">
+    		<div class="card-body d-flex flex-column flex-md-row justify-content-between align-items-center">
+    			<div class="order-2 order-md-1">
+    				<h5>Selamat Datang Kembali {{ Auth::user()->nama_user }}</h5>
+	    			<p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit<br>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+	    		</div>	
+    			<div class="order-1 order-md-2 d-flex align-items-center mb-3 mb-md-0"> 
+    				<h1 style="font-size: 4rem" class="m-0" id="hours"></h1>
+    				<span id="greetings"></span>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+    @endif
     <div class="menu-grid">
     	<div class="row">
-    		@php $colors = ["red", "green", "primary", "blue"]; @endphp
+    		@php $colors = ["red", "green", "yellow", "blue"]; @endphp
     		@if(count($array_card)>0)
     			@foreach($array_card as $key=>$data)
 		    		<div class="col-6 col-lg-3 mb-3">
@@ -39,43 +55,64 @@
     		@endif
     	</div>
     </div>
-    <!-- Row -->
     <div class="row">
-        <!-- Column -->
-        <div class="col-lg-6">
-            <!-- Tile -->
-            <div class="tile">
-                <!-- Tile Title -->
-                <div class="tile-title-w-btn">
-                	<h5>Statistik Pengunjung</h5>
-                    <div>
-                        <select id="filter-visitor" class="form-control form-control-sm">
-                            <option value="week">Seminggu Terakhir</option>
-                            <option value="month">Sebulan Terakhir</option>
-                        </select>
-                    </div>
-                </div>
-                <!-- /Tile Title -->
-                <!-- Tile Body -->
-                <div class="tile-body">
-					<canvas id="chartVisitor" width="400" height="270"></canvas>
-                </div>
-                <!-- /Tile Body -->
-            </div>
-            <!-- /Tile -->
-        </div>
-        <!-- /Column -->
-        <!-- Column -->
-        <div class="col-lg-6">
+    	<div class="col-lg-8">
+    		@if (Auth::user()->role==role('it'))
+		    <div class="experience mb-3">
+		    	<div class="card">
+		    		<div class="card-body">
+		    			<div class="media d-block d-md-flex align-items-center">
+							<div class="text-center text-md-left">
+								<img class="mr-0 mr-md-3 mb-3 mb-md-0 " width="100" src="https://image.flaticon.com/icons/svg/3731/3731790.svg">
+							</div>
+			    			<div class="media-body">
+			    				<div class="d-block d-md-flex align-items-center mb-1">
+					    			<span class="badge menu-bg-red mr-2" data-toggle="tooltip" data-placement="top" title="Percobaan untuk tema dark mode">BETA</span>
+					    			<h5 class="m-0">Experience with dark mode</h5>
+					    		</div>
+					    		<p class="m-0">Aktifkan dark mode untuk merasakan pengalaman baru</p>
+					    		<div class="d-flex align-items-center">
+									<dark-mode-toggle
+									    appearance="toggle"
+									    permanent=""
+									></dark-mode-toggle>
+									<span class="badge menu-bg-blue" data-toggle="tooltip" data-placement="top" title="Klik untuk mengaktifkan dark mode"><i class="fa fa-chevron-left mr-1"></i> Klik Untuk Mengaktifkan</span>
+								</div>
+				    		</div>
+			    		</div>
+		    		</div>
+		    	</div>
+		    	<div id="exp">
+		    		<button class="btn menu-bg-primary text">
+		    			<i class="fa fa-diamond mr-2"></i>
+		    			<span>Pro Version</span>
+		    		</button>
+		    	</div>
+		    </div>
+		    @endif
+		    <div class="pengunjung">
+	            <div class="tile">
+	                <div class="tile-title-w-btn">
+	                	<h5>Statistik Pengunjung</h5>
+	                    <div>
+	                        <select id="filter-visitor" class="form-control form-control-sm">
+	                            <option value="week">Seminggu Terakhir</option>
+	                            <option value="month">Sebulan Terakhir</option>
+	                        </select>
+	                    </div>
+	                </div>
+	                <div class="tile-body">
+						<canvas id="chartVisitor" width="400" height="270"></canvas>
+	                </div>
+	            </div>
+	        </div>
+    	</div>
+        <div class="col-lg-4">
         	@if(count($array)>0)
-            <!-- Tile -->
             <div class="tile">
-                <!-- Tile Title -->
                 <div class="tile-title">
                 	<h5>Statistik</h5>
                 </div>
-                <!-- /Tile Title -->
-                <!-- Tile Body -->
                 <div class="tile-body">
 					<div class="list-group mt-3">
 						@foreach($array as $key=>$data)
@@ -86,16 +123,11 @@
 						@endforeach
 					</div>
                 </div>
-                <!-- /Tile Body -->
             </div>
-            <!-- /Tile -->
             @endif
         </div>
-        <!-- /Column -->
     </div>
-    <!-- /Row -->
 </main>
-<!-- /Main -->
 
 @endsection
 
@@ -170,9 +202,42 @@
 				chart = generate_chart_line(selector, data);
 			}
 		});
+		return myChart;
 	}
 </script>
+@if (Auth::user()->role==role('it'))
+<script type="text/javascript">
+function waktu(){
+	var today = new Date()
+	var curHr = today.getHours()
 
+	if (curHr >= 0 && curHr < 6) {
+	    document.getElementById("greetings").innerHTML = '<img class="weather" src="https://image.flaticon.com/icons/svg/3731/3731938.svg">';
+	} else if (curHr >= 6 && curHr < 12) {
+	    document.getElementById("greetings").innerHTML = '<img class="weather" src="https://image.flaticon.com/icons/svg/3731/3731715.svg">';
+	} else if (curHr >= 12 && curHr < 17) {
+	    document.getElementById("greetings").innerHTML = '<img class="weather" src="https://image.flaticon.com/icons/svg/3731/3731894.svg">';
+	} else {
+	    document.getElementById("greetings").innerHTML = '<img class="weather" src="https://image.flaticon.com/icons/svg/3731/3731916.svg">';
+	}
+}
+window.setInterval(waktu, 1000);
+// var a = new Date();
+// console.log(a);
+// document.getElementById("hours").append(a);
+</script>
+@endif
+<!-- <script type="text/javascript">
+	$.ajax({
+		url: "{{route('api.get.coordinate')}}",
+		type: 'GET',
+		success: function(response){
+			var data = JSON.parse(response);
+			console.log(data.latitude);
+			console.log(data.longitude);
+		}
+	})
+</script> -->
 @endsection
 
 @section('css-extra')

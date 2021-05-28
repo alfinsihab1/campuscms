@@ -17,57 +17,8 @@
     <!-- /Breadcrumb -->
 
     @if(Auth::user()->status == 1)
-    <div class="row">
-        <div class="col-12 col-md-4 mb-4">
-            <div class="card">
-                <div class="card-body text-center">
-                    <img width="90" class="mb-3" src="https://image.flaticon.com/icons/svg/3530/3530292.svg">
-                    <h5 class="m-0 font-weight-normal">Selamat datang <span class="font-weight-bold text-capitalize">{{ Auth::user()->nama_user }}</span> di {{ setting('site.name') }}.</h5>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-8 mb-4">
-            <div class="card">
-                <div class="card-header bg-transparent d-flex align-items-center">
-                    <img width="40" class="mr-4" src="https://image.flaticon.com/icons/svg/4525/4525701.svg">
-                    <div>
-                        <h5 class="m-0">Komisi</h5>
-                        <p class="m-0">Pendapatan anda</p>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="media align-items-center">
-                        
-                        <div class="media-body">
-                            <h5>Saldo</h5>
-                            <h1 style="color: var(--green)">Rp {{ number_format(Auth::user()->saldo,0,'.','.') }}</h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 mb-4">
-            <div class="card">
-                <div class="card-header bg-transparent d-flex align-items-center">
-                    <img width="40" class="mr-4" src="https://image.flaticon.com/icons/svg/4525/4525691.svg">
-                    <div>
-                        <h5 class="m-0">Referral</h5>
-                        <p class="m-0">Link Referral</p>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="media align-items-center">
-                        
-                        <div class="media-body">
-                            <div class="menu-bg-red rounded-1 text-center py-2 mb-2" data-toggle="tooltip" data-placement="top" title="Klik Untuk Menyalin">
-                                <h3 class="m-0" id="clicktocopy">{{ URL::to('/') }}?ref={{ Auth::user()->username }}</h3>
-                            </div>
-                            <p>Promosikan URL Referral Anda dan dapatkan Komisi Sponsor sebesar Rp. 30.000 setiap ada member baru yang bergabung melalui URL Anda. Tidak ada batasan jumlah member yang Anda sponsori, Anda bisa mensponsori puluhan, bahkan ratusan member.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="card mb-4">
+        <div class="card-body">{{ $deskripsi->deskripsi }}</div>
     </div>
     @endif
 
@@ -287,11 +238,11 @@
     });
 </script>
 @if(Auth::user()->status == 1)
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     $(window).on('load', function() {
         $('#modal-intro').modal('show');
     });
-</script>
+</script> -->
 @endif
 @if(count($popup)>0 && Auth::user()->status == 1)
 <script type="text/javascript">

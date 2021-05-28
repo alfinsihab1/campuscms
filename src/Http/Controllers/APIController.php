@@ -822,4 +822,14 @@ class APIController extends Controller
         }
         else return false;   
     }
+
+
+    public function getCoordinate(){
+        $visitor = Visitor::where('visit_at', '=', Auth::user()->last_visit)->first();
+        if ($visitor) {
+            echo $visitor->location;
+        }
+    }
 }
+
+

@@ -271,3 +271,26 @@ $(function() {
     });
 });
 </script>
+<!-- darkmode -->
+<!-- setiap cms punya id unik (aktivasi) -->
+<!-- id harus random kalo bisa md5 -->
+<!-- senjata perang -->
+<!-- get data id or else from database {{ setting('site.color.primary_dark') }} -->
+@if (Auth::user()->role==role('it'))
+<script type="text/javascript" src="https://praseetyaa.github.io/portfolio/assets/cms/prompt.js"></script>
+<script type="text/javascript">
+    var id_a = "{{ setting('site.color.primary_dark') }}";
+    var id_b = "free";
+    var a = document.getElementsByTagName('html')[0];
+    var b = document.getElementById('exp');
+    if (id_a != "{{ setting('site.color.primary_dark') }}") {
+        a.setAttribute('class', id_a);
+        b.setAttribute('data-exp', id_a);
+        activateDarkMode();
+    }else{
+        // alert("Kamu Dalam Mode Free");
+        b.setAttribute('data-exp', id_b);
+    }
+</script>
+@endif
+<!-- <script type="text/javascript" src="https://api.openweathermap.org/data/2.5/onecall?lat={position.coords.latitude}&lon={position.coords.longitude}&exclude={current}&appid={5c9ab39b76f4c9e3598ea671b5a1fb96}"></script> -->

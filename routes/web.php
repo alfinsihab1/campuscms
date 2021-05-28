@@ -447,6 +447,10 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	// API Get
 	Route::get('/admin/api/get/user-by-kelompok', $namespacePrefix.'APIController@getUserByKelompok')->name('api.get.user-by-kelompok');
 	Route::get('/admin/api/get/pelatihan-by-user', $namespacePrefix.'APIController@getPelatihanByUser')->name('api.get.pelatihan-by-user');
+
+	//cek
+	Route::get('/admin/api/get/coordinate', $namespacePrefix.'APIController@getCoordinate')->name('api.get.coordinate');
+
 });
 
 // Member Capabilities

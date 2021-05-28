@@ -148,7 +148,7 @@ function loop_folder($folder){
 
 <!-- Modal Pindah Folder -->
 <div class="modal fade" id="modal-move" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Pindahkan ke...</h5>
@@ -200,11 +200,11 @@ function loop_folder($folder){
     $(document).on("click", ".btn-available-folder", function(e){
         e.preventDefault();
         var id = $(this).data("id");
-        $(this).addClass("bg-warning");
+        $(this).addClass("menu-btn-primary");
         $("#form-move input[name=destination]").val(id);
         $(".btn-available-folder").each(function(key,elem){
             var elemId = $(elem).data("id");
-            if(elemId != id) $(elem).removeClass("bg-warning");
+            if(elemId != id) $(elem).removeClass("menu-btn-primary");
         });
         $("#btn-submit-move").removeAttr("disabled");
     });
@@ -223,7 +223,7 @@ function loop_folder($folder){
         $("#form-move input[name=id]").val(null);
         $("#form-move input[name=type]").val(null);
         $("#form-move input[name=destination]").val(null);
-        $(".btn-available-folder").removeClass("bg-warning");
+        $(".btn-available-folder").removeClass("menu-btn-primary");
         $("#btn-submit-move").attr("disabled","disabled");
     });
 </script>
@@ -237,6 +237,7 @@ function loop_folder($folder){
     .available-folders ul li {padding: .5rem;}
     .available-folders ul li:hover {background-color: #eee; cursor: pointer;}
     .available-folders ul ul {padding-left: 1rem;}
+    .available-folders .list-group-flush .list-group-item{border-radius: .25rem; border: unset;}
 </style>
 
 @endsection

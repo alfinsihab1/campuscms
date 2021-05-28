@@ -1,8 +1,6 @@
 @extends('faturcms::template.admin.main')
 
-@php $prefix = $kategori->tipe_kategori == 'ebook' || $kategori->tipe_kategori == 'video'  ? 'Materi' : 'Kumpulan'; @endphp
-
-@section('title', $prefix.' '.$kategori->folder_kategori)
+@section('title', $kategori->prefix_kategori.' '.$kategori->folder_kategori)
 
 @section('content')
 
@@ -11,10 +9,10 @@
 
     <!-- Breadcrumb -->
     @include('faturcms::template.admin._breadcrumb', ['breadcrumb' => [
-        'title' => $prefix.' '.$kategori->folder_kategori,
+        'title' => $kategori->prefix_kategori.' '.$kategori->folder_kategori,
         'items' => [
             ['text' => 'File Manager', 'url' => '#'],
-            ['text' => $prefix.' '.$kategori->folder_kategori, 'url' => '#'],
+            ['text' => $kategori->prefix_kategori.' '.$kategori->folder_kategori, 'url' => '#'],
         ]
     ]])
     <!-- /Breadcrumb -->

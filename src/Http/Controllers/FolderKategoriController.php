@@ -75,6 +75,8 @@ class FolderKategoriController extends Controller
             $kategori->slug_kategori = slugify($request->kategori, 'folder_kategori', 'slug_kategori', 'id_fk', null);
             $kategori->tipe_kategori = $request->tipe;
             $kategori->status_kategori = $request->status;
+            $kategori->prefix_kategori = $request->prefix_kategori != '' ? $request->prefix_kategori : '' ;
+            $kategori->icon_kategori = $request->icon_kategori != '' ? $request->icon_kategori : '' ;
             $kategori->order_kategori = $latest ? $latest->order_kategori + 1 : 1;
             $kategori->save();
         }
@@ -131,6 +133,8 @@ class FolderKategoriController extends Controller
             $kategori->slug_kategori = slugify($request->kategori, 'folder_kategori', 'slug_kategori', 'id_fk', $request->id);
             $kategori->tipe_kategori = $request->tipe;
             $kategori->status_kategori = $request->status;
+            $kategori->prefix_kategori = $request->prefix_kategori != '' ? $request->prefix_kategori : '' ;
+            $kategori->icon_kategori = $request->icon_kategori != '' ? $request->icon_kategori : '' ;
             $kategori->save();
         }
 

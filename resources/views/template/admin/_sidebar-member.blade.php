@@ -48,14 +48,8 @@
         
         @if(has_access('FileController::index', Auth::user()->role, false))
           @foreach(array_kategori_folder() as $kategori)
-            @php
-              if($kategori->tipe_kategori == 'ebook') $fa_icon = 'fa-folder-open';
-              elseif($kategori->tipe_kategori == 'video') $fa_icon = 'fa-video-camera';
-              elseif($kategori->tipe_kategori == 'script') $fa_icon = 'fa-file-text-o';
-              elseif($kategori->tipe_kategori == 'tools') $fa_icon = 'fa-wrench';
-            @endphp
             @if(status_kategori_folder($kategori->slug_kategori))
-            <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('member.filemanager.index', ['kategori' => $kategori->slug_kategori]))) ? 'active' : '' }}" href="{{ route('member.filemanager.index', ['kategori' => $kategori->slug_kategori]) }}"><i class="app-menu__icon fa {{ $fa_icon }}"></i><span class="app-menu__label">{{ $kategori->tipe_kategori == 'ebook' || $kategori->tipe_kategori == 'video' ? $kategori->slug_kategori != 'dokumentasi' ? 'Materi' : '' : 'Kumpulan' }} {{ $kategori->folder_kategori }}</span></a></li>
+            <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('member.filemanager.index', ['kategori' => $kategori->slug_kategori]))) ? 'active' : '' }}" href="{{ route('member.filemanager.index', ['kategori' => $kategori->slug_kategori]) }}"><i class="app-menu__icon fa {{ $kategori->icon_kategori }}"></i><span class="app-menu__label">{{ $kategori->prefix_kategori.' '.$kategori->folder_kategori }}</span></a></li>
             @endif
           @endforeach
         @endif

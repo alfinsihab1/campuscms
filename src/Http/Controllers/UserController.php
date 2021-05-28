@@ -440,20 +440,25 @@ class UserController extends Controller
         $user->save();
         
         // Tambah data foto profil
-        $photo = new ProfilePhoto;
-        $photo->id_user = $user->id_user;
-        $photo->photo_name = $image_name;
-        $photo->uploaded_at = date('Y-m-d H:i:s');
-        $photo->save();
+        if($request->gambar_direct_url == null || $request->gambar_direct_url == ''){
+            $photo = new ProfilePhoto;
+            $photo->id_user = $user->id_user;
+            $photo->photo_name = $image_name;
+            $photo->uploaded_at = date('Y-m-d H:i:s');
+            $photo->save();
+        }
 
         // Redirect
         if(Auth::user()->is_admin == 1){
+            // Redirect berhasil mengupdate foto profil sendiri
             if($user->id_user == Auth::user()->id_user)
                 return redirect()->route('admin.profile')->with(['updatePhotoMessage' => 'Berhasil mengganti foto profil.']);
+            // Redirect berhasil mengupdate foto profil user lain
             else
                 return redirect()->route('admin.user.detail', ['id' => $user->id_user])->with(['updatePhotoMessage' => 'Berhasil mengganti foto profil.']);
         }
         elseif(Auth::user()->is_admin == 0){
+            // Redirect berhasil mengupdate foto profil sendiri
             return redirect()->route('member.profile')->with(['updatePhotoMessage' => 'Berhasil mengganti foto profil.']);
         }
     }

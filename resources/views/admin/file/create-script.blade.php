@@ -12,7 +12,7 @@
         'title' => 'Tambah File',
         'items' => [
             ['text' => 'File Manager', 'url' => '#'],
-            ['text' => 'Kumpulan Copywriting', 'url' => route('admin.filemanager.index', ['kategori' => $kategori->slug_kategori])],
+            ['text' => $kategori->prefix_kategori.' '.$kategori->icon_kategori, 'url' => route('admin.filemanager.index', ['kategori' => $kategori->slug_kategori])],
             ['text' => 'Tambah File', 'url' => '#'],
         ]
     ]])

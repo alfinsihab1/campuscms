@@ -68,7 +68,7 @@ class UpdateCommand extends Command
 
         // Composer dump autoload
         $composer = new Composer($filesystem);
-        $this->info($composer->dumpAutoloads());
+        $composer->dumpAutoloads();
 
         // Migrate
         $this->call('migrate');

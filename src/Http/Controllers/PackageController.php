@@ -89,14 +89,55 @@ class PackageController extends Controller
   }
 
   /**
-   * Update my package
+   * Mengupdate package dari remote
    *
+   * @return \Illuminate\Http\Request
    * @return \Illuminate\Http\Response
    */
-  public function updateMe()
+  public function update(Request $request)
+  {
+	  $url = $request->query('url');
+
+	  try {
+		  $client = new Client(['base_uri' => $url.'/api/']);
+		  $request = $client->request('POST', 'package/update');
+	  } catch (ClientException $e) {
+		  echo Psr7\Message::toString($e->getResponse());
+		  return;
+	  }
+	  echo $request->getBody();
+  }
+
+  /**
+   * Update my package
+   *
+   * @return \Illuminate\Http\Request
+   * @return \Illuminate\Http\Response
+   */
+  public function updateMe(Request $request)
   {
     // Check Access
-    has_access(generate_method(__METHOD__), Auth::user()->role);
+    // has_access(generate_method(__METHOD__), Auth::user()->role);
+
+    // Mencoba melakukan request ke main package (mengupdate version)
+    try {
+      $client = new Client(['base_uri' => 'http://faturcms.faturmedia.xyz/api/']);
+      $faturcms_request = $client->request('PUT', 'version/update', [
+        'query' => [
+          'url' => url()->to('/'),
+          'key' => env('FATURCMS_APP_KEY'),
+        ]
+      ]);
+    } catch (ClientException $e) {
+      echo Psr7\Message::toString($e->getResponse());
+      return;
+    }
+    $response = json_decode($faturcms_request->getBody(), true);
+    if($response['status'] == 404){
+      // echo $faturcms_request->getBody();
+      echo '<div class="alert alert-danger text-center">'.$response['message'].'</div>';
+      return;
+    }
     
     // Update from packagist
     $process = new Process([setting('site.server.php'), setting('site.server.composer'), 'update', 'ajifatur/faturcms'], base_path());
@@ -132,20 +173,6 @@ class PackageController extends Controller
       $package->package_at = date('Y-m-d H:i:s');
       $package->package_up = date('Y-m-d H:i:s');
       $package->save();
-    }
-
-    // Mencoba melakukan request ke main package (mengupdate version)
-    try {
-      $client = new Client(['base_uri' => 'http://faturcms.faturmedia.xyz/api/']);
-      $faturcms_request = $client->request('PUT', 'version/update', [
-        'query' => [
-          'url' => url()->to('/'),
-          'key' => env('FATURCMS_APP_KEY'),
-        ]
-      ]);
-    } catch (ClientException $e) {
-      echo Psr7\Message::toString($e->getResponse());
-      return;
     }
 
     // Update FaturCMS

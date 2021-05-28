@@ -12,7 +12,7 @@
         'title' => 'Edit File',
         'items' => [
             ['text' => 'File Manager', 'url' => '#'],
-            ['text' => 'Materi '.$kategori->folder_kategori, 'url' => route('admin.filemanager.index', ['kategori' => $kategori->slug_kategori])],
+            ['text' => $kategori->prefix_kategori.' '.$kategori->folder_kategori, 'url' => route('admin.filemanager.index', ['kategori' => $kategori->slug_kategori])],
             ['text' => 'Edit File', 'url' => '#'],
         ]
     ]])

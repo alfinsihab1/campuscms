@@ -105,7 +105,7 @@ class DashboardController extends Controller
         
         // Array Push Data File
         $array_card = [];
-        $folder_kategori = FolderKategori::where('tipe_kategori','=','ebook')->orWhere('tipe_kategori','=','video')->get();
+        $folder_kategori = FolderKategori::whereIn('slug_kategori',['e-learning','e-library','e-competence','e-course'])->get();
         foreach($folder_kategori as $data){
             $file = Files::join('folder','file.id_folder','=','folder.id_folder')->where('file_kategori','=',$data->id_fk)->count();
             array_push($array_card, ['title' => $data->folder_kategori, 'total' => $file, 'url' => route('admin.filemanager.index', ['kategori' => $data->slug_kategori])]);

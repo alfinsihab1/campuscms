@@ -51,7 +51,8 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	// Package
 	Route::get('/admin/sistem/package', $namespacePrefix.'PackageController@index')->name('admin.package.index');
 	Route::get('/admin/sistem/package/me', $namespacePrefix.'PackageController@me')->name('admin.package.me');
-	Route::get('/admin/sistem/package/update-me', $namespacePrefix.'PackageController@updateMe')->name('admin.package.update-me');
+	Route::get('/admin/sistem/package/update', $namespacePrefix.'PackageController@update')->name('admin.package.update');
+	// Route::get('/admin/sistem/package/update-me', $namespacePrefix.'PackageController@updateMe')->name('admin.package.update-me');
 	Route::get('/admin/sistem/package/detail', $namespacePrefix.'PackageController@detail')->name('admin.package.detail');
 
 	// Subscriber
@@ -164,6 +165,7 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::get('/admin/folder/kategori/edit/{id}', $namespacePrefix.'FolderKategoriController@edit')->name('admin.folder.kategori.edit');
 	Route::post('/admin/folder/kategori/update', $namespacePrefix.'FolderKategoriController@update')->name('admin.folder.kategori.update');
 	Route::post('/admin/folder/kategori/delete', $namespacePrefix.'FolderKategoriController@delete')->name('admin.folder.kategori.delete');
+	Route::post('/admin/folder/kategori/sort', $namespacePrefix.'FolderKategoriController@sorting')->name('admin.folder.kategori.sort');
 
 	// Artikel
 	Route::get('/admin/blog', $namespacePrefix.'BlogController@index')->name('admin.blog.index');
@@ -463,6 +465,7 @@ Route::group(['middleware' => ['faturcms.member']], function() use ($namespacePr
 	Route::get('/member/profile', $namespacePrefix.'UserController@profile')->name('member.profile');
 	Route::get('/member/profile/edit', $namespacePrefix.'UserController@editProfile')->name('member.profile.edit');
 	Route::post('/member/profile/update', $namespacePrefix.'UserController@updateProfile')->name('member.profile.update');
+	Route::post('/member/user/update-photo', $namespacePrefix.'UserController@updatePhoto')->name('member.user.updatephoto');
 	Route::get('/member/user/images', $namespacePrefix.'UserController@showImages')->name('member.user.images');
 
 	// Rekening

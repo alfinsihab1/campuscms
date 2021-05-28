@@ -2,7 +2,6 @@
 
 /**
  * Count Helpers:
- * @method int count_existing_data(string $table, string $field, string $keyword, string $primaryKey, int $id = null)
  * @method int count_notif_admin()
  * @method int count_notif_komisi()
  * @method int count_notif_withdrawal()
@@ -33,19 +32,10 @@ use Ajifatur\FaturCMS\Models\PelatihanMember;
 use Ajifatur\FaturCMS\Models\Visitor;
 use Ajifatur\FaturCMS\Models\Withdrawal;
 
-// Menghitung jumlah data duplikat
-if(!function_exists('count_existing_data')){
-    function count_existing_data($table, $field, $keyword, $primaryKey, $id = null){
-        if($id == null) $data = DB::table($table)->where($field,'=',$keyword)->count();
-        else $data = DB::table($table)->where($field,'=',$keyword)->where($primaryKey,'!=',$id)->count();
-        return $data;
-    }
-}
-
 // Menghitung semua notifikasi (admin)
 if(!function_exists('count_notif_admin')){
     function count_notif_admin(){
-        $data = count_notif_komisi() + count_notif_withdrawal() + count_notif_pelatihan() + count_notif_package();
+        $data = count_notif_komisi() + count_notif_withdrawal() + count_notif_pelatihan();
         return $data;
     }
 }
@@ -71,17 +61,6 @@ if(!function_exists('count_notif_pelatihan')){
     function count_notif_pelatihan(){
         $data = PelatihanMember::where('fee_status','=',0)->count();
         return $data;
-    }
-}
-
-// Menghitung notifikasi package
-if(!function_exists('count_notif_package')){
-    function count_notif_package(){
-        $package = Package::where('package_name','=',config('faturcms.name'))->first();
-        if($package){
-            return $package->package_version == package_version() ? 0 : 1;
-        }
-        return 1;
     }
 }
 

@@ -69,6 +69,25 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="col-md-2 col-form-label">Prefix</label>
+                            <div class="col-md-10">
+                                <input type="text" name="prefix_kategori" class="form-control {{ $errors->has('prefix_kategori') ? 'is-invalid' : '' }}" value="{{ old('prefix_kategori') }}">
+                                @if($errors->has('prefix_kategori'))
+                                <div class="small text-danger mt-1">{{ ucfirst($errors->first('prefix_kategori')) }}</div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label">Icon</label>
+                            <div class="col-md-10">
+                                <input type="text" name="icon_kategori" class="form-control {{ $errors->has('icon_kategori') ? 'is-invalid' : '' }}" value="{{ old('icon_kategori') }}">
+                                <div class="small text-muted mt-1">Masukkan nama class icon dari Font Awesome 4.7.0. Contoh: fa-users</div>
+                                @if($errors->has('icon_kategori'))
+                                <div class="small text-danger mt-1">{{ ucfirst($errors->first('icon_kategori')) }}</div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-md-2 col-form-label"></label>
                             <div class="col-md-10">
                                 <button type="submit" class="btn btn-theme-1"><i class="fa fa-save mr-2"></i>Simpan</button>

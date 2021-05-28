@@ -34,6 +34,14 @@ if(!function_exists('rename_file')){
     }
 }
 
+// Array folder kategori
+if(!function_exists('array_kategori_folder')){
+    function array_kategori_folder(){
+        $data = FolderKategori::where('status_kategori','=',1)->orderBy('order_kategori','asc')->get();
+        return $data;
+    }
+}
+
 // Status folder kategori
 if(!function_exists('status_kategori_folder')){
     function status_kategori_folder($category){

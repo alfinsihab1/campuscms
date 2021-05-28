@@ -1,8 +1,6 @@
 @extends('faturcms::template.admin.main')
 
-@php $prefix = $kategori->tipe_kategori == 'ebook' || $kategori->tipe_kategori == 'video'  ? 'Materi' : 'Kumpulan'; @endphp
-
-@section('title', $prefix.' '.$kategori->folder_kategori)
+@section('title', $kategori->prefix_kategori.' '.$kategori->folder_kategori)
 
 @section('content')
 
@@ -11,10 +9,10 @@
 
     <!-- Breadcrumb -->
     @include('faturcms::template.admin._breadcrumb', ['breadcrumb' => [
-        'title' => $prefix.' '.$kategori->folder_kategori,
+        'title' => $kategori->prefix_kategori.' '.$kategori->folder_kategori,
         'items' => [
             ['text' => 'File Manager', 'url' => '#'],
-            ['text' => $prefix.' '.$kategori->folder_kategori, 'url' => '#'],
+            ['text' => $kategori->prefix_kategori.' '.$kategori->folder_kategori, 'url' => '#'],
         ]
     ]])
     <!-- /Breadcrumb -->
@@ -47,7 +45,7 @@
                     <div class="row">
                         @if(count($folders)>0)
                             @foreach($folders as $data)
-                                <div class="col-md-3 col-sm-6 mb-3">
+                                <div class="col-lg-3 col-md-6 mb-3">
                                     <div class="card">
                                         <div class="card-body text-center">
                                             <a class="{{ $data->folder_voucher != '' ? session()->get('id_folder') != $data->id_folder ? 'btn-voucher' : '' : '' }}"  data-id="{{ $data->id_folder }}" href="{{ route('member.filemanager.index', ['kategori' => $kategori->slug_kategori, 'dir' => $data->folder_dir]) }}">
@@ -70,10 +68,10 @@
                     <div class="row">
                         @if(count($files)>0)
                             @foreach($files as $data)
-                                <div class="col-md-3 col-sm-6 mb-3">
+                                <div class="col-lg-3 col-md-6 mb-3">
                                     <div class="card">
                                         <a href="{{ $data->tipe_kategori == 'tools' ? asset('assets/tools/'.$data->file_konten) : route('member.file.detail', ['kategori' => $kategori->slug_kategori, 'id' => $data->id_file]) }}">
-                                            <img class="card-img-top" src="{{ image('assets/images/file/'.$data->file_thumbnail, $data->tipe_kategori) }}">
+                                            <img class="card-img-top" src="{{ image('assets/images/file/'.$data->file_thumbnail, $data->tipe_kategori) }}" height="{{ image('assets/images/file/'.$data->file_thumbnail, $data->tipe_kategori) == asset('assets/images/default/'.config('faturcms.images.'.$data->tipe_kategori)) ? 100 : 'auto' }}">
                                         </a>
                                         <div class="card-body text-center">
                                             <p class="h6 my-0"><a href="{{ $data->tipe_kategori == 'tools' ? asset('assets/tools/'.$data->file_konten) : route('member.file.detail', ['kategori' => $kategori->slug_kategori, 'id' => $data->id_file]) }}">{{ $data->file_nama }}</a></p>

@@ -3,8 +3,6 @@
 /**
  * Main Helpers:
  * @method has_access(string $permission, int $role, bool $isAbort = true)
- * @method role(int|string $key)
- * @method setting(string $key)
  * @method image(string $file, string $category = '')
  * @method status(int $status)
  * @method gender(string $gender)
@@ -15,8 +13,6 @@
  * @method referral(string $ref, string $route, array $routeParams = [])
  * @method sponsor(string $username)
  * @method message(string $key)
- * @method setting_rules(string $key)
- * @method package(string $package)
  * @method package_version()
  * @method browser_info()
  * @method platform_info()
@@ -26,21 +22,13 @@
  * @method log_login(object $request)
  *
  * Array Helpers:
- * @method array_validation_messages()
- * @method array_indo_month()
  * @method array_kategori_artikel()
  * @method array_kategori_materi()
  * @method array_receivers()
  * @method array_tag()
  *
  * Other Helpers:
- * @method slugify(string $text, string $table, string $field, string $primaryKey, int $id = null)
- * @method rename_permalink(string $permalink, int $count = 0)
- * @method upload_file(string $code, string $path)
- * @method upload_quill_image(string $code, string $path)
  * @method package_path(string $path)
- * @method file_replace_contents(string $source_file, string $destination_file, string $contents1 = '', string $contents2 = '', bool $replace = false)
- * @method composer_lock()
  */
 
 use Illuminate\Http\Request;
@@ -53,7 +41,6 @@ use hisorange\BrowserDetect\Parser as Browser;
 use Stevebauman\Location\Facades\Location;
 use App\User;
 use Ajifatur\FaturCMS\Models\KategoriArtikel;
-use Ajifatur\FaturCMS\Models\KategoriMateri;
 use Ajifatur\FaturCMS\Models\KategoriPelatihan;
 use Ajifatur\FaturCMS\Models\KategoriSetting;
 use Ajifatur\FaturCMS\Models\Permission;
@@ -110,33 +97,6 @@ if(!function_exists('has_access')){
     }
 }
 
-// Get role
-if(!function_exists('role')){
-    function role($key){
-        if(is_int($key)){
-            // Get nama role
-            $role = Role::find($key);
-            return $role ? $role->nama_role : null;
-        }
-        elseif(is_string($key)){
-            // Get id role
-            $role = Role::where('key_role','=',$key)->first();
-            return $role ? $role->id_role : null;
-        }
-        else{
-            return '';
-        }
-    }
-}
-
-// Get setting
-if(!function_exists('setting')){
-    function setting($key){
-        $setting = Setting::where('setting_key','=',$key)->first();
-        return $setting ? $setting->setting_value : '';
-    }
-}
-
 // Get image
 if(!function_exists('image')){
     function image($file, $category = ''){
@@ -144,24 +104,6 @@ if(!function_exists('image')){
             return file_exists(public_path($file)) && !is_dir(public_path($file)) ? asset($file) : asset('assets/images/default/'.config('faturcms.images.'.$category));
         else
             return '';
-    }
-}
-
-// Get status
-if(!function_exists('status')){
-    function status($status){
-        if($status == 1) return 'Aktif';
-        elseif($status == 0) return 'Tidak Aktif';
-        else return '';
-    }
-}
-
-// Get gender
-if(!function_exists('gender')){
-    function gender($gender){
-        if($gender == 'L') return 'Laki-Laki';
-        elseif($gender == 'P') return 'Perempuan';
-        else return '';
     }
 }
 
@@ -232,28 +174,6 @@ if(!function_exists('message')){
     function message($key){
         if($key == 'unpaid') return 'Anda belum melakukan pembayaran';
         else return '';
-    }
-}
-
-// Get setting rules
-if(!function_exists('setting_rules')){
-    function setting_rules($key){
-        $data = DB::table('settings')->where('setting_key',$key)->first();
-        return $data ? $data->setting_rules : '';  
-    }
-}
-
-// Package
-if(!function_exists('package')){
-    function package($package){
-        $array = composer_lock()['packages'];
-        $index = '';
-        if(count($array)>0){
-            foreach($array as $key=>$data){
-                if($data['name'] == $package) $index = $key;
-            }
-        }
-        return array_key_exists($index, $array) ? $array[$index] : null;
     }
 }
 
@@ -361,53 +281,16 @@ if(!function_exists('log_login')){
     }
 }
 
-
 /**
  *
  * Arrays
  * 
  */
 
-// Array pesan validasi form
-if(!function_exists('array_validation_messages')){
-    function array_validation_messages(){
-        $array = [
-            'alpha' => 'Hanya bisa diisi dengan huruf!',
-            'alpha_dash' => 'Hanya bisa diisi dengan huruf, angka, strip dan underscore!',
-            'confirmed' => 'Tidak cocok!',
-            'email' => 'Format penulisan email salah!',
-            'max' => 'Harus diisi maksimal :max karakter!',
-            'min' => 'Harus diisi minimal :min karakter!',
-            'numeric' => 'Harus diisi dengan nomor atau angka!',
-            'regex' => 'Format penulisan tidak valid!',
-            'required' => 'Harus diisi!',
-            'same' => 'Harus sama!',
-            'unique' => 'Sudah terdaftar!',
-        ];
-        return $array;
-    }
-}
-
-// Array nama bulan dalam Bahasa Indonesia
-if(!function_exists('array_indo_month')){
-    function array_indo_month(){
-        $array = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-        return $array;
-    }
-}
-
 // Array kategori artikel
 if(!function_exists('array_kategori_artikel')){
     function array_kategori_artikel(){
         $array = KategoriArtikel::where('id_ka','>',0)->get();
-        return $array;
-    }
-}
-
-// Array kategori materi
-if(!function_exists('array_kategori_materi')){
-    function array_kategori_materi(){
-        $array = KategoriMateri::all();
         return $array;
     }
 }
@@ -435,116 +318,10 @@ if(!function_exists('array_tag')){
  * 
  */
 
-// Mengupload file
-if(!function_exists('upload_file')){
-    function upload_file($code, $path){
-        // Decode base 64
-        list($type, $code) = explode(';', $code);
-        list(, $code)      = explode(',', $code);
-        $code = base64_decode($code);
-        $mime = str_replace('data:', '', $type);
-
-        // Membuat nama file
-        $file_name = date('Y-m-d-H-i-s');
-        $file_name = $file_name.'.'.mime_to_ext($mime)[0];
-        file_put_contents($path.$file_name, $code);
-
-        // Return
-        return $file_name;
-    }
-}
-
-// Mengupload gambar dari Quill Editor
-if(!function_exists('upload_quill_image')){
-    function upload_quill_image($html, $path){
-        // Mengambil gambar dari tag "img"
-        $dom = new \DOMDocument;
-        @$dom->loadHTML($html);
-        $images = $dom->getElementsByTagName('img');
-
-        foreach ($images as $key=>$image){
-            // Mengambil isi atribut "src"
-            $code = $image->getAttribute('src');
-
-			// Mencari gambar yang bukan URL
-            if(filter_var($code, FILTER_VALIDATE_URL) == false){
-                // Upload foto
-                list($type, $code) = explode(';', $code);
-                list(, $code)      = explode(',', $code);
-                $code = base64_decode($code);
-                $mime = str_replace('data:', '', $type);
-                $image_name = date('Y-m-d-H-i-s').' ('.($key+1).')';
-                $image_name = $image_name.'.'.mime_to_ext($mime)[0];
-                file_put_contents($path.$image_name, $code);
-
-                // Mengganti atribut "src"
-                $image->setAttribute('src', URL::to('/').'/'.$path.$image_name);
-            }
-        }
-        
-        // Return
-        return $dom->saveHTML();
-    }
-}
-
-// Slugify
-if(!function_exists('slugify')){
-    function slugify($text, $table, $field, $primaryKey, $id = null){
-        $permalink = generate_permalink($text);
-        $i = 1;
-        while(count_existing_data($table, $field, $permalink, $primaryKey, $id) > 0){
-            $permalink = rename_permalink(generate_permalink($text), $i);
-            $i++;
-        }
-        return $permalink;
-    }
-}
-
-// Mengganti nama permalink jika ada yang sama
-if(!function_exists('rename_permalink')){
-    function rename_permalink($permalink, $count = 0){
-        return $permalink."-".($count+1);
-    }
-}
-
 // Package path
 if(!function_exists('package_path')){
     function package_path($path = ''){
         if(substr($path, 0, 1) != '/') $path = '/'.$path;
         return base_path('vendor/'.config('faturcms.name').$path);
-    }
-}
-
-// Mengganti konten file
-if(!function_exists('file_replace_contents')){
-    function file_replace_contents($source_file, $destination_file, $contents1 = '', $contents2 = '', $replace = false){
-        // Jika konten kosong, berarti mengganti "semua" isi file
-        if($contents1 == ''){
-            if(File::exists($source_file) && File::exists($destination_file)){
-                File::put($destination_file, File::get($source_file));
-            }
-        }
-        // Jika konten tidak kosong, berarti mengganti isi file berdasarkan konten yang dicari
-        else{
-            // Jika belum pernah diupdate
-            if(strpos(File::get($destination_file), $contents1) === false){
-                // Jika false, tidak mereplace
-                if($replace === false)
-                    File::append($destination_file, $contents2);
-                // Jika true, berarti mereplace
-                else{
-                    $get_contents = File::get($destination_file);
-                    File::put($destination_file, str_replace($contents2, $contents1, $get_contents));
-                }
-            }
-        }
-    }
-}
-
-// Composer lock
-if(!function_exists('composer_lock')){
-    function composer_lock(){
-        $content = File::get(base_path('composer.lock'));
-        return json_decode($content, true);
     }
 }

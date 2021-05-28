@@ -67,13 +67,16 @@ class InstallCommand extends Command
 
         // Composer dump autoload
         $composer = new Composer($filesystem);
-        $this->info($composer->dumpAutoloads());
+        $composer->dumpAutoloads();
 
         // Migrate
         $this->call('migrate');
 
         // Seed
         $this->call('db:seed');
+
+        // Seed dummy data
+        $this->call('db:seed', ['--class' => \Ajifatur\FaturCMS\DummySeeder\InstallDummySeeder::class]);
 
         // Last info
         $this->info('Successfully installing FaturCMS! Enjoy');

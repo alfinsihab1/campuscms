@@ -103,27 +103,14 @@
         @if(has_access('EmailController::index', Auth::user()->role, false))
         <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.email.index'))) ? 'active' : '' }}" href="{{ route('admin.email.index') }}"><i class="app-menu__icon fa fa-envelope"></i><span class="app-menu__label">Email</span></a></li>
         @endif
-
+        
         @if(has_access('FileController::index', Auth::user()->role, false))
           <div class="app-menu-title"><span class="font-weight-bold" style="color: var(--primary)">Materi</span></div>
-          @if(status_kategori_folder('e-learning'))
-          <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.filemanager.index', ['kategori' => 'e-learning']))) ? 'active' : '' }}" href="{{ route('admin.filemanager.index', ['kategori' => 'e-learning']) }}"><i class="app-menu__icon fa fa-folder-open"></i><span class="app-menu__label">Materi E-Learning</span></a></li>
-          @endif
-          @if(status_kategori_folder('e-library'))
-          <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.filemanager.index', ['kategori' => 'e-library']))) ? 'active' : '' }}" href="{{ route('admin.filemanager.index', ['kategori' => 'e-library']) }}"><i class="app-menu__icon fa fa-folder-open"></i><span class="app-menu__label">Materi E-Library</span></a></li>
-          @endif
-          @if(status_kategori_folder('e-competence'))
-          <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.filemanager.index', ['kategori' => 'e-competence']))) ? 'active' : '' }}" href="{{ route('admin.filemanager.index', ['kategori' => 'e-competence']) }}"><i class="app-menu__icon fa fa-folder-open"></i><span class="app-menu__label">Materi E-Competence</span></a></li>
-          @endif
-          @if(status_kategori_folder('e-course'))
-          <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.filemanager.index', ['kategori' => 'e-course']))) ? 'active' : '' }}" href="{{ route('admin.filemanager.index', ['kategori' => 'e-course']) }}"><i class="app-menu__icon fa fa-video-camera"></i><span class="app-menu__label">Materi E-Course</span></a></li>
-          @endif
-          @if(status_kategori_folder('script'))
-          <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.filemanager.index', ['kategori' => 'script']))) ? 'active' : '' }}" href="{{ route('admin.filemanager.index', ['kategori' => 'script']) }}"><i class="app-menu__icon fa fa-file-text-o"></i><span class="app-menu__label">Kumpulan Copywriting</span></a></li>
-          @endif
-          @if(status_kategori_folder('tools'))
-          <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.filemanager.index', ['kategori' => 'tools']))) ? 'active' : '' }}" href="{{ route('admin.filemanager.index', ['kategori' => 'tools']) }}"><i class="app-menu__icon fa fa-wrench"></i><span class="app-menu__label">Kumpulan Tools</span></a></li>
-          @endif
+          @foreach(array_kategori_folder() as $kategori)
+            @if(status_kategori_folder($kategori->slug_kategori))
+            <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.filemanager.index', ['kategori' => $kategori->slug_kategori]))) ? 'active' : '' }}" href="{{ route('admin.filemanager.index', ['kategori' => $kategori->slug_kategori]) }}"><i class="app-menu__icon fa {{ $kategori->icon_kategori }}"></i><span class="app-menu__label">{{ $kategori->prefix_kategori.' '.$kategori->folder_kategori }}</span></a></li>
+            @endif
+          @endforeach
         @endif
 
         @if(has_access('HalamanController::index', Auth::user()->role, false) || has_access('BlogController::index', Auth::user()->role, false) || has_access('AcaraController::index', Auth::user()->role, false) || has_access('ProgramController::index', Auth::user()->role, false) || has_access('PelatihanController::index', Auth::user()->role, false) || has_access('KarirController::index', Auth::user()->role, false) || has_access('PsikologController::index', Auth::user()->role, false) || has_access('PopupController::index', Auth::user()->role, false))

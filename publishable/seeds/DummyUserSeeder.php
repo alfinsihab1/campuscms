@@ -1,10 +1,12 @@
 <?php
 
+namespace Ajifatur\FaturCMS\DummySeeder;
+
 use Illuminate\Database\Seeder;
 use App\User;
 use Ajifatur\FaturCMS\Models\Setting;
 
-class UserSeeder extends Seeder
+class DummyUserSeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -19,7 +19,7 @@
     @endif
   </ul>
   <ul class="app-nav ml-auto ml-md">
-    @if(has_access('KomisiController::index', Auth::user()->role, false) || has_access('WithdrawalController::index', Auth::user()->role, false) || has_access('PelatihanController::transaction', Auth::user()->role, false) || has_access('PackageController::me', Auth::user()->role, false))
+    @if(has_access('KomisiController::index', Auth::user()->role, false) || has_access('WithdrawalController::index', Auth::user()->role, false) || has_access('PelatihanController::transaction', Auth::user()->role, false))
     <li class="dropdown">
       <a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Show notifications">
         <i class="fa fa-bell fa-lg" data-toggle="tooltip" title="Notifikasi"></i>
@@ -62,17 +62,6 @@
                   <span class="badge badge-pill badge-danger position-absolute">{{ count_notif_pelatihan() }}</span>
                   <div>
                     <p class="app-notification__message">Pembayaran<br>Pelatihan</p>
-                  </div>
-                </a>
-              </div>
-              @endif
-              @if(has_access('PackageController::me', Auth::user()->role, false))
-              <div class="col-6">
-                <a class="dropdown-item" href="{{ route('admin.package.me') }}">
-                  <span class="app-notification__icon p-0"><span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x text-info"></i><i class="fa fa-level-up fa-stack-1x fa-inverse"></i></span></span>
-                  <span class="badge badge-pill badge-danger position-absolute">{{ count_notif_package() }}</span>
-                  <div>
-                    <p class="app-notification__message">Update<br>Sistem</p>
                   </div>
                 </a>
               </div>

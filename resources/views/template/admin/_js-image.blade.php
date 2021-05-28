@@ -49,7 +49,7 @@
           ctx.drawImage(image, 0, 0);
           if($(".btn-crop").hasClass("btn-direct-change")){
             $("#form-direct-change input[name=gambar_direct]").val(canvas.toDataURL("image/png"));
-            $("#form-direct-change").attr("action", "{{ route('admin.user.updatephoto') }}");
+            $("#form-direct-change").attr("action", "{{ Auth::user()->is_admin == 1 ? route('admin.user.updatephoto') : route('member.user.updatephoto') }}");
             $("#form-direct-change").submit();
           }
           else{
@@ -120,7 +120,7 @@
         var url = $(this).attr("src");
         if($(".btn-crop").hasClass("btn-direct-change")){
           $("#form-direct-change input[name=gambar_direct_url]").val(url);
-          $("#form-direct-change").attr("action", "{{ route('admin.user.updatephoto') }}");
+          $("#form-direct-change").attr("action", "{{ Auth::user()->is_admin == 1 ? route('admin.user.updatephoto') : route('member.user.updatephoto') }}");
           $("#form-direct-change").submit();
         }
         else{

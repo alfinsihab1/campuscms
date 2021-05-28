@@ -109,7 +109,19 @@ class MainCommand extends Command
             true
         );
 
-        // Get migration files
+        // Update ENV
+        $this->info('Updating Environment');
+        file_replace_contents(
+            '',
+            base_path('.env'),
+            'FATURCMS_APP_KEY=',
+            "\n".
+            "\n".
+            'FATURCMS_APP_KEY='.
+            "\n"
+        );
+
+        // Delete migration files
         $migration_files = generate_file(database_path('migrations'));
         if(count($migration_files)>0){
             foreach($migration_files as $file){

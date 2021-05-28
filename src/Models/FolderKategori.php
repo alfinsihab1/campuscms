@@ -26,7 +26,7 @@ class FolderKategori extends Model
      * @var array
      */
     protected $fillable = [
-        'folder_kategori', 'slug_kategori', 'tipe_kategori', 'status_kategori'
+        'folder_kategori', 'slug_kategori', 'tipe_kategori', 'status_kategori', 'order_kategori', 'prefix_kategori', 'icon_kategori'
     ];
 
     /**

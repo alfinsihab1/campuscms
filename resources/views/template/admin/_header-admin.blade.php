@@ -8,7 +8,7 @@
       </div>
     </li>
   </ul>
-  @if (Request::path()=='/admin')
+  @if( Request::path() != 'admin' )
   @if (Auth::user()->role==role('it'))
   <dark-mode-toggle
     hidden=""

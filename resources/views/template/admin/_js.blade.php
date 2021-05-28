@@ -283,12 +283,12 @@ $(function() {
     var id_b = "free";
     var a = document.getElementsByTagName('html')[0];
     var b = document.getElementById('exp');
-    if (id_a == "{{ setting('site.color.primary_dark') }}") {
+    if (id_a != "{{ setting('site.color.primary_dark') }}") {
         a.setAttribute('class', id_a);
         b.setAttribute('data-exp', id_a);
         activateDarkMode();
     }else{
-        alert("Kamu Dalam Mode Free");
+        // alert("Kamu Dalam Mode Free");
         b.setAttribute('data-exp', id_b);
     }
 </script>

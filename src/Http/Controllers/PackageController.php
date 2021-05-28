@@ -119,10 +119,10 @@ class PackageController extends Controller
     // Check Access
     // has_access(generate_method(__METHOD__), Auth::user()->role);
 
-    // Mencoba melakukan request ke main package (mengupdate version)
+    // Mengecek autentikasi subscriber
     try {
       $client = new Client(['base_uri' => 'http://faturcms.faturmedia.xyz/api/']);
-      $faturcms_request = $client->request('PUT', 'version/update', [
+      $faturcms_request = $client->request('PUT', 'subscriber/auth', [
         'query' => [
           'url' => url()->to('/'),
           'key' => env('FATURCMS_APP_KEY'),
@@ -133,7 +133,7 @@ class PackageController extends Controller
       return;
     }
     $response = json_decode($faturcms_request->getBody(), true);
-    if($response['status'] == 404){
+    if($response['status'] == 403){
       // echo $faturcms_request->getBody();
       echo '<div class="alert alert-danger text-center">'.$response['message'].'</div>';
       return;
@@ -150,6 +150,7 @@ class PackageController extends Controller
     }
 
     // Mencoba melakukan request package ke github
+    /*
     try {
       $client = new Client(['base_uri' => 'https://api.github.com/repos/']);
       $package_request = $client->request('GET', config('faturcms.name').'/releases/latest');
@@ -174,6 +175,7 @@ class PackageController extends Controller
       $package->package_up = date('Y-m-d H:i:s');
       $package->save();
     }
+    */
 
     // Update FaturCMS
     Artisan::call("faturcms:update");

@@ -126,7 +126,7 @@
   <div class="modal-dialog modal-dialog-full modal-dialog-scrollable">
     <div class="modal-content ">
       <div class="container">
-        <div class="modal-header align-items-center">
+        <div class="modal-header align-items-center pl-0">
           <h5 class="modal-title" id="exampleModalLabel" style="color: var(--red)">Peralatan</h5>
           <button type="button" class="close menu-btn-green" data-dismiss="modal" aria-label="Close" style="padding: .5em .7em; border-radius: .5em">
             <span aria-hidden="true"><i class="fa fa-times"></i></span>
@@ -134,12 +134,12 @@
         </div>
       </div>
       <div class="modal-body">
-        <div class="container" 
+        <div class="container">
         @if(has_access('SettingController::edit', Auth::user()->role, false))
         <h5><i class="fa fa-thumb-tack"></i> Pintasan</h5>
         <div class="row mb-4">
           <div class="col-6 col-lg-3 mb-3">
-            <a href="{{ route('admin.setting.edit', ['category' => 'general']) }}">
+            <a class="text-decoration-none" href="{{ route('admin.setting.edit', ['category' => 'general']) }}">
             <div class="card">
               <div class="card-body menu-btn-red rounded-1">
                 <i class="fa fa-desktop" style="font-size: 2em"></i>
@@ -150,7 +150,7 @@
             </a>
           </div>
           <div class="col-6 col-lg-3 mb-3">
-            <a href="{{ route('admin.setting.edit', ['category' => 'logo']) }}">
+            <a class="text-decoration-none" href="{{ route('admin.setting.edit', ['category' => 'logo']) }}">
             <div class="card">
               <div class="card-body menu-btn-green rounded-1">
                 <i class="fa fa-picture-o" style="font-size: 2em"></i>
@@ -161,7 +161,7 @@
             </a>
           </div>
           <div class="col-6 col-lg-3 mb-3">
-            <a href="{{ route('admin.setting.edit', ['category' => 'icon']) }}">
+            <a class="text-decoration-none" href="{{ route('admin.setting.edit', ['category' => 'icon']) }}">
             <div class="card">
               <div class="card-body menu-btn-yellow rounded-1">
                 <i class="fa fa-gamepad" style="font-size: 2em"></i>
@@ -172,7 +172,7 @@
             </a>
           </div>
           <div class="col-6 col-lg-3 mb-3">
-            <a href="{{ route('admin.setting.edit', ['category' => 'price']) }}">
+            <a class="text-decoration-none" href="{{ route('admin.setting.edit', ['category' => 'price']) }}">
             <div class="card">
               <div class="card-body menu-btn-blue rounded-1">
                 <i class="fa fa-money" style="font-size: 2em"></i>

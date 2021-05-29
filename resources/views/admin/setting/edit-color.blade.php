@@ -32,25 +32,29 @@
                     @endif
                     <form id="form" method="post" action="{{ route('admin.setting.update', ['category' => $kategori->slug]) }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
-                        @foreach($setting as $data)
-                        <div class="form-group row">
-                            <label class="col-md-2 col-form-label">
-                                {{ $data->setting_name }}
-                                <span class="text-danger">{{ is_int(strpos($data->setting_rules, 'required')) ? '*' : '' }}</span>
-                                <br>
-                                <span class="small text-muted">{{ $data->setting_key }}</span>
-                            </label>
-                            <div class="col-md-10">
-                                <input type="text" name="setting[{{ str_replace($kategori->prefix, '', $data->setting_key) }}]" class="form-control {{ $errors->has('setting.'.str_replace($kategori->prefix, '', $data->setting_key)) ? 'is-invalid' : '' }} colorpicker" value="{{ $data->setting_value }}">
-                                @if($errors->has('setting.'.str_replace($kategori->prefix, '', $data->setting_key)))
-                                <div class="small text-danger mt-1">{{ ucfirst($errors->first('setting.'.str_replace($kategori->prefix, '', $data->setting_key))) }}</div>
-                                @endif
+                        <div class="row">
+                            @foreach($setting as $data)
+                            <div class="col-md-6 col-lg-3">
+                                <div class="form-group">
+                                    <label class="col-form-label">
+                                        {{ $data->setting_name }}
+                                        <span class="text-danger">{{ is_int(strpos($data->setting_rules, 'required')) ? '*' : '' }}</span>
+                                        <br>
+                                        <span class="small text-muted">{{ $data->setting_key }}</span>
+                                    </label>
+                                    <div class="">
+                                        <input type="text" name="setting[{{ str_replace($kategori->prefix, '', $data->setting_key) }}]" class="form-control {{ $errors->has('setting.'.str_replace($kategori->prefix, '', $data->setting_key)) ? 'is-invalid' : '' }} colorpicker" value="{{ $data->setting_value }}">
+                                        @if($errors->has('setting.'.str_replace($kategori->prefix, '', $data->setting_key)))
+                                        <div class="small text-danger mt-1">{{ ucfirst($errors->first('setting.'.str_replace($kategori->prefix, '', $data->setting_key))) }}</div>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
+                            @endforeach
                         </div>
-                        @endforeach
-                        <div class="form-group row">
-                            <label class="col-md-2 col-form-label"></label>
-                            <div class="col-md-10">
+                        <div class="form-group">
+                            <label class="col-form-label"></label>
+                            <div class="">
                                 <button type="submit" class="btn btn-theme-1"><i class="fa fa-save mr-2"></i>Simpan</button>
                             </div>
                         </div>

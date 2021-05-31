@@ -67,13 +67,7 @@
                                         <small><i class="fa fa-phone mr-1"></i>{{ $data->nomor_hp }}</small>
                                     </td>
                                     <td>{{ $data->nama_platform }} | {{ $data->nomor }} | {{ $data->atas_nama }}</td>
-                                    <td>
-                                        @if($data->withdrawal_status == 0)
-                                            <strong class="text-danger">Sedang Diproses</strong>
-                                        @else
-                                            <strong class="text-success">Diterima</strong>
-                                        @endif
-                                    </td>
+                                    <td><span class="badge {{ $data->withdrawal_status == 1 ? 'badge-success' : 'badge-danger' }}">{{ $data->withdrawal_status == 1 ? 'Diterima' : 'Sedang Diproses' }}</span></td>
                                     <td>{{ number_format($data->nominal,0,',',',') }}</td>
                                     <td>
                                         @if($data->withdrawal_status == 0)

@@ -33,12 +33,6 @@ class PermissionSeeder extends Seeder
             ['key' => 'PackageController::me', 'name' => 'Menampilkan My Package'],
             ['key' => 'PackageController::updateMe', 'name' => 'Mengupdate My Package'],
 
-            // Subscriber
-            ['key' => 'SubscriberController::index', 'name' => 'Menampilkan Data Subscriber'],
-            ['key' => 'SubscriberController::create', 'name' => 'Menambah Subscriber'],
-            ['key' => 'SubscriberController::edit', 'name' => 'Mengupdate Subscriber'],
-            ['key' => 'SubscriberController::delete', 'name' => 'Menghapus Subscriber'],
-
             // Artisan
             ['key' => 'ArtisanController::index', 'name' => 'Menampilkan Data Command Artisan'],
 
@@ -94,6 +88,12 @@ class PermissionSeeder extends Seeder
             ['key' => 'RekeningController::create', 'name' => 'Menambah Rekening'],
             ['key' => 'RekeningController::edit', 'name' => 'Mengupdate Rekening'],
             ['key' => 'RekeningController::delete', 'name' => 'Menghapus Rekening'],
+
+            // Platform
+            ['key' => 'PlatformController::index', 'name' => 'Menampilkan Data Platform'],
+            ['key' => 'PlatformController::create', 'name' => 'Menambah Platform'],
+            ['key' => 'PlatformController::edit', 'name' => 'Mengupdate Platform'],
+            ['key' => 'PlatformController::delete', 'name' => 'Menghapus Platform'],
 
             // Default Rekening
             ['key' => 'DefaultRekeningController::index', 'name' => 'Menampilkan Data Default Rekening'],
@@ -272,6 +272,14 @@ class PermissionSeeder extends Seeder
 
         foreach($array as $key=>$data){
             Permission::updateOrCreate(['key_permission' => $data['key']], ['nama_permission' => $data['name'], 'order_permission' => ($key+1)]);
+        }
+
+        // Unused
+        $unused = ['SubscriberController::index', 'SubscriberController::create', 'SubscriberController::edit', 'SubscriberController::delete'];
+
+        foreach($unused as $data){
+            $permission = Permission::where('key_permission','=',$data)->first();
+            if($permission) $permission->delete();
         }
     }
 }

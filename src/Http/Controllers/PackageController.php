@@ -116,12 +116,9 @@ class PackageController extends Controller
    */
   public function updateMe(Request $request)
   {
-    // Check Access
-    // has_access(generate_method(__METHOD__), Auth::user()->role);
-
     // Mengecek autentikasi subscriber
     try {
-      $client = new Client(['base_uri' => 'http://fpm.faturmedia.xyz/api/']);
+      $client = new Client(['base_uri' => 'https://fpm.faturmedia.xyz/api/']);
       $faturcms_request = $client->request('PUT', 'subscriber/auth', [
         'query' => [
           'url' => url()->to('/'),
@@ -148,34 +145,6 @@ class PackageController extends Controller
     if(!$process->isSuccessful()){
       throw new ProcessFailedException($process);
     }
-
-    // Mencoba melakukan request package ke github
-    /*
-    try {
-      $client = new Client(['base_uri' => 'https://api.github.com/repos/']);
-      $package_request = $client->request('GET', config('faturcms.name').'/releases/latest');
-    } catch (ClientException $e) {
-      echo Psr7\Message::toString($e->getResponse());
-      return;
-    }
-    $releases = json_decode($package_request->getBody(), true);
-
-    // Update package detail
-    $package = Package::where('package_name','=',config('faturcms.name'))->first();
-    if($package){
-      $package->package_version = array_key_exists('name', $releases) ? $releases['name'] : '';
-      $package->package_up = date('Y-m-d H:i:s');
-      $package->save();
-    }
-    else{
-      $package = new Package;
-      $package->package_name = config('faturcms.name');
-      $package->package_version = array_key_exists('name', $releases) ? $releases['name'] : '';
-      $package->package_at = date('Y-m-d H:i:s');
-      $package->package_up = date('Y-m-d H:i:s');
-      $package->save();
-    }
-    */
 
     // Update FaturCMS
     Artisan::call("faturcms:update");

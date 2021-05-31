@@ -4,7 +4,9 @@ namespace Ajifatur\FaturCMS\Http\Controllers;
 
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Schema;
 use App\User;
 use Ajifatur\FaturCMS\Models\Files;
 use Ajifatur\FaturCMS\Models\Kelompok;
@@ -664,7 +666,7 @@ class APIController extends Controller
         $user = User::findOrFail($request->query('id'));
 
         // Data pelatihan
-        $pelatihan = PelatihanMember::join('users','pelatihan_member.id_user','=','users.id_user')->join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->where('pelatihan_member.id_user','=',$user->id_user)->orderBy('nama_pelatihan','desc')->get();
+        $pelatihan = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->join('users','pelatihan.trainer','=','users.id_user')->where('pelatihan_member.id_user','=',$user->id_user)->orderBy('nama_pelatihan','desc')->get();
 
         // Response
         return response()->json([
@@ -754,7 +756,7 @@ class APIController extends Controller
                 $count_view_ebook = 0;
                 $count_view_video = 0;
 
-                // Aktivitas
+                // Aktivitas (versi Log)
                 if($logs != false){
                     if(count($logs)>0){
                         // Loop logs
@@ -770,6 +772,32 @@ class APIController extends Controller
                                     if($file->tipe_kategori == 'ebook') $count_view_ebook++;
                                     elseif($file->tipe_kategori == 'video') $count_view_video++;
                                 }
+                            }
+                        }
+                    }
+                }
+
+                // Aktivitas (versi Tabel Aktivitas)
+                if(Schema::hasTable('aktivitas')){
+                    // Get data aktivitas
+                    $aktivitas = DB::table('aktivitas')->where('id_user','=',$member->id_user)->whereDate('aktivitas_at','=',$tanggal_awal)->get();
+                    if(count($aktivitas)>0){
+                        foreach($aktivitas as $data){
+                            $data->aktivitas = json_decode($data->aktivitas, true);
+                            foreach($data->aktivitas as $row){
+                                // Path format baru
+                                if(is_int(strpos($row['path'], '/member/file-manager/view/'))){
+                                    $id_file = str_replace('/member/file-manager/view/', '', $row['path']);
+                                    $file = Files::join('folder_kategori','file.file_kategori','=','folder_kategori.id_fk')->find($id_file);
+                                    if($file){
+                                        if($file->tipe_kategori == 'ebook') $count_view_ebook++;
+                                        elseif($file->tipe_kategori == 'video') $count_view_video++;
+                                    }
+                                }
+                                // Path course format lama
+                                elseif(is_int(strpos($row['path'], '/member/e-course/detail/'))) $count_view_video++;
+                                // Path course format lama
+                                elseif(is_int(strpos($row['path'], '/member/materi/e-learning/view/')) || is_int(strpos($row['path'], '/member/materi/e-library/view/')) || is_int(strpos($row['path'], '/member/materi/e-competence/view/'))) $count_view_ebook++;
                             }
                         }
                     }

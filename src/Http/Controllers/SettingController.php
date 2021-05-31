@@ -9,6 +9,7 @@ use Illuminate\Validation\Rule;
 use App\User;
 use Ajifatur\FaturCMS\Models\Setting;
 use Ajifatur\FaturCMS\Models\KategoriSetting;
+use Ajifatur\FaturCMS\Models\UserSetting;
 
 class SettingController extends Controller
 {
@@ -62,11 +63,23 @@ class SettingController extends Controller
         // User
         $users = $category == 'referral' ? User::where('is_admin','=',0)->where('status','=',1)->where('email_verified','=',1)->orderBy('role','asc')->get() : null;
 
+        $theme='light';
+        if ($category=='color') {
+            $user_setting=UserSetting::where('id_user','=',Auth::user()->id_user)->first();
+            if ($user_setting) {
+                $json=($user_setting->user_setting != '' || $user_setting->user_setting != null) ? json_decode($user_setting->user_setting, true) : [];
+                if (array_key_exists('theme',$json)) {
+                    $theme = $json['theme'];
+                }
+            }
+        }
+
         // View
         return view('faturcms::admin.setting.edit-'.$category, [
             'kategori' => $kategori,
             'setting' => $setting,
             'users' => $users,
+            'theme' => $theme,
         ]);
     }
 

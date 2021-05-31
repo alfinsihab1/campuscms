@@ -2,7 +2,7 @@
     /* Root */
     :root{ 
       @if (Auth::user()->role==role('it'))
-      color-scheme: light dark;
+      color-scheme: {{ ($theme!="dimmed") ? get_theme() : "dark" }};
       @endif
       --duration: 0.5s;
       --timing: ease; 
@@ -372,3 +372,4 @@
       .a-app-content { margin: 0; padding: 0; background-color: #fff;}
   }
 </style>
+<link rel="stylesheet" href="{{ asset('assets/css/'.get_theme().'.css') }}" id="theme-link">

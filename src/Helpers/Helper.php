@@ -48,6 +48,7 @@ use Ajifatur\FaturCMS\Models\Role;
 use Ajifatur\FaturCMS\Models\RolePermission;
 use Ajifatur\FaturCMS\Models\Setting;
 use Ajifatur\FaturCMS\Models\Tag;
+use Ajifatur\FaturCMS\Models\UserSetting;
 
 // Get has access
 if(!function_exists('has_access')){
@@ -323,5 +324,22 @@ if(!function_exists('package_path')){
     function package_path($path = ''){
         if(substr($path, 0, 1) != '/') $path = '/'.$path;
         return base_path('vendor/'.config('faturcms.name').$path);
+    }
+}
+
+// theme
+if(!function_exists('get_theme')){
+    function get_theme(){
+        $theme='light';
+        
+            $user_setting=UserSetting::where('id_user','=',Auth::user()->id_user)->first();
+            if ($user_setting) {
+                $json=($user_setting->user_setting != '' || $user_setting->user_setting != null) ? json_decode($user_setting->user_setting, true) : [];
+                if (array_key_exists('theme',$json)) {
+                    $theme = $json['theme'];
+                }
+            }
+        
+        return $theme;
     }
 }

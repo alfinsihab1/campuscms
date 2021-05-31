@@ -72,13 +72,13 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-4">
-                        <div class="card img-radio" id="light">
+                        <div class="card img-radio <?php echo $theme=="light" ? 'active' : ''; ?>" id="light">
                             <div class="card-body p-0">
                                 <img src="https://github.githubassets.com/images/modules/settings/color_modes/light_preview.svg" style="border-radius: .25rem .25rem 0 0; width: 100%" >
                             </div>
                             <div class="card-footer">
                                 <div class="form-check">
-                                  <input class="form-check-input" type="radio" id="light" name="theme" value="light">
+                                  <input class="form-check-input" type="radio" id="light" name="theme" value="light" <?php echo $theme=="light" ? 'checked' : ''; ?>>
                                   <label class="form-check-label" for="light">
                                     Default Light
                                   </label>
@@ -87,13 +87,13 @@
                         </div>
                     </div>
                     <div class="col-lg-4">
-                        <div class="card img-radio">
+                        <div class="card img-radio <?php echo $theme=="dark" ? 'active' : ''; ?>" id="dark">
                             <div class="card-body p-0">
                                 <img src="https://github.githubassets.com/images/modules/settings/color_modes/dark_preview.svg" style="border-radius: .25rem .25rem 0 0; width: 100%" id="dark" class="img-radio">
                             </div>
                             <div class="card-footer">
                                 <div class="form-check">
-                                  <input class="form-check-input" type="radio" id="dark" name="theme" value="dark">
+                                  <input class="form-check-input" type="radio" id="dark" name="theme" value="dark" <?php echo $theme=="dark" ? 'checked' : ''; ?>>
                                   <label class="form-check-label" for="dark">
                                     Default Dark
                                   </label>
@@ -102,13 +102,13 @@
                         </div>
                     </div>
                     <div class="col-lg-4">
-                        <div class="card img-radio">
+                        <div class="card img-radio <?php echo $theme=="dimmed" ? 'active' : ''; ?>" id="dimmed">
                             <div class="card-body p-0">
                                 <img src="https://github.githubassets.com/images/modules/settings/color_modes/dark_dimmed_preview.svg" style="border-radius: .25rem .25rem 0 0; width: 100%" id="dimmed" class="img-radio">
                             </div>
                             <div class="card-footer">
                                 <div class="form-check">
-                                  <input class="form-check-input" type="radio" id="dimmed" name="theme" value="dimmed">
+                                  <input class="form-check-input" type="radio" id="dimmed" name="theme" value="dimmed" <?php echo $theme=="dimmed" ? 'checked' : ''; ?>>
                                   <label class="form-check-label" for="dimmed">
                                     Dark Dimmed
                                   </label>
@@ -153,42 +153,46 @@
     });
 </script>
 <script type="text/javascript">
-    // var html = document.querySelector('html');
-    // var radios = document.querySelectorAll('input');
-    // var theme = document.querySelector('#theme-link');
+    var html = document.querySelector('html');
+    var radios = document.querySelectorAll('input');
+    var theme = document.querySelector('#theme-link');
 
     // setThemeAutomatically();
 
-    // function setThemeAutomatically() {
-    //   var current_theme;
-    //   if (window.localStorage.getItem("theme") === null) { 
-    //     window.localStorage.setItem("theme", 'light';
-    //   } else {
-    //     current_theme = window.localStorage.getItem('theme');
-    //   }
-    //   html.removeAttribute("class");
-    //   html.classList.add(current_theme);
-    //   theme.href = "assets/cek/"+ current_theme +".css";
+    function setThemeAutomatically() {
+      var current_theme = "{{get_theme()}}";
+      html.removeAttribute("class");
+      html.classList.add(current_theme);
+      theme.href = "/assets/css/"+ current_theme +".css";
       
-    // }
+    }
 
-    // radios.forEach(function(radio) {
-    //   radio.addEventListener('change', setThemeManually);
-    // });
+    radios.forEach(function(radio) {
+      radio.addEventListener('change', setThemeManually);
+    });
 
-    // function setThemeManually() {
-    //   var radio = document.getElementsByName("theme");
-    //   for(var i = 0; i < radio.length; i++){
-    //     if (radio[i].checked) {
-    //       // console.log(radio[i].value)
-    //       html.removeAttribute("class");
-    //       html.classList.add(radio[i].value);
-    //       theme.href = "assets/cek/"+ radio[i].value +".css";
+    function setThemeManually() {
+      var radio = document.getElementsByName("theme");
+      for(var i = 0; i < radio.length; i++){
+        if (radio[i].checked) {
+          // console.log(radio[i].value)
+          html.removeAttribute("class");
+          html.classList.add(radio[i].value);
+          theme.href = "/assets/css/"+ radio[i].value +".css";
 
-    //       window.localStorage.setItem('theme', radio[i].value);
-    //     }
-    //   }
-    // }
+          // window.localStorage.setItem('theme', radio[i].value);
+
+          $.ajax({
+            type: "GET",
+            url: "{{route('admin.user-setting.set-theme')}}",
+            data: {theme:radio[i].value},
+            success: function(response){
+                // console.log(response);
+            }
+            })
+        }
+      }
+    }
 
     $(document).on('click', '.img-radio', function(e){
         e.preventDefault();
@@ -202,7 +206,6 @@
 @endsection
 
 @section('css-extra')
-
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/colorpicker/jquery-minicolors.min.css') }}">
 <style type="text/css">
     .card.img-radio, .form-check-label{cursor: pointer;}

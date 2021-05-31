@@ -851,10 +851,15 @@ class APIController extends Controller
         else return false;   
     }
 
-
+    /**
+     * Mengambil koordinat
+     *
+     * string $path
+     * @return \Illuminate\Http\Response
+     */
     public function getCoordinate(){
-        $visitor = Visitor::where('visit_at', '=', Auth::user()->last_visit)->first();
-        if ($visitor) {
+        $visitor = Visitor::where('visit_at','=',Auth::user()->last_visit)->first();
+        if($visitor){
             echo $visitor->location;
         }
     }

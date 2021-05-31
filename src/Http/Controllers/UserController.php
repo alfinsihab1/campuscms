@@ -149,7 +149,7 @@ class UserController extends Controller
         $sponsor = User::where('username','=',$user->reference)->first();
 
         // Pelatihan member
-        $pelatihan = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->where('id_user','=',$id)->orderBy('tanggal_pelatihan_from','desc')->get();
+        $pelatihan = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->join('users','pelatihan.trainer','=','users.id_user')->where('pelatihan_member.id_user','=',$id)->orderBy('tanggal_pelatihan_from','desc')->get();
 
         // View
         return view('faturcms::admin.user.detail', [

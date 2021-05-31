@@ -5,15 +5,14 @@ namespace Ajifatur\FaturCMS\Http\Controllers;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use App\User;
-use Ajifatur\FaturCMS\Models\Subscriber;
+use Ajifatur\FaturCMS\Models\Platform;
 
-class SubscriberController extends Controller
+class PlatformController extends Controller
 {
     /**
-     * Menampilkan data subscriber
+     * Menampilkan data platform
      *
      * @return \Illuminate\Http\Response
      */
@@ -22,17 +21,17 @@ class SubscriberController extends Controller
         // Check Access
         has_access(generate_method(__METHOD__), Auth::user()->role);
 
-        // Data subscriber
-        $subscriber = Subscriber::all();
-        
+        // Data platform
+        $platform = Platform::orderBy('tipe_platform','asc')->orderBy('nama_platform','asc')->get();
+
         // View
-        return view('faturcms::admin.subscriber.index', [
-            'subscriber' => $subscriber,
+        return view('faturcms::admin.platform.index', [
+            'platform' => $platform,
         ]);
     }
 
     /**
-     * Menampilkan form tambah subscriber
+     * Menampilkan form tambah platform
      *
      * @return \Illuminate\Http\Response
      */
@@ -42,11 +41,11 @@ class SubscriberController extends Controller
         has_access(generate_method(__METHOD__), Auth::user()->role);
 
         // View
-        return view('faturcms::admin.subscriber.create');
+        return view('faturcms::admin.platform.create');
     }
 
     /**
-     * Menambah subscriber
+     * Menambah platform
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -55,8 +54,8 @@ class SubscriberController extends Controller
     {
         // Validasi
         $validator = Validator::make($request->all(), [
-            'subscriber_email' => 'required|email|unique:subscriber',
-            'subscriber_url' => 'required|unique:subscriber',
+            'nama_platform' => 'required|max:255',
+            'tipe_platform' => 'required',
         ], array_validation_messages());
         
         // Mengecek jika ada error
@@ -67,24 +66,20 @@ class SubscriberController extends Controller
         // Jika tidak ada error
         else{
             // Menambah data
-            $subscriber = new Subscriber;
-            $subscriber->subscriber_email = $request->subscriber_email;
-            $subscriber->subscriber_url = $request->subscriber_url;
-            $subscriber->subscriber_key = Str::random(40);
-            $subscriber->subscriber_version = '';
-            $subscriber->subscriber_at = date('Y-m-d H:i:s');
-            $subscriber->subscriber_up = date('Y-m-d H:i:s');
-            $subscriber->save();
+            $platform = new Platform;
+            $platform->nama_platform = $request->nama_platform;
+            $platform->tipe_platform = $request->tipe_platform;
+            $platform->save();
         }
 
         // Redirect
-		return redirect()->route('admin.subscriber.index')->with(['message' => 'Berhasil menambah data.']);
+        return redirect()->route('admin.platform.index')->with(['message' => 'Berhasil menambah data.']);
     }
 
     /**
-     * Menampilkan form edit subscriber
+     * Menampilkan form edit platform
      *
-     * * int $id
+     * int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -92,17 +87,17 @@ class SubscriberController extends Controller
         // Check Access
         has_access(generate_method(__METHOD__), Auth::user()->role);
 
-        // subscriber
-        $subscriber = Subscriber::findOrFail($id);
-        
+        // Data platform
+        $platform = Platform::findOrFail($id);
+
         // View
-        return view('faturcms::admin.subscriber.edit', [
-            'subscriber' => $subscriber,
+        return view('faturcms::admin.platform.edit', [
+            'platform' => $platform,
         ]);
     }
 
     /**
-     * Mengupdate subscriber
+     * Mengupdate platform
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -111,12 +106,8 @@ class SubscriberController extends Controller
     {
         // Validasi
         $validator = Validator::make($request->all(), [
-            'subscriber_email' => [
-                'required', 'email', Rule::unique('subscriber')->ignore($request->id, 'id_subscriber')
-            ],
-            'subscriber_url' => [
-                'required', Rule::unique('subscriber')->ignore($request->id, 'id_subscriber')
-            ],
+            'nama_platform' => 'required|max:255',
+            'tipe_platform' => 'required',
         ], array_validation_messages());
         
         // Mengecek jika ada error
@@ -127,19 +118,18 @@ class SubscriberController extends Controller
         // Jika tidak ada error
         else{
             // Mengupdate data
-            $subscriber = Subscriber::find($request->id);
-            $subscriber->subscriber_email = $request->subscriber_email;
-            $subscriber->subscriber_url = $request->subscriber_url;
-            $subscriber->subscriber_up = date('Y-m-d H:i:s');
-            $subscriber->save();
+            $platform = Platform::find($request->id);
+            $platform->nama_platform = $request->nama_platform;
+            $platform->tipe_platform = $request->tipe_platform;
+            $platform->save();
         }
 
         // Redirect
-		return redirect()->route('admin.subscriber.index')->with(['message' => 'Berhasil mengupdate data.']);
+        return redirect()->route('admin.platform.index')->with(['message' => 'Berhasil mengupdate data.']);
     }
 
     /**
-     * Menghapus subscriber
+     * Menghapus platform
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -148,12 +138,12 @@ class SubscriberController extends Controller
     {
         // Check Access
         has_access(generate_method(__METHOD__), Auth::user()->role);
-        
+
     	// Menghapus data
-        $subscriber = Subscriber::find($request->id);
-        $subscriber->delete();
+        $platform = Platform::find($request->id);
+        $platform->delete();
 
         // Redirect
-        return redirect()->route('admin.subscriber.index')->with(['message' => 'Berhasil menghapus data.']);
+        return redirect()->route('admin.platform.index')->with(['message' => 'Berhasil menghapus data.']);
     }
 }

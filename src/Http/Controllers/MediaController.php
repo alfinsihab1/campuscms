@@ -64,7 +64,6 @@ class MediaController extends Controller
         // Check Access
         has_access(generate_method(__METHOD__), Auth::user()->role);
 
-
         // Check kategori
         if(array_key_exists($request->query('category'), $this->directory)){
             // Get data file

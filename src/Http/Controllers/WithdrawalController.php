@@ -24,7 +24,7 @@ class WithdrawalController extends Controller
         // Jika role = admin
         if(Auth::user()->is_admin == 1){
             // Data withdrawal
-            $withdrawal = Withdrawal::join('users','withdrawal.id_user','=','users.id_user')->join('rekening','withdrawal.id_rekening','=','rekening.id_rekening')->join('platform','rekening.id_platform','=','platform.id_platform')->orderBy('withdrawal_status','desc')->orderBy('withdrawal_at','desc')->get();
+            $withdrawal = Withdrawal::join('users','withdrawal.id_user','=','users.id_user')->join('rekening','withdrawal.id_rekening','=','rekening.id_rekening')->join('platform','rekening.id_platform','=','platform.id_platform')->orderBy('withdrawal_status','asc')->orderBy('withdrawal_at','desc')->get();
 
             // View
             return view('faturcms::admin.withdrawal.index', [
@@ -36,7 +36,7 @@ class WithdrawalController extends Controller
             if(Auth::user()->status == 0) abort(403, message('unpaid'));
             
 			// Data withdrawal
-			$withdrawal = Withdrawal::join('users','withdrawal.id_user','=','users.id_user')->join('rekening','withdrawal.id_rekening','=','rekening.id_rekening')->join('platform','rekening.id_platform','=','platform.id_platform')->where('withdrawal.id_user',Auth::user()->id_user)->orderBy('withdrawal_status','desc')->orderBy('withdrawal_at','desc')->get();
+			$withdrawal = Withdrawal::join('users','withdrawal.id_user','=','users.id_user')->join('rekening','withdrawal.id_rekening','=','rekening.id_rekening')->join('platform','rekening.id_platform','=','platform.id_platform')->where('withdrawal.id_user',Auth::user()->id_user)->orderBy('withdrawal_status','asc')->orderBy('withdrawal_at','desc')->get();
 
             // Data current withdrawal
             $current_withdrawal = Withdrawal::where('withdrawal_status','=',0)->latest('withdrawal_at')->first();

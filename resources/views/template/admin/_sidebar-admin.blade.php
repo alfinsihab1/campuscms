@@ -31,10 +31,6 @@
           </ul>
         </li>
         @endif
-
-        @if(has_access('SubscriberController::index', Auth::user()->role, false))
-        <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.subscriber.index'))) ? 'active' : '' }}" href="{{ route('admin.subscriber.index') }}"><i class="app-menu__icon fa fa-user-secret"></i><span class="app-menu__label">Subscriber</span></a></li>
-        @endif
         
         @if(has_access('StatistikController::member', Auth::user()->role, false) || has_access('StatistikController::device', Auth::user()->role, false) || has_access('StatistikController::location', Auth::user()->role, false) || has_access('StatistikController::finance', Auth::user()->role, false) || has_access('StatistikController::byTanggal', Auth::user()->role, false) || has_access('StatistikController::byKelompok', Auth::user()->role, false) || has_access('VisitorController::index', Auth::user()->role, false) || has_access('VisitorController::topVisitor', Auth::user()->role, false))
         <li class="treeview {{ is_int(strpos(Request::url(), '/admin/statistik')) || is_int(strpos(Request::url(), route('admin.visitor.index'))) ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Statistik</span><i class="treeview-indicator fa fa-angle-right"></i></a>
@@ -71,11 +67,14 @@
         <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.media.index'))) ? 'active' : '' }}" href="{{ route('admin.media.index') }}"><i class="app-menu__icon fa fa-image"></i><span class="app-menu__label">Media</span></a></li>
         @endif
         
-        @if(has_access('RekeningController::index', Auth::user()->role, false) || has_access('DefaultRekeningController::index', Auth::user()->role, false))
-        <li class="treeview {{ is_int(strpos(Request::url(), route('admin.rekening.index'))) || is_int(strpos(Request::url(), route('admin.default-rekening.index'))) ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-id-card"></i><span class="app-menu__label">Rekening</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+        @if(has_access('RekeningController::index', Auth::user()->role, false) || has_access('PlatformController::index', Auth::user()->role, false) || has_access('DefaultRekeningController::index', Auth::user()->role, false))
+        <li class="treeview {{ is_int(strpos(Request::url(), route('admin.rekening.index'))) || is_int(strpos(Request::url(), route('admin.platform.index'))) || is_int(strpos(Request::url(), route('admin.default-rekening.index'))) ? 'is-expanded' : '' }}"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-id-card"></i><span class="app-menu__label">Rekening</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
             @if(has_access('RekeningController::index', Auth::user()->role, false))
             <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.rekening.index'))) ? 'active' : '' }}" href="{{ route('admin.rekening.index') }}"><i class="icon fa fa-circle-o"></i> Data Rekening</a></li>
+            @endif
+            @if(has_access('PlatformController::index', Auth::user()->role, false))
+            <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.platform.index'))) ? 'active' : '' }}" href="{{ route('admin.platform.index') }}"><i class="icon fa fa-circle-o"></i> Platform</a></li>
             @endif
             @if(has_access('DefaultRekeningController::index', Auth::user()->role, false))
             <li><a class="treeview-item {{ is_int(strpos(Request::url(), route('admin.default-rekening.index'))) ? 'active' : '' }}" href="{{ route('admin.default-rekening.index') }}"><i class="icon fa fa-circle-o"></i> Default Rekening</a></li>

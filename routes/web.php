@@ -55,14 +55,6 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	// Route::get('/admin/sistem/package/update-me', $namespacePrefix.'PackageController@updateMe')->name('admin.package.update-me');
 	Route::get('/admin/sistem/package/detail', $namespacePrefix.'PackageController@detail')->name('admin.package.detail');
 
-	// Subscriber
-	Route::get('/admin/subscriber', $namespacePrefix.'SubscriberController@index')->name('admin.subscriber.index');
-	Route::get('/admin/subscriber/create', $namespacePrefix.'SubscriberController@create')->name('admin.subscriber.create');
-	Route::post('/admin/subscriber/store', $namespacePrefix.'SubscriberController@store')->name('admin.subscriber.store');
-	Route::get('/admin/subscriber/edit/{id}', $namespacePrefix.'SubscriberController@edit')->name('admin.subscriber.edit');
-	Route::post('/admin/subscriber/update', $namespacePrefix.'SubscriberController@update')->name('admin.subscriber.update');
-	Route::post('/admin/subscriber/delete', $namespacePrefix.'SubscriberController@delete')->name('admin.subscriber.delete');
-
 	// Artisan
 	Route::get('/admin/sistem/artisan', $namespacePrefix.'ArtisanController@index')->name('admin.artisan.index');
 	Route::post('/admin/sistem/artisan/call', $namespacePrefix.'ArtisanController@call')->name('admin.artisan.call');
@@ -96,6 +88,14 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::get('/admin/rekening/edit/{id}', $namespacePrefix.'RekeningController@edit')->name('admin.rekening.edit');
 	Route::post('/admin/rekening/update', $namespacePrefix.'RekeningController@update')->name('admin.rekening.update');
 	Route::post('/admin/rekening/delete', $namespacePrefix.'RekeningController@delete')->name('admin.rekening.delete');
+
+	// Platform
+	Route::get('/admin/platform', $namespacePrefix.'PlatformController@index')->name('admin.platform.index');
+	Route::get('/admin/platform/create', $namespacePrefix.'PlatformController@create')->name('admin.platform.create');
+	Route::post('/admin/platform/store', $namespacePrefix.'PlatformController@store')->name('admin.platform.store');
+	Route::get('/admin/platform/edit/{id}', $namespacePrefix.'PlatformController@edit')->name('admin.platform.edit');
+	Route::post('/admin/platform/update', $namespacePrefix.'PlatformController@update')->name('admin.platform.update');
+	Route::post('/admin/platform/delete', $namespacePrefix.'PlatformController@delete')->name('admin.platform.delete');
 
 	// Default Rekening
 	Route::get('/admin/default-rekening', $namespacePrefix.'DefaultRekeningController@index')->name('admin.default-rekening.index');

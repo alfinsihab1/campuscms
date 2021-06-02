@@ -2,7 +2,7 @@
     /* Root */
     :root{ 
       @if (Auth::user()->role==role('it'))
-      color-scheme: {{ ($theme!="dimmed") ? get_theme() : "dark" }};
+      color-scheme: {{ (get_theme()!="dimmed") ? get_theme() : "dark" }};
       @endif
       --duration: 0.5s;
       --timing: ease; 

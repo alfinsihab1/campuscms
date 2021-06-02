@@ -102,7 +102,7 @@
 	                    </div>
 	                </div>
 	                <div class="tile-body">
-						<canvas id="chartVisitor" width="400" height="270"></canvas>
+						<canvas id="chartVisitor" width="400" height="200"></canvas>
 	                </div>
 	            </div>
 	        </div>

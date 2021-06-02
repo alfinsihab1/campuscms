@@ -90,7 +90,7 @@
                 responsive: true,
                 cutoutPercentage: 75,
                 legend: {
-                    // display: false
+                    display: false
                 },
                 tooltips: {
                     callbacks: {
@@ -106,4 +106,17 @@
         });
         return myChart;
     }
+	
+	function generate_chart_legend(colors, data, selector){
+		var html = '';
+		html += '<ul class="list-group list-group-flush">';
+		for(i=0; i<colors.length; i++){
+			html += '<li class="list-group-item d-flex justify-content-between py-1 px-0">';
+			html += '<div><i class="fa fa-circle mr-2" style="color: ' + colors[i] + '"></i>' + data.labels[i] + '</div>';
+			html += '<div>' + thousand_format(data.data[i]) + '</div>';
+			html += '</li>';
+		}
+		html += '</ul>';
+		$(selector).parents(".tile").find(".tile-footer").html(html);
+	}
 </script>

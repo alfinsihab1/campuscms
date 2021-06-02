@@ -1,3 +1,5 @@
+<p align="center"><img src="https://fpm.faturmedia.xyz/assets/images/others/faturcms.jpg" width="400"></p>
+<br>
 <p align="center">
   <a href="https://packagist.org/packages/ajifatur/faturcms"><img src="https://poser.pugx.org/ajifatur/faturcms/d/total.svg" alt="Total Downloads"></a>
   <a href="https://packagist.org/packages/ajifatur/faturcms"><img src="https://poser.pugx.org/ajifatur/faturcms/v/stable.svg" alt="Latest Stable Version"></a>

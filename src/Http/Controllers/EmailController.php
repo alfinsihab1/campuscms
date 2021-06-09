@@ -43,14 +43,9 @@ class EmailController extends Controller
     {
         // Check Access
         has_access(generate_method(__METHOD__), Auth::user()->role);
-
-		// Get data member
-		$members = User::where('is_admin','=',0)->get();
 		
         // View
-        return view('faturcms::admin.email.create', [
-			'members' => $members	
-		]);
+        return view('faturcms::admin.email.create');
     }
 
     /**
@@ -160,16 +155,34 @@ class EmailController extends Controller
     }
 
     /**
-     * Mencari email
+     * Memforward pesan
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    // public function search(Request $request)
-    // {
-    //     $users = User::where('is_admin','=',0)->where('email','like','%'.$request->search.'%')->get();
-    //     echo json_encode($users);
-    // }
+    public function forward(Request $request)
+    {
+        // Get email
+        $mail = Email::join('users','email.sender','=','users.id_user')->findOrFail($request->id);
+
+        // Explode
+        $ids = explode(",", $request->receiver);
+
+        // Send Mail
+        foreach($ids as $id){
+            $receiver = User::find($id);
+            Mail::to($receiver->email)->send(new MessageMail(Auth::user()->email, $receiver, $mail->subjek, htmlentities($mail->pesan)));
+        }
+
+        // Merge Receiver
+        $receiver_old = explode(",", $mail->receiver_id);
+        $merge = array_merge($receiver_old, $ids);
+        $mail->receiver_id = implode(",", $merge);
+        $mail->save();
+
+        // Redirect
+        return redirect()->route('admin.email.index')->with(['message' => 'Berhasil mem-forward pesan.']);
+    }
  
     /**
      * Mengimport email
@@ -182,4 +195,21 @@ class EmailController extends Controller
         echo json_encode(Excel::toArray(new EmailImport, $request->file('file')));
     }
 
+    /**
+     * Mengambil data member JSON
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function memberJson()
+    {
+        // Data user
+        $user = User::select('id_user', 'nama_user', 'email')->where('is_admin','=',0)->where('status','=',1)->get();
+
+        // Response
+        return response()->json([
+            'status' => 200,
+            'message' => 'OK',
+            'data' => $user
+        ]);
+    }
 }

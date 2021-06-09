@@ -262,7 +262,7 @@ $(function() {
     var header = $(".app-header");
     $(window).scroll(function() {
         var scroll = $(window).scrollTop();
-
+        console.log(scroll);
         if (scroll >= 100) {
             header.addClass("nav-sticky");
         } else {

@@ -146,7 +146,7 @@
 
   /* Quill Editor */
   #editor {height: 300px;}
-  .ql-button-html:after {content: "<>";}
+  .ql-button-html:after {content: "<>"; color: black;}
   .ql-editor {white-space: normal!important;}
 .ql-editor h1, .ql-editor h2, .ql-editor h3, .ql-editor h4, .ql-editor h5, .ql-editor h6, .ql-editor p {margin-bottom: 1rem!important;}
   .ql-snow .ql-toolbar button, .ql-snow.ql-toolbar button.ql-button-html {width: 30px;}

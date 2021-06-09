@@ -2,6 +2,7 @@
 
 /**
  * Count Helpers:
+ * @method int count_member_aktif()
  * @method int count_notif_admin()
  * @method int count_notif_komisi()
  * @method int count_notif_withdrawal()
@@ -18,6 +19,7 @@
  * @method int count_churn_rate(int $month)
  * @method int count_pelatihan_member(int $user, array $tanggal)
  * @method int count_anggota_kelompok(int $id)
+ * @method int count_penerima_email(array $receivers)
  */
 
 use App\User;
@@ -31,6 +33,14 @@ use Ajifatur\FaturCMS\Models\Pelatihan;
 use Ajifatur\FaturCMS\Models\PelatihanMember;
 use Ajifatur\FaturCMS\Models\Visitor;
 use Ajifatur\FaturCMS\Models\Withdrawal;
+
+// Menghitung semua member aktif
+if(!function_exists('count_member_aktif')){
+    function count_member_aktif(){
+        $data = User::where('is_admin','=',0)->where('status','=',1)->count();
+        return $data;
+    }
+}
 
 // Menghitung semua notifikasi (admin)
 if(!function_exists('count_notif_admin')){
@@ -197,5 +207,13 @@ if(!function_exists('count_anggota_kelompok')){
             }
             else return 0;
         }
+    }
+}
+
+// Menghitung jumlah penerima email
+if(!function_exists('count_penerima_email')){
+    function count_penerima_email($receivers){
+        $explode = explode(",", $receivers);
+        return $receivers != '' ? count($explode) : 0;
     }
 }

@@ -53,6 +53,13 @@ class FaturCMSServiceProvider extends ServiceProvider
             // Register console commands
             $this->registerConsoleCommands();
         }
+
+        // Register schedule
+        $this->app->singleton('ajifatur.faturcms.console.kernel', function($app) {
+            $dispatcher = $app->make(\Illuminate\Contracts\Events\Dispatcher::class);
+            return new \Ajifatur\FaturCMS\Console\Kernel($app, $dispatcher);
+        });
+        $this->app->make('ajifatur.faturcms.console.kernel');
     }
 
     /**

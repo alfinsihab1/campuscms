@@ -50,7 +50,7 @@ class Kernel extends ConsoleKernel
                             // Update email
                             $data->receiver_id = implode(",", $receivers);
                             $data->save();
-                        })->everyMinute();
+                        })->dailyAt($data->scheduled);
                     }
                 }  
             }    

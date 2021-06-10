@@ -40,9 +40,9 @@ class Kernel extends ConsoleKernel
                 if(count($users)>0){
                     foreach($users as $user){
                         // Run sending email task
-                        $schedule->call(function() use ($user, $receivers, $data){
+                        $schedule->call(function() use ($user, $receivers, $cs, $data){
                             // Send email
-                            Mail::to($user->email)->send(new MessageMail($cs->email, $user, $data->subject, htmlentities($data->content)));
+                            Mail::to($user->email)->send(new MessageMail($cs->email, $user, $data->subject, html_entity_decode($data->content)));
                             
                             // Push receiver
                             array_push($receivers, $user->id_user);

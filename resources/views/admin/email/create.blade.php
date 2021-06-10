@@ -37,6 +37,36 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="col-md-2 col-form-label">Terjadwal <span class="text-danger">*</span></label>
+                            <div class="col-md-10">
+                                <div class="form-check">
+                                  <input class="form-check-input" type="radio" name="terjadwal" id="terjadwal-0" value="0" {{ old('terjadwal') == '0' ? 'checked' : '' }} {{ old('terjadwal') == null ? 'checked' : '' }}>
+                                  <label class="form-check-label" for="terjadwal-0">Tidak</label>
+                                </div>
+                                <div class="form-check">
+                                  <input class="form-check-input" type="radio" name="terjadwal" id="terjadwal-1" value="1" {{ old('terjadwal') == '1' ? 'checked' : '' }}>
+                                  <label class="form-check-label" for="terjadwal-1">Ya</label>
+                                </div>
+                                @if($errors->has('terjadwal'))
+                                <div class="small text-danger mt-1">{{ ucfirst($errors->first('terjadwal')) }}</div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row form-jadwal d-none">
+                            <label class="col-md-2 col-form-label">Waktu Pengiriman Email <span class="text-danger">*</span></label>
+                            <div class="col-md-10">
+                                <div class="input-group">
+                                    <input type="text" name="waktu" class="form-control {{ $errors->has('waktu') ? 'is-invalid' : '' }}" value="{{ old('waktu') }}">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text {{ $errors->has('waktu') ? 'border-danger' : '' }}"><i class="fa fa-clock-o"></i></span>
+                                    </div>
+                                </div>
+                                @if($errors->has('waktu'))
+                                <div class="small text-danger mt-1">{{ ucfirst($errors->first('waktu')) }}</div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-md-2 col-form-label">Penerima <span class="text-danger">*</span></label>
                             <div class="col-md-10">
                                 <a class="btn btn-sm btn-secondary btn-search" href="#"><i class="fa fa-search mr-2"></i>Cari Penerima</a>
@@ -151,6 +181,12 @@
 <script type="text/javascript">
     // Quill
     generate_quill("#editor");
+
+    // Change Terjadwal
+    $(document).on("change", "input[name=terjadwal]", function(){
+        var terjadwal = $(this).val();
+        terjadwal == 1 ? $(".form-jadwal").removeClass("d-none") : $(".form-jadwal").addClass("d-none");
+    });
     
     // Button Search
     $(document).on("click", ".btn-search", function(e){

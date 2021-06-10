@@ -24,7 +24,7 @@ class Kernel extends ConsoleKernel
 
         // Broadcast scheduled emails
         // Get email
-        $email = Email::where('scheduled','!=',null)->get();
+        $email = Email::where('scheduled','=',date('H:i'))->get();
         // Loop email
         if(count($email)>0){
             // Get customer service

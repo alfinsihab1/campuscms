@@ -59,7 +59,9 @@ class EmailController extends Controller
         // Validasi
         $validator = Validator::make($request->all(), [
             'subjek' => 'required|max:255',
-            'emails' => 'required'
+            'terjadwal' => 'required',
+            'waktu' => $request->terjadwal == 1 ? 'required' : '',
+            'emails' => 'required',
         ], array_validation_messages());
         
         // Mengecek jika ada error
@@ -70,6 +72,8 @@ class EmailController extends Controller
                 'ids',
                 'names',
                 'emails',
+                'terjadwal',
+                'waktu'
             ]));
         }
         // Jika tidak ada error
@@ -103,6 +107,7 @@ class EmailController extends Controller
 			$mail->receiver_email = $request->emails;
 			$mail->sender = Auth::user()->id_user;
 			$mail->content = htmlentities(upload_quill_image($request->pesan, 'assets/images/konten-email/'));
+            $mail->scheduled = $request->terjadwal == 1 ? $request->waktu : null;
 			$mail->sent_at = date('Y-m-d H:i:s');
 			$mail->save();
         }

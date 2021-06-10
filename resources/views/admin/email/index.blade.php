@@ -47,6 +47,7 @@
                                     <th width="20"><input type="checkbox"></th>
                                     <th>Email</th>
                                     <th width="150">Pengirim</th>
+                                    <th width="100">Terjadwal</th>
                                     <th width="100">Waktu</th>
                                     <th width="40">Opsi</th>
                                 </tr>
@@ -68,6 +69,15 @@
                                         <small><i class="fa fa-envelope mr-1"></i>{{ $data->email }}</small>
                                         <br>
                                         <small><i class="fa fa-phone mr-1"></i>{{ $data->nomor_hp }}</small>
+                                    </td>
+                                    <td>
+                                        @if($data->scheduled != null)
+                                            <span>Harian</span>
+                                            <br>
+                                            <small><i class="fa fa-clock-o mr-1"></i>{{ $data->scheduled }} WIB</small>
+                                        @else
+                                            <span class="badge badge-danger">Tidak</span>
+                                        @endif
                                     </td>
                                     <td>
                                         <span class="d-none">{{ $data->sent_at }}</span>

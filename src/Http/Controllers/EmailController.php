@@ -171,7 +171,7 @@ class EmailController extends Controller
         // Send Mail
         foreach($ids as $id){
             $receiver = User::find($id);
-            Mail::to($receiver->email)->send(new MessageMail(Auth::user()->email, $receiver, $mail->subjek, htmlentities($mail->pesan)));
+            Mail::to($receiver->email)->send(new MessageMail(Auth::user()->email, $receiver, $mail->subject, html_entity_decode($mail->content)));
         }
 
         // Merge Receiver

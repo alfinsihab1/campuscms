@@ -44,7 +44,7 @@
 										<table class="subcopy" width="100%" cellpadding="0" cellspacing="0" role="presentation">
 											<tr id="tr-logo">
 												<td align="center">
-													<img id="logo" src="{{ asset('assets/images/logo/'.setting('site.logo')) }}" width="200">
+													<img id="logo" src="{{ asset('assets/images/logo/'.setting('site.logo')) }}" width="200" alt="{{ setting('site.name') }}">
 												</td>
 											</tr>
 											<tr>

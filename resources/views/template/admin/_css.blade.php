@@ -198,7 +198,7 @@
 
 
   .app-header{padding: 30px 30px 0px 30px; position: static; background-color: transparent; box-shadow: none;}
-  .app-header.nav-sticky{padding: 0px 30px 0px 30px; position: sticky; top: 0; transition: var(--transition); background-color: var(--white); box-shadow: var(--shadow); animation: topBottom var(--transition)}
+  .app-header.nav-sticky{padding: 0px 30px 0px 30px; position: fixed; top: 0; background-color: var(--white); box-shadow: var(--shadow); animation: topBottom var(--transition)}
   .app-header.nav-sticky .dropdown{transform: translate();}
   .app-sidebar{padding-top: 0px; box-shadow: var(--shadow)!important}
   .app-content{min-height: unset; margin-top: unset; padding: 30px; background-color: unset; -webkit-transition: unset; -o-transition: unset; transition: unset;}
@@ -206,6 +206,8 @@
   @media (max-width: 768px) {.app-content {margin-top: unset;min-width: unset}}
   @media (max-width: 480px) {.app-content {padding: unset}}
   @media print {.app-content { margin: unset; padding: unset; background-color: unset}}
+  @media (min-width: 992px) {.app-header.nav-sticky{padding-left: 260px;}}
+  @media (min-width: 992px) {.sidenav-closed .app-header.nav-sticky{padding-left: 102px;}}
 
   /*.a-app-content{min-height: calc(100vh - 50px); margin-top: 50px; padding: 30px; -webkit-transition: margin-left 0.3s ease; -o-transition: margin-left 0.3s ease; transition: margin-left 0.3s ease; min-height: unset!important; padding-bottom: unset!important; margin-top: 0px; margin-left: 230px}*/
   .a-app-content{min-height: calc(100vh - 50px); margin-top: 50px; -webkit-transition: margin-left 0.3s ease; -o-transition: margin-left 0.3s ease; transition: margin-left 0.3s ease; min-height: unset!important; padding-bottom: unset!important; margin-top: 0px; margin-left: 230px}

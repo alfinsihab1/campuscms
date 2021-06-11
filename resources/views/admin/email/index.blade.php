@@ -49,7 +49,7 @@
                                     <th width="150">Pengirim</th>
                                     <th width="100">Terjadwal</th>
                                     <th width="100">Waktu</th>
-                                    <th width="40">Opsi</th>
+                                    <th width="80">Opsi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -88,6 +88,7 @@
                                     <td>
                                         <div class="btn-group">
                                             <a href="{{ route('admin.email.detail', ['id' => $data->id_email]) }}" class="btn btn-info btn-sm" data-toggle="tooltip" title="Detail"><i class="fa fa-eye"></i></a>
+                                            <a href="#" class="btn btn-warning btn-sm btn-schedule" data-id="{{ $data->id_email }}" data-schedule="{{ $data->scheduled }}" data-toggle="tooltip" title="Atur Jadwal"><i class="fa fa-clock-o"></i></a>
                                             <a href="#" class="btn btn-success btn-sm btn-forward" data-id="{{ $data->id_email }}" data-r="{{ $data->receiver_id }}" data-toggle="tooltip" title="Teruskan"><i class="fa fa-share"></i></a>
                                             <a href="#" class="btn btn-danger btn-sm btn-delete" data-id="{{ $data->id_email }}" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>
                                         </div>
@@ -145,12 +146,68 @@
 </div>
 <!-- /Forward Modal -->
 
+<!-- Schedule Modal -->
+<div class="modal fade" id="modal-schedule" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Atur Jadwal</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" action="{{ route('admin.email.schedule') }}">
+                <div class="modal-body">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="id" value="{{ old('id') }}">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label">Terjadwal <span class="text-danger">*</span></label>
+                        <div class="col-md-9">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="terjadwal" id="terjadwal-0" value="0" {{ old('terjadwal') == '0' ? 'checked' : '' }} {{ old('terjadwal') == null ? 'checked' : '' }}>
+                                <label class="form-check-label" for="terjadwal-0">Tidak</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="terjadwal" id="terjadwal-1" value="1" {{ old('terjadwal') == '1' ? 'checked' : '' }}>
+                                <label class="form-check-label" for="terjadwal-1">Ya</label>
+                            </div>
+                            @if($errors->has('terjadwal'))
+                            <div class="small text-danger mt-1">{{ ucfirst($errors->first('terjadwal')) }}</div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="form-group row form-jadwal {{ old('terjadwal') != 1 ? 'd-none' : '' }}">
+                        <label class="col-md-3 col-form-label">Waktu Pengiriman Email <span class="text-danger">*</span></label>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                <input type="text" name="scheduled" class="form-control clockpicker {{ $errors->has('scheduled') ? 'is-invalid' : '' }}" value="{{ old('scheduled') }}" autocomplete="off">
+                                <div class="input-group-append">
+                                    <span class="input-group-text {{ $errors->has('scheduled') ? 'border-danger' : '' }}"><i class="fa fa-clock-o"></i></span>
+                                </div>
+                            </div>
+                            @if($errors->has('scheduled'))
+                            <div class="small text-danger mt-1">{{ ucfirst($errors->first('scheduled')) }}</div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Simpan</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- /Schedule Modal -->
+
 @endsection
 
 @section('js-extra')
 
 @include('faturcms::template.admin._js-table')
 
+<script type="text/javascript" src="{{ asset('assets/plugins/clockpicker/bootstrap-clockpicker.min.js') }}"></script>
 <script type="text/javascript">
     // DataTable
     generate_datatable("#dataTable");
@@ -213,6 +270,46 @@
             actionChecked($(elem), false);
         });
         countChecked($(".input-receivers:checked"));
+    });
+    
+    // Button Schedule
+    $(document).on("click", ".btn-schedule", function(e){
+        e.preventDefault();
+        var id = $(this).data("id");
+        var schedule = $(this).data("schedule");
+		
+		// Add values
+        $("#modal-schedule input[name=id]").val(id);
+		if(schedule != ''){
+        	$("#modal-schedule #terjadwal-1").prop("checked", true);
+			$("#modal-schedule .form-jadwal").removeClass("d-none");
+			$("#modal-schedule input[name=scheduled]").val(schedule);
+		}
+		else{
+        	$("#modal-schedule #terjadwal-0").prop("checked", true);
+			$("#modal-schedule .form-jadwal").addClass("d-none");
+			$("#modal-schedule input[name=scheduled]").val(schedule);
+		}
+
+        // Show modal
+        $("#modal-schedule").modal("show");
+    });
+	
+	// Clockpicker
+	$(".clockpicker").clockpicker({
+		autoclose: true
+	});
+
+    // Change Terjadwal
+    $(document).on("change", "input[name=terjadwal]", function(){
+        var terjadwal = $(this).val();
+        terjadwal == 1 ? $(".form-jadwal").removeClass("d-none") : $(".form-jadwal").addClass("d-none");
+    });
+    
+    // Hide Modal Schedule
+    $('#modal-schedule').on('hidden.bs.modal', function(){
+        $("#modal-schedule input[name=id]").val(null);
+		$("#modal-schedule input[name=scheduled]").val(null);
     });
     
     // Checkbox Batch
@@ -283,13 +380,19 @@
         return checked;
     }
 </script>
+@if(count($errors)>0)
+<script type="text/javascript">
+	$("#modal-schedule").modal("show");
+</script>
+@endif
 
 @endsection
 
 @section('css-extra')
 
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/clockpicker/bootstrap-clockpicker.min.css') }}">
 <style type="text/css">
-    #modal-forward .modal-content {max-height: 500px; overflow-y: hidden;}
+    #modal-forward .modal-content {max-height: calc(100vh - 50px); overflow-y: hidden;}
     .modal-body {overflow-y: auto;}
     #table-receivers tr td {padding: .5rem!important;}
     #table-receivers tr:hover {background-color: #eeeeee!important;}

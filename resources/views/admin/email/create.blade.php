@@ -52,21 +52,21 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group row form-jadwal d-none">
+                        <div class="form-group row form-jadwal {{ old('terjadwal') != 1 ? 'd-none' : '' }}">
                             <label class="col-md-2 col-form-label">Waktu Pengiriman Email <span class="text-danger">*</span></label>
                             <div class="col-md-10">
                                 <div class="input-group">
-                                    <input type="text" name="waktu" class="form-control {{ $errors->has('waktu') ? 'is-invalid' : '' }}" value="{{ old('waktu') }}">
+                                    <input type="text" name="scheduled" class="form-control clockpicker {{ $errors->has('scheduled') ? 'is-invalid' : '' }}" value="{{ old('scheduled') }}" autocomplete="off">
                                     <div class="input-group-append">
-                                        <span class="input-group-text {{ $errors->has('waktu') ? 'border-danger' : '' }}"><i class="fa fa-clock-o"></i></span>
+                                        <span class="input-group-text {{ $errors->has('scheduled') ? 'border-danger' : '' }}"><i class="fa fa-clock-o"></i></span>
                                     </div>
                                 </div>
-                                @if($errors->has('waktu'))
-                                <div class="small text-danger mt-1">{{ ucfirst($errors->first('waktu')) }}</div>
+                                @if($errors->has('scheduled'))
+                                <div class="small text-danger mt-1">{{ ucfirst($errors->first('scheduled')) }}</div>
                                 @endif
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div class="form-group row form-penerima {{ old('terjadwal') == 0 || old('terjadwal') == null ? '' : 'd-none' }}">
                             <label class="col-md-2 col-form-label">Penerima <span class="text-danger">*</span></label>
                             <div class="col-md-10">
                                 <a class="btn btn-sm btn-secondary btn-search" href="#"><i class="fa fa-search mr-2"></i>Cari Penerima</a>
@@ -93,7 +93,7 @@
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label"></label>
                             <div class="col-md-10">
-                                <button type="submit" class="btn btn-theme-1"><i class="fa fa-send mr-2"></i>Kirim</button>
+                                <button type="submit" class="btn btn-theme-1"><i class="fa fa-save mr-2"></i>Simpan</button>
                             </div>
                         </div>
                     </form>
@@ -178,14 +178,27 @@
 
 @include('faturcms::template.admin._js-editor')
 
+<script src="{{ asset('assets/plugins/clockpicker/bootstrap-clockpicker.min.js') }}"></script>
 <script type="text/javascript">
     // Quill
     generate_quill("#editor");
+	
+	// Clockpicker
+	$(".clockpicker").clockpicker({
+		autoclose: true
+	});
 
     // Change Terjadwal
     $(document).on("change", "input[name=terjadwal]", function(){
         var terjadwal = $(this).val();
-        terjadwal == 1 ? $(".form-jadwal").removeClass("d-none") : $(".form-jadwal").addClass("d-none");
+        if(terjadwal == 1){
+            $(".form-jadwal").removeClass("d-none");
+            $(".form-penerima").addClass("d-none");
+        }
+        else{
+            $(".form-penerima").removeClass("d-none");
+            $(".form-jadwal").addClass("d-none");
+        }
     });
     
     // Button Search
@@ -380,8 +393,10 @@
 @section('css-extra')
 
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/quill/quill.snow.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/clockpicker/bootstrap-clockpicker.min.css') }}">
 <style type="text/css">
-    #modal-search .modal-content, #modal-import .modal-content {max-height: 500px; overflow-y: hidden;}
+    #modal-search .modal-content {max-height: calc(100vh - 50px); overflow-y: hidden;}
+    #modal-import .modal-content {max-height: 500px; overflow-y: hidden;}
     .modal-body {overflow-y: auto;}
     #table-receivers tr td {padding: .5rem!important;}
     #table-receivers tr:hover {background-color: #eeeeee!important;}

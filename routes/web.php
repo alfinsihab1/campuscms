@@ -123,6 +123,7 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::get('/admin/email/create', $namespacePrefix.'EmailController@create')->name('admin.email.create');
 	Route::post('/admin/email/store', $namespacePrefix.'EmailController@store')->name('admin.email.store');
 	Route::post('/admin/email/forward', $namespacePrefix.'EmailController@forward')->name('admin.email.forward');
+	Route::post('/admin/email/schedule', $namespacePrefix.'EmailController@schedule')->name('admin.email.schedule');
 	Route::get('/admin/email/detail/{id}', $namespacePrefix.'EmailController@detail')->name('admin.email.detail');
 	Route::post('/admin/email/delete', $namespacePrefix.'EmailController@delete')->name('admin.email.delete');
 	Route::post('/admin/email/import', $namespacePrefix.'EmailController@import')->name('admin.email.import');

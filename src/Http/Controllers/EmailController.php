@@ -26,7 +26,7 @@ class EmailController extends Controller
         has_access(generate_method(__METHOD__), Auth::user()->role);
 
         // Data email
-        $email = Email::join('users','email.sender','=','users.id_user')->orderBy('sent_at','desc')->get();
+        $email = Email::join('users','email.sender','=','users.id_user')->orderBy('scheduled','desc')->orderBy('sent_at','desc')->get();
 		
         // View
         return view('faturcms::admin.email.index', [
@@ -60,8 +60,8 @@ class EmailController extends Controller
         $validator = Validator::make($request->all(), [
             'subjek' => 'required|max:255',
             'terjadwal' => 'required',
-            'waktu' => $request->terjadwal == 1 ? 'required' : '',
-            'emails' => 'required',
+            'scheduled' => $request->terjadwal == 1 ? 'required|unique:email' : '',
+            'emails' => $request->terjadwal == 0 ? 'required' : '',
         ], array_validation_messages());
         
         // Mengecek jika ada error
@@ -73,47 +73,53 @@ class EmailController extends Controller
                 'names',
                 'emails',
                 'terjadwal',
-                'waktu'
+                'scheduled'
             ]));
         }
         // Jika tidak ada error
         else{
-			if($request->ids != ""){
-				// Explode
-				$ids = explode(",", $request->ids);
-				$emails = explode(", ", $request->emails);
+            // Kirim pesan jika tidak terjadwal
+            if($request->terjadwal == 0){
+                if($request->ids != ""){
+                    // Explode
+                    $ids = explode(",", $request->ids);
+                    $emails = explode(", ", $request->emails);
 
-				// Send Mail
-				foreach($ids as $id){
-					$receiver = User::find($id);
-					Mail::to($receiver->email)->send(new MessageMail(Auth::user()->email, $receiver, $request->subjek, htmlentities($request->pesan)));
-				}
-			}
-			else{
-				// Explode
-				$names = explode(", ", $request->names);
-				$emails = explode(", ", $request->emails);
+                    // Mengirim pesan
+                    foreach($ids as $id){
+                        $receiver = User::find($id);
+                        Mail::to($receiver->email)->send(new MessageMail(Auth::user()->email, $receiver, $request->subjek, htmlentities($request->pesan)));
+                    }
+                }
+                else{
+                    // Explode
+                    $names = explode(", ", $request->names);
+                    $emails = explode(", ", $request->emails);
 
-				// Send Mail
-				foreach($emails as $key=>$email){
-					Mail::to($email)->send(new MessageMail(Auth::user()->email, $names[$key], $request->subjek, htmlentities($request->pesan)));
-				}
-			}
+                    // Mengirim pesan
+                    foreach($emails as $key=>$email){
+                        Mail::to($email)->send(new MessageMail(Auth::user()->email, $names[$key], $request->subjek, htmlentities($request->pesan)));
+                    }
+                }
+            }
 			
-			// Simpan Mail
+			// Simpan pesan
 			$mail = new Email;
 			$mail->subject = $request->subjek;
-			$mail->receiver_id = $request->ids != '' ? $request->ids : '';
-			$mail->receiver_email = $request->emails;
+			$mail->receiver_id = $request->ids != '' ? $request->terjadwal == 0 ? $request->ids : '' : '';
+			$mail->receiver_email = $request->terjadwal == 0 ? $request->emails : '';
 			$mail->sender = Auth::user()->id_user;
 			$mail->content = htmlentities(upload_quill_image($request->pesan, 'assets/images/konten-email/'));
-            $mail->scheduled = $request->terjadwal == 1 ? $request->waktu : null;
+            $mail->scheduled = $request->terjadwal == 1 ? $request->scheduled : null;
 			$mail->sent_at = date('Y-m-d H:i:s');
 			$mail->save();
         }
 
         // Redirect
-        return redirect()->route('admin.email.index')->with(['message' => 'Berhasil mengirim pesan.']);
+        if($request->terjadwal == 0)
+            return redirect()->route('admin.email.index')->with(['message' => 'Berhasil mengirim pesan.']);
+        elseif($request->terjadwal == 1)
+            return redirect()->route('admin.email.index')->with(['message' => 'Berhasil menyimpan pesan. Pesan akan dikirim sesuai jadwal.']);
     }
 	
     /**
@@ -131,7 +137,7 @@ class EmailController extends Controller
         $email = Email::join('users','email.sender','=','users.id_user')->findOrFail($id);
 		
 		// Get data member
-		$members = User::where('is_admin','=',0)->get();
+		$members = User::where('is_admin','=',0)->where('status','=',1)->get();
 
         // View
         return view('faturcms::admin.email.detail', [
@@ -187,6 +193,37 @@ class EmailController extends Controller
 
         // Redirect
         return redirect()->route('admin.email.index')->with(['message' => 'Berhasil mem-forward pesan.']);
+    }
+
+    /**
+     * Mengatur jadwal
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function schedule(Request $request)
+    {
+        // Validasi
+        $validator = Validator::make($request->all(), [
+            'terjadwal' => 'required',
+            'scheduled' => $request->terjadwal == 1 ? ['required', Rule::unique('email')->ignore($request->id, 'id_email')] : '',
+        ], array_validation_messages());
+        
+        // Mengecek jika ada error
+        if($validator->fails()){
+            // Kembali ke halaman sebelumnya dan menampilkan pesan error
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+        // Jika tidak ada error
+        else{
+            // Mengupdate jadwal
+            $email = Email::find($request->id);
+            $email->scheduled = $request->terjadwal == 1 ? $request->scheduled : null;
+            $email->save();
+    
+            // Redirect
+            return redirect()->route('admin.email.index')->with(['message' => 'Berhasil mengatur jadwal.']);
+        }
     }
  
     /**

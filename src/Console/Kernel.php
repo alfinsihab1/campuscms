@@ -24,36 +24,42 @@ class Kernel extends ConsoleKernel
 
         // Broadcast scheduled emails
         // Get email
-        $email = Email::where('scheduled','=',date('H:i'))->get();
+        $email = Email::join('users','email.sender','=','users.id_user')->where('scheduled','=',date('H:i'))->get();
         // Loop email
         if(count($email)>0){
-            // Get customer service
-            $cs = User::where('role','=',role('cs'))->first();
             foreach($email as $key=>$data){
-                // Get receivers
-                $receivers = explode(",", $data->receiver_id);
+                // Check receivers
+                if(count_penerima_email($data->receiver_id) < count_member_aktif()){
+                    // Get receivers
+                    $receivers = explode(",", $data->receiver_id);
+					$receivers = array_filter($receivers);
+                    $receivers_email = explode(",", $data->receiver_email);
+					$receivers_email = array_filter($receivers_email);
 
-                // Get user haven't received yet
-                $users = User::where('is_admin','=',0)->where('status','=',1)->whereNotIn('id_user',$receivers)->limit(round(100/count($email)))->get();
+                    // Get user haven't received yet
+                    $users = User::where('is_admin','=',0)->where('status','=',1)->whereNotIn('id_user',$receivers)->limit(100)->get();
 
-                // Loop user
-                if(count($users)>0){
-                    foreach($users as $user){
-                        // Run sending email task
-                        $schedule->call(function() use ($user, $receivers, $cs, $data){
-                            // Send email
-                            Mail::to($user->email)->send(new MessageMail($cs->email, $user, $data->subject, html_entity_decode($data->content)));
-                            
-                            // Push receiver
-                            array_push($receivers, $user->id_user);
+                    // Loop user
+                    if(count($users)>0){
+                        foreach($users as $user){
+                            // Run sending email task
+                            $schedule->call(function() use ($user, $receivers, $receivers_email, $data){
+                                // Send email
+                                Mail::to($user->email)->send(new MessageMail($data->email, $user, $data->subject, html_entity_decode($data->content)));
+                                
+                                // Push receivers
+                                array_push($receivers, $user->id_user);
+                                array_push($receivers_email, $user->email);
 
-                            // Update email
-                            $data->receiver_id = implode(",", $receivers);
-                            $data->save();
-                        })->dailyAt($data->scheduled);
+                                // Update email
+                                $data->receiver_id = implode(",", $receivers);
+                                $data->receiver_email = implode(",", $receivers_email);
+                                $data->save();
+                            })->dailyAt($data->scheduled);
+                        }
                     }
-                }  
-            }    
+                }
+            }
         }
     }
 }

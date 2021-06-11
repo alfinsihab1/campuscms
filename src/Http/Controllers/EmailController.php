@@ -135,14 +135,10 @@ class EmailController extends Controller
 
         // Data email
         $email = Email::join('users','email.sender','=','users.id_user')->findOrFail($id);
-		
-		// Get data member
-		$members = User::where('is_admin','=',0)->where('status','=',1)->get();
 
         // View
         return view('faturcms::admin.email.detail', [
             'email' => $email,
-            'members' => $members,
         ]);
     }
 

@@ -328,7 +328,7 @@ class PelatihanController extends Controller
 		
 		if(Auth::user()->is_admin == 1){
             // Data pelatihan member
-            $pelatihan_member = PelatihanMember::join('users','pelatihan_member.id_user','=','users.id_user')->join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->where('pelatihan_member.id_pelatihan','=',$pelatihan->id_pelatihan)->orderBy('pm_at','desc')->get();
+            $pelatihan_member = PelatihanMember::join('users','pelatihan_member.id_user','=','users.id_user')->join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->where('pelatihan_member.id_pelatihan','=',$pelatihan->id_pelatihan)->where('fee_status','=',1)->orderBy('pm_at','desc')->get();
             
             // View
             return view('faturcms::admin.pelatihan.participant', [
@@ -338,7 +338,7 @@ class PelatihanController extends Controller
 		}
 		elseif(Auth::user()->is_admin == 0){
 			// Data pelatihan member
-			$pelatihan_member = PelatihanMember::join('users','pelatihan_member.id_user','=','users.id_user')->join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->where('pelatihan_member.id_pelatihan','=',$pelatihan->id_pelatihan)->where('trainer','=',Auth::user()->id_user)->orderBy('pm_at','desc')->get();
+			$pelatihan_member = PelatihanMember::join('users','pelatihan_member.id_user','=','users.id_user')->join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->where('pelatihan_member.id_pelatihan','=',$pelatihan->id_pelatihan)->where('trainer','=',Auth::user()->id_user)->where('fee_status','=',1)->orderBy('pm_at','desc')->get();
 			
 			// View
 			return view('faturcms::member.pelatihan.participant', [

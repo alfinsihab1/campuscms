@@ -69,7 +69,7 @@ if(!function_exists('count_notif_withdrawal')){
 // Menghitung notifikasi pelatihan
 if(!function_exists('count_notif_pelatihan')){
     function count_notif_pelatihan(){
-        $data = PelatihanMember::where('fee_status','=',0)->count();
+        $data = PelatihanMember::where('fee_status','=',0)->where('fee_bukti','!=','')->count();
         return $data;
     }
 }
@@ -117,7 +117,7 @@ if(!function_exists('count_refer_aktif')){
 // Menghitung peserta pelatihan
 if(!function_exists('count_peserta_pelatihan')){
     function count_peserta_pelatihan($pelatihan){
-        $data = PelatihanMember::join('users','pelatihan_member.id_user','=','users.id_user')->where('id_pelatihan','=',$pelatihan)->count();
+        $data = PelatihanMember::join('users','pelatihan_member.id_user','=','users.id_user')->where('id_pelatihan','=',$pelatihan)->where('fee_status','=',1)->count();
         return $data;
     }
 }

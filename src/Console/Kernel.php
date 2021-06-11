@@ -33,7 +33,7 @@ class Kernel extends ConsoleKernel
                     // Get receivers
                     $receivers = explode(",", $data->receiver_id);
 					$receivers = array_filter($receivers);
-                    $receivers_email = explode(",", $data->receiver_email);
+                    $receivers_email = explode(", ", $data->receiver_email);
 					$receivers_email = array_filter($receivers_email);
 
                     // Get user haven't received yet
@@ -53,7 +53,7 @@ class Kernel extends ConsoleKernel
 
                                 // Update email
                                 $data->receiver_id = implode(",", $receivers);
-                                $data->receiver_email = implode(",", $receivers_email);
+                                $data->receiver_email = implode(", ", $receivers_email);
                                 $data->save();
                             })->dailyAt($data->scheduled);
                         }

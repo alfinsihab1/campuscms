@@ -43,7 +43,7 @@ class Kernel extends ConsoleKernel
                     if(count($users)>0){
                         foreach($users as $user){
                             // Run sending email task
-                            $schedule->call(function() use ($user, $receivers, $receivers_email, $data){
+                            $schedule->call(function() use ($user, &$receivers, &$receivers_email, $data){
                                 // Send email
                                 Mail::to($user->email)->send(new MessageMail($data->email, $user, $data->subject, html_entity_decode($data->content)));
                                 

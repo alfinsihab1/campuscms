@@ -611,7 +611,7 @@ class APIController extends Controller
             'status' => 200,
             'message' => 'Success!',
             'data' => [
-                'labels' => ['Tidak Pernah Ikut', 'Ikut 1 kali', 'Ikut 2 kali', 'Ikut 3 kali', 'Ikut 4 kali', 'Ikut > 4'],
+                'labels' => ['Tidak Pernah Ikut', 'Ikut 1 kali', 'Ikut 2 kali', 'Ikut 3 kali', 'Ikut 4 kali', 'Ikut > 4 kali'],
                 'data' => [$userPelatihan0, $userPelatihan1, $userPelatihan2, $userPelatihan3, $userPelatihan4, $userPelatihanMore],
                 'total' => number_format(count($userTotal),0,'.','.')
             ]

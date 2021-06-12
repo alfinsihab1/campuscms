@@ -35,7 +35,7 @@
                 <!-- Tile Body -->
                 <div class="tile-body">
                     <div class="text-center">
-                        <a href="#" class="btn-image">
+                        <a href="#">
                             <img src="{{ image('assets/images/user/'.$user->foto, 'user') }}" class="img-fluid rounded-circle" height="175" width="175">
                         </a>
                     </div>

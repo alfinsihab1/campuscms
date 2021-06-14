@@ -1,6 +1,6 @@
 @extends('faturcms::template.admin.main')
 
-@section('title', 'Trainer')
+@section('title', $user->nama_user.' - '.$user->nama_role))
 
 @section('content')
 
@@ -9,9 +9,10 @@
 
     <!-- Breadcrumb -->
     @include('faturcms::template.admin._breadcrumb', ['breadcrumb' => [
-        'title' => 'Trainer',
+        'title' => $user->nama_role,
         'items' => [
-            ['text' => 'Trainer', 'url' => '#'],
+            ['text' => $user->nama_role, 'url' => '#'],
+            ['text' => $user->nama_user, 'url' => '#'],
         ]
     ]])
     <!-- /Breadcrumb -->
@@ -20,15 +21,6 @@
     <div class="row">
         <!-- Column -->
         <div class="col-lg-3">
-            @if($user->is_admin == 0)
-            <!-- Saldo -->
-            <div class="alert alert-success text-center">
-                Saldo:
-                <br>
-                <p class="h5 mb-0">Rp {{ number_format($user->saldo,0,'.','.') }}</p>
-            </div>
-            <!-- /Saldo -->
-            @endif
             <!-- Tile -->
             <div class="tile mb-3">
                 <!-- Tile Body -->
@@ -44,15 +36,6 @@
         <!-- /Column -->
         <!-- Column -->
         <div class="col-lg-9">
-            @if($user->is_admin == 0)
-            <!-- Link Referral -->
-            <div class="alert alert-warning text-center">
-                Link Referral:
-                <br>
-                <a class="h5" href="{{ URL::to('/') }}?ref={{ $user->username }}" target="_blank">{{ URL::to('/') }}?ref={{ $user->username }}</a>
-            </div>
-            <!-- /Link Referral -->
-            @endif
             <!-- Tile -->
             <div class="tile">
                 <!-- Tile Body -->
@@ -63,20 +46,12 @@
                             <div>{{ $user->nama_user }}</div>
                         </div>
                         <div class="list-group-item d-sm-flex justify-content-between px-0 py-1">
-                            <div class="font-weight-bold">Tanggal Lahir:</div>
-                            <div>{{ generate_date($user->tanggal_lahir) }}</div>
-                        </div>
-                        <div class="list-group-item d-sm-flex justify-content-between px-0 py-1">
                             <div class="font-weight-bold">Jenis Kelamin:</div>
                             <div>{{ gender($user->jenis_kelamin) }}</div>
                         </div>
                         <div class="list-group-item d-sm-flex justify-content-between px-0 py-1">
                             <div class="font-weight-bold">Nomor HP:</div>
                             <div>{{ $user->nomor_hp }}</div>
-                        </div>
-                        <div class="list-group-item d-sm-flex justify-content-between px-0 py-1">
-                            <div class="font-weight-bold">Username:</div>
-                            <div>{{ $user->username }}</div>
                         </div>
                         <div class="list-group-item d-sm-flex justify-content-between px-0 py-1">
                             <div class="font-weight-bold">Email:</div>
@@ -90,27 +65,9 @@
                             <div class="font-weight-bold">Status:</div>
                             <div><span class="badge {{ $user->status == 1 ?'badge-success' : 'badge-danger' }}">{{ status($user->status) }}</span></div>
                         </div>
-                        @if($user->is_admin == 0)
-                        <div class="list-group-item d-sm-flex justify-content-between px-0 py-1">
-                            <div class="font-weight-bold">Sponsor:</div>
-                            <div>{{ $sponsor ? $sponsor->nama_user : '' }}</div>
-                        </div>
-                        <div class="list-group-item d-sm-flex justify-content-between px-0 py-1">
-                            <div class="font-weight-bold">Refer:</div>
-                            <div>{{ count_refer($user->username) }} orang</div>
-                        </div>
-                        <div class="list-group-item d-sm-flex justify-content-between px-0 py-1">
-                            <div class="font-weight-bold">Refer Aktif:</div>
-                            <div>{{ count_refer_aktif($user->username) }} orang</div>
-                        </div>
-                        @endif
                         <div class="list-group-item d-sm-flex justify-content-between px-0 py-1">
                             <div class="font-weight-bold">Kunjungan Terakhir:</div>
                             <div>{{ generate_date_time($user->last_visit) }}</div>
-                        </div>
-                        <div class="list-group-item d-sm-flex justify-content-between px-0 py-1">
-                            <div class="font-weight-bold">Mendaftar:</div>
-                            <div>{{ generate_date_time($user->register_at) }}</div>
                         </div>
                     </div>
                 </div>
@@ -141,6 +98,7 @@
                                     <th width="40">No.</th>
                                     <th width="100">Waktu</th>
                                     <th>Pelatihan</th>
+                                    <th width="60">Jumlah Peserta</th>
                                     <th width="40">Opsi</th>
                                 </tr>
                             </thead>
@@ -161,6 +119,7 @@
                                             <br>
                                             <small><i class="fa fa-tag mr-1"></i>{{ $data->nomor_pelatihan }}</small>
                                         </td>
+										<td>{{ number_format(count_peserta_pelatihan($data->id_pelatihan),0,',',',') }}</td>
                                         <td>-</td>
                                     </tr>
                                     @php $i++; @endphp
@@ -179,7 +138,6 @@
     <!-- /Row -->
 </main>
 <!-- /Main -->
-
 
 @endsection
 

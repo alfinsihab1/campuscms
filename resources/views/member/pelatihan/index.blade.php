@@ -34,13 +34,13 @@
                                         <a href="{{ route('member.pelatihan.detail', ['id' => $data->id_pelatihan]) }}">
                                             <img class="card-img-top" src="{{ image('assets/images/pelatihan/'.$data->gambar_pelatihan, 'pelatihan') }}">
                                         </a>
-                                        <div class="card-body text-center">
-                                            <p class="h6 my-0"><a href="{{ route('member.pelatihan.detail', ['id' => $data->id_pelatihan]) }}">{{ $data->nama_pelatihan }}</a></p>
-                                            <p class="mt-2 mb-0">
-                                                <a href="{{ route('member.user.trainer', ['id' => $data->trainer ]) }}"><i class="fa fa-user mr-1"></i>{{ $data->nama_user }}</a>
+                                        <div class="card-body p-2">
+                                            <p class="card-title my-0"><a href="{{ route('member.pelatihan.detail', ['id' => $data->id_pelatihan]) }}" data-toggle="tooltip" title="{{ $data->nama_pelatihan }}">{{ $data->nama_pelatihan }}</a></p>
+                                            <p class="mt-2 mb-0 text-truncate">
+                                                Oleh: <a href="{{ route('member.user.trainer', ['id' => $data->trainer ]) }}" data-toggle="tooltip" title="{{ $data->nama_user }}">{{ $data->nama_user }}</a>
                                             </p>
                                         </div>
-                                        <div class="card-footer d-flex justify-content-between">
+                                        <div class="card-footer d-flex justify-content-between small p-2">
                                             <span><i class="fa fa-calendar mr-1"></i>{{ date('d/m/Y', strtotime($data->tanggal_pelatihan_from)) }}</span>
                                             <span><i class="fa fa-clock-o mr-1"></i>{{ date('H:i', strtotime($data->tanggal_pelatihan_from)) }} WIB</span>
                                         </div>
@@ -64,5 +64,13 @@
     <!-- /Row -->
 </main>
 <!-- /Main -->
+
+@endsection
+
+@section('css-extra')
+
+<style type="text/css">
+	.card-title {font-weight: bold; height: 42px; display: -webkit-box !important; -webkit-line-clamp: 2; -moz-line-clamp: 2; -ms-line-clamp: 2; -o-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; -ms-box-orient: vertical; -o-box-orient: vertical; box-orient: vertical; overflow: hidden; text-overflow: ellipsis;}
+</style>
 
 @endsection

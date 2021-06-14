@@ -61,6 +61,7 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 
 	// User
 	Route::get('/admin/user', $namespacePrefix.'UserController@index')->name('admin.user.index');
+	Route::get('/admin/user/data', $namespacePrefix.'UserController@data')->name('admin.user.data');
 	Route::get('/admin/user/create', $namespacePrefix.'UserController@create')->name('admin.user.create');
 	Route::post('/admin/user/store', $namespacePrefix.'UserController@store')->name('admin.user.store');
 	Route::get('/admin/user/detail/{id}', $namespacePrefix.'UserController@detail')->name('admin.user.detail');
@@ -107,6 +108,7 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 
 	// Transaksi Komisi
 	Route::get('/admin/transaksi/komisi', $namespacePrefix.'KomisiController@index')->name('admin.komisi.index');
+	Route::get('/admin/transaksi/komisi/data', $namespacePrefix.'KomisiController@data')->name('admin.komisi.data');
 	Route::post('/admin/transaksi/komisi/verify', $namespacePrefix.'KomisiController@verify')->name('admin.komisi.verify');
 	Route::post('/admin/transaksi/komisi/confirm', $namespacePrefix.'KomisiController@confirm')->name('admin.komisi.confirm');
 
@@ -120,6 +122,7 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 
 	// Email
 	Route::get('/admin/email', $namespacePrefix.'EmailController@index')->name('admin.email.index');
+	Route::get('/admin/email/data', $namespacePrefix.'EmailController@data')->name('admin.email.data');
 	Route::get('/admin/email/create', $namespacePrefix.'EmailController@create')->name('admin.email.create');
 	Route::post('/admin/email/store', $namespacePrefix.'EmailController@store')->name('admin.email.store');
 	Route::post('/admin/email/forward', $namespacePrefix.'EmailController@forward')->name('admin.email.forward');

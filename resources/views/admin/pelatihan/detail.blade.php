@@ -78,6 +78,7 @@
                         <strong>Deskripsi:</strong>
                         <div class="ql-snow"><div class="ql-editor p-0">{!! html_entity_decode($pelatihan->deskripsi_pelatihan) !!}</div></div>
                     </div>
+                    @if(count($pelatihan->materi_pelatihan)>0)
                     <div class="mt-3">
                         <strong>Materi:</strong>
                         <div class="list-group list-group-flush">
@@ -90,6 +91,7 @@
                             @endforeach
                         </div>
                     </div>
+                    @endif
                 </div>
                 <!-- /Tile Body -->
             </div>

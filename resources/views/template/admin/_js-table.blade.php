@@ -8,7 +8,8 @@
 
 <script type="text/javascript">
     // Generate dataTable
-    function generate_datatable(table){
+    function generate_datatable(table, setting = ''){
+        // Configs
         var config_lang = {
             "lengthMenu": "Menampilkan _MENU_ data",
             "zeroRecords": "Data tidak tersedia",
@@ -17,41 +18,62 @@
             "infoFiltered": "(Terfilter dari total _MAX_ data)",
             "search": "Cari:",
             "paginate": {
-            "first": "Pertama",
-            "last": "Terakhir",
-            "previous": "<",
-            "next": ">",
+                "first": "Pertama",
+                "last": "Terakhir",
+                "previous": "<",
+                "next": ">",
             },
             "processing": "Memproses data..."
         };
-        var datatable = $(table).DataTable({
-            "language": config_lang,
-            "fnDrawCallback": function(){
-                $('.btn-magnify-popup').magnificPopup({
-                    type: 'image',
-                    closeOnContentClick: true,
-                    closeBtnInside: false,
-                    fixedContentPos: true,
-                    image: {
-                        verticalFit: true
-                    },
-                    gallery: {
-                        enabled: true
-                    },
-                    callbacks: {
-                        elementParse: function(item) {
-                            // Change type if video
-                            item.type = $(item.el).hasClass("video-link") ? "iframe" : "image";
-                        }
-                    },
-                });
-            },
-            columnDefs: [
-                {orderable: false, targets: 0},
-                {orderable: false, targets: -1},
-            ],
-            order: []
-        });
+        var configFnDrawCallback = function(){
+            $('.btn-magnify-popup').magnificPopup({
+                type: 'image',
+                closeOnContentClick: true,
+                closeBtnInside: false,
+                fixedContentPos: true,
+                image: {
+                    verticalFit: true
+                },
+                gallery: {
+                    enabled: true
+                },
+                callbacks: {
+                    elementParse: function(item) {
+                        item.type = $(item.el).hasClass("video-link") ? "iframe" : "image"; // Change type if video
+                    }
+                },
+            });
+        };
+        
+        if(typeof setting != 'object'){
+            // Server Side OFF
+            var datatable = $(table).DataTable({
+                "language": config_lang,
+                "fnDrawCallback": configFnDrawCallback,
+                columnDefs: [
+                    {orderable: false, targets: 0},
+                    {orderable: false, targets: -1},
+                ],
+                order: []
+            });
+        }
+        else{
+            // Server Side ON
+            var datatable = $(table).DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: setting.url,
+                columns: setting.columns,
+                columnDefs: [
+                    {orderable: false, targets: 0},
+                    {orderable: false, targets: -1},
+                ],
+                order: [setting.order],
+                "lengthMenu": [[10, 25, 50, 100], [10, 25, 50, 100]],
+                "language": config_lang,
+                "fnDrawCallback": configFnDrawCallback,
+            });
+        }
         datatable.on('draw.dt', function(){
             $('[data-toggle="tooltip"]').tooltip();
         });

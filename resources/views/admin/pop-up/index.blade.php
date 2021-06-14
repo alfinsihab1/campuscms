@@ -43,7 +43,6 @@
                                 <tr>
                                     <th width="20"><input type="checkbox"></th>
                                     <th>Judul</th>
-                                    <th width="150">Gambar / Video</th>
                                     <th width="90">Waktu Awal</th>
                                     <th width="90">Waktu Akhir</th>
                                     <th width="60">Opsi</th>
@@ -55,15 +54,6 @@
                                     <td><input type="checkbox"></td>
                                     <td>{{ $data->popup_judul }}</td>
                                     <td>
-                                        @if($data->popup_tipe == 1)
-                                        <a href="{{ asset('assets/images/pop-up/'.$data->popup) }}" class="btn-magnify-popup" title="Gambar Pop-Up">
-                                            <img src="{{ asset('assets/images/pop-up/'.$data->popup) }}" class="img-thumbnail" style="max-width: 150px;">
-                                        </a>
-                                        @elseif($data->popup_tipe == 2)
-                                        <a href="{{ $data->popup }}" class="btn btn-sm btn-secondary btn-magnify-popup video-link" data-toggle="tooltip" title="Video Pop-Up"><i class="fa fa-video-camera"></i></a>
-                                        @endif
-                                    </td>
-                                    <td>
                                         <span class="d-none">{{ $data->popup_from }}</span>
                                         {{ date('d/m/Y', strtotime($data->popup_from)) }}
                                     </td>
@@ -73,7 +63,11 @@
                                     </td>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="{{ route('admin.pop-up.detail', ['id' => $data->id_popup]) }}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail"><i class="fa fa-eye"></i></a>
+                                            @if($data->popup_tipe == 1)
+                                            <a href="{{ asset('assets/images/pop-up/'.$data->popup) }}" class="btn btn-sm btn-info btn-magnify-popup" data-toggle="tooltip" title="Gambar Pop-Up"><i class="fa fa-image"></i></a>
+                                            @elseif($data->popup_tipe == 2)
+                                            <a href="{{ $data->popup }}" class="btn btn-sm btn-info btn-magnify-popup video-link" data-toggle="tooltip" title="Video Pop-Up"><i class="fa fa-video-camera"></i></a>
+                                            @endif
                                             <a href="{{ route('admin.pop-up.edit', ['id' => $data->id_popup]) }}" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>
                                             <a href="#" class="btn btn-sm btn-danger btn-delete" data-id="{{ $data->id_popup }}" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>
                                         </div>

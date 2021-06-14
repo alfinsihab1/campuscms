@@ -39,7 +39,7 @@ class ForgotPasswordMail extends Mailable
 		
 		// Change password
 		$new_password = Str::random(8);
-		// $user->password = bcrypt($new_password);
+		$user->password = bcrypt($new_password);
 		$user->save();
 		
         return $this->from($cs->email, setting('site.name'))->markdown('faturcms::email.forgot-password')->subject('Recovery Password '.setting('site.name'))->with([

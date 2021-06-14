@@ -44,68 +44,6 @@
                                     <th width="40">Opsi</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach($komisi as $data)
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td>{{ $data->inv_komisi }}</td>
-                                    <td>
-                                        @if($data->komisi_at != null)
-                                            <span class="d-none">{{ $data->komisi_at }}</span>
-                                            {{ date('d/m/Y', strtotime($data->komisi_at)) }}
-                                            <br>
-                                            <small><i class="fa fa-clock-o mr-1"></i>{{ date('H:i', strtotime($data->komisi_at)) }} WIB</small>
-                                        @else
-                                        -
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('admin.user.detail', ['id' => $data->id_user ]) }}">{{ $data->nama_user }}</a>
-                                        <br>
-                                        <small><i class="fa fa-envelope mr-1"></i>{{ $data->email }}</small>
-                                        <br>
-                                        <small><i class="fa fa-phone mr-1"></i>{{ $data->nomor_hp }}</small>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('admin.user.detail', ['id' => $data->id_sponsor->id_user ]) }}">{{ $data->id_sponsor->nama_user }}</a>
-                                        <br>
-                                        <small><i class="fa fa-envelope mr-1"></i>{{ $data->id_sponsor->email }}</small>
-                                        <br>
-                                        <small><i class="fa fa-phone mr-1"></i>{{ $data->id_sponsor->nomor_hp }}</small>
-                                    </td>
-                                    <td>
-                                        <strong>Aktivasi Komisi:</strong><br>
-                                        Rp. {{ number_format($data->komisi_aktivasi,0,',',',') }}<br><br>
-                                        <strong>Hasil Komisi:</strong><br>
-                                        Rp. {{ number_format($data->komisi_hasil,0,',',',') }}
-                                    </td>
-                                    <td>
-                                        @if($data->komisi_status == 1)
-                                            <strong class="text-success">Diterima</strong>
-                                        @else
-                                            @if($data->komisi_proof != '')
-                                                <strong class="text-danger">Pembayaran Belum Diverifikasi</strong>
-                                            @else
-                                                <strong class="text-danger">User Belum Membayar</strong>
-                                            @endif
-                                        @endif
-                                    </td>
-                                    <td align="center">
-                                        <div class="btn-group"> 
-                                            @if($data->komisi_status == 1)
-                                                <a href="{{ asset('assets/images/komisi/'.$data->komisi_proof) }}" class="btn btn-sm btn-info btn-magnify-popup" data-toggle="tooltip" title="Bukti Transfer"><i class="fa fa-image"></i></a>
-                                            @else
-                                                @if($data->komisi_proof != '')
-                                                    <a href="#" class="btn btn-sm btn-success btn-verify" data-id="{{ $data->id_komisi }}" data-proof="{{ asset('assets/images/komisi/'.$data->komisi_proof) }}" data-toggle="tooltip" title="Verifikasi Pembayaran"><i class="fa fa-check"></i></a>
-                                                @else
-                                                    <a href="#" class="btn btn-sm btn-success btn-confirm" data-id="{{ $data->id_komisi }}" data-toggle="tooltip" title="Konfirmasi Pembayaran"><i class="fa fa-check"></i></a>
-                                                @endif
-                                            @endif
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -194,7 +132,20 @@
 
 <script type="text/javascript">
     // DataTable
-    generate_datatable("#dataTable");
+    generate_datatable("#dataTable", {
+		"url": "{{ route('admin.komisi.data') }}",
+		"columns": [
+            {data: 'checkbox', name: 'checkbox'},
+            {data: 'inv_komisi', name: 'inv_komisi'},
+            {data: 'komisi_at', name: 'komisi_at'},
+            {data: 'user_identity', name: 'user_identity'},
+            {data: 'sponsor', name: 'sponsor'},
+            {data: 'komisi', name: 'komisi'},
+            {data: 'komisi_status', name: 'komisi_status'},
+            {data: 'options', name: 'options'},
+		],
+        "order": [6, 'asc']
+	});
 
     // Button Verify
     $(document).on("click", ".btn-verify", function(e){
@@ -202,7 +153,7 @@
         var id = $(this).data("id");
         var proof = $(this).data("proof");
         $("#form-verify input[name=id_komisi]").val(id);
-        $("#form-verify img").attr("src", proof);
+        $("#form-verify img").attr("src", proof).removeClass("d-none");
         $("#modal-verify").modal("show");
     });
 

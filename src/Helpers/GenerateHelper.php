@@ -8,12 +8,16 @@ use Ajifatur\FaturCMS\Models\Tag;
 if(!function_exists('generate_materi_pelatihan')){
     function generate_materi_pelatihan($kode_unit, $judul_unit, $durasi){
         $array = [];
-        if(count($kode_unit)>0){
-            foreach($kode_unit as $key=>$kode){
-                array_push($array, ['kode' => $kode, 'judul' => $judul_unit[$key], 'durasi' => $durasi[$key]]);
+        if(empty(array_filter($kode_unit)) || empty(array_filter($judul_unit)) || empty(array_filter($durasi)))
+            return json_encode($array);
+        else{
+            if(count($kode_unit)>0){
+                foreach($kode_unit as $key=>$kode){
+                    array_push($array, ['kode' => $kode, 'judul' => $judul_unit[$key], 'durasi' => $durasi[$key]]);
+                }
             }
+            return json_encode($array);
         }
-        return json_encode($array);
     }
 }
 

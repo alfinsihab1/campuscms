@@ -104,26 +104,43 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-2 col-form-label">Materi <span class="text-danger">*</span></label>
+                            <label class="col-md-2 col-form-label">Materi</label>
                             <div class="col-md-10">
                                 <a class="btn btn-sm btn-secondary btn-add-materi" href="#"><i class="fa fa-plus mr-2"></i>Tambah Materi</a>
                                 <div class="table-responsive-sm konten-materi mt-3 mb-3 mb-md-0">
-                                    @foreach($pelatihan->materi_pelatihan as $key=>$materi)
-                                    <div class="form-row" data-id="{{ ($key+1) }}">
-                                        <div class="form-group col-4">
-                                            <input type="text" name="kode_unit[]" class="form-control kode-unit" data-id="{{ ($key+1) }}" placeholder="Kode Unit" value="{{ $materi['kode'] }}">
+                                    @if(count($pelatihan->materi_pelatihan)>0)
+                                        @foreach($pelatihan->materi_pelatihan as $key=>$materi)
+                                        <div class="form-row" data-id="{{ ($key+1) }}">
+                                            <div class="form-group col-4">
+                                                <input type="text" name="kode_unit[]" class="form-control kode-unit" data-id="{{ ($key+1) }}" placeholder="Kode Unit" value="{{ $materi['kode'] }}">
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <input type="text" name="judul_unit[]" class="form-control judul-unit" data-id="{{ ($key+1) }}" placeholder="Judul Unit" value="{{ $materi['judul'] }}">
+                                            </div>
+                                            <div class="form-group col-3">
+                                                <input type="text" name="durasi[]" class="form-control number-only durasi" data-id="{{ ($key+1) }}" placeholder="Durasi (Jam)" value="{{ $materi['durasi'] }}">
+                                            </div>
+                                            <div class="form-group col-1">
+                                                <a href="#" class="btn btn-danger btn-block {{ count($pelatihan->materi_pelatihan) <= 1 ? 'btn-disabled' : 'btn-delete-materi' }}" data-id="{{ ($key+1) }}" title="Hapus"><i class="fa fa-trash"></i></a>
+                                            </div>
                                         </div>
-                                        <div class="form-group col-4">
-                                            <input type="text" name="judul_unit[]" class="form-control judul-unit" data-id="{{ ($key+1) }}" placeholder="Judul Unit" value="{{ $materi['judul'] }}">
+                                        @endforeach
+                                    @else
+                                        <div class="form-row" data-id="1">
+                                            <div class="form-group col-4">
+                                                <input type="text" name="kode_unit[]" class="form-control kode-unit" data-id="1" placeholder="Kode Unit">
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <input type="text" name="judul_unit[]" class="form-control judul-unit" data-id="1" placeholder="Judul Unit">
+                                            </div>
+                                            <div class="form-group col-3">
+                                                <input type="text" name="durasi[]" class="form-control number-only durasi" data-id="1" placeholder="Durasi (Jam)">
+                                            </div>
+                                            <div class="form-group col-1">
+                                                <a href="#" class="btn btn-danger btn-block btn-disabled" data-id="1" title="Hapus"><i class="fa fa-trash"></i></a>
+                                            </div>
                                         </div>
-                                        <div class="form-group col-3">
-                                            <input type="text" name="durasi[]" class="form-control number-only durasi" data-id="{{ ($key+1) }}" placeholder="Durasi (Jam)" value="{{ $materi['durasi'] }}">
-                                        </div>
-                                        <div class="form-group col-1">
-                                            <a href="#" class="btn btn-danger btn-block {{ count($pelatihan->materi_pelatihan) <= 1 ? 'btn-disabled' : 'btn-delete-materi' }}" data-id="{{ ($key+1) }}" title="Hapus"><i class="fa fa-trash"></i></a>
-                                        </div>
-                                    </div>
-                                    @endforeach
+                                    @endif
                                 </div>
                                 <a class="btn btn-sm btn-secondary btn-add-materi" href="#"><i class="fa fa-plus mr-2"></i>Tambah Materi</a>
                             </div>
@@ -251,15 +268,6 @@
     // Button Submit
     $(document).on("click", "button[type=submit]", function(e){
         e.preventDefault();
-        
-        // Cek Materi
-        var rows = $(".konten-materi .form-row");
-        if(rows.length == 1){
-            if($(rows).find(".kode-unit").val() == '' || $(rows).find(".judul-unit").val() == '' || $(rows).find(".durasi").val() == '' ){
-                alert("Materi harus diisi minimal 1 (satu) !");
-                return;
-            }
-        }
         
         // Get Konten di Quill Editor
         var myEditor = document.querySelector('#editor');

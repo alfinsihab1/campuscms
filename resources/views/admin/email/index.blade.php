@@ -52,50 +52,6 @@
                                     <th width="80">Opsi</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach($email as $data)
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td>
-                                        <a href="{{ route('admin.email.detail', ['id' => $data->id_email]) }}">{{ $data->subject }}</a>
-                                        <br>
-                                        @if(count_penerima_email($data->receiver_id)>0)
-                                            <small class="text-muted"><i class="fa fa-check-circle mr-1"></i>Sudah dikirim kepada {{ number_format(count_penerima_email($data->receiver_id),0,'.','.') }} dari total {{ number_format(count_member_aktif(),0,'.','.') }} member.</small>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('admin.user.detail', ['id' => $data->id_user]) }}">{{ $data->nama_user }}</a>
-                                        <br>
-                                        <small><i class="fa fa-envelope mr-1"></i>{{ $data->email }}</small>
-                                        <br>
-                                        <small><i class="fa fa-phone mr-1"></i>{{ $data->nomor_hp }}</small>
-                                    </td>
-                                    <td>
-                                        @if($data->scheduled != null)
-                                            <span>Harian</span>
-                                            <br>
-                                            <small><i class="fa fa-clock-o mr-1"></i>{{ $data->scheduled }} WIB</small>
-                                        @else
-                                            <span class="badge badge-danger">Tidak</span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <span class="d-none">{{ $data->sent_at }}</span>
-                                        {{ date('d/m/Y', strtotime($data->sent_at)) }}
-                                        <br>
-                                        <small><i class="fa fa-clock-o mr-1"></i>{{ date('H:i', strtotime($data->sent_at)) }} WIB</small>
-                                    </td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a href="{{ route('admin.email.detail', ['id' => $data->id_email]) }}" class="btn btn-info btn-sm" data-toggle="tooltip" title="Detail"><i class="fa fa-eye"></i></a>
-                                            <a href="#" class="btn btn-warning btn-sm btn-schedule" data-id="{{ $data->id_email }}" data-schedule="{{ $data->scheduled }}" data-toggle="tooltip" title="Atur Jadwal"><i class="fa fa-clock-o"></i></a>
-                                            <a href="#" class="btn btn-success btn-sm btn-forward" data-id="{{ $data->id_email }}" data-r="{{ $data->receiver_id }}" data-toggle="tooltip" title="Teruskan"><i class="fa fa-share"></i></a>
-                                            <a href="#" class="btn btn-danger btn-sm btn-delete" data-id="{{ $data->id_email }}" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
                         </table>
                         <form id="form-delete" class="d-none" method="post" action="{{ route('admin.email.delete') }}">
                             {{ csrf_field() }}
@@ -210,7 +166,18 @@
 <script type="text/javascript" src="{{ asset('assets/plugins/clockpicker/bootstrap-clockpicker.min.js') }}"></script>
 <script type="text/javascript">
     // DataTable
-    generate_datatable("#dataTable");
+    generate_datatable("#dataTable", {
+        "url": "{{ route('admin.email.data') }}",
+        "columns": [
+            {data: 'checkbox', name: 'checkbox'},
+            {data: 'email', name: 'email'},
+            {data: 'sender', name: 'sender'},
+            {data: 'scheduled', name: 'scheduled'},
+            {data: 'sent_at', name: 'sent_at'},
+            {data: 'options', name: 'options'},
+        ],
+        "order": [3, 'desc']
+    });
     
     // Button Forward
     $(document).on("click", ".btn-forward", function(e){
@@ -277,28 +244,28 @@
         e.preventDefault();
         var id = $(this).data("id");
         var schedule = $(this).data("schedule");
-		
-		// Add values
+        
+        // Add values
         $("#modal-schedule input[name=id]").val(id);
-		if(schedule != ''){
-        	$("#modal-schedule #terjadwal-1").prop("checked", true);
-			$("#modal-schedule .form-jadwal").removeClass("d-none");
-			$("#modal-schedule input[name=scheduled]").val(schedule);
-		}
-		else{
-        	$("#modal-schedule #terjadwal-0").prop("checked", true);
-			$("#modal-schedule .form-jadwal").addClass("d-none");
-			$("#modal-schedule input[name=scheduled]").val(schedule);
-		}
+        if(schedule != ''){
+            $("#modal-schedule #terjadwal-1").prop("checked", true);
+            $("#modal-schedule .form-jadwal").removeClass("d-none");
+            $("#modal-schedule input[name=scheduled]").val(schedule);
+        }
+        else{
+            $("#modal-schedule #terjadwal-0").prop("checked", true);
+            $("#modal-schedule .form-jadwal").addClass("d-none");
+            $("#modal-schedule input[name=scheduled]").val(schedule);
+        }
 
         // Show modal
         $("#modal-schedule").modal("show");
     });
-	
-	// Clockpicker
-	$(".clockpicker").clockpicker({
-		autoclose: true
-	});
+    
+    // Clockpicker
+    $(".clockpicker").clockpicker({
+        autoclose: true
+    });
 
     // Change Terjadwal
     $(document).on("change", "input[name=terjadwal]", function(){
@@ -309,7 +276,7 @@
     // Hide Modal Schedule
     $('#modal-schedule').on('hidden.bs.modal', function(){
         $("#modal-schedule input[name=id]").val(null);
-		$("#modal-schedule input[name=scheduled]").val(null);
+        $("#modal-schedule input[name=scheduled]").val(null);
     });
     
     // Checkbox Batch
@@ -382,7 +349,7 @@
 </script>
 @if(count($errors)>0)
 <script type="text/javascript">
-	$("#modal-schedule").modal("show");
+    $("#modal-schedule").modal("show");
 </script>
 @endif
 

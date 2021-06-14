@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Yajra\DataTables\Facades\DataTables;
 use Ajifatur\FaturCMS\Mails\ConfirmationMail;
 use Ajifatur\FaturCMS\Mails\VerificationMail;
 use Ajifatur\FaturCMS\Mails\WithdrawalMail;
@@ -17,6 +18,94 @@ use Ajifatur\FaturCMS\Models\Withdrawal;
 
 class KomisiController extends Controller
 {
+    /**
+     * Menampilkan data komisi (JSON)
+     *
+     * @return \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function data(Request $request)
+    {
+		if(Auth::user()->is_admin == 1){
+			// Data komisi
+			$komisi = Komisi::join('users','komisi.id_user','=','users.id_user')->orderBy('komisi_at','desc')->get();
+			
+			// Set data komisi
+			foreach($komisi as $key=>$data){
+				$komisi[$key]->id_sponsor = User::find($data->id_sponsor);
+			}
+
+			// Return
+			return DataTables::of($komisi)
+			->addColumn('checkbox', '<input type="checkbox">')
+			->addColumn('komisi_at', function($data){
+				if($data->komisi_at != null){
+					return '
+						<span class="d-none">'.$data->komisi_at.'</span>
+						'.date('d/m/Y', strtotime($data->komisi_at)).'
+						<br>
+						<small><i class="fa fa-clock-o mr-1"></i>'.date('H:i', strtotime($data->komisi_at)).' WIB</small>
+					';
+				}
+				else return '-';
+			})
+			->addColumn('user_identity', function($data){
+				return '
+				<a href="'.route('admin.user.detail', ['id' => $data->id_user ]).'">'.$data->nama_user.'</a>
+				<br>
+				<small><i class="fa fa-envelope mr-1"></i>'.$data->email.'</small>
+				<br>
+				<small><i class="fa fa-phone mr-1"></i>'.$data->nomor_hp.'</small>
+				';
+			})
+			->addColumn('sponsor', function($data){
+				return '
+				<a href="'.route('admin.user.detail', ['id' => $data->id_sponsor->id_user ]).'">'.$data->id_sponsor->nama_user.'</a>
+				<br>
+				<small><i class="fa fa-envelope mr-1"></i>'.$data->id_sponsor->email.'</small>
+				<br>
+				<small><i class="fa fa-phone mr-1"></i>'.$data->id_sponsor->nomor_hp.'</small>
+				';
+			})
+			->addColumn('komisi', function($data){
+				return '
+					<strong>Aktivasi Komisi:</strong><br>
+                    Rp. '.number_format($data->komisi_aktivasi,0,',',',').'<br><br>
+                    <strong>Hasil Komisi:</strong><br>
+                    Rp. '.number_format($data->komisi_hasil,0,',',',').'
+				';
+			})
+			->addColumn('komisi_status', function($data){
+				if($data->komisi_status == 1)
+					return '<span class="d-none">2</span><span class="badge badge-success">Diterima</span>';
+				else{
+					if($data->komisi_proof != '')
+						return '<span class="d-none">1</span><span class="badge badge-warning">Belum Diverifikasi</span>';
+					else
+						return '<span class="d-none">3</span><span class="badge badge-danger">Belum Membayar</span>';
+				}
+			})
+			->addColumn('options', function($data){
+				$html = '';
+				$html .= '<div class="btn-group">';
+				if($data->komisi_status == 1){
+					$html .= '<a href="'.asset('assets/images/komisi/'.$data->komisi_proof).'" class="btn btn-sm btn-info btn-magnify-popup" data-toggle="tooltip" title="Bukti Transfer"><i class="fa fa-image"></i></a>';
+				}
+				else{
+					if($data->komisi_proof != '')
+						$html .= '<a href="#" class="btn btn-sm btn-success btn-verify" data-id="'.$data->id_komisi.'" data-proof="'. asset('assets/images/komisi/'.$data->komisi_proof).'" data-toggle="tooltip" title="Verifikasi Pembayaran"><i class="fa fa-check"></i></a>';
+					else
+						$html .= '<a href="#" class="btn btn-sm btn-success btn-confirm" data-id="'.$data->id_komisi.'" data-toggle="tooltip" title="Konfirmasi Pembayaran"><i class="fa fa-check"></i></a>';
+				}
+				$html .= '</div>';
+				return $html;
+			})
+			->removeColumn(['password', 'tanggal_lahir', 'jenis_kelamin', 'id_sponsor.password', 'id_sponsor.tanggal_lahir', 'id_sponsor.jenis_kelamin'])
+			->rawColumns(['checkbox', 'komisi_at', 'user_identity', 'sponsor', 'komisi', 'komisi_status', 'options'])
+			->make(true);
+        }
+    }
+
     /**
      * Menampilkan data komisi
      *

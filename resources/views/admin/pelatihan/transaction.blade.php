@@ -159,7 +159,7 @@
         var id = $(this).data("id");
         var proof = $(this).data("proof");
         $("#form-verify input[name=id]").val(id);
-        $("#form-verify img").attr("src", proof);
+        $("#form-verify img").attr("src", proof).removeClass("d-none");
         $("#modal-verify").modal("show");
     });
 </script>

@@ -21,6 +21,12 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         parent::schedule($schedule);
+        
+		// Clear
+        $schedule->command('clear-compiled')->daily();
+        $schedule->command('cache:clear')->daily();
+        $schedule->command('config:clear')->daily();
+        $schedule->command('view:clear')->daily();
 
         // Broadcast scheduled emails
         // Get email

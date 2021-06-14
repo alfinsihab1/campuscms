@@ -100,7 +100,7 @@
     #dataTable td .btn-group a.btn:first-child {border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;}
     #dataTable td .btn-group a.btn:last-child {border-top-right-radius: .25rem; border-bottom-right-radius: .25rem;}
     #dataTable td a.btn {width: 36px;}
-    div.dataTables_wrapper div.dataTables_processing {background-color: #eeeeee;}
+    div.dataTables_wrapper div.dataTables_processing {background-color: var(--primary-light); color: var(--primary-dark); box-shadow: 0 .125rem .25rem rgba(0,0,0,.375)!important;}
     .table-stretch tr th, .table-stretch tr td {padding: .25rem;}
 
     /* Anchor */

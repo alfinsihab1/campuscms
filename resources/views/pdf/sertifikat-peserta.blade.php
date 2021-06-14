@@ -116,6 +116,7 @@
 	<hr id="line-1">
 	<hr id="line-2">
 	
+	@if(count($pelatihan->materi_pelatihan)>0)
 	<!-- Page Break -->
 	<div class="page-break"></div>
 	
@@ -163,5 +164,6 @@
 	<!-- <img id="stempel-2" src="{{ asset('assets/images/others/stempel.png') }}"> -->
 	<div id="trainer">{{ $pelatihan->nama_user }}</div>
 	<div id="div-line"><hr id="line"></div>
+	@endif
 </body>
 </html>

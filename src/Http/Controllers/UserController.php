@@ -72,7 +72,7 @@ class UserController extends Controller
 					return '<span class="badge badge-success">Aktif</span>';
 				elseif($user->status == 0 && $user->email_verified == 1)
 					return '<span class="badge badge-warning">Belum Aktif</span>';
-				elseif($user->status == 0)
+				elseif($user->status == 0 && $user->email_verified == 0)
 					return '<span class="badge badge-danger">Tidak Aktif</span>';
 			})
 			->addColumn('register_at', function($user){

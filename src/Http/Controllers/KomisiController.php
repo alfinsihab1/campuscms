@@ -104,6 +104,12 @@ class KomisiController extends Controller
 			->rawColumns(['checkbox', 'komisi_at', 'user_identity', 'sponsor', 'komisi', 'komisi_status', 'options'])
 			->make(true);
         }
+		else{
+			return response()->json([
+				'status' => 403,
+				'message' => 'Forbidden!'
+			]);
+		}
     }
 
     /**

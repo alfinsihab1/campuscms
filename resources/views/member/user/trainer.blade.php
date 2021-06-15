@@ -63,7 +63,15 @@
                         </div>
                         <div class="list-group-item d-sm-flex justify-content-between px-0 py-1">
                             <div class="font-weight-bold">Status:</div>
-                            <div><span class="badge {{ $user->status == 1 ?'badge-success' : 'badge-danger' }}">{{ status($user->status) }}</span></div>
+                            <div>
+                                @if($user->status == 1)
+                                    <span class="badge badge-success">Aktif</span>
+                                @elseif($user->status == 0 && $user->email_verified == 1)
+                                    <span class="badge badge-warning">Belum Aktif</span>
+                                @elseif($user->status == 0 && $user->email_verified == 0)
+                                    <span class="badge badge-danger">Tidak Aktif</span>
+                                @endif
+                            </div>
                         </div>
                         <div class="list-group-item d-sm-flex justify-content-between px-0 py-1">
                             <div class="font-weight-bold">Kunjungan Terakhir:</div>

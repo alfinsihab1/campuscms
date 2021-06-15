@@ -118,6 +118,7 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 
 	// Transaksi Pelatihan
 	Route::get('/admin/transaksi/pelatihan', $namespacePrefix.'PelatihanController@transaction')->name('admin.pelatihan.transaction');
+	Route::get('/admin/transaksi/pelatihan/data', $namespacePrefix.'PelatihanController@transactionData')->name('admin.pelatihan.transaction.data');
 	Route::post('/admin/transaksi/pelatihan/verify', $namespacePrefix.'PelatihanController@verify')->name('admin.pelatihan.verify');
 
 	// Email

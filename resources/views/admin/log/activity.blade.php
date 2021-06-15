@@ -27,6 +27,7 @@
                 <div class="tile-title-w-btn">
                     <h5>Log: {{ $user->nama_user }}</h5>
                     <div class="btn-group">
+                        <a href="{{ route('admin.user.detail', ['id' => $user->id_user]) }}" class="btn btn-sm btn-success"><i class="fa fa-user mr-2"></i> Kunjungi Profil</a>
                         <a href="#" class="btn btn-sm btn-danger btn-delete-log"><i class="fa fa-trash mr-2"></i> Hapus Log ({{ generate_size(\File::size(storage_path('logs/user-activities/'.$user->id_user.'.log'))) }})</a>
                     </div>
                     <form id="form-delete-log" class="d-none" method="post" action="{{ route('admin.log.activity.delete') }}">
@@ -60,7 +61,7 @@
                             <table class="table table-hover table-striped table-borderless table-stretch">
                                 @foreach($logs as $log)
                                 <tr>
-                                    <td><a href="{{ URL::to($log->url) }}" target="_blank">{{ URL::to($log->url) }}</a></td>
+                                    <td><a href="{{ URL::to($log->url) }}" target="_blank">{{ strlen($log->url) <= 100 ? URL::to($log->url) : URL::to(substr($log->url,0,100)).'....' }}</a></td>
                                     <td width="150">{{ date('d/m/Y', $log->time).', '.date('H:i:s', $log->time) }}</td>
                                 </tr>
                                 @endforeach

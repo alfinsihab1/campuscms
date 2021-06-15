@@ -398,7 +398,7 @@ class UserController extends Controller
         $sponsor = User::where('username','=',$user->reference)->first();
 
         // Pelatihan member
-        $pelatihan = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->where('trainer','=',$id)->orderBy('tanggal_pelatihan_from','desc')->get();
+        $pelatihan = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->where('trainer','=',$id)->groupBy('pelatihan_member.id_pelatihan')->orderBy('tanggal_pelatihan_from','desc')->get();
 
         // View
         return view('faturcms::member.user.trainer', [
@@ -580,7 +580,6 @@ class UserController extends Controller
                 $users = User::join('role','users.role','=','role.id_role')->where('role.is_admin','=',0)->where('status','=',0)->get();
             else
                 $users = User::join('role','users.role','=','role.id_role')->get();
-
         }
 
         return Excel::download(new UserExport($users), 'Data User.xlsx');

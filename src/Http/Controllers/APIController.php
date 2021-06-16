@@ -94,6 +94,66 @@ class APIController extends Controller
             'data' => $data
         ]);
     }
+    
+    /**
+     * Top visitor last week
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function topVisitorLastWeek()
+    {
+        // Get visitor
+        $last_week = date('Y-m-d', strtotime('-7 days'));
+        $visitor = Visitor::join('users','visitor.id_user','=','users.id_user')->where('is_admin','=',0)->whereDate('visit_at','>=',$last_week)->pluck('users.id_user')->toArray();
+        $count_visitor = array_count_values($visitor);
+        arsort($count_visitor); // Sort
+        
+        // Pick 10
+        $array = [];
+        if(count($count_visitor)>0){
+            foreach($count_visitor as $key=>$value){
+                $user = User::select('id_user', 'nama_user')->find($key);
+                array_push($array, ['user' => $user, 'url' => route('admin.user.detail', ['id' => $key]), 'visits' => $value]);
+            }
+        }
+        
+        // Response
+        return response()->json([
+            'status' => 200,
+            'message' => 'Success!',
+            'data' => array_slice($array,0,10)
+        ]);
+    }
+    
+    /**
+     * Top visitor last month
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function topVisitorLastMonth()
+    {
+        // Get visitor
+        $last_month = date('Y-m-d', strtotime('-1 month'));
+        $visitor = Visitor::join('users','visitor.id_user','=','users.id_user')->where('is_admin','=',0)->whereDate('visit_at','>=',$last_month)->pluck('users.id_user')->toArray();
+        $count_visitor = array_count_values($visitor);
+        arsort($count_visitor); // Sort
+        
+        // Pick 10
+        $array = [];
+        if(count($count_visitor)>0){
+            foreach($count_visitor as $key=>$value){
+                $user = User::select('id_user', 'nama_user')->find($key);
+                array_push($array, ['user' => $user, 'url' => route('admin.user.detail', ['id' => $key]), 'visits' => $value]);
+            }
+        }
+        
+        // Response
+        return response()->json([
+            'status' => 200,
+            'message' => 'Success!',
+            'data' => array_slice($array,0,10)
+        ]);
+    }
 
     /**
      * Status member
@@ -861,7 +921,6 @@ class APIController extends Controller
     /**
      * Mengambil koordinat
      *
-     * string $path
      * @return \Illuminate\Http\Response
      */
     public function getCoordinate(){
@@ -869,6 +928,16 @@ class APIController extends Controller
         if ($visitor) {
             echo $visitor->location;
         }
+    }
+
+    /**
+     * Terserah
+     *
+     * @return \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function terserah(Request $request){
+        // Type code here
     }
 }
 

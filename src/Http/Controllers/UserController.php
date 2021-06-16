@@ -237,6 +237,9 @@ class UserController extends Controller
         // Sponsor
         $sponsor = User::where('username','=',$user->reference)->first();
 
+        // Pelatihan trainer
+        $pelatihan_trainer = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->where('trainer','=',$id)->groupBy('pelatihan_member.id_pelatihan')->orderBy('tanggal_pelatihan_from','desc')->get();
+
         // Pelatihan member
         $pelatihan = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->join('users','pelatihan.trainer','=','users.id_user')->where('pelatihan_member.id_user','=',$id)->orderBy('tanggal_pelatihan_from','desc')->get();
 
@@ -245,6 +248,7 @@ class UserController extends Controller
             'user' => $user,
             'sponsor' => $sponsor,
             'pelatihan' => $pelatihan,
+            'pelatihan_trainer' => $pelatihan_trainer,
             'id_direct' => $id,
         ]);
     }
@@ -397,7 +401,7 @@ class UserController extends Controller
         // Sponsor
         $sponsor = User::where('username','=',$user->reference)->first();
 
-        // Pelatihan member
+        // Pelatihan trainer
         $pelatihan = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->where('trainer','=',$id)->groupBy('pelatihan_member.id_pelatihan')->orderBy('tanggal_pelatihan_from','desc')->get();
 
         // View

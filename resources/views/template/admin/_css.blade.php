@@ -100,6 +100,12 @@
     #dataTable td .btn-group a.btn:first-child {border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;}
     #dataTable td .btn-group a.btn:last-child {border-top-right-radius: .25rem; border-bottom-right-radius: .25rem;}
     #dataTable td a.btn {width: 36px;}
+    #dataTable-2 td {padding: .5rem;}
+    #dataTable-2 thead tr th {text-align: center; vertical-align: middle;}
+    #dataTable-2 tbody tr td:first-child, #dataTable-2 tbody tr td:last-child {text-align: center;}
+    #dataTable-2 td .btn-group a.btn:first-child {border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;}
+    #dataTable-2 td .btn-group a.btn:last-child {border-top-right-radius: .25rem; border-bottom-right-radius: .25rem;}
+    #dataTable-2 td a.btn {width: 36px;}
     div.dataTables_wrapper div.dataTables_processing {background-color: var(--primary-light); color: var(--primary-dark); box-shadow: 0 .125rem .25rem rgba(0,0,0,.375)!important;}
     .table-stretch tr th, .table-stretch tr td {padding: .25rem;}
 

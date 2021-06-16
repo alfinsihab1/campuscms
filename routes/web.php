@@ -423,6 +423,10 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	// API Visitor Total
 	Route::get('/admin/api/visitor/count/last-week', $namespacePrefix.'APIController@visitorLastWeek')->name('api.visitor.count.last-week');
 	Route::get('/admin/api/visitor/count/last-month', $namespacePrefix.'APIController@visitorLastMonth')->name('api.visitor.count.last-month');
+	
+	// API Top Visitor
+	Route::get('/admin/api/visitor/top/last-week', $namespacePrefix.'APIController@topVisitorLastWeek')->name('api.visitor.top.last-week');
+	Route::get('/admin/api/visitor/top/last-month', $namespacePrefix.'APIController@topVisitorLastMonth')->name('api.visitor.top.last-month');
 
 	// API Member
 	Route::get('/admin/api/member/status', $namespacePrefix.'APIController@memberStatus')->name('api.member.status');
@@ -457,6 +461,9 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 
 	// API Get Koordinat
 	Route::get('/admin/api/get/coordinate', $namespacePrefix.'APIController@getCoordinate')->name('api.get.coordinate');
+
+	// API Terserah
+	Route::get('/admin/api/terserah', $namespacePrefix.'APIController@terserah')->name('api.terserah');
 
 	// User Setting
 	Route::get('/admin/user-setting/set-theme', $namespacePrefix.'UserSettingController@setTheme')->name('api.user-setting.set-theme');

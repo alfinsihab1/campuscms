@@ -366,8 +366,8 @@
                 var arrayEmail = [];
                 var i;
                 for(i = 0; i < result[0].length; i++){
-                    arrayName.push(result[0][i][1]);
-                    arrayEmail.push(result[0][i][2]);
+                    result[0][i][1] != null ? arrayName.push(result[0][i][1]) : '';
+                    result[0][i][2] != null ? arrayEmail.push(result[0][i][2]) : '';
                 }
                 var names = arrayName.join(", ");
                 var emails = arrayEmail.join(", ");
@@ -397,7 +397,7 @@
 <style type="text/css">
     #modal-search .modal-content {max-height: calc(100vh - 50px); overflow-y: hidden;}
     #modal-import .modal-content {max-height: 500px; overflow-y: hidden;}
-    .modal-body {overflow-y: auto;}
+    #modal-search .modal-body, #modal-import .modal-body {overflow-y: auto;}
     #table-receivers tr td {padding: .5rem!important;}
     #table-receivers tr:hover {background-color: #eeeeee!important;}
     .tr-checkbox {cursor: pointer;}

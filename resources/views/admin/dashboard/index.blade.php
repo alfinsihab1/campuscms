@@ -171,12 +171,13 @@
                         <table class="table table-hover table-striped table-borderless" id="table-top-visitor">
                             <thead>
                                 <tr>
+                                    <th width="40">No.</th>
                                     <th>Member</th>
                                     <th>Kunjungan</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr><td class="colspan" colspan="2"><em>Loading...</em></td></tr>
+                                <tr><td class="colspan" colspan="3"><em>Loading...</em></td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -286,6 +287,7 @@
 					if(response.data.length > 0){
 						for(var i=0; i<response.data.length; i++){
 							html += '<tr>';
+							html += '<td>' + (i+1) + '</td>';
 							html += '<td><a href="' + response.data[i].url + '">' + response.data[i].user.nama_user + '</a></td>';
 							html += '<td>' + response.data[i].visits + '</td>';
 							html += '</tr>';
@@ -293,7 +295,7 @@
 					}
 					else{
 						html += '<tr>';
-						html += '<td colspan="2" class="text-center"><em class="text-danger">Tidak ada data pengunjung.</em></td>';
+						html += '<td colspan="3" class="text-center"><em class="text-danger">Tidak ada data pengunjung.</em></td>';
 						html += '</tr>';
 					}
 					$(selector).find("tbody").html(html);

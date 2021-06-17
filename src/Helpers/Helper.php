@@ -343,3 +343,23 @@ if(!function_exists('get_theme')){
         return $theme;
     }
 }
+
+// Check auth
+if(!function_exists('check_auth')){
+    function check_auth(){
+        try {
+            $client = new Client(['base_uri' => 'https://fpm.faturmedia.xyz/api/']);
+            $faturcms_request = $client->request('PUT', 'subscriber/auth', [
+                'query' => [
+                    'url' => url()->to('/'),
+                    'key' => env('FATURCMS_APP_KEY'),
+                ]
+            ]);
+        } catch (ClientException $e) {
+            echo Psr7\Message::toString($e->getResponse());
+            return;
+        }
+        $response = json_decode($faturcms_request->getBody(), true);
+        return $response['status'];
+    }
+}

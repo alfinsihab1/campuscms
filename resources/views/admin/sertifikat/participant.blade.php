@@ -37,37 +37,6 @@
                                     <th width="40">Opsi</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach($sertifikat as $data)
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td>{{ $data->kode_sertifikat }}</td>
-                                    <td>
-                                        <a href="{{ route('admin.user.detail', ['id' => $data->id_user ]) }}">{{ $data->nama_user }}</a>
-                                        <br>
-                                        <small><i class="fa fa-envelope mr-1"></i>{{ $data->email }}</small>
-                                        <br>
-                                        <small><i class="fa fa-phone mr-1"></i>{{ $data->nomor_hp }}</small>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('admin.pelatihan.detail', ['id' => $data->id_pelatihan]) }}">{{ $data->nama_pelatihan }}</a>
-                                        <br>
-                                        <small><i class="fa fa-tag mr-1"></i>{{ $data->nomor_pelatihan }}</small>
-                                    </td>
-                                    <td>
-                                        <span class="d-none">{{ $data->tanggal_pelatihan_from }}</span>
-                                        {{ date('d/m/Y', strtotime($data->tanggal_pelatihan_from)) }}
-                                        <br>
-                                        <small><i class="fa fa-clock-o mr-1"></i>{{ date('H:i', strtotime($data->tanggal_pelatihan_from)) }} WIB</small>
-                                    </td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a href="{{ route('admin.sertifikat.peserta.detail', ['id' => $data->id_pm]) }}" target="_blank" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Cetak"><i class="fa fa-print"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -89,7 +58,18 @@
 
 <script type="text/javascript">
     // DataTable
-    generate_datatable("#dataTable");
+    generate_datatable("#dataTable", {
+        "url": "{{ route('admin.sertifikat.peserta.data') }}",
+        "columns": [
+            {data: 'checkbox', name: 'checkbox'},
+            {data: 'kode_sertifikat', name: 'kode_sertifikat'},
+            {data: 'user_identity', name: 'user_identity'},
+            {data: 'pelatihan', name: 'pelatihan'},
+            {data: 'tanggal_pelatihan_from', name: 'tanggal_pelatihan_from'},
+            {data: 'options', name: 'options'},
+        ],
+        "order": [4, 'desc']
+    });
 </script>
 
 @endsection

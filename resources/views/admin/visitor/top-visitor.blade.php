@@ -42,33 +42,6 @@
                                     <th width="40">Opsi</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach($user as $data)
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td>
-                                        <a href="{{ route('admin.user.detail', ['id' => $data->id_user]) }}">{{ $data->nama_user }}</a>
-                                        <br>
-                                        <small><i class="fa fa-envelope mr-1"></i>{{ $data->email }}</small>
-                                        <br>
-                                        <small><i class="fa fa-phone mr-1"></i>{{ $data->nomor_hp }}</small>
-                                    </td>
-                                    <td>{{ role($data->role) }}</td>
-                                    <td>{{ number_format(count_kunjungan($data->id_user, 'all'),0,',',',') }}</td>
-                                    <td>
-                                        <span class="d-none">{{ $data->last_visit }}</span>
-                                        {{ date('d/m/Y', strtotime($data->last_visit)) }}
-                                        <br>
-                                        <small><i class="fa fa-clock-o mr-1"></i>{{ date('H:i', strtotime($data->last_visit)) }} WIB</small>
-                                    </td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a href="{{ route('admin.log.activity', ['id' => $data->id_user]) }}" class="btn btn-sm btn-info" data-id="{{ $data->id_visitor }}" data-toggle="tooltip" title="Lihat Aktivitas"><i class="fa fa-eye"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -90,7 +63,18 @@
 
 <script type="text/javascript">
     // DataTable
-    generate_datatable("#dataTable").order([3, 'desc']).draw();
+    generate_datatable("#dataTable", {
+        "url": "{{ route('admin.visitor.top.data') }}",
+        "columns": [
+            {data: 'checkbox', name: 'checkbox'},
+            {data: 'user_identity', name: 'user_identity'},
+            {data: 'nama_role', name: 'nama_role'},
+            {data: 'visits', name: 'visits'},
+            {data: 'last_visit', name: 'last_visit'},
+            {data: 'options', name: 'options'},
+        ],
+        "order": [3, 'desc']
+    });
 </script>
 
 @endsection

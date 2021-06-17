@@ -118,7 +118,7 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 
 	// Transaksi Pelatihan
 	Route::get('/admin/transaksi/pelatihan', $namespacePrefix.'PelatihanController@transaction')->name('admin.pelatihan.transaction');
-	Route::get('/admin/transaksi/pelatihan/data', $namespacePrefix.'PelatihanController@transactionData')->name('admin.pelatihan.transaction.data');
+	Route::get('/admin/transaksi/pelatihan/data', $namespacePrefix.'PelatihanController@dataTransaction')->name('admin.pelatihan.transaction.data');
 	Route::post('/admin/transaksi/pelatihan/verify', $namespacePrefix.'PelatihanController@verify')->name('admin.pelatihan.verify');
 
 	// Email
@@ -293,6 +293,7 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::get('/admin/e-sertifikat/trainer', $namespacePrefix.'SertifikatController@indexTrainer')->name('admin.sertifikat.trainer.index');
 	Route::get('/admin/e-sertifikat/trainer/detail/{id}', $namespacePrefix.'SertifikatController@detailTrainer')->name('admin.sertifikat.trainer.detail');
 	Route::get('/admin/e-sertifikat/peserta', $namespacePrefix.'SertifikatController@indexParticipant')->name('admin.sertifikat.peserta.index');
+	Route::get('/admin/e-sertifikat/peserta/data', $namespacePrefix.'SertifikatController@dataParticipant')->name('admin.sertifikat.peserta.data');
 	Route::get('/admin/e-sertifikat/peserta/detail/{id}', $namespacePrefix.'SertifikatController@detailParticipant')->name('admin.sertifikat.peserta.detail');
 
 	// Slider
@@ -405,6 +406,7 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	// Visitor
 	Route::get('/admin/visitor', $namespacePrefix.'VisitorController@index')->name('admin.visitor.index');
 	Route::get('/admin/visitor/top', $namespacePrefix.'VisitorController@topVisitor')->name('admin.visitor.top');
+	Route::get('/admin/visitor/top/data', $namespacePrefix.'VisitorController@dataTopVisitor')->name('admin.visitor.top.data');
 	Route::post('/admin/visitor/info', $namespacePrefix.'VisitorController@info')->name('admin.visitor.info');
 	// Route::get('/admin/visitor/update-location', $namespacePrefix.'VisitorController@updateLocation')->name('admin.visitor.update-location');
 

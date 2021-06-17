@@ -32,7 +32,7 @@
                         <form method="get" action="{{ route('admin.absensi.index') }}">
                             <div class="input-group">
                               <div class="input-group-prepend">
-                                  <a href="#" class="btn btn-sm btn-dark btn-date" data-toggle="tooltip" title="Pilih Tanggal"><i class="fa fa-calendar"></i></a>
+                                  <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                               </div>
                               <input type="text" name="tanggal" class="form-control form-control-sm" value="{{ $tanggal }}" readonly>
                               <div class="input-group-append">
@@ -125,12 +125,6 @@
 
     // DataTable
     generate_datatable("#dataTable");
-    
-    // Button Date
-    $(document).on("click", ".btn-date", function(e){
-        e.preventDefault();
-        $("input[name=tanggal]").focus();
-    });
 </script>
 
 @endsection

@@ -42,7 +42,7 @@
 		    			<div class="card menu-bg-{{ $colors[$key] }}">
 		    				<div class="card-body">
 		    					<div class="media d-block d-md-flex text-center text-md-left">
-	    						<div class="mr-0 mr-md-3 h1">{{ number_format($data['total'],0,',',',') }}</div>
+	    						<div class="mr-0 mr-md-3 h1">{{ number_format($data['total'],0,'.','.') }}</div>
 		    						<div class="media-body pl-0 pl-md-3 " style="border-left: 1px solid var(--{{ $colors[$key] }})">
 		    							<p class="m-0">Materi<br>{{ $data['title'] }}</p>
 		    						</div>
@@ -58,7 +58,7 @@
     <div class="row">
     	<div class="col-lg-6 order-2 order-lg-1">
     		@if (Auth::user()->role==role('it'))
-		    <div class="experience mb-3">
+		    <div class="experience mb-3 d-none">
 		    	<div class="card">
 		    		<div class="card-body">
 		    			<div class="media d-block d-md-flex align-items-center">
@@ -110,46 +110,38 @@
         <div class="col-lg-6 order-1 order-lg-2">
 		    <div class="menu-grid">
 		    	<div class="row">
+	    		@php $user_colors = ["green", "red"]; @endphp
+	    		@if(count($array_card_user)>0)
+	    			@foreach($array_card_user as $key=>$data)
 		    		<div class="col-6 mb-3">
-		    			<a href="#" class="text-decoration-none">
-		    			<div class="card menu-bg-red">
+		    			<a href="{{ $data['url'] }}" class="text-decoration-none">
+		    			<div class="card menu-bg-{{ $user_colors[$key] }}">
 		    				<div class="card-body">
 		    					<div class="media d-block d-md-flex text-center text-md-left">
-	    						<div class="mr-0 mr-md-3 h1">12</div>
-		    						<div class="media-body pl-0 pl-md-3 " style="border-left: 1px solid var(--red)">
-		    							<p class="m-0">Member<br>Aktif</p>
+	    						<div class="mr-0 mr-md-3 h1">{{ number_format($data['total'],0,'.','.') }}</div>
+		    						<div class="media-body pl-0 pl-md-3 " style="border-left: 1px solid var(--{{ $user_colors[$key] }})">
+		    							<p class="m-0">Member<br>{{ $data['title'] }}</p>
 		    						</div>
 		    					</div>
 		    				</div>
 		    			</div>
 		    			</a>
 		    		</div>
-		    		<div class="col-6 mb-3">
-		    			<a href="#" class="text-decoration-none">
-		    			<div class="card menu-bg-green">
-		    				<div class="card-body">
-		    					<div class="media d-block d-md-flex text-center text-md-left">
-	    						<div class="mr-0 mr-md-3 h1">2</div>
-		    						<div class="media-body pl-0 pl-md-3 " style="border-left: 1px solid var(--green)">
-		    							<p class="m-0">Member<br>Belum Aktif</p>
-		    						</div>
-		    					</div>
-		    				</div>
-		    			</div>
-		    			</a>
-		    		</div>
+		    		@endforeach
+		    	@endif
 		    	</div>
 		    </div>
-        	@if(count($array)>0)
+
+        	@if(count($array)>=2)
             <div class="tile">
                 <div class="tile-title">
-                	<h5>Statistik</h5>
+                	<h5>Sekilas</h5>
                 </div>
                 <div class="tile-body">
                 	<div class="row">
 						@foreach($array as $key=>$data)
-						<div class="col-lg-6">
-							<a href="{{ $data['url'] }}" class="list-group-item list-group-item-action border-0 d-flex align-items-center {{ $key == 0 ? 'bg-primary' : '' }}">
+						<div class="col-md-6">
+							<a href="{{ $data['url'] }}" class="list-group-item list-group-item-action border-0 d-flex align-items-center">
 								<i class="app-menu__icon fa {{$data['icon']}}"></i>
 								<div class="d-flex justify-content-between w-100">
 									<span>{{ $data['title'] }}</span>
@@ -159,14 +151,11 @@
 						</div>
 						@endforeach
                 	</div>
-					<div class="list-group mt-3">
-
-					</div>
                 </div>
             </div>
             @endif
 			
-			@if(Auth::user()->role == role('it'))
+			@if(has_access('VisitorController::index', Auth::user()->role, false))
             <div class="tile">
 				<div class="tile-title-w-btn">
 					<h5>Pengunjung Top</h5>
@@ -294,10 +283,17 @@
 				url: url,
 				success: function(response){
 					var html = '';
-					for(var i=0; i<response.data.length; i++){
+					if(response.data.length > 0){
+						for(var i=0; i<response.data.length; i++){
+							html += '<tr>';
+							html += '<td><a href="' + response.data[i].url + '">' + response.data[i].user.nama_user + '</a></td>';
+							html += '<td>' + response.data[i].visits + '</td>';
+							html += '</tr>';
+						}
+					}
+					else{
 						html += '<tr>';
-						html += '<td><a href="' + response.data[i].url + '">' + response.data[i].user.nama_user + '</a></td>';
-						html += '<td>' + response.data[i].visits + '</td>';
+						html += '<td colspan="2" class="text-center"><em class="text-danger">Tidak ada data pengunjung.</em></td>';
 						html += '</tr>';
 					}
 					$(selector).find("tbody").html(html);

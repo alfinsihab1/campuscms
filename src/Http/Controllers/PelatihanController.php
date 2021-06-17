@@ -436,12 +436,12 @@ class PelatihanController extends Controller
     }
 
     /**
-     * Menampilkan data user (JSON)
+     * Menampilkan data transaksi pelatihan (JSON)
      *
      * @return \Illuminate\Http\Request
      * @return \Illuminate\Http\Response
      */
-    public function transactionData(Request $request)
+    public function dataTransaction(Request $request)
     {
         if($request->ajax()){
             // Data pelatihan member

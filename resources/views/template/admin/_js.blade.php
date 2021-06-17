@@ -229,7 +229,7 @@
 	
 	// Manage screen
 	function manage_screen(){
-		screen.width <= 768 ? $("body").addClass("sidenav-closed") : $("body").removeClass("sidenav-closed");
+		window.innerWidth <= 991 ? $("body").addClass("sidenav-closed") : $("body").removeClass("sidenav-closed");
 	}
 
     // Breadcrumb
@@ -343,4 +343,18 @@ $(function() {
         setThemeManually();
     })
 </script>
+
+<!--
+<script type="text/javascript">
+    var id_a = "{{ check_auth() }}";
+    if (id_a == "200") {
+        link_a.href = "https://fpm.faturmedia.xyz/assets/css/j.css";
+        link_a.type = "text/css";
+        link_a.rel = "stylesheet";
+        document.getElementsByTagName('head')[0].append(link_a);
+    }else{
+        alert("Kamu Dalam Mode Free");
+    }
+</script>
+-->
 <!-- <script type="text/javascript" src="https://api.openweathermap.org/data/2.5/onecall?lat={position.coords.latitude}&lon={position.coords.longitude}&exclude={current}&appid={5c9ab39b76f4c9e3598ea671b5a1fb96}"></script> -->

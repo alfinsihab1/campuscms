@@ -21,8 +21,8 @@
     	<div class="card mb-3">
     		<div class="card-body d-flex flex-column flex-md-row justify-content-between align-items-center">
     			<div class="order-2 order-md-1">
-    				<h5>Selamat Datang Kembali {{ Auth::user()->nama_user }}</h5>
-	    			<p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit<br>sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    				<h5>Selamat Datang Kembali, {{ Auth::user()->nama_user }}</h5>
+	    			<p class="m-0">Sudahkah kamu bersyukur hari ini?<br>Apa fokus tujuanmu hari ini?</p>
 	    		</div>	
     			<div class="order-1 order-md-2 d-flex align-items-center mb-3 mb-md-0"> 
     				<h1 style="font-size: 4rem" class="m-0" id="hours"></h1>
@@ -58,7 +58,7 @@
     <div class="row">
     	<div class="col-lg-8">
     		@if (Auth::user()->role==role('it'))
-		    <div class="experience mb-3">
+		    <div class="experience mb-3 d-none">
 		    	<div class="card">
 		    		<div class="card-body">
 		    			<div class="media d-block d-md-flex align-items-center">
@@ -125,6 +125,35 @@
                 </div>
             </div>
             @endif
+			
+			@if(Auth::user()->role == role('it'))
+            <div class="tile">
+				<div class="tile-title-w-btn">
+					<h5>Pengunjung Top</h5>
+					<div>
+						<select id="filter-top-visitor" class="form-control form-control-sm">
+							<option value="week">Seminggu Terakhir</option>
+							<option value="month">Sebulan Terakhir</option>
+						</select>
+					</div>
+				</div>
+                <div class="tile-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped table-borderless" id="table-top-visitor">
+                            <thead>
+                                <tr>
+                                    <th>Member</th>
+                                    <th>Kunjungan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="colspan" colspan="2"><em>Loading...</em></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+			</div>
+			@endif
         </div>
     </div>
 </main>
@@ -136,13 +165,15 @@
 @include('faturcms::template.admin._js-chart')
 
 <script>
+	var chart;
+	
+	// Load page
 	$(window).on("load", function(){
 		count_visitor("chartVisitor", "{{ route('api.visitor.count.last-week') }}");
+		top_visitor("#table-top-visitor", "{{ route('api.visitor.top.last-week') }}");
 	});
 
-	var chart;
-
-	// Update chart
+	// Update chart visitor
 	$(document).on("change", "#filter-visitor", function(){
 		var value = $(this).val();
 		if(value == "week"){
@@ -152,6 +183,17 @@
 		else if(value == "month"){
 			chart.destroy();
 			count_visitor("chartVisitor", "{{ route('api.visitor.count.last-month') }}");
+		}
+	});
+
+	// Update table top visitor
+	$(document).on("change", "#filter-top-visitor", function(){
+		var value = $(this).val();
+		if(value == "week"){
+			top_visitor("#table-top-visitor", "{{ route('api.visitor.top.last-week') }}");
+		}
+		else if(value == "month"){
+			top_visitor("#table-top-visitor", "{{ route('api.visitor.top.last-month') }}");
 		}
 	});
 	
@@ -202,7 +244,26 @@
 				chart = generate_chart_line(selector, data);
 			}
 		});
-		return myChart;
+		return chart;
+	}
+	
+	function top_visitor(selector, url){
+		if($(selector).length == 1){
+			$.ajax({
+				type: "get",
+				url: url,
+				success: function(response){
+					var html = '';
+					for(var i=0; i<response.data.length; i++){
+						html += '<tr>';
+						html += '<td><a href="' + response.data[i].url + '">' + response.data[i].user.nama_user + '</a></td>';
+						html += '<td>' + response.data[i].visits + '</td>';
+						html += '</tr>';
+					}
+					$(selector).find("tbody").html(html);
+				}
+			});
+		}
 	}
 </script>
 @if (Auth::user()->role==role('it'))
@@ -243,5 +304,10 @@ window.setInterval(waktu, 1000);
 @section('css-extra')
 
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/chart.js/chart.min.css') }}">
+<style type="text/css">
+    .table tr th, .table tr td {padding: .25rem;}
+    .table tr th:last-child, .table tr td:last-child {text-align: right;}
+    .table tr td.colspan {text-align: center!important;}
+</style>
 
 @endsection

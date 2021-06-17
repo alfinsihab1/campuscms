@@ -25,6 +25,11 @@
             <div class="tile">
                 <!-- Tile Body -->
                 <div class="tile-body">
+                    <!-- Identitas -->
+                    <div class="mb-4">
+                        <p class="mb-1"><i class="fa fa-exclamation-triangle mr-2"></i>{{ number_format(count($logs),0,',',',') }}x Login Error</p>
+                    </div>
+                    <!-- /Identitas -->
                     <!-- Logs -->
                     @if($logs != false)
                     <div class="table-responsive">

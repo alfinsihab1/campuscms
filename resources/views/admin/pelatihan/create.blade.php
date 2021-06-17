@@ -117,7 +117,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-2 col-form-label">Materi <span class="text-danger">*</span></label>
+                            <label class="col-md-2 col-form-label">Materi</label>
                             <div class="col-md-10">
                                 <a class="btn btn-sm btn-secondary btn-add-materi" href="#"><i class="fa fa-plus mr-2"></i>Tambah Materi</a>
                                 <div class="table-responsive-sm konten-materi mt-3 mb-3 mb-md-0">
@@ -249,15 +249,6 @@
     // Button Submit
     $(document).on("click", "button[type=submit]", function(e){
         e.preventDefault();
-        
-        // Cek Materi
-        var rows = $(".konten-materi .form-row");
-        if(rows.length == 1){
-            if($(rows).find(".kode-unit").val() == '' || $(rows).find(".judul-unit").val() == '' || $(rows).find(".durasi").val() == '' ){
-                alert("Materi harus diisi minimal 1 (satu) !");
-                return;
-            }
-        }
         
         // Get Konten di Quill Editor
         var myEditor = document.querySelector('#editor');

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Yajra\DataTables\Facades\DataTables;
 use Ajifatur\FaturCMS\Mails\TrainingPaymentMail;
 use App\User;
 use Ajifatur\FaturCMS\Models\DefaultRekening;
@@ -37,15 +38,15 @@ class PelatihanController extends Controller
             ]);
         }
         elseif(Auth::user()->is_admin == 0){
-			if(Auth::user()->role == role('trainer')){				
-				// Data pelatihan (kecuali yang dia traineri)
-				$pelatihan = Pelatihan::join('users','pelatihan.trainer','=','users.id_user')->where('trainer','!=',Auth::user()->id_user)->whereDate('tanggal_pelatihan_to','>=',date('Y-m-d'))->orderBy('tanggal_pelatihan_from','desc')->get();
-			}
-			elseif(Auth::user()->role == role('student')){
-				// Data pelatihan
-				$pelatihan = Pelatihan::join('users','pelatihan.trainer','=','users.id_user')->whereDate('tanggal_pelatihan_to','>=',date('Y-m-d'))->orderBy('tanggal_pelatihan_from','desc')->get();
-			}
-			
+            if(Auth::user()->role == role('trainer')){              
+                // Data pelatihan (kecuali yang dia traineri)
+                $pelatihan = Pelatihan::join('users','pelatihan.trainer','=','users.id_user')->where('trainer','!=',Auth::user()->id_user)->whereDate('tanggal_pelatihan_to','>=',date('Y-m-d'))->orderBy('tanggal_pelatihan_from','desc')->get();
+            }
+            elseif(Auth::user()->role == role('student')){
+                // Data pelatihan
+                $pelatihan = Pelatihan::join('users','pelatihan.trainer','=','users.id_user')->whereDate('tanggal_pelatihan_to','>=',date('Y-m-d'))->orderBy('tanggal_pelatihan_from','desc')->get();
+            }
+            
             // View
             return view('faturcms::member.pelatihan.index', [
                 'pelatihan' => $pelatihan,
@@ -108,7 +109,7 @@ class PelatihanController extends Controller
             ]));
         }
         // Jika tidak ada error
-        else{			
+        else{           
             // Menambah data
             $pelatihan = new Pelatihan;
             $pelatihan->nama_pelatihan = $request->nama_pelatihan;
@@ -125,8 +126,8 @@ class PelatihanController extends Controller
             $pelatihan->kode_trainer = str_replace('/', '.', $pelatihan->nomor_pelatihan).'.T';
             $pelatihan->fee_member = str_replace('.', '', $request->fee);
             $pelatihan->fee_non_member = 0;
-			$pelatihan->materi_pelatihan = generate_materi_pelatihan($request->get('kode_unit'), $request->get('judul_unit'), $request->get('durasi'));
-			$pelatihan->total_jam_pelatihan = array_sum($request->get('durasi'));
+            $pelatihan->materi_pelatihan = generate_materi_pelatihan($request->get('kode_unit'), $request->get('judul_unit'), $request->get('durasi'));
+            $pelatihan->total_jam_pelatihan = array_sum($request->get('durasi'));
             $pelatihan->pelatihan_at = date('Y-m-d H:i:s');
             $pelatihan->save();
         }
@@ -146,38 +147,38 @@ class PelatihanController extends Controller
         // Check Access
         has_access(generate_method(__METHOD__), Auth::user()->role);
 
-    	// Data pelatihan
-    	$pelatihan = Pelatihan::join('users','pelatihan.trainer','=','users.id_user')->findOrFail($id);
+        // Data pelatihan
+        $pelatihan = Pelatihan::join('users','pelatihan.trainer','=','users.id_user')->findOrFail($id);
         $pelatihan->materi_pelatihan = json_decode($pelatihan->materi_pelatihan, true);
         
         // Get data default rekening
         $default_rekening = DefaultRekening::join('platform','default_rekening.id_platform','=','platform.id_platform')->orderBy('tipe_platform','asc')->get();
-		
-		if(Auth::user()->is_admin == 1){
+        
+        if(Auth::user()->is_admin == 1){
             // View
             return view('faturcms::admin.pelatihan.detail', [
                 'pelatihan' => $pelatihan,
             ]);
-		}
-		elseif(Auth::user()->is_admin == 0){
-			// Cek pelatihan member
-			$cek_pelatihan = PelatihanMember::where('id_pelatihan','=',$pelatihan->id_pelatihan)->where('id_user','=',Auth::user()->id_user)->first();
-			
-			// Cek total pelatihan member
-			$cek_total = PelatihanMember::where('id_user','=',Auth::user()->id_user)->get();
-			
-			// Generate invoice
-			$invoice = generate_invoice(Auth::user()->id_user, 'PEM').'.'.(count($cek_total)+1);
-			
-			// View
-			return view('faturcms::member.pelatihan.detail', [
-				'default_rekening' => $default_rekening,
-				'pelatihan' => $pelatihan,
-				'cek_pelatihan' => $cek_pelatihan,
-				'cek_total' => $cek_total,
-				'invoice' => $invoice,
-			]);
-		}
+        }
+        elseif(Auth::user()->is_admin == 0){
+            // Cek pelatihan member
+            $cek_pelatihan = PelatihanMember::where('id_pelatihan','=',$pelatihan->id_pelatihan)->where('id_user','=',Auth::user()->id_user)->first();
+            
+            // Cek total pelatihan member
+            $cek_total = PelatihanMember::where('id_user','=',Auth::user()->id_user)->get();
+            
+            // Generate invoice
+            $invoice = generate_invoice(Auth::user()->id_user, 'PEM').'.'.(count($cek_total)+1);
+            
+            // View
+            return view('faturcms::member.pelatihan.detail', [
+                'default_rekening' => $default_rekening,
+                'pelatihan' => $pelatihan,
+                'cek_pelatihan' => $cek_pelatihan,
+                'cek_total' => $cek_total,
+                'invoice' => $invoice,
+            ]);
+        }
     }
 
     /**
@@ -323,29 +324,29 @@ class PelatihanController extends Controller
         // Check Access
         has_access(generate_method(__METHOD__), Auth::user()->role);
 
-    	// Data pelatihan
-    	$pelatihan = Pelatihan::join('users','pelatihan.trainer','=','users.id_user')->findOrFail($id);
-		
-		if(Auth::user()->is_admin == 1){
+        // Data pelatihan
+        $pelatihan = Pelatihan::join('users','pelatihan.trainer','=','users.id_user')->findOrFail($id);
+        
+        if(Auth::user()->is_admin == 1){
             // Data pelatihan member
-            $pelatihan_member = PelatihanMember::join('users','pelatihan_member.id_user','=','users.id_user')->join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->where('pelatihan_member.id_pelatihan','=',$pelatihan->id_pelatihan)->orderBy('pm_at','desc')->get();
+            $pelatihan_member = PelatihanMember::join('users','pelatihan_member.id_user','=','users.id_user')->join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->where('pelatihan_member.id_pelatihan','=',$pelatihan->id_pelatihan)->where('fee_status','=',1)->orderBy('pm_at','desc')->get();
             
             // View
             return view('faturcms::admin.pelatihan.participant', [
                 'pelatihan' => $pelatihan,
                 'pelatihan_member' => $pelatihan_member,
             ]);
-		}
-		elseif(Auth::user()->is_admin == 0){
-			// Data pelatihan member
-			$pelatihan_member = PelatihanMember::join('users','pelatihan_member.id_user','=','users.id_user')->join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->where('pelatihan_member.id_pelatihan','=',$pelatihan->id_pelatihan)->where('trainer','=',Auth::user()->id_user)->orderBy('pm_at','desc')->get();
-			
-			// View
-			return view('faturcms::member.pelatihan.participant', [
-				'pelatihan' => $pelatihan,
-				'pelatihan_member' => $pelatihan_member,
-			]);
-		}
+        }
+        elseif(Auth::user()->is_admin == 0){
+            // Data pelatihan member
+            $pelatihan_member = PelatihanMember::join('users','pelatihan_member.id_user','=','users.id_user')->join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->where('pelatihan_member.id_pelatihan','=',$pelatihan->id_pelatihan)->where('trainer','=',Auth::user()->id_user)->where('fee_status','=',1)->orderBy('pm_at','desc')->get();
+            
+            // View
+            return view('faturcms::member.pelatihan.participant', [
+                'pelatihan' => $pelatihan,
+                'pelatihan_member' => $pelatihan_member,
+            ]);
+        }
     }
 
     /**
@@ -433,7 +434,84 @@ class PelatihanController extends Controller
             'pelatihan' => $pelatihan
         ]);
     }
-	
+
+    /**
+     * Menampilkan data user (JSON)
+     *
+     * @return \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function transactionData(Request $request)
+    {
+        if($request->ajax()){
+            // Data pelatihan member
+            $pelatihan_member = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->join('users','pelatihan_member.id_user','=','users.id_user')->orderBy('pm_at','desc')->get();
+
+            // Return
+            return DataTables::of($pelatihan_member)
+            ->addColumn('checkbox', '<input type="checkbox">')
+            ->addColumn('waktu_membayar', function($data){
+                if($data->pm_at != null){
+                    return '
+                        <span class="d-none">'.$data->pm_at.'</span>
+                        '.date('d/m/Y', strtotime($data->pm_at)).'
+                        <br>
+                        <small><i class="fa fa-clock-o mr-1"></i>'.date('H:i', strtotime($data->pm_at)).' WIB</small>
+                    ';
+                }
+                else return '-';
+            })
+            ->addColumn('user_identity', function($data){
+                return '
+                    <a href="'.route('admin.user.detail', ['id' => $data->id_user ]).'">'.$data->nama_user.'</a>
+                    <br>
+                    <small><i class="fa fa-envelope mr-1"></i>'.$data->email.'</small>
+                    <br>
+                    <small><i class="fa fa-phone mr-1"></i>'.$data->nomor_hp.'</small>
+                ';
+            })
+            ->addColumn('pelatihan', function($data){
+                return '
+                    <a href="'.route('admin.pelatihan.detail', ['id' => $data->id_pelatihan]).'">'.$data->nama_pelatihan.'</a>
+                    <br>
+                    <small><i class="fa fa-tag mr-2"></i>'.$data->nomor_pelatihan.'</small>
+                ';
+            })
+            ->addColumn('fee', function($data){
+                return $data->fee > 0 ? number_format($data->fee,0,',',',') : 'Gratis';
+            })
+            ->addColumn('status', function($data){
+                if($data->fee_status == 1)
+                    return '<span class="badge badge-success">Diterima</span>';
+                else{
+                    if($data->fee_bukti == '')
+                        return '<span class="badge badge-danger">Belum Membayar</span>';
+                    else
+                        return '<span class="badge badge-warning">Belum Diverifikasi</span>';
+                }
+            })
+            ->addColumn('options', function($data){
+                $html = '';
+                $html .= '<div class="btn-group">';
+                if($data->fee_status == 0 && $data->fee_bukti != '')
+                    $html .= '<a href="#" class="btn btn-sm btn-success btn-verify" data-id="'.$data->id_pm.'" data-proof="'.asset('assets/images/fee-pelatihan/'.$data->fee_bukti).'" data-toggle="tooltip" title="Verifikasi Pembayaran"><i class="fa fa-check"></i></a>';
+                if($data->fee_bukti != '')
+                    $html .= '<a href="'.asset('assets/images/fee-pelatihan/'.$data->fee_bukti).'" class="btn btn-sm btn-info btn-magnify-popup" data-toggle="tooltip" title="Bukti Transfer"><i class="fa fa-image"></i></a>';
+                $html .= '</div>';
+                return $html;
+            })
+            ->removeColumn(['password', 'tanggal_lahir', 'jenis_kelamin', 'reference', 'tempat_pelatihan', 'tanggal_pelatihan_from', 'tanggal_pelatihan_to', 'tanggal_sertifikat_from', 'tanggal_sertifikat_to', 'fee_non_member', 'gambar_pelatihan', 'deskripsi_pelatihan', 'materi_pelatihan', 'total_jam_pelatihan'])
+            ->rawColumns(['checkbox', 'waktu_membayar', 'user_identity', 'pelatihan', 'fee', 'status', 'options'])
+            ->make(true);
+        }
+        else{
+            return response()->json([
+                'status' => 403,
+                'message' => 'Forbidden!'
+            ]);
+        }
+    }
+    
     /**
      * Menampilkan data transaksi pelatihan
      *
@@ -445,13 +523,8 @@ class PelatihanController extends Controller
         has_access(generate_method(__METHOD__), Auth::user()->role);
         
         if(Auth::user()->is_admin == 1){
-            // Data pelatihan member
-            $pelatihan_member = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->join('users','pelatihan_member.id_user','=','users.id_user')->orderBy('pm_at','desc')->get();
-            
             // View
-            return view('faturcms::admin.pelatihan.transaction', [
-                'pelatihan_member' => $pelatihan_member,
-            ]);
+            return view('faturcms::admin.pelatihan.transaction');
         }
         elseif(Auth::user()->is_admin == 0){
             // Data pelatihan member

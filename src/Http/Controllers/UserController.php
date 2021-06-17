@@ -6,6 +6,7 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Yajra\DataTables\Facades\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
 use Ajifatur\FaturCMS\Exports\UserExport;
 use App\User;
@@ -18,6 +19,94 @@ use Ajifatur\FaturCMS\Models\Withdrawal;
 
 class UserController extends Controller
 {
+    /**
+     * Menampilkan data user (JSON)
+     *
+     * @return \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function data(Request $request)
+    {
+		if($request->ajax()){
+			// Get data user
+			if($request->query('filter') == null){
+				$users = User::join('role','users.role','=','role.id_role')->orderBy('register_at','desc')->get();
+			}
+			else{
+				if($request->query('filter') == 'all')
+					$users = User::join('role','users.role','=','role.id_role')->orderBy('register_at','desc')->get();
+				elseif($request->query('filter') == 'admin')
+					$users = User::join('role','users.role','=','role.id_role')->where('role.is_admin','=',1)->orderBy('register_at','desc')->get();
+				elseif($request->query('filter') == 'member')
+					$users = User::join('role','users.role','=','role.id_role')->where('role.is_admin','=',0)->orderBy('register_at','desc')->get();
+				elseif($request->query('filter') == 'aktif')
+					$users = User::join('role','users.role','=','role.id_role')->where('role.is_admin','=',0)->where('status','=',1)->orderBy('register_at','desc')->get();
+				elseif($request->query('filter') == 'belum-aktif')
+					$users = User::join('role','users.role','=','role.id_role')->where('role.is_admin','=',0)->where('status','=',0)->orderBy('register_at','desc')->get();
+			}
+
+			// Return
+			return DataTables::of($users)
+			->addColumn('checkbox', '<input type="checkbox">')
+			->addColumn('user_identity', function($user){
+				$route = $user->id_user == Auth::user()->id_user ? route('admin.profile') : route('admin.user.detail', ['id' => $user->id_user]);
+				return '
+				<a href="'.$route.'">'.$user->nama_user.'</a>
+				<br>
+				<small><i class="fa fa-envelope mr-1"></i>'.$user->email.'</small>
+				<br>
+				<small><i class="fa fa-phone mr-1"></i>'.$user->nomor_hp.'</small>
+				';
+			})
+			->addColumn('saldo', function($user){
+				return $user->is_admin == 0 ? number_format($user->saldo,0,',',',') : '-';
+			})
+			->addColumn('refer', function($user){
+				if($user->is_admin == 0){
+					return '<a href="'.route('admin.user.refer', ['id' => $user->id_user]).'" data-toggle="tooltip" title="Lihat Data Refer">'.number_format(count_refer($user->username),0,',',',').'</a>';
+				}
+				else return '';
+			})
+			->addColumn('status', function($user){
+				if($user->status == 1)
+					return '<span class="badge badge-success">Aktif</span>';
+				elseif($user->status == 0 && $user->email_verified == 1)
+					return '<span class="badge badge-warning">Belum Aktif</span>';
+				elseif($user->status == 0 && $user->email_verified == 0)
+					return '<span class="badge badge-danger">Tidak Aktif</span>';
+			})
+			->addColumn('register_at', function($user){
+				return '
+					<span class="d-none">'.$user->register_at.'</span>
+					'.date('d/m/Y', strtotime($user->register_at)).'
+					<br>
+					<small><i class="fa fa-clock-o mr-1"></i>'.date('H:i', strtotime($user->register_at)).' WIB</small>
+				';
+			})
+			->addColumn('options', function($user){
+				$btn_delete_class = $user->id_user > 6 ? 'btn-delete' : '';
+				$btn_delete_style = $user->id_user > 6 ? '' : 'cursor: not-allowed';
+				$btn_delete_title = $user->id_user <= 6 ? $user->id_user == Auth::user()->id_user ? 'Tidak dapat menghapus akun sendiri' : 'Akun ini tidak boleh dihapus' : 'Hapus';
+				$html = '';
+				$html .= '<div class="btn-group">';
+				$html .= '<a href="'.route('admin.user.detail', ['id' => $user->id_user]).'" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail"><i class="fa fa-eye"></i></a>';
+				$html .= '<a href="'.route('admin.user.edit', ['id' => $user->id_user]).'" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>';
+				$html .= '<a href="#" class="btn btn-sm btn-danger '.$btn_delete_class.'" data-id="'.$user->id_user.'" style="'.$btn_delete_style.'" data-toggle="tooltip" title="'.$btn_delete_title.'"><i class="fa fa-trash"></i></a>';
+				$html .= '</div>';
+				return $html;
+			})
+			->removeColumn(['password', 'tanggal_lahir', 'jenis_kelamin'])
+			->rawColumns(['checkbox', 'user_identity', 'saldo', 'refer', 'status', 'register_at', 'options'])
+			->make(true);
+		}
+		else{
+			return response()->json([
+				'status' => 403,
+				'message' => 'Forbidden!'
+			]);
+		}
+    }
+
     /**
      * Menampilkan data user
      * 
@@ -148,6 +237,9 @@ class UserController extends Controller
         // Sponsor
         $sponsor = User::where('username','=',$user->reference)->first();
 
+        // Pelatihan trainer
+        $pelatihan_trainer = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->where('trainer','=',$id)->groupBy('pelatihan_member.id_pelatihan')->orderBy('tanggal_pelatihan_from','desc')->get();
+
         // Pelatihan member
         $pelatihan = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->join('users','pelatihan.trainer','=','users.id_user')->where('pelatihan_member.id_user','=',$id)->orderBy('tanggal_pelatihan_from','desc')->get();
 
@@ -156,6 +248,7 @@ class UserController extends Controller
             'user' => $user,
             'sponsor' => $sponsor,
             'pelatihan' => $pelatihan,
+            'pelatihan_trainer' => $pelatihan_trainer,
             'id_direct' => $id,
         ]);
     }
@@ -308,8 +401,8 @@ class UserController extends Controller
         // Sponsor
         $sponsor = User::where('username','=',$user->reference)->first();
 
-        // Pelatihan member
-        $pelatihan = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->where('trainer','=',$id)->orderBy('tanggal_pelatihan_from','desc')->get();
+        // Pelatihan trainer
+        $pelatihan = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->where('trainer','=',$id)->groupBy('pelatihan_member.id_pelatihan')->orderBy('tanggal_pelatihan_from','desc')->get();
 
         // View
         return view('faturcms::member.user.trainer', [
@@ -491,7 +584,6 @@ class UserController extends Controller
                 $users = User::join('role','users.role','=','role.id_role')->where('role.is_admin','=',0)->where('status','=',0)->get();
             else
                 $users = User::join('role','users.role','=','role.id_role')->get();
-
         }
 
         return Excel::download(new UserExport($users), 'Data User.xlsx');

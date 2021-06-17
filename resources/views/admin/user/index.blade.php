@@ -61,41 +61,6 @@
                                     <th width="60">Opsi</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach($users as $user)
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td>
-                                        <a href="{{ $user->id_user == Auth::user()->id_user ? route('admin.profile') : route('admin.user.detail', ['id' => $user->id_user]) }}">{{ $user->nama_user }}</a>
-                                        <br>
-                                        <small><i class="fa fa-envelope mr-1"></i>{{ $user->email }}</small>
-                                        <br>
-                                        <small><i class="fa fa-phone mr-1"></i>{{ $user->nomor_hp }}</small>
-                                    </td>
-                                    <td>{{ $user->nama_role }}</td>
-                                    <td>{{ $user->is_admin == 0 ? number_format($user->saldo,0,',',',') : '-' }}</td>
-                                    <td>
-                                        @if($user->is_admin == 0)
-                                            <a href="{{ route('admin.user.refer', ['id' => $user->id_user]) }}" data-toggle="tooltip" title="Lihat Data Refer">{{ number_format(count_refer($user->username),0,',',',') }}</a>
-                                        @endif
-                                    </td>
-                                    <td><span class="badge {{ $user->status == 1 ? 'badge-success' : 'badge-danger' }}">{{ status($user->status) }}</span></td>
-                                    <td>
-                                        <span class="d-none">{{ $user->register_at }}</span>
-                                        {{ date('d/m/Y', strtotime($user->register_at)) }}
-                                        <br>
-                                        <small><i class="fa fa-clock-o mr-1"></i>{{ date('H:i', strtotime($user->register_at)) }} WIB</small>
-                                    </td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a href="{{ route('admin.user.detail', ['id' => $user->id_user]) }}" class="btn btn-sm btn-info" data-toggle="tooltip" title="Detail"><i class="fa fa-eye"></i></a>
-                                            <a href="{{ route('admin.user.edit', ['id' => $user->id_user]) }}" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>
-                                            <a href="#" class="btn btn-sm btn-danger {{ $user->id_user > 6 ? 'btn-delete' : '' }}" data-id="{{ $user->id_user }}" style="{{ $user->id_user > 6 ? '' : 'cursor: not-allowed' }}" data-toggle="tooltip" title="{{ $user->id_user <= 6 ? $user->id_user == Auth::user()->id_user ? 'Tidak dapat menghapus akun sendiri' : 'Akun ini tidak boleh dihapus' : 'Hapus' }}"><i class="fa fa-trash"></i></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
                         </table>
                         <form id="form-delete" class="d-none" method="post" action="{{ route('admin.user.delete') }}">
                             {{ csrf_field() }}
@@ -121,7 +86,20 @@
 
 <script type="text/javascript">
     // DataTable
-    generate_datatable("#dataTable");
+    generate_datatable("#dataTable", {
+		"url": "{{ route('admin.user.data', ['filter' => $filter]) }}",
+        "columns": [
+            {data: 'checkbox', name: 'checkbox'},
+            {data: 'user_identity', name: 'user_identity'},
+            {data: 'nama_role', name: 'nama_role'},
+            {data: 'saldo', name: 'saldo'},
+            {data: 'refer', name: 'refer'},
+            {data: 'status', name: 'status'},
+            {data: 'register_at', name: 'register_at'},
+            {data: 'options', name: 'options'},
+        ],
+        "order": [6, 'desc']
+	});
 
     // Filter
     $(document).on("change", "#filter", function(){

@@ -34,6 +34,9 @@
                     <p class="text-center mt-2 mb-0">Total: <strong id="total-status">0</strong></p>
                 </div>
                 <!-- /Tile Body -->
+                <!-- Tile Footer -->
+				<div class="tile-footer p-0"></div>
+                <!-- /Tile Footer -->
             </div>
             <!-- /Tile -->
         </div>
@@ -53,6 +56,9 @@
                     <p class="text-center mt-2 mb-0">Total: <strong id="total-gender">0</strong></p>
                 </div>
                 <!-- /Tile Body -->
+                <!-- Tile Footer -->
+				<div class="tile-footer p-0"></div>
+                <!-- /Tile Footer -->
             </div>
             <!-- /Tile -->
         </div>
@@ -72,6 +78,9 @@
                     <p class="text-center mt-2 mb-0">Total: <strong id="total-age">0</strong></p>
                 </div>
                 <!-- /Tile Body -->
+                <!-- Tile Footer -->
+				<div class="tile-footer p-0"></div>
+                <!-- /Tile Footer -->
             </div>
             <!-- /Tile -->
         </div>
@@ -94,15 +103,17 @@
             type: "get",
             url: "{{ route('api.member.status') }}",
             success: function(response){
+				var colors = ["#28a745", "#dc3545"];
                 var data = {
                     labels: response.data.labels,
                     datasets: [{
                         data: response.data.data,
-                        backgroundColor: ["#28a745", "#dc3545"],
+                        backgroundColor: colors,
                         borderWidth: 0
                     }]
                 };
                 generate_chart_doughnut("chartStatus", data);
+				generate_chart_legend(colors, response.data, "#chartStatus");
                 $("#total-status").text(thousand_format(response.data.total));
             }
         });
@@ -112,15 +123,17 @@
             type: "get",
             url: "{{ route('api.member.gender') }}",
             success: function(response){
+				var colors = ["#007bff", "#e83e8c"];
                 var data = {
                     labels: response.data.labels,
                     datasets: [{
                         data: response.data.data,
-                        backgroundColor: ["#007bff", "#e83e8c"],
+                        backgroundColor: colors,
                         borderWidth: 0
                     }]
                 };
                 generate_chart_doughnut("chartGender", data);
+				generate_chart_legend(colors, response.data, "#chartGender");
                 $("#total-gender").text(thousand_format(response.data.total));
             }
         });
@@ -130,15 +143,17 @@
             type: "get",
             url: "{{ route('api.member.age') }}",
             success: function(response){
+				var colors = ["#20c997", "#28a745", "#ffc107", "#dc3545"];
                 var data = {
                     labels: response.data.labels,
                     datasets: [{
                         data: response.data.data,
-                        backgroundColor: ["#20c997", "#28a745", "#ffc107", "#dc3545"],
+                        backgroundColor: colors,
                         borderWidth: 0
                     }]
                 };
                 generate_chart_doughnut("chartAge", data);
+				generate_chart_legend(colors, response.data, "#chartAge");
                 $("#total-age").text(thousand_format(response.data.total));
             }
         });

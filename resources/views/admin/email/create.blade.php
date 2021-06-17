@@ -37,6 +37,36 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="col-md-2 col-form-label">Terjadwal <span class="text-danger">*</span></label>
+                            <div class="col-md-10">
+                                <div class="form-check">
+                                  <input class="form-check-input" type="radio" name="terjadwal" id="terjadwal-0" value="0" {{ old('terjadwal') == '0' ? 'checked' : '' }} {{ old('terjadwal') == null ? 'checked' : '' }}>
+                                  <label class="form-check-label" for="terjadwal-0">Tidak</label>
+                                </div>
+                                <div class="form-check">
+                                  <input class="form-check-input" type="radio" name="terjadwal" id="terjadwal-1" value="1" {{ old('terjadwal') == '1' ? 'checked' : '' }}>
+                                  <label class="form-check-label" for="terjadwal-1">Ya</label>
+                                </div>
+                                @if($errors->has('terjadwal'))
+                                <div class="small text-danger mt-1">{{ ucfirst($errors->first('terjadwal')) }}</div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row form-jadwal {{ old('terjadwal') != 1 ? 'd-none' : '' }}">
+                            <label class="col-md-2 col-form-label">Waktu Pengiriman Email <span class="text-danger">*</span></label>
+                            <div class="col-md-10">
+                                <div class="input-group">
+                                    <input type="text" name="scheduled" class="form-control clockpicker {{ $errors->has('scheduled') ? 'is-invalid' : '' }}" value="{{ old('scheduled') }}" autocomplete="off">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text {{ $errors->has('scheduled') ? 'border-danger' : '' }}"><i class="fa fa-clock-o"></i></span>
+                                    </div>
+                                </div>
+                                @if($errors->has('scheduled'))
+                                <div class="small text-danger mt-1">{{ ucfirst($errors->first('scheduled')) }}</div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row form-penerima {{ old('terjadwal') == 0 || old('terjadwal') == null ? '' : 'd-none' }}">
                             <label class="col-md-2 col-form-label">Penerima <span class="text-danger">*</span></label>
                             <div class="col-md-10">
                                 <a class="btn btn-sm btn-secondary btn-search" href="#"><i class="fa fa-search mr-2"></i>Cari Penerima</a>
@@ -63,7 +93,7 @@
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label"></label>
                             <div class="col-md-10">
-                                <button type="submit" class="btn btn-theme-1"><i class="fa fa-send mr-2"></i>Kirim</button>
+                                <button type="submit" class="btn btn-theme-1"><i class="fa fa-save mr-2"></i>Simpan</button>
                             </div>
                         </div>
                     </form>
@@ -89,32 +119,11 @@
                 </button>
             </div>
             <div class="col-12 pt-3" style="background-color: #e5e5e5;">
-                <div class="">
-                    <div class="form-group col-md-12">
-                        @for($i=1; $i<=ceil(count($members)/100); $i++)
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input checkbox-batch" name="batch" type="radio" id="checkbox-{{ $i }}" value="{{ $i }}">
-                            <label class="form-check-label" for="checkbox-{{ $i }}">{{ (($i - 1) * 100) + 1 }}-{{ $i * 100 }}</label>
-                        </div>
-                        @endfor
-                    </div>
-                </div>
+                <div class="form-group col-md-12 checkbox-list"></div>
             </div>
             <div class="modal-body">
                 <table class="table mb-0" id="table-receivers">
-                    @foreach($members as $member)
-                    <tr class="tr-checkbox" data-id="{{ $member->id_user }}" data-email="{{ $member->email }}">
-                        <td>
-                            <input name="receivers[]" class="input-receivers d-none" type="checkbox" data-id="{{ $member->id_user }}" data-email="{{ $member->email }}" value="{{ $member->id_user }}">
-                            <span class="text-primary"><i class="fa fa-user mr-2"></i>{{ $member->nama_user }}</span>
-                            <br>
-                            <span class="small text-dark"><i class="fa fa-envelope mr-2"></i>{{ $member->email }}</span>
-                        </td>
-                        <td width="30" align="center" class="td-check align-middle">
-                            <i class="fa fa-check text-primary d-none"></i>
-                        </td>
-                    </tr>
-                    @endforeach
+                    <tbody></tbody>
                 </table>
             </div>
             <div class="modal-footer">
@@ -169,25 +178,83 @@
 
 @include('faturcms::template.admin._js-editor')
 
+<script src="{{ asset('assets/plugins/clockpicker/bootstrap-clockpicker.min.js') }}"></script>
 <script type="text/javascript">
     // Quill
     generate_quill("#editor");
+	
+	// Clockpicker
+	$(".clockpicker").clockpicker({
+		autoclose: true
+	});
+
+    // Change Terjadwal
+    $(document).on("change", "input[name=terjadwal]", function(){
+        var terjadwal = $(this).val();
+        if(terjadwal == 1){
+            $(".form-jadwal").removeClass("d-none");
+            $(".form-penerima").addClass("d-none");
+        }
+        else{
+            $(".form-penerima").removeClass("d-none");
+            $(".form-jadwal").addClass("d-none");
+        }
+    });
     
     // Button Search
     $(document).on("click", ".btn-search", function(e){
         e.preventDefault();
-        var ids = $("input[name=ids]").val();
-        var arrayId = ids.length > 0 ? ids.split(",") : [];
-        arrayId.forEach(function(item){
-            $(".input-receivers[data-id="+item+"]").prop("checked", true);
-            actionChecked($(".input-receivers[data-id="+item+"]"), true);
+        $.ajax({
+            type: "get",
+            url: "{{ route('admin.email.member-json') }}",
+            success: function(response){
+                // Fetch data user
+                var html = '';
+                $(response.data).each(function(key,data){
+                    html += '<tr class="tr-checkbox" data-id="' + data.id_user + '" data-email="' + data.email + '">';
+                    html += '<td>';
+                    html += '<input name="receivers[]" class="input-receivers d-none" type="checkbox" data-id="' + data.id_user + '" data-email="' + data.email + '" value="' + data.id_user + '">';
+                    html += '<span class="text-primary"><i class="fa fa-user mr-2"></i>' + data.nama_user + '</span>';
+                    html += '<br>';
+                    html += '<span class="small text-dark"><i class="fa fa-envelope mr-2"></i>' + data.email + '</span>';
+                    html += '</td>';
+                    html += '<td width="30" align="center" class="td-check align-middle">';
+                    html += '<i class="fa fa-check text-primary d-none"></i>';
+                    html += '</td>';
+                    html += '</tr>';
+                });
+                $("#table-receivers tbody").html(html);
+
+                // Show checkbox list
+                var html2 = '';
+                for(var i=1; i<=Math.ceil(response.data.length/100); i++){
+                    html2 += '<div class="form-check form-check-inline">';
+                    html2 += '<input class="form-check-input checkbox-batch" name="batch" type="radio" id="checkbox-' + i + '" value="' + i + '">';
+                    html2 += '<label class="form-check-label" for="checkbox-' + i + '">' + (((i - 1) * 100) + 1) + '-' + (i * 100) + '</label>';
+                    html2 += '</div>';
+                }
+                $(".checkbox-list").html(html2);
+
+                // Check user choosen
+                var ids = $("input[name=ids]").val();
+                var arrayId = ids.length > 0 ? ids.split(",") : [];
+                arrayId.forEach(function(item){
+                    $(".input-receivers[data-id="+item+"]").prop("checked", true);
+                    actionChecked($(".input-receivers[data-id="+item+"]"), true);
+                });
+                countChecked(arrayId);
+
+                // Show modal
+                $("#modal-search").modal("show");
+            }
         });
-        countChecked(arrayId);
-        $("#modal-search").modal("show");
     });
     
-      // Hide Modal Search
+    // Hide Modal Search
     $('#modal-search').on('hidden.bs.modal', function(){
+        $(".checkbox-batch").each(function(key,elem){
+            $(elem).prop("checked", false);
+        });
         $(".input-receivers").each(function(key,elem){
             $(elem).prop("checked", false);
             actionChecked($(elem), false);
@@ -264,7 +331,7 @@
     function countChecked(array){
         var checked = array.length;
         $("#count-checked").text(checked);
-        checked <= 0 ? $("#btn-choose").attr("disabled","disabled") : $("#btn-choose").removeAttr("disabled");
+        checked <= 0 ? $(".btn-choose").attr("disabled","disabled") : $(".btn-choose").removeAttr("disabled");
         return checked;
     }
     
@@ -299,8 +366,8 @@
                 var arrayEmail = [];
                 var i;
                 for(i = 0; i < result[0].length; i++){
-                    arrayName.push(result[0][i][1]);
-                    arrayEmail.push(result[0][i][2]);
+                    result[0][i][1] != null ? arrayName.push(result[0][i][1]) : '';
+                    result[0][i][2] != null ? arrayEmail.push(result[0][i][2]) : '';
                 }
                 var names = arrayName.join(", ");
                 var emails = arrayEmail.join(", ");
@@ -326,9 +393,11 @@
 @section('css-extra')
 
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/quill/quill.snow.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/clockpicker/bootstrap-clockpicker.min.css') }}">
 <style type="text/css">
-    #modal-search .modal-content, #modal-import .modal-content {max-height: 500px; overflow-y: hidden;}
-    .modal-body {overflow-y: auto;}
+    #modal-search .modal-content {max-height: calc(100vh - 50px); overflow-y: hidden;}
+    #modal-import .modal-content {max-height: 500px; overflow-y: hidden;}
+    #modal-search .modal-body, #modal-import .modal-body {overflow-y: auto;}
     #table-receivers tr td {padding: .5rem!important;}
     #table-receivers tr:hover {background-color: #eeeeee!important;}
     .tr-checkbox {cursor: pointer;}

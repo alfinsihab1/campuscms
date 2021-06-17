@@ -17,22 +17,6 @@
     ]])
     <!-- /Breadcrumb -->
 
-    <div class="tile mb-3" style="padding-top: 15px; padding-bottom: 15px;">
-        <div class="tile-body">
-            <div class="d-md-flex justify-content-between align-items-center">
-                <div>
-                    @if($my_package->package_version == package_version())
-                        Kamu saat ini sudah menggunakan versi terbaru dari <strong>{{ config('faturcms.name') }} ({{ $my_package->package_version }})</strong>!
-                    @else
-                        Jangan sampai ketinggalan update terbaru dari <strong>{{ config('faturcms.name') }}</strong>!
-                        <br>
-                        Kamu saat ini menggunakan versi <strong>{{ $my_package->package_version }}</strong>.
-                    @endif
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Row -->
     <div class="row">
         <!-- Column -->

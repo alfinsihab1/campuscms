@@ -94,6 +94,66 @@ class APIController extends Controller
             'data' => $data
         ]);
     }
+    
+    /**
+     * Top visitor last week
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function topVisitorLastWeek()
+    {
+        // Get visitor
+        $last_week = date('Y-m-d', strtotime('-7 days'));
+        $visitor = Visitor::join('users','visitor.id_user','=','users.id_user')->where('is_admin','=',0)->whereDate('visit_at','>=',$last_week)->pluck('users.id_user')->toArray();
+        $count_visitor = array_count_values($visitor);
+        arsort($count_visitor); // Sort
+        
+        // Pick 10
+        $array = [];
+        if(count($count_visitor)>0){
+            foreach($count_visitor as $key=>$value){
+                $user = User::select('id_user', 'nama_user')->find($key);
+                array_push($array, ['user' => $user, 'url' => route('admin.user.detail', ['id' => $key]), 'visits' => $value]);
+            }
+        }
+        
+        // Response
+        return response()->json([
+            'status' => 200,
+            'message' => 'Success!',
+            'data' => array_slice($array,0,10)
+        ]);
+    }
+    
+    /**
+     * Top visitor last month
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function topVisitorLastMonth()
+    {
+        // Get visitor
+        $last_month = date('Y-m-d', strtotime('-1 month'));
+        $visitor = Visitor::join('users','visitor.id_user','=','users.id_user')->where('is_admin','=',0)->whereDate('visit_at','>=',$last_month)->pluck('users.id_user')->toArray();
+        $count_visitor = array_count_values($visitor);
+        arsort($count_visitor); // Sort
+        
+        // Pick 10
+        $array = [];
+        if(count($count_visitor)>0){
+            foreach($count_visitor as $key=>$value){
+                $user = User::select('id_user', 'nama_user')->find($key);
+                array_push($array, ['user' => $user, 'url' => route('admin.user.detail', ['id' => $key]), 'visits' => $value]);
+            }
+        }
+        
+        // Response
+        return response()->json([
+            'status' => 200,
+            'message' => 'Success!',
+            'data' => array_slice($array,0,10)
+        ]);
+    }
 
     /**
      * Status member
@@ -201,19 +261,26 @@ class APIController extends Controller
     {
         // Data visitor
         $visitorAll = Visitor::join('users','visitor.id_user','=','users.id_user')->count();
-        $visitorChrome = Visitor::join('users','visitor.id_user','=','users.id_user')->where('browser','like','%'.'"family":"Chrome"'.'%')->orWhere('browser','like','%'.'"family":"Chrome Mobile"'.'%')->count();
+        $visitorChrome = Visitor::join('users','visitor.id_user','=','users.id_user')->where('browser','like','%'.'"family":"Chrome"'.'%')->count();
+        $visitorChromeMobile = Visitor::join('users','visitor.id_user','=','users.id_user')->where('browser','like','%'.'"family":"Chrome Mobile"'.'%')->count();
         $visitorFirefox = Visitor::join('users','visitor.id_user','=','users.id_user')->where('browser','like','%'.'"family":"Firefox"'.'%')->count();
         $visitorOpera = Visitor::join('users','visitor.id_user','=','users.id_user')->where('browser','like','%'.'"family":"Opera"'.'%')->count();
-        $visitorLainnya = $visitorAll - ($visitorChrome + $visitorFirefox + $visitorOpera);
+        $visitorSafari = Visitor::join('users','visitor.id_user','=','users.id_user')->where('browser','like','%'.'"family":"Safari"'.'%')->count();
+        $visitorMobileSafari = Visitor::join('users','visitor.id_user','=','users.id_user')->where('browser','like','%'.'"family":"Mobile Safari"'.'%')->count();
+        $visitorMIUI = Visitor::join('users','visitor.id_user','=','users.id_user')->where('browser','like','%'.'"family":"MIUI Browser"'.'%')->count();
+        $visitorSamsungBrowser = Visitor::join('users','visitor.id_user','=','users.id_user')->where('browser','like','%'.'"family":"Samsung Browser"'.'%')->count();
+        $visitorOppoBrowser = Visitor::join('users','visitor.id_user','=','users.id_user')->where('browser','like','%'.'"family":"Oppo Browser"'.'%')->count();
+        $visitorVivoBrowser = Visitor::join('users','visitor.id_user','=','users.id_user')->where('browser','like','%'.'"family":"vivo Browser"'.'%')->count();
+        $visitorLainnya = $visitorAll - ($visitorChrome + $visitorChromeMobile + $visitorFirefox + $visitorOpera + $visitorSafari + $visitorMobileSafari + $visitorMIUI + $visitorSamsungBrowser + $visitorOppoBrowser + $visitorVivoBrowser);
 
         // Response
         return response()->json([
             'status' => 200,
             'message' => 'Success!',
             'data' => [
-                'labels' => ['Chrome', 'Firefox', 'Opera', 'Lainnya'],
-                'data' => [$visitorChrome, $visitorFirefox, $visitorOpera, $visitorLainnya],
-                'total' => number_format($visitorChrome + $visitorFirefox + $visitorOpera + $visitorLainnya,0,'.','.')
+                'labels' => ['Chrome', 'Chrome Mobile', 'Firefox', 'Opera', 'Safari', 'Mobile Safari', 'MIUI Browser', 'Samsung Browser', 'Oppo Browser', 'Vivo Browser', 'Lainnya'],
+                'data' => [$visitorChrome, $visitorChromeMobile, $visitorFirefox, $visitorOpera, $visitorSafari, $visitorMobileSafari, $visitorMIUI, $visitorSamsungBrowser, $visitorOppoBrowser, $visitorVivoBrowser, $visitorLainnya],
+                'total' => number_format($visitorChrome + $visitorChromeMobile + $visitorFirefox + $visitorOpera + $visitorSafari + $visitorMobileSafari + $visitorMIUI + $visitorSamsungBrowser + $visitorOppoBrowser + $visitorVivoBrowser + $visitorLainnya,0,'.','.')
             ]
         ]);
     }
@@ -228,7 +295,7 @@ class APIController extends Controller
         // Data visitor
         $visitorAll = Visitor::join('users','visitor.id_user','=','users.id_user')->count();
         $visitorWindows = Visitor::join('users','visitor.id_user','=','users.id_user')->where('platform','like','%'.'"family":"Windows"'.'%')->count();
-        $visitorLinux = Visitor::join('users','visitor.id_user','=','users.id_user')->where('platform','like','%'.'"family":"Linux"'.'%')->count();
+        $visitorLinux = Visitor::join('users','visitor.id_user','=','users.id_user')->where('platform','like','%'.'"family":"GNU\\\\/Linux"'.'%')->count();
         $visitorMac = Visitor::join('users','visitor.id_user','=','users.id_user')->where('platform','like','%'.'"family":"Mac"'.'%')->count();
         $visitorAndroid = Visitor::join('users','visitor.id_user','=','users.id_user')->where('platform','like','%'.'"family":"Android"'.'%')->count();
         $visitorLainnya = $visitorAll - ($visitorWindows + $visitorLinux + $visitorMac + $visitorAndroid);
@@ -604,7 +671,7 @@ class APIController extends Controller
             'status' => 200,
             'message' => 'Success!',
             'data' => [
-                'labels' => ['Tidak Pernah Ikut', 'Ikut 1 kali', 'Ikut 2 kali', 'Ikut 3 kali', 'Ikut 4 kali', 'Ikut > 4'],
+                'labels' => ['Tidak Pernah Ikut', 'Ikut 1 kali', 'Ikut 2 kali', 'Ikut 3 kali', 'Ikut 4 kali', 'Ikut > 4 kali'],
                 'data' => [$userPelatihan0, $userPelatihan1, $userPelatihan2, $userPelatihan3, $userPelatihan4, $userPelatihanMore],
                 'total' => number_format(count($userTotal),0,'.','.')
             ]
@@ -854,15 +921,23 @@ class APIController extends Controller
     /**
      * Mengambil koordinat
      *
-     * string $path
      * @return \Illuminate\Http\Response
      */
     public function getCoordinate(){
-        $visitor = Visitor::where('visit_at','=',Auth::user()->last_visit)->first();
-        if($visitor){
+        $visitor = Visitor::where('visit_at', '=', Auth::user()->last_visit)->first();
+        if ($visitor) {
             echo $visitor->location;
         }
     }
-}
 
+    /**
+     * Terserah
+     *
+     * @return \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function terserah(Request $request){
+        // Type code here
+    }
+}
 

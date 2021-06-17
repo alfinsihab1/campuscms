@@ -48,7 +48,7 @@ class BlogController extends Controller
         $kategori = KategoriArtikel::orderBy('id_ka','desc')->get();
 
         // Kontributor
-        $kontributor = Kontributor::orderBy('kontributor','asc')->get();
+        $kontributor = Kontributor::where('id_kontributor','>',0)->orderBy('kontributor','asc')->get();
 
         // View
         return view('faturcms::admin.blog.create', [
@@ -117,7 +117,7 @@ class BlogController extends Controller
         $kategori = KategoriArtikel::orderBy('id_ka','desc')->get();
 
         // Kontributor
-        $kontributor = Kontributor::orderBy('kontributor','asc')->get();
+        $kontributor = Kontributor::where('id_kontributor','>',0)->orderBy('kontributor','asc')->get();
 
         // View
         return view('faturcms::admin.blog.edit', [

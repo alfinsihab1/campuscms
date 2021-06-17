@@ -44,60 +44,6 @@
                                     <th width="40">Opsi</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach($pelatihan_member as $data)
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td>{{ $data->inv_pelatihan }}</td>
-                                    <td>
-                                        @if($data->pm_at != null)
-                                            <span class="d-none">{{ $data->pm_at }}</span>
-                                            {{ date('d/m/Y', strtotime($data->pm_at)) }}
-                                            <br>
-                                            <small><i class="fa fa-clock-o mr-1"></i>{{ date('H:i', strtotime($data->pm_at)) }} WIB</small>
-                                        @else
-                                        -
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('admin.user.detail', ['id' => $data->id_user]) }}">{{ $data->nama_user }}</a>
-                                        <br>
-                                        <small><i class="fa fa-envelope mr-2"></i>{{ $data->email }}</small>
-                                        <br>
-                                        <small><i class="fa fa-phone mr-2"></i>{{ $data->nomor_hp }}</small>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('admin.pelatihan.detail', ['id' => $data->id_pelatihan]) }}">{{ $data->nama_pelatihan }}</a>
-                                        <br>
-                                        <small><i class="fa fa-tag mr-2"></i>{{ $data->nomor_pelatihan }}</small>
-                                    </td>
-                                    <td>
-                                        {{ $data->fee > 0 ? number_format($data->fee,0,',',',') : 'Free' }}
-                                    </td>
-                                    <td>
-                                        @if($data->fee_status == 1)
-                                            <strong class="text-success">Diterima</strong>
-                                        @else
-                                            @if($data->fee_bukti == '')
-                                                <strong class="text-danger">User Belum Membayar</strong>
-                                            @else
-                                                <strong class="text-danger">Belum Diverifikasi</strong>
-                                            @endif
-                                        @endif
-                                    </td>
-                                    <td align="center">
-                                        <div class="btn-group"> 
-                                            @if($data->fee_status == 0 && $data->fee_bukti != '')
-                                                <a href="#" class="btn btn-sm btn-success btn-verify" data-id="{{ $data->id_pm }}" data-proof="{{ asset('assets/images/fee-pelatihan/'.$data->fee_bukti) }}" data-toggle="tooltip" title="Verifikasi Pembayaran"><i class="fa fa-check"></i></a>
-                                            @endif
-                                            @if($data->fee_bukti != '')
-                                                <a href="{{ asset('assets/images/fee-pelatihan/'.$data->fee_bukti) }}" class="btn btn-sm btn-info btn-magnify-popup" data-toggle="tooltip" title="Bukti Transfer"><i class="fa fa-image"></i></a>
-                                            @endif
-                                        </div>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -151,7 +97,20 @@
 
 <script type="text/javascript">
     // DataTable
-    generate_datatable("#dataTable");
+    generate_datatable("#dataTable", {
+        "url": "{{ route('admin.pelatihan.transaction.data') }}",
+        "columns": [
+            {data: 'checkbox', name: 'checkbox'},
+            {data: 'inv_pelatihan', name: 'inv_pelatihan'},
+            {data: 'waktu_membayar', name: 'waktu_membayar'},
+            {data: 'user_identity', name: 'user_identity'},
+            {data: 'pelatihan', name: 'pelatihan'},
+            {data: 'fee', name: 'fee'},
+            {data: 'status', name: 'status'},
+            {data: 'options', name: 'options'},
+        ],
+        "order": [2, 'desc']
+    });
 
     // Button Verify
     $(document).on("click", ".btn-verify", function(e){
@@ -159,7 +118,7 @@
         var id = $(this).data("id");
         var proof = $(this).data("proof");
         $("#form-verify input[name=id]").val(id);
-        $("#form-verify img").attr("src", proof);
+        $("#form-verify img").attr("src", proof).removeClass("d-none");
         $("#modal-verify").modal("show");
     });
 </script>

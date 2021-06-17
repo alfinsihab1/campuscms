@@ -35,9 +35,7 @@
                 <!-- Tile Body -->
                 <div class="tile-body">
                     <div class="text-center">
-                        <a href="#" class="btn-image">
-                            <img src="{{ image('assets/images/user/'.$user->foto, 'user') }}" class="img-fluid rounded-circle" height="175" width="175">
-                        </a>
+                        <img src="{{ image('assets/images/user/'.$user->foto, 'user') }}" class="img-fluid rounded-circle" height="175" width="175">
                     </div>
                 </div>
                 <!-- /Tile Body -->
@@ -91,7 +89,15 @@
                         </div>
                         <div class="list-group-item d-sm-flex justify-content-between px-0 py-1">
                             <div class="font-weight-bold">Status:</div>
-                            <div><span class="badge {{ $user->status == 1 ?'badge-success' : 'badge-danger' }}">{{ status($user->status) }}</span></div>
+                            <div>
+                                @if($user->status == 1)
+                                    <span class="badge badge-success">Aktif</span>
+                                @elseif($user->status == 0 && $user->email_verified == 1)
+                                    <span class="badge badge-warning">Belum Aktif</span>
+                                @elseif($user->status == 0 && $user->email_verified == 0)
+                                    <span class="badge badge-danger">Tidak Aktif</span>
+                                @endif
+                            </div>
                         </div>
                         @if($user->is_admin == 0)
                         <div class="list-group-item d-sm-flex justify-content-between px-0 py-1">
@@ -124,6 +130,67 @@
         <!-- /Column -->
     </div>
     <!-- /Row -->
+    
+    @if($user->role == role('trainer'))
+    <!-- Row -->
+    <div class="row">
+        <!-- Column -->
+        <div class="col-lg-12">
+            <!-- Tile -->
+            <div class="tile">
+                <!-- Tile Title -->
+                <div class="tile-title">
+                    <h5>Pelatihan yang Diampu</h5>
+                </div>
+                <!-- /Tile Title -->
+                <!-- Tile Body -->
+                <div class="tile-body">
+                    <div class="table-responsive">
+                        <table id="dataTable" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th width="40">No.</th>
+                                    <th width="100">Waktu</th>
+                                    <th>Pelatihan</th>
+                                    <th width="60">Jumlah Peserta</th>
+                                    <th width="40">Opsi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if(count($pelatihan_trainer)>0)
+                                    @php $i = 1; @endphp
+                                    @foreach($pelatihan_trainer as $data)
+                                    <tr>
+                                        <td>{{ $i }}</td>
+                                        <td>
+                                            <span class="d-none">{{ $data->tanggal_pelatihan_from }}</span>
+                                            {{ date('d/m/Y', strtotime($data->tanggal_pelatihan_from)) }}
+                                            <br>
+                                            <small><i class="fa fa-clock-o mr-1"></i>{{ date('H:i', strtotime($data->tanggal_pelatihan_from)) }} WIB</small>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('member.pelatihan.detail', ['id' => $data->id_pelatihan]) }}">{{ $data->nama_pelatihan }}</a>
+                                            <br>
+                                            <small><i class="fa fa-tag mr-1"></i>{{ $data->nomor_pelatihan }}</small>
+                                        </td>
+										<td>{{ number_format(count_peserta_pelatihan($data->id_pelatihan),0,',',',') }}</td>
+                                        <td>-</td>
+                                    </tr>
+                                    @php $i++; @endphp
+                                    @endforeach
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- /Tile Body -->
+            </div>
+            <!-- /Tile -->
+        </div>
+        <!-- /Column -->
+    </div>
+    <!-- /Row -->
+    @endif
 
     @if($user->is_admin == 0)
     <!-- Row -->
@@ -140,7 +207,7 @@
                 <!-- Tile Body -->
                 <div class="tile-body">
                     <div class="table-responsive">
-                        <table id="dataTable" class="table table-striped table-bordered">
+                        <table id="dataTable-2" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th width="40">No.</th>
@@ -190,7 +257,7 @@
         <!-- /Column -->
     </div>
     <!-- /Row -->
-    @endif
+@endif
 </main>
 <!-- /Main -->
 
@@ -205,6 +272,7 @@
 <script type="text/javascript">
     // DataTable
     generate_datatable("#dataTable");
+    generate_datatable("#dataTable-2");
 </script>
 
 @include('faturcms::template.admin._js-image', ['imageType' => 'user', 'croppieWidth' => 300, 'croppieHeight' => 300, 'id' => $id_direct])

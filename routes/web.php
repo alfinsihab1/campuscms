@@ -61,6 +61,7 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 
 	// User
 	Route::get('/admin/user', $namespacePrefix.'UserController@index')->name('admin.user.index');
+	Route::get('/admin/user/data', $namespacePrefix.'UserController@data')->name('admin.user.data');
 	Route::get('/admin/user/create', $namespacePrefix.'UserController@create')->name('admin.user.create');
 	Route::post('/admin/user/store', $namespacePrefix.'UserController@store')->name('admin.user.store');
 	Route::get('/admin/user/detail/{id}', $namespacePrefix.'UserController@detail')->name('admin.user.detail');
@@ -107,6 +108,7 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 
 	// Transaksi Komisi
 	Route::get('/admin/transaksi/komisi', $namespacePrefix.'KomisiController@index')->name('admin.komisi.index');
+	Route::get('/admin/transaksi/komisi/data', $namespacePrefix.'KomisiController@data')->name('admin.komisi.data');
 	Route::post('/admin/transaksi/komisi/verify', $namespacePrefix.'KomisiController@verify')->name('admin.komisi.verify');
 	Route::post('/admin/transaksi/komisi/confirm', $namespacePrefix.'KomisiController@confirm')->name('admin.komisi.confirm');
 
@@ -116,15 +118,20 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 
 	// Transaksi Pelatihan
 	Route::get('/admin/transaksi/pelatihan', $namespacePrefix.'PelatihanController@transaction')->name('admin.pelatihan.transaction');
+	Route::get('/admin/transaksi/pelatihan/data', $namespacePrefix.'PelatihanController@transactionData')->name('admin.pelatihan.transaction.data');
 	Route::post('/admin/transaksi/pelatihan/verify', $namespacePrefix.'PelatihanController@verify')->name('admin.pelatihan.verify');
 
 	// Email
 	Route::get('/admin/email', $namespacePrefix.'EmailController@index')->name('admin.email.index');
+	Route::get('/admin/email/data', $namespacePrefix.'EmailController@data')->name('admin.email.data');
 	Route::get('/admin/email/create', $namespacePrefix.'EmailController@create')->name('admin.email.create');
 	Route::post('/admin/email/store', $namespacePrefix.'EmailController@store')->name('admin.email.store');
+	Route::post('/admin/email/forward', $namespacePrefix.'EmailController@forward')->name('admin.email.forward');
+	Route::post('/admin/email/schedule', $namespacePrefix.'EmailController@schedule')->name('admin.email.schedule');
 	Route::get('/admin/email/detail/{id}', $namespacePrefix.'EmailController@detail')->name('admin.email.detail');
 	Route::post('/admin/email/delete', $namespacePrefix.'EmailController@delete')->name('admin.email.delete');
 	Route::post('/admin/email/import', $namespacePrefix.'EmailController@import')->name('admin.email.import');
+	Route::get('/admin/email/member-json', $namespacePrefix.'EmailController@memberJson')->name('admin.email.member-json');
 
 	// Halaman
 	Route::get('/admin/halaman', $namespacePrefix.'HalamanController@index')->name('admin.halaman.index');
@@ -416,6 +423,10 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	// API Visitor Total
 	Route::get('/admin/api/visitor/count/last-week', $namespacePrefix.'APIController@visitorLastWeek')->name('api.visitor.count.last-week');
 	Route::get('/admin/api/visitor/count/last-month', $namespacePrefix.'APIController@visitorLastMonth')->name('api.visitor.count.last-month');
+	
+	// API Top Visitor
+	Route::get('/admin/api/visitor/top/last-week', $namespacePrefix.'APIController@topVisitorLastWeek')->name('api.visitor.top.last-week');
+	Route::get('/admin/api/visitor/top/last-month', $namespacePrefix.'APIController@topVisitorLastMonth')->name('api.visitor.top.last-month');
 
 	// API Member
 	Route::get('/admin/api/member/status', $namespacePrefix.'APIController@memberStatus')->name('api.member.status');
@@ -448,12 +459,14 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::get('/admin/api/get/user-by-kelompok', $namespacePrefix.'APIController@getUserByKelompok')->name('api.get.user-by-kelompok');
 	Route::get('/admin/api/get/pelatihan-by-user', $namespacePrefix.'APIController@getPelatihanByUser')->name('api.get.pelatihan-by-user');
 
-	// User Setting
-	Route::get('/admin/user-setting/set-theme', $namespacePrefix.'UserSettingController@setTheme')->name('admin.user-setting.set-theme');
-
-	//cek
+	// API Get Koordinat
 	Route::get('/admin/api/get/coordinate', $namespacePrefix.'APIController@getCoordinate')->name('api.get.coordinate');
 
+	// API Terserah
+	Route::get('/admin/api/terserah', $namespacePrefix.'APIController@terserah')->name('api.terserah');
+
+	// User Setting
+	Route::get('/admin/user-setting/set-theme', $namespacePrefix.'UserSettingController@setTheme')->name('api.user-setting.set-theme');
 });
 
 // Member Capabilities

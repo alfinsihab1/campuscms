@@ -32,12 +32,22 @@ class MessageMail extends Mailable
      * @return $this
      */
     public function build()
-    {		
-        return $this->from($this->sender, setting('site.name'))->markdown('faturcms::email.message')->subject($this->subject)->with([
-			'sender' => $this->sender,
-			'receiver' => $this->receiver,
-			'subject' => $this->subject,
-			'message' => $this->message,
+    {
+        // Add headers
+        $this->withSwiftMessage(function ($message) {
+            $message->getHeaders()->addTextHeader('List-Unsubscribe', '<mailto:'.$this->sender.'>');
+            $message->getHeaders()->addTextHeader('X-Priority', '2');
+            $message->getHeaders()->addTextHeader('X-MSmail-Priority', 'high');
+        });
+        
+        // Set mail
+        $this->from($this->sender, setting('site.name'))->markdown('faturcms::email.message')->subject($this->subject)->with([
+            'sender' => $this->sender,
+            'receiver' => $this->receiver,
+            'subject' => $this->subject,
+            'message' => $this->message,
         ]);
+        
+        return $this;
     }
 }

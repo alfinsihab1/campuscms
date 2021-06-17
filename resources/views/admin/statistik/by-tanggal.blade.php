@@ -60,6 +60,9 @@
                     <p class="text-center mt-2 mb-0">Total: <strong id="total-kunjungan">0</strong></p>
                 </div>
                 <!-- /Tile Body -->
+                <!-- Tile Footer -->
+				<div class="tile-footer p-0"></div>
+                <!-- /Tile Footer -->
             </div>
             <!-- /Tile -->
         </div>
@@ -79,6 +82,9 @@
                     <p class="text-center mt-2 mb-0">Total: <strong id="total-ikut-pelatihan">0</strong></p>
                 </div>
                 <!-- /Tile Body -->
+                <!-- Tile Footer -->
+				<div class="tile-footer p-0"></div>
+                <!-- /Tile Footer -->
             </div>
             <!-- /Tile -->
         </div>
@@ -98,6 +104,9 @@
                     <p class="text-center mt-2 mb-0">Total: <strong id="total-churn-rate">0</strong></p>
                 </div>
                 <!-- /Tile Body -->
+                <!-- Tile Footer -->
+				<div class="tile-footer p-0"></div>
+                <!-- /Tile Footer -->
             </div>
             <!-- /Tile -->
         </div>
@@ -135,15 +144,17 @@
             url: "{{ route('api.by-tanggal.kunjungan') }}",
             data: {tanggal1: tanggal1, tanggal2: tanggal2},
             success: function(response){
+				var colors = ["#dc3545", "#fd7e14", "#ffc107", "#28a745"];
                 var data = {
                     labels: response.data.labels,
                     datasets: [{
                         data: response.data.data,
-                        backgroundColor: ["#dc3545", "#fd7e14", "#ffc107", "#28a745"],
+                        backgroundColor: colors,
                         borderWidth: 0
                     }]
                 };
                 generate_chart_doughnut("chartKunjungan", data);
+				generate_chart_legend(colors, response.data, "#chartKunjungan");
                 $("#total-kunjungan").text(thousand_format(response.data.total));
             }
         });
@@ -154,15 +165,17 @@
             url: "{{ route('api.by-tanggal.ikut-pelatihan') }}",
             data: {tanggal1: tanggal1, tanggal2: tanggal2},
             success: function(response){
+				var colors = ["#FF6384", "#63FF84", "#84FF63", "#8463FF", "#FDD100", "#F8B312"];
                 var data = {
                     labels: response.data.labels,
                     datasets: [{
                         data: response.data.data,
-                        backgroundColor: ["#FF6384", "#63FF84", "#84FF63", "#8463FF", "#FDD100", "#F8B312"],
+                        backgroundColor: colors,
                         borderWidth: 0
                     }]
                 };
                 generate_chart_doughnut("chartIkutPelatihan", data);
+				generate_chart_legend(colors, response.data, "#chartIkutPelatihan");
                 $("#total-ikut-pelatihan").text(thousand_format(response.data.total));
             }
         });
@@ -173,15 +186,17 @@
             url: "{{ route('api.by-tanggal.churn-rate') }}",
             data: {tanggal1: tanggal1, tanggal2: tanggal2},
             success: function(response){
+				var colors = ["#007bff", "#28a745", "#ffc107"];
                 var data = {
                     labels: response.data.labels,
                     datasets: [{
                         data: response.data.data,
-                        backgroundColor: ["#007bff", "#28a745", "#ffc107"],
+                        backgroundColor: colors,
                         borderWidth: 0
                     }]
                 };
                 generate_chart_doughnut("chartChurnRate", data);
+				generate_chart_legend(colors, response.data, "#chartChurnRate");
                 $("#total-churn-rate").text(thousand_format(response.data.total));
             }
         });

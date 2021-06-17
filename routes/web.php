@@ -466,7 +466,7 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::get('/admin/api/terserah', $namespacePrefix.'APIController@terserah')->name('api.terserah');
 
 	// User Setting
-	Route::get('/admin/user-setting/set-theme', $namespacePrefix.'UserSettingController@setTheme')->name('api.user-setting.set-theme');
+	Route::get('/admin/user-setting/set-theme', $namespacePrefix.'UserSettingController@setTheme')->name('admin.user-setting.set-theme');
 });
 
 // Member Capabilities

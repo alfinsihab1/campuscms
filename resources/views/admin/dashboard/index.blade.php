@@ -56,9 +56,9 @@
     	</div>
     </div>
     <div class="row">
-    	<div class="col-lg-8">
+    	<div class="col-lg-6 order-2 order-lg-1">
     		@if (Auth::user()->role==role('it'))
-		    <div class="experience mb-3 d-none">
+		    <div class="experience mb-3">
 		    	<div class="card">
 		    		<div class="card-body">
 		    			<div class="media d-block d-md-flex align-items-center">
@@ -107,20 +107,60 @@
 	            </div>
 	        </div>
     	</div>
-        <div class="col-lg-4">
+        <div class="col-lg-6 order-1 order-lg-2">
+		    <div class="menu-grid">
+		    	<div class="row">
+		    		<div class="col-6 mb-3">
+		    			<a href="#" class="text-decoration-none">
+		    			<div class="card menu-bg-red">
+		    				<div class="card-body">
+		    					<div class="media d-block d-md-flex text-center text-md-left">
+	    						<div class="mr-0 mr-md-3 h1">12</div>
+		    						<div class="media-body pl-0 pl-md-3 " style="border-left: 1px solid var(--red)">
+		    							<p class="m-0">Member<br>Aktif</p>
+		    						</div>
+		    					</div>
+		    				</div>
+		    			</div>
+		    			</a>
+		    		</div>
+		    		<div class="col-6 mb-3">
+		    			<a href="#" class="text-decoration-none">
+		    			<div class="card menu-bg-green">
+		    				<div class="card-body">
+		    					<div class="media d-block d-md-flex text-center text-md-left">
+	    						<div class="mr-0 mr-md-3 h1">2</div>
+		    						<div class="media-body pl-0 pl-md-3 " style="border-left: 1px solid var(--green)">
+		    							<p class="m-0">Member<br>Belum Aktif</p>
+		    						</div>
+		    					</div>
+		    				</div>
+		    			</div>
+		    			</a>
+		    		</div>
+		    	</div>
+		    </div>
         	@if(count($array)>0)
             <div class="tile">
                 <div class="tile-title">
                 	<h5>Statistik</h5>
                 </div>
                 <div class="tile-body">
-					<div class="list-group mt-3">
+                	<div class="row">
 						@foreach($array as $key=>$data)
-						<a href="{{ $data['url'] }}" class="list-group-item list-group-item-action d-flex justify-content-between {{ $key == 0 ? 'bg-primary' : '' }}">
-							<span>{{ $data['title'] }}</span>
-							<span>{{ number_format($data['total'],0,'.','.') }}</span>
-						</a>
+						<div class="col-lg-6">
+							<a href="{{ $data['url'] }}" class="list-group-item list-group-item-action border-0 d-flex align-items-center {{ $key == 0 ? 'bg-primary' : '' }}">
+								<i class="app-menu__icon fa {{$data['icon']}}"></i>
+								<div class="d-flex justify-content-between w-100">
+									<span>{{ $data['title'] }}</span>
+									<span>{{ number_format($data['total'],0,'.','.') }}</span>
+								</div>
+							</a>
+						</div>
 						@endforeach
+                	</div>
+					<div class="list-group mt-3">
+
 					</div>
                 </div>
             </div>

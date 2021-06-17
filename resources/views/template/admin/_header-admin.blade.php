@@ -260,7 +260,9 @@
               </h5>
             </div>
             <div class="list-group list-group-flush">
+              @if (Auth::user()->role==role('it'))
               <a class="list-group-item list-group-item-action" href="{{ route('admin.setting.edit', ['category' => 'color']) }}"><i class="fa fa-circle-o"></i> Warna</a>
+              @endif
               <a class="list-group-item list-group-item-action" href="{{ route('admin.setting.edit', ['category' => 'certificate']) }}"><i class="fa fa-circle-o"></i> Sertifikat</a>
               <a class="list-group-item list-group-item-action" href="{{ route('admin.setting.edit', ['category' => 'view']) }}"><i class="fa fa-circle-o"></i> Halaman</a>
               <a class="list-group-item list-group-item-action" href="{{ route('admin.setting.edit', ['category' => 'receivers']) }}"><i class="fa fa-circle-o"></i> Notifikasi</a>

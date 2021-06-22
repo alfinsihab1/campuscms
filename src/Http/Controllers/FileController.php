@@ -154,7 +154,7 @@ class FileController extends Controller
             $file->file_kategori = $request->file_kategori;
             $file->file_deskripsi = $request->file_deskripsi != '' ? $request->file_deskripsi : '';
             $file->file_konten = $request->file_konten;
-            $file->file_keterangan = $request->file_kategori == tipe_file(1) ? htmlentities($request->file_keterangan) : '';
+            $file->file_keterangan = tipe_file($request->file_kategori) == 'video' ? htmlentities($request->file_keterangan) : '';
             $file->file_thumbnail = generate_image_name("assets/images/file/", $request->gambar, $request->gambar_url);
             $file->file_at = date('Y-m-d H:i:s');
             $file->file_up = date('Y-m-d H:i:s');
@@ -289,8 +289,8 @@ class FileController extends Controller
             $file->id_folder = $request->id_folder;
             $file->file_nama = generate_file_name($request->nama_file, 'file', 'file_nama', 'file_kategori', $request->file_kategori, 'id_folder', $request->id_folder, 'id_file', $request->id);
             $file->file_deskripsi = $request->file_deskripsi != '' ? $request->file_deskripsi : '';
-            $file->file_konten = $request->file_kategori == tipe_file(1) ? $request->file_konten : $file->file_konten;
-            $file->file_keterangan = $request->file_kategori == tipe_file(1) ? htmlentities($request->file_keterangan) : '';
+            $file->file_konten = tipe_file($request->file_kategori) == 'video' ? $request->file_konten : $file->file_konten;
+            $file->file_keterangan = tipe_file($request->file_kategori) == 'video' ? htmlentities($request->file_keterangan) : '';
             $file->file_thumbnail = generate_image_name("assets/images/file/", $request->gambar, $request->gambar_url) != '' ? generate_image_name("assets/images/file/", $request->gambar, $request->gambar_url) : $file->file_thumbnail;
             $file->file_up = date('Y-m-d H:i:s');
             $file->save();

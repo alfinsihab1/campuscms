@@ -159,7 +159,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-sm btn-success btn-block" {{ $pelatihan->fee_member > 0 ? 'disabled' : '' }}><i class="fa fa-pencil mr-2"></i>Daftar</button>
+                    <button type="submit" class="btn btn-success btn-block" {{ $pelatihan->fee_member > 0 ? 'disabled' : '' }}><i class="fa fa-pencil mr-2"></i>Daftar</button>
                 </div>
             </form>
         </div>

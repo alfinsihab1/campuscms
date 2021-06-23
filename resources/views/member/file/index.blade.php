@@ -55,7 +55,7 @@
                                         </div>
                                         <div class="card-footer d-flex justify-content-between">
                                             <span data-toggle="tooltip" title="{{ count_folders($data->id_folder, $data->folder_kategori) }} Folder"><i class="fa fa-folder-open mr-1"></i>{{ count_folders($data->id_folder, $data->folder_kategori) }}</span>
-                                            <span data-toggle="tooltip" title="{{ count_files($data->id_folder, $data->folder_kategori) }} File"><i class="fa fa-file mr-1"></i>{{ count_files($data->id_folder, $data->folder_kategori) }}</span>
+                                            <span data-toggle="tooltip" title="{{ count_files($data->id_folder, $data->folder_kategori) }} File"><i class="fa {{ $kategori->icon_kategori }} mr-1"></i>{{ count_files($data->id_folder, $data->folder_kategori) }}</span>
                                         </div>
                                     </div>
                                 </div>

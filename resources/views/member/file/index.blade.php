@@ -45,17 +45,19 @@
                     <div class="row">
                         @if(count($folders)>0)
                             @foreach($folders as $data)
-                                <div class="col-lg-3 col-md-6 mb-3">
+                                <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
                                     <div class="card">
-                                        <div class="card-body text-center">
-                                            <a class="{{ $data->folder_voucher != '' ? session()->get('id_folder') != $data->id_folder ? 'btn-voucher' : '' : '' }}"  data-id="{{ $data->id_folder }}" href="{{ route('member.filemanager.index', ['kategori' => $kategori->slug_kategori, 'dir' => $data->folder_dir]) }}">
-                                                <img src="{{ image('assets/images/folder/'.$data->folder_icon, 'folder') }}" height="100" style="max-width: 100%;">
-                                            </a>
-                                            <p class="h6 mt-3 mb-0"><a class="{{ $data->folder_voucher != '' ? session()->get('id_folder') != $data->id_folder ? 'btn-voucher' : '' : '' }}" data-id="{{ $data->id_folder }}" href="{{ route('member.filemanager.index', ['kategori' => $kategori->slug_kategori, 'dir' => $data->folder_dir]) }}">{{ $data->folder_nama }}</a></p>
+                                        <a class="text-center {{ $data->folder_voucher != '' ? session()->get('id_folder') != $data->id_folder ? 'btn-voucher' : '' : '' }}"  data-id="{{ $data->id_folder }}" href="{{ route('member.filemanager.index', ['kategori' => $kategori->slug_kategori, 'dir' => $data->folder_dir]) }}">
+                                            <img class="lazy" data-src="{{ image('assets/images/folder/'.$data->folder_icon, 'folder') }}" height="100" style="max-width: 100%;">
+                                        </a>
+                                        <div class="card-body p-2">
+                                            <p class="card-title mb-0">
+                                                <a class="{{ $data->folder_voucher != '' ? session()->get('id_folder') != $data->id_folder ? 'btn-voucher' : '' : '' }}" data-id="{{ $data->id_folder }}" href="{{ route('member.filemanager.index', ['kategori' => $kategori->slug_kategori, 'dir' => $data->folder_dir]) }}" data-toggle="tooltip" title="{{ $data->folder_nama }}">{{ $data->folder_nama }}</a>
+                                            </p>
                                         </div>
-                                        <div class="card-footer d-flex justify-content-between">
+                                        <div class="card-footer d-flex justify-content-between p-2">
                                             <span data-toggle="tooltip" title="{{ count_folders($data->id_folder, $data->folder_kategori) }} Folder"><i class="fa fa-folder-open mr-1"></i>{{ count_folders($data->id_folder, $data->folder_kategori) }}</span>
-                                            <span data-toggle="tooltip" title="{{ count_files($data->id_folder, $data->folder_kategori) }} File"><i class="fa {{ $kategori->icon_kategori }} mr-1"></i>{{ count_files($data->id_folder, $data->folder_kategori) }}</span>
+                                            <span data-toggle="tooltip" title="{{ count_files($data->id_folder, $data->folder_kategori) }} File"><i class="fa {{ $kategori->icon_kategori != 'fa-folder-open' ? $kategori->icon_kategori : 'fa-file' }} mr-1"></i>{{ count_files($data->id_folder, $data->folder_kategori) }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -68,13 +70,15 @@
                     <div class="row">
                         @if(count($files)>0)
                             @foreach($files as $data)
-                                <div class="col-lg-3 col-md-6 mb-3">
+                                <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
                                     <div class="card">
                                         <a href="{{ $data->tipe_kategori == 'tools' ? asset('assets/tools/'.$data->file_konten) : route('member.file.detail', ['kategori' => $kategori->slug_kategori, 'id' => $data->id_file]) }}">
-                                            <img class="card-img-top" src="{{ image('assets/images/file/'.$data->file_thumbnail, $data->tipe_kategori) }}" height="{{ image('assets/images/file/'.$data->file_thumbnail, $data->tipe_kategori) == asset('assets/images/default/'.config('faturcms.images.'.$data->tipe_kategori)) ? 100 : 'auto' }}">
+                                            <img class="card-img-top lazy" data-src="{{ image('assets/images/file/'.$data->file_thumbnail, $data->tipe_kategori) }}" height="{{ image('assets/images/file/'.$data->file_thumbnail, $data->tipe_kategori) == asset('assets/images/default/'.config('faturcms.images.'.$data->tipe_kategori)) ? 100 : 'auto' }}">
                                         </a>
-                                        <div class="card-body text-center">
-                                            <p class="h6 my-0"><a href="{{ $data->tipe_kategori == 'tools' ? asset('assets/tools/'.$data->file_konten) : route('member.file.detail', ['kategori' => $kategori->slug_kategori, 'id' => $data->id_file]) }}">{{ $data->file_nama }}</a></p>
+                                        <div class="card-body p-2">
+                                            <p class="card-title my-0">
+                                                <a href="{{ $data->tipe_kategori == 'tools' ? asset('assets/tools/'.$data->file_konten) : route('member.file.detail', ['kategori' => $kategori->slug_kategori, 'id' => $data->id_file]) }}" data-toggle="tooltip" title="{{ $data->file_nama }}">{{ $data->file_nama }}</a>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -140,11 +144,16 @@
 
 @section('js-extra')
 
-<script>
-    @if(Session::get('message'))
-        $("#modal-voucher").modal("show");
-	@endif
-	
+@include('faturcms::template.admin._js-lazy')
+
+@if(Session::get('message'))
+<script type="text/javascript">
+    // Display modal voucher
+    $("#modal-voucher").modal("show");
+</script>
+@endif
+
+<script type="text/javascript">	
 	// Button voucher
 	$(document).on("click", ".btn-voucher", function(e){
 		e.preventDefault();
@@ -153,5 +162,13 @@
 		$("#modal-voucher").modal("show");
 	});
 </script>
+
+@endsection
+
+@section('css-extra')
+
+<style type="text/css">
+    .card-title {font-weight: bold; height: 42px; display: -webkit-box !important; -webkit-line-clamp: 2; -moz-line-clamp: 2; -ms-line-clamp: 2; -o-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; -ms-box-orient: vertical; -o-box-orient: vertical; box-orient: vertical; overflow: hidden; text-overflow: ellipsis;}
+</style>
 
 @endsection

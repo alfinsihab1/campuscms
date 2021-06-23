@@ -19,6 +19,3 @@ $namespacePrefix = '\\'.config('faturcms.controllers.namespace').'\\';
 
 // Update Package
 Route::post('/package/update', $namespacePrefix.'PackageController@updateMe');
-
-// Slider
-Route::get('/slider', $namespacePrefix.'SliderController@json')->name('api.slider.index');

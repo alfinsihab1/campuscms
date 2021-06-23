@@ -108,7 +108,7 @@ class DashboardController extends Controller
             // Data Withdrawal
             $data_withdrawal = Withdrawal::join('users','withdrawal.id_user','=','users.id_user')->join('rekening','withdrawal.id_rekening','=','rekening.id_rekening')->join('platform','rekening.id_platform','=','platform.id_platform')->count();
             // Array Push
-            array_push($array, ['title' => 'Transaksi Withdrawal', 'icon' => 'fa-credit-card', 'total' => $data_withdrawal, 'url' => route('admin.withdrawal.index')]);
+            array_push($array, ['title' => 'Tran. Withdrawal', 'icon' => 'fa-credit-card', 'total' => $data_withdrawal, 'url' => route('admin.withdrawal.index')]);
         }
 
         // Data Transaksi Pelatihan
@@ -116,7 +116,7 @@ class DashboardController extends Controller
             // Data Pelatihan
             $data_transaksi_pelatihan = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->join('users','pelatihan_member.id_user','=','users.id_user')->count();
             // Array Push
-            array_push($array, ['title' => 'Transaksi Pelatihan', 'icon' => 'fa-credit-card', 'total' => $data_transaksi_pelatihan, 'url' => route('admin.pelatihan.transaction')]);
+            array_push($array, ['title' => 'Tran. Pelatihan', 'icon' => 'fa-credit-card', 'total' => $data_transaksi_pelatihan, 'url' => route('admin.pelatihan.transaction')]);
         }
         
         // Array Push Data File

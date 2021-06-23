@@ -58,9 +58,9 @@
                                     <td>{{ $data->nama_platform }} | {{ $data->nomor }} | {{ $data->atas_nama }}</td>
                                     <td>
                                         @if($data->withdrawal_status == 0)
-                                            <strong class="text-danger">Sedang Diproses</strong>
+                                            <span class="badge badge-danger">Sedang Diproses</span>
                                         @else
-                                            <strong class="text-success">Diterima</strong>
+                                            <span class="badge badge-success">Diterima</span>
                                         @endif
                                     </td>
                                     <td align="right">{{ number_format($data->nominal,0,',',',') }}</td>

@@ -7,6 +7,17 @@
 <!-- Main -->
 <main class="app-content">
 
+    <!-- Breadcrumb -->
+    @include('faturcms::template.admin._breadcrumb', ['breadcrumb' => [
+        'title' => $kategori->prefix_kategori.' '.$kategori->folder_kategori,
+        'items' => [
+            ['text' => 'File Manager', 'url' => '#'],
+            ['text' => $kategori->prefix_kategori.' '.$kategori->folder_kategori, 'url' => route('member.filemanager.index', ['kategori' => $kategori->slug_kategori])],
+            ['text' => 'Detail File', 'url' => '#'],
+        ]
+    ]])
+    <!-- /Breadcrumb -->
+
     <!-- Row -->
     <div class="row">
         <!-- Column -->

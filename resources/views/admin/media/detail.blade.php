@@ -94,19 +94,11 @@
 
 @section('js-extra')
 
+@include('faturcms::template.admin._js-lazy')
+
 <script type="text/javascript" src="{{ asset('templates/vali-admin/vendor/magnific-popup/jquery.magnific-popup.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('templates/vali-admin/vendor/magnific-popup/meg.init.js') }}"></script>
-<script type="text/javascript">
-    // Image Lazy on Load
-    $(window).on("load", function(){
-        lazy_load();
-    });
-    
-    // Image Lazy on Scroll
-    $(window).on("scroll", function(){
-        lazy_load();
-    });
-    
+<script type="text/javascript">    
     // Button Magnify Popup
     $('.btn-magnify-popup').magnificPopup({
         type: 'image',
@@ -140,17 +132,6 @@
             $("#form-delete-batch-media").submit();
         }
     });
-    
-    // Function Lazy Load
-    function lazy_load(){
-        var scroll = $(window).scrollTop();
-        var images = $("img.lazy");
-        $(images).each(function(key,elem){
-            if($(elem).offset().top - window.innerHeight < scroll){
-                if($(elem).attr("src") == undefined) $(elem).attr("src", $(this).data("src"));
-            }
-        });
-    }
 </script>
 
 @endsection

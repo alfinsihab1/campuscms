@@ -169,7 +169,7 @@
                                             <small><i class="fa fa-clock-o mr-1"></i>{{ date('H:i', strtotime($data->tanggal_pelatihan_from)) }} WIB</small>
                                         </td>
                                         <td>
-                                            <a href="{{ route('member.pelatihan.detail', ['id' => $data->id_pelatihan]) }}">{{ $data->nama_pelatihan }}</a>
+                                            <a href="{{ route('admin.pelatihan.detail', ['id' => $data->id_pelatihan]) }}">{{ $data->nama_pelatihan }}</a>
                                             <br>
                                             <small><i class="fa fa-tag mr-1"></i>{{ $data->nomor_pelatihan }}</small>
                                         </td>

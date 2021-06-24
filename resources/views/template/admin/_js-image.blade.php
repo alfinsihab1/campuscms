@@ -122,7 +122,7 @@
                 }
                 html += '</div>';
                 $("#pills-galeri").html(html);
-                lazy_load();
+                lazy_load_elem("#modal-image .modal-body");
             }
         });
     });
@@ -143,5 +143,10 @@
           $("#modal-image .dropzone").val(null);
           $("#modal-image").modal("hide");
         }
+    });
+    
+    // Image Lazy on Scroll
+    $("#modal-image .modal-body").on("scroll", function(){
+        lazy_load_elem("#modal-image .modal-body");
     });
 </script>

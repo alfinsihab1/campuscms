@@ -101,6 +101,20 @@
             </div>
         </div>
         <!-- /Column -->
+        <!-- Column -->
+        <div class="col-xl-4 col-md-6">
+            <div class="tile">
+                <div class="tile-title-w-btn">
+                    <h5>Jam Kunjungan</h5>
+                </div>
+                <div class="tile-body">
+                    <canvas id="chartJamKunjungan" width="400" height="270"></canvas>
+                    <p class="text-center mt-2 mb-0">Total: <strong id="total-jam-kunjungan">0</strong></p>
+                </div>
+                <div class="tile-footer p-0"></div>
+            </div>
+        </div>
+        <!-- /Column -->
     </div>
     <!-- /Row -->
 </main>
@@ -194,7 +208,7 @@
         // Load chart hari kunjungan
         $.ajax({
             type: "get",
-            url: "{{ route('api.by-hari.kunjungan') }}",
+            url: "{{ route('api.by-tanggal.kunjungan-hari') }}",
             data: {tanggal1: tanggal1, tanggal2: tanggal2},
             success: function(response){
                 var colors = ["#FF6384", "#63FF84", "#84FF63", "#8463FF", "#FDD100", "#F8B312", "#D4D4D4"];
@@ -209,6 +223,27 @@
                 generate_chart_doughnut("chartHariKunjungan", data);
                 generate_chart_legend(colors, response.data, "#chartHariKunjungan");
                 $("#total-hari-kunjungan").text(thousand_format(response.data.total));
+            }
+        });
+
+        // Load chart jam kunjungan
+        $.ajax({
+            type: "get",
+            url: "{{ route('api.by-tanggal.kunjungan-jam') }}",
+            data: {tanggal1: tanggal1, tanggal2: tanggal2},
+            success: function(response){
+                var colors = ["#63FF84", "#8463FF", "#FDD100", "#FF6384"];
+                var data = {
+                    labels: response.data.labels,
+                    datasets: [{
+                        data: response.data.data,
+                        backgroundColor: colors,
+                        borderWidth: 0
+                    }]
+                };
+                generate_chart_doughnut("chartJamKunjungan", data);
+                generate_chart_legend(colors, response.data, "#chartJamKunjungan");
+                $("#total-jam-kunjungan").text(thousand_format(response.data.total));
             }
         });
     });

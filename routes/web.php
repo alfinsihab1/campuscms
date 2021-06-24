@@ -448,13 +448,12 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::get('/admin/api/finance/outcome', $namespacePrefix.'APIController@outcome')->name('api.finance.outcome');
 	Route::get('/admin/api/finance/revenue/{month}/{year}', $namespacePrefix.'APIController@revenue')->name('api.finance.revenue');
 
-	// API By Hari
-	Route::get('/admin/api/by-hari/kunjungan', $namespacePrefix.'APIController@byHariKunjungan')->name('api.by-hari.kunjungan');
-
 	// API By Tanggal
 	Route::get('/admin/api/by-tanggal/kunjungan', $namespacePrefix.'APIController@byTanggalKunjungan')->name('api.by-tanggal.kunjungan');
 	Route::get('/admin/api/by-tanggal/ikut-pelatihan', $namespacePrefix.'APIController@byTanggalIkutPelatihan')->name('api.by-tanggal.ikut-pelatihan');
 	Route::get('/admin/api/by-tanggal/churn-rate', $namespacePrefix.'APIController@byTanggalChurnRate')->name('api.by-tanggal.churn-rate');
+	Route::get('/admin/api/by-tanggal/kunjungan-hari', $namespacePrefix.'APIController@byTanggalKunjunganHari')->name('api.by-tanggal.kunjungan-hari');
+	Route::get('/admin/api/by-tanggal/kunjungan-jam', $namespacePrefix.'APIController@byTanggalKunjunganJam')->name('api.by-tanggal.kunjungan-jam');
 
 	// API By Kelompok
 	Route::get('/admin/api/by-kelompok/login', $namespacePrefix.'APIController@byKelompokLogin')->name('api.by-kelompok.login');

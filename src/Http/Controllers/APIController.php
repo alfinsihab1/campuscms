@@ -659,46 +659,6 @@ class APIController extends Controller
     }
 
     /**
-     * Kunjungan berdasarkan hari
-     * 
-     * @return \Illuminate\Http\Request
-     * @return \Illuminate\Http\Response
-     */
-    public function byHariKunjungan(Request $request)
-    {
-        if($request->ajax()){
-            // Visitor
-            $visitor = Visitor::join('users','visitor.id_user','=','users.id_user')->where('is_admin','=',0)->whereDate('visit_at','>=',generate_date_format($request->query('tanggal1'), 'y-m-d'))->whereDate('visit_at','<=',generate_date_format($request->query('tanggal2'), 'y-m-d'))->get();
-
-            // Get by day
-            $visitorDay = [];
-            if(count($visitor)>0){
-                foreach($visitor as $data){
-                    array_push($visitorDay, date('w', strtotime($data->visit_at)));
-                }
-            }
-            $array = array_count_values($visitorDay);
-
-            // Fill array if index is empty
-            for($i=0; $i<7; $i++){
-                $array[$i] = array_key_exists($i, $array) ? $array[$i] : 0;
-            }
-            ksort($array); // Sort by key asc
-
-            // Response
-            return response()->json([
-                'status' => 200,
-                'message' => 'Success!',
-                'data' => [
-                    'labels' => ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum`at', 'Sabtu'],
-                    'data' => $array,
-                    'total' => number_format(array_sum($array),0,'.','.')
-                ]
-            ]);
-        }
-    }
-
-    /**
      * Kunjungan berdasarkan tanggal
      * 
      * @return \Illuminate\Http\Request
@@ -787,6 +747,83 @@ class APIController extends Controller
                     'labels' => ['Tidak Login 1 bulan terakhir', 'Tidak Login 2 bulan terakhir', 'Tidak Login 3 bulan terakhir'],
                     'data' => [count_churn_rate(1), count_churn_rate(2), count_churn_rate(3)],
                     'total' => number_format(count_churn_rate(1) + count_churn_rate(2) + count_churn_rate(3),0,'.','.')
+                ]
+            ]);
+        }
+    }
+
+    /**
+     * Kunjungan berdasarkan hari
+     * 
+     * @return \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function byTanggalKunjunganHari(Request $request)
+    {
+        if($request->ajax()){
+            // Visitor
+            $visitor = Visitor::join('users','visitor.id_user','=','users.id_user')->where('is_admin','=',0)->whereDate('visit_at','>=',generate_date_format($request->query('tanggal1'), 'y-m-d'))->whereDate('visit_at','<=',generate_date_format($request->query('tanggal2'), 'y-m-d'))->get();
+
+            // Get by day
+            $visitorDay = [];
+            if(count($visitor)>0){
+                foreach($visitor as $data){
+                    array_push($visitorDay, date('w', strtotime($data->visit_at)));
+                }
+            }
+            $array = array_count_values($visitorDay);
+
+            // Fill array if index is empty
+            for($i=0; $i<7; $i++){
+                $array[$i] = array_key_exists($i, $array) ? $array[$i] : 0;
+            }
+            ksort($array); // Sort by key asc
+
+            // Response
+            return response()->json([
+                'status' => 200,
+                'message' => 'Success!',
+                'data' => [
+                    'labels' => ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum`at', 'Sabtu'],
+                    'data' => $array,
+                    'total' => number_format(array_sum($array),0,'.','.')
+                ]
+            ]);
+        }
+    }
+
+    /**
+     * Kunjungan berdasarkan jam
+     * 
+     * @return \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function byTanggalKunjunganJam(Request $request)
+    {
+        if($request->ajax()){
+            // Visitor
+            $visitor = Visitor::join('users','visitor.id_user','=','users.id_user')->where('is_admin','=',0)->whereDate('visit_at','>=',generate_date_format($request->query('tanggal1'), 'y-m-d'))->whereDate('visit_at','<=',generate_date_format($request->query('tanggal2'), 'y-m-d'))->get();
+
+            // Get by day
+            $visitorHour1 = $visitorHour2 = $visitorHour3 = $visitorHour4 = 0;
+            if(count($visitor)>0){
+                foreach($visitor as $data){
+                    $hour = date('G', strtotime($data->visit_at));
+                    if($hour >= 0 && $hour < 6) $visitorHour1++; // 00:00 - 05:59
+                    elseif($hour >= 6 && $hour < 12) $visitorHour2++; // 06:00 - 11:59
+                    elseif($hour >= 12 && $hour < 18) $visitorHour3++; // 12:00 - 17:59
+                    elseif($hour >= 18 && $hour <= 23) $visitorHour4++; // 18:00 - 23:59
+                }
+            }
+
+            // Response
+            return response()->json([
+                'status' => 200,
+                'message' => 'Success!',
+                'data' => [
+                    'labels' => ['00:00 - 05:59', '06:00 - 11:59', '12:00 - 17:59', '18:00 - 23:59'],
+                    'data' => [$visitorHour1, $visitorHour2, $visitorHour3, $visitorHour4],
+                    'total' => number_format(count($visitor),0,'.','.')
                 ]
             ]);
         }

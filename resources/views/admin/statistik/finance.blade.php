@@ -21,9 +21,7 @@
     <div class="row">
         <!-- Column -->
         <div class="col-xl-8 col-md-12">
-            <!-- Tile -->
             <div class="tile">
-                <!-- Tile Title -->
                 <div class="tile-title-w-btn">
                     <h5>Revenue</h5>
                     <div>
@@ -43,8 +41,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- /Tile Title -->
-                <!-- Tile Body -->
                 <div class="tile-body">
                     <canvas id="chartRevenue" width="400" height="270"></canvas>
                     <div class="d-md-flex justify-content-between text-center mt-3">
@@ -53,51 +49,35 @@
                         <div>Saldo: <strong id="revenue-saldo">0</strong></div>
                     </div>
                 </div>
-                <!-- /Tile Body -->
             </div>
-            <!-- /Tile -->
         </div>
         <!-- /Column -->
         <!-- Column -->
         <div class="col-xl-4 col-md-12">
-            <!-- Row -->
             <div class="row">
-                <!-- Column -->
                 <div class="col-xl-12 col-md-6">
-                    <!-- Tile -->
                     <div class="tile">
-                        <!-- Tile Title -->
                         <div class="tile-title-w-btn">
                             <h5>Total Income</h5>
                         </div>
-                        <!-- /Tile Title -->
-                        <!-- Tile Body -->
                         <div class="tile-body">
                             <canvas id="chartIncome" width="400" height="270"></canvas>
                             <p class="text-center mt-2 mb-0">Total: <strong id="total-income">0</strong></p>
                         </div>
-                        <!-- /Tile Body -->
                     </div>
-                    <!-- /Tile -->
                 </div>
                 <!-- /Column -->
                 <!-- Column -->
                 <div class="col-xl-12 col-md-6">
-                    <!-- Tile -->
                     <div class="tile">
-                        <!-- Tile Title -->
                         <div class="tile-title-w-btn">
                             <h5>Total Outcome</h5>
                         </div>
-                        <!-- /Tile Title -->
-                        <!-- Tile Body -->
                         <div class="tile-body">
                             <canvas id="chartOutcome" width="400" height="270"></canvas>
                             <p class="text-center mt-2 mb-0">Total: <strong id="total-outcome">0</strong></p>
                         </div>
-                        <!-- /Tile Body -->
                     </div>
-                    <!-- /Tile -->
                 </div>
                 <!-- /Column -->
             </div>

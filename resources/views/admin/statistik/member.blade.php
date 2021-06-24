@@ -21,68 +21,44 @@
     <div class="row">
         <!-- Column -->
         <div class="col-xl-4 col-md-6">
-            <!-- Tile -->
             <div class="tile">
-                <!-- Tile Title -->
                 <div class="tile-title-w-btn">
                     <h5>Status</h5>
                 </div>
-                <!-- /Tile Title -->
-                <!-- Tile Body -->
                 <div class="tile-body">
 					<canvas id="chartStatus" width="400" height="270"></canvas>
                     <p class="text-center mt-2 mb-0">Total: <strong id="total-status">0</strong></p>
                 </div>
-                <!-- /Tile Body -->
-                <!-- Tile Footer -->
 				<div class="tile-footer p-0"></div>
-                <!-- /Tile Footer -->
             </div>
-            <!-- /Tile -->
         </div>
         <!-- /Column -->
         <!-- Column -->
         <div class="col-xl-4 col-md-6">
-            <!-- Tile -->
             <div class="tile">
-                <!-- Tile Title -->
                 <div class="tile-title-w-btn">
                     <h5>Jenis Kelamin</h5>
                 </div>
-                <!-- /Tile Title -->
-                <!-- Tile Body -->
                 <div class="tile-body">
 					<canvas id="chartGender" width="400" height="270"></canvas>
                     <p class="text-center mt-2 mb-0">Total: <strong id="total-gender">0</strong></p>
                 </div>
-                <!-- /Tile Body -->
-                <!-- Tile Footer -->
 				<div class="tile-footer p-0"></div>
-                <!-- /Tile Footer -->
             </div>
-            <!-- /Tile -->
         </div>
         <!-- /Column -->
         <!-- Column -->
         <div class="col-xl-4 col-md-6">
-            <!-- Tile -->
             <div class="tile">
-                <!-- Tile Title -->
                 <div class="tile-title-w-btn">
                     <h5>Usia</h5>
                 </div>
-                <!-- /Tile Title -->
-                <!-- Tile Body -->
                 <div class="tile-body">
 					<canvas id="chartAge" width="400" height="270"></canvas>
                     <p class="text-center mt-2 mb-0">Total: <strong id="total-age">0</strong></p>
                 </div>
-                <!-- /Tile Body -->
-                <!-- Tile Footer -->
 				<div class="tile-footer p-0"></div>
-                <!-- /Tile Footer -->
             </div>
-            <!-- /Tile -->
         </div>
         <!-- /Column -->
     </div>

@@ -21,14 +21,10 @@
     <div class="row">
         <!-- Column -->
         <div class="col-xl-4 col-md-6">
-            <!-- Tile -->
             <div class="tile">
-                <!-- Tile Title -->
                 <div class="tile-title-w-btn">
                     <h5>Kota</h5>
                 </div>
-                <!-- /Tile Title -->
-                <!-- Tile Body -->
                 <div class="tile-body">
                     <div class="table-responsive">
                         <table class="table table-hover table-striped table-borderless" id="table-city">
@@ -44,22 +40,16 @@
                         </table>
                     </div>
                 </div>
-                <!-- /Tile Body -->
             </div>
-            <!-- /Tile -->
         </div>
         <!-- /Column -->
 
         <!-- Column -->
         <div class="col-xl-4 col-md-6">
-            <!-- Tile -->
             <div class="tile">
-                <!-- Tile Title -->
                 <div class="tile-title-w-btn">
                     <h5>Region</h5>
                 </div>
-                <!-- /Tile Title -->
-                <!-- Tile Body -->
                 <div class="tile-body">
                     <div class="table-responsive">
                         <table class="table table-hover table-striped table-borderless" id="table-region">
@@ -75,22 +65,16 @@
                         </table>
                     </div>
                 </div>
-                <!-- /Tile Body -->
             </div>
-            <!-- /Tile -->
         </div>
         <!-- /Column -->
 
         <!-- Column -->
         <div class="col-xl-4 col-md-6">
-            <!-- Tile -->
             <div class="tile">
-                <!-- Tile Title -->
                 <div class="tile-title-w-btn">
                     <h5>Negara</h5>
                 </div>
-                <!-- /Tile Title -->
-                <!-- Tile Body -->
                 <div class="tile-body">
                     <div class="table-responsive">
                         <table class="table table-hover table-striped table-borderless" id="table-country">
@@ -106,9 +90,7 @@
                         </table>
                     </div>
                 </div>
-                <!-- /Tile Body -->
             </div>
-            <!-- /Tile -->
         </div>
         <!-- /Column -->
     </div>

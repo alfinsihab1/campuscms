@@ -42,7 +42,7 @@
                     <option value="" disabled selected>--Pilih--</option>
                 </select>
             </div>
-            <div class="col-lg-3 text-right"><button class="btn btn-primary" type="submit" {{ $check ? '' : 'disabled' }}>Terapkan</button></div>
+            <div class="col-lg-3 text-right mt-3 mt-lg-0"><button class="btn btn-primary" type="submit" {{ $check ? '' : 'disabled' }}>Terapkan</button></div>
         </div>
     </form>
     <hr>
@@ -52,38 +52,26 @@
     <div class="row">
         <!-- Column -->
         <div class="col-xl-6 col-md-12">
-            <!-- Tile -->
             <div class="tile">
-                <!-- Tile Title -->
                 <div class="tile-title-w-btn">
                     <h5>Login</h5>
                 </div>
-                <!-- /Tile Title -->
-                <!-- Tile Body -->
                 <div class="tile-body">
                     <canvas id="chartLogin" width="400" height="270"></canvas>
                 </div>
-                <!-- /Tile Body -->
             </div>
-            <!-- /Tile -->
         </div>
         <!-- /Column -->
         <!-- Column -->
         <div class="col-xl-6 col-md-12">
-            <!-- Tile -->
             <div class="tile">
-                <!-- Tile Title -->
                 <div class="tile-title-w-btn">
                     <h5>Aktivitas</h5>
                 </div>
-                <!-- /Tile Title -->
-                <!-- Tile Body -->
                 <div class="tile-body">
                     <canvas id="chartAktivitas" width="400" height="270"></canvas>
                 </div>
-                <!-- /Tile Body -->
             </div>
-            <!-- /Tile -->
         </div>
         <!-- /Column -->
     </div>

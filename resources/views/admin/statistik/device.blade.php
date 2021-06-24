@@ -21,68 +21,44 @@
     <div class="row">
         <!-- Column -->
         <div class="col-xl-4 col-md-6">
-            <!-- Tile -->
             <div class="tile">
-                <!-- Tile Title -->
                 <div class="tile-title-w-btn">
                     <h5>Perangkat</h5>
                 </div>
-                <!-- /Tile Title -->
-                <!-- Tile Body -->
                 <div class="tile-body">
 					<canvas id="chartDevice" width="400" height="270"></canvas>
                     <p class="text-center mt-2 mb-0">Total: <strong id="total-device">0</strong></p>
                 </div>
-                <!-- /Tile Body -->
-                <!-- Tile Footer -->
 				<div class="tile-footer p-0"></div>
-                <!-- /Tile Footer -->
             </div>
-            <!-- /Tile -->
         </div>
         <!-- /Column -->
         <!-- Column -->
         <div class="col-xl-4 col-md-6">
-            <!-- Tile -->
             <div class="tile">
-                <!-- Tile Title -->
                 <div class="tile-title-w-btn">
                     <h5>Browser</h5>
                 </div>
-                <!-- /Tile Title -->
-                <!-- Tile Body -->
                 <div class="tile-body">
 					<canvas id="chartBrowser" width="400" height="270"></canvas>
                     <p class="text-center mt-2 mb-0">Total: <strong id="total-browser">0</strong></p>
                 </div>
-                <!-- /Tile Body -->
-                <!-- Tile Footer -->
 				<div class="tile-footer p-0"></div>
-                <!-- /Tile Footer -->
             </div>
-            <!-- /Tile -->
         </div>
         <!-- /Column -->
         <!-- Column -->
         <div class="col-xl-4 col-md-6">
-            <!-- Tile -->
             <div class="tile">
-                <!-- Tile Title -->
                 <div class="tile-title-w-btn">
                     <h5>Platform</h5>
                 </div>
-                <!-- /Tile Title -->
-                <!-- Tile Body -->
                 <div class="tile-body">
 					<canvas id="chartPlatform" width="400" height="270"></canvas>
                     <p class="text-center mt-2 mb-0">Total: <strong id="total-platform">0</strong></p>
                 </div>
-                <!-- /Tile Body -->
-                <!-- Tile Footer -->
 				<div class="tile-footer p-0"></div>
-                <!-- /Tile Footer -->
             </div>
-            <!-- /Tile -->
         </div>
         <!-- /Column -->
     </div>

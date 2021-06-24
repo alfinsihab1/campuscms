@@ -38,7 +38,7 @@
                 <input type="text" name="tanggal2" id="tanggal2" class="form-control form-control-sm" value="{{ $tanggal2 }}" readonly>
                 </div>
             </div>
-            <div class="col-lg-3 text-right"><button class="btn btn-primary" type="submit">Terapkan</button></div>
+            <div class="col-lg-3 text-right mt-3 mt-lg-0"><button class="btn btn-primary" type="submit">Terapkan</button></div>
         </div>
     </form>
     <hr>
@@ -47,68 +47,58 @@
     <div class="row">
         <!-- Column -->
         <div class="col-xl-4 col-md-6">
-            <!-- Tile -->
             <div class="tile">
-                <!-- Tile Title -->
                 <div class="tile-title-w-btn">
                     <h5>Kunjungan</h5>
                 </div>
-                <!-- /Tile Title -->
-                <!-- Tile Body -->
                 <div class="tile-body">
 					<canvas id="chartKunjungan" width="400" height="270"></canvas>
                     <p class="text-center mt-2 mb-0">Total: <strong id="total-kunjungan">0</strong></p>
                 </div>
-                <!-- /Tile Body -->
-                <!-- Tile Footer -->
 				<div class="tile-footer p-0"></div>
-                <!-- /Tile Footer -->
             </div>
-            <!-- /Tile -->
         </div>
         <!-- /Column -->
         <!-- Column -->
         <div class="col-xl-4 col-md-6">
-            <!-- Tile -->
             <div class="tile">
-                <!-- Tile Title -->
                 <div class="tile-title-w-btn">
                     <h5>Ikut Pelatihan</h5>
                 </div>
-                <!-- /Tile Title -->
-                <!-- Tile Body -->
                 <div class="tile-body">
 					<canvas id="chartIkutPelatihan" width="400" height="270"></canvas>
                     <p class="text-center mt-2 mb-0">Total: <strong id="total-ikut-pelatihan">0</strong></p>
                 </div>
-                <!-- /Tile Body -->
-                <!-- Tile Footer -->
 				<div class="tile-footer p-0"></div>
-                <!-- /Tile Footer -->
             </div>
-            <!-- /Tile -->
         </div>
         <!-- /Column -->
         <!-- Column -->
         <div class="col-xl-4 col-md-6">
-            <!-- Tile -->
             <div class="tile">
-                <!-- Tile Title -->
                 <div class="tile-title-w-btn">
                     <h5>Churn Rate</h5>
                 </div>
-                <!-- /Tile Title -->
-                <!-- Tile Body -->
                 <div class="tile-body">
 					<canvas id="chartChurnRate" width="400" height="270"></canvas>
                     <p class="text-center mt-2 mb-0">Total: <strong id="total-churn-rate">0</strong></p>
                 </div>
-                <!-- /Tile Body -->
-                <!-- Tile Footer -->
 				<div class="tile-footer p-0"></div>
-                <!-- /Tile Footer -->
             </div>
-            <!-- /Tile -->
+        </div>
+        <!-- /Column -->
+        <!-- Column -->
+        <div class="col-xl-4 col-md-6">
+            <div class="tile">
+                <div class="tile-title-w-btn">
+                    <h5>Hari Kunjungan</h5>
+                </div>
+                <div class="tile-body">
+                    <canvas id="chartHariKunjungan" width="400" height="270"></canvas>
+                    <p class="text-center mt-2 mb-0">Total: <strong id="total-hari-kunjungan">0</strong></p>
+                </div>
+                <div class="tile-footer p-0"></div>
+            </div>
         </div>
         <!-- /Column -->
     </div>
@@ -198,6 +188,27 @@
                 generate_chart_doughnut("chartChurnRate", data);
 				generate_chart_legend(colors, response.data, "#chartChurnRate");
                 $("#total-churn-rate").text(thousand_format(response.data.total));
+            }
+        });
+
+        // Load chart hari kunjungan
+        $.ajax({
+            type: "get",
+            url: "{{ route('api.by-hari.kunjungan') }}",
+            data: {tanggal1: tanggal1, tanggal2: tanggal2},
+            success: function(response){
+                var colors = ["#FF6384", "#63FF84", "#84FF63", "#8463FF", "#FDD100", "#F8B312", "#D4D4D4"];
+                var data = {
+                    labels: response.data.labels,
+                    datasets: [{
+                        data: response.data.data,
+                        backgroundColor: colors,
+                        borderWidth: 0
+                    }]
+                };
+                generate_chart_doughnut("chartHariKunjungan", data);
+                generate_chart_legend(colors, response.data, "#chartHariKunjungan");
+                $("#total-hari-kunjungan").text(thousand_format(response.data.total));
             }
         });
     });

@@ -442,7 +442,7 @@ class FileController extends Controller
      */
     public function showImages(Request $request)
     {
-        echo json_encode(generate_file(public_path('assets/images/file')));
+        echo json_encode(generate_file(public_path('assets/images/file'), ['..png']));
     }
 
     /**

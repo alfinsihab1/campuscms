@@ -164,7 +164,7 @@ class MentorController extends Controller
      */
     public function showImages(Request $request)
     {
-        echo json_encode(generate_file(public_path('assets/images/mentor')));
+        echo json_encode(generate_file(public_path('assets/images/mentor'), ['..png']));
     }
 
     /**

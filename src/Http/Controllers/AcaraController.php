@@ -205,6 +205,6 @@ class AcaraController extends Controller
      */
     public function showImages(Request $request)
     {
-        echo json_encode(generate_file(public_path('assets/images/acara')));
+        echo json_encode(generate_file(public_path('assets/images/acara'), ['..png']));
     }
 }

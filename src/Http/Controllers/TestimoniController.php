@@ -170,7 +170,7 @@ class TestimoniController extends Controller
      */
     public function showImages(Request $request)
     {
-        echo json_encode(generate_file(public_path('assets/images/testimoni')));
+        echo json_encode(generate_file(public_path('assets/images/testimoni'), ['..png']));
     }
 
     /**

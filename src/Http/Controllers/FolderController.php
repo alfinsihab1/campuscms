@@ -304,6 +304,6 @@ class FolderController extends Controller
      */
     public function showImages(Request $request)
     {
-        echo json_encode(generate_file(public_path('assets/images/folder')));
+        echo json_encode(generate_file(public_path('assets/images/folder'), ['..png']));
     }
 }

@@ -1,3 +1,5 @@
+@include('faturcms::template.admin._js-lazy')
+
 <!-- Croppie -->
 <script type="text/javascript" src="{{ asset('assets/plugins/croppie/croppie.min.js') }}"></script>
 
@@ -85,6 +87,16 @@
           reader.readAsDataURL(input.files[0]);
       }
     }
+	
+    // Show Modal Image
+    $('#modal-image').on('shown.bs.modal', function(){
+      var images = $("#pills-galeri").find("img");
+      if(images.length > 0){
+        $(images).each(function(key,elem){
+          $(elem).attr("src",$(elem).data("src")).removeClass("d-none");
+        });
+      }
+    });
 
     // Load Galeri Gambar
     $(document).on("click", "#pills-galeri-tab", function(){
@@ -98,7 +110,7 @@
                 if(result.length > 0){
                     for(var i = 0; i < result.length; i++){
                         html += '<div class="col-lg-3 col-md-3 col-sm-6 mb-3">';
-                        html += '<img class="img-fluid img-thumbnail btn-choose-image" src="{{ asset('assets/images') }}/{{ $imageType }}/'+result[i]+'" title="Pilih Gambar">';
+                        html += '<img class="img-fluid img-thumbnail btn-choose-image lazy" data-src="{{ asset('assets/images') }}/{{ $imageType }}/'+result[i]+'" title="Pilih Gambar">';
                         html += '<p class="small text-center mb-1">'+result[i]+'</p>';
                         html += '</div>';
                     }
@@ -110,6 +122,7 @@
                 }
                 html += '</div>';
                 $("#pills-galeri").html(html);
+                lazy_load();
             }
         });
     });

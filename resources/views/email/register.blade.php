@@ -8,7 +8,12 @@
     <br>
     <ol>
         @foreach($default_rekening as $data)
-        <li><strong>{{ $data->nama_platform }}</strong> dengan nomor rekening <strong>{{ $data->nomor }}</strong> a/n <strong>{{ $data->atas_nama }}</strong>.</li>
+        <li>
+            <strong>{{ $data->nama_platform }}</strong> dengan nomor rekening <strong>{{ $data->nomor }}</strong> a/n <strong>{{ $data->atas_nama }}</strong>.
+            @if($data->tipe_platform == 1)
+            Kode transfer bank adalah <strong>{{ $data->kode_platform }}</strong>.
+            @endif
+        </li>
         @endforeach
     </ol>
     <br>

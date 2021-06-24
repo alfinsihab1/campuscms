@@ -53,6 +53,15 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="col-md-2 col-form-label">Kode Transfer</label>
+                            <div class="col-md-10">
+                                <input type="text" name="kode_platform" class="form-control {{ $errors->has('kode_platform') ? 'is-invalid' : '' }}" value="{{ old('kode_platform') }}">
+                                @if($errors->has('kode_platform'))
+                                <div class="small text-danger mt-1">{{ ucfirst($errors->first('kode_platform')) }}</div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-md-2 col-form-label"></label>
                             <div class="col-md-10">
                                 <button type="submit" class="btn btn-theme-1"><i class="fa fa-save mr-2"></i>Simpan</button>

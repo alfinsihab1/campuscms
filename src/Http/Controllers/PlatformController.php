@@ -69,6 +69,7 @@ class PlatformController extends Controller
             $platform = new Platform;
             $platform->nama_platform = $request->nama_platform;
             $platform->tipe_platform = $request->tipe_platform;
+            $platform->kode_platform = $request->kode_platform != '' ? $request->kode_platform : '';
             $platform->save();
         }
 
@@ -121,6 +122,7 @@ class PlatformController extends Controller
             $platform = Platform::find($request->id);
             $platform->nama_platform = $request->nama_platform;
             $platform->tipe_platform = $request->tipe_platform;
+            $platform->kode_platform = $request->kode_platform != '' ? $request->kode_platform : '';
             $platform->save();
         }
 

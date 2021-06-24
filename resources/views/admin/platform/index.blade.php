@@ -44,6 +44,7 @@
                                     <th width="20"><input type="checkbox"></th>
                                     <th>Platform</th>
                                     <th>Tipe</th>
+                                    <th width="100">Kode Transfer</th>
                                     <th width="40">Opsi</th>
                                 </tr>
                             </thead>
@@ -53,6 +54,7 @@
                                     <td><input type="checkbox"></td>
                                     <td>{{ $data->nama_platform }}</td>
                                     <td>{{ $data->tipe_platform == 1 ? 'Bank' : 'Fintech' }}</td>
+                                    <td>{{ $data->kode_platform }}</td>
                                     <td>
                                         <div class="btn-group">
                                             <a href="{{ route('admin.platform.edit', ['id' => $data->id_platform]) }}" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Edit"><i class="fa fa-edit"></i></a>

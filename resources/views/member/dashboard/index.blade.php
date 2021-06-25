@@ -228,8 +228,11 @@
     // See More
     function see_more(){
         $(".more-text").each(function(key,elem){
+            // Set to default
             $(elem).css("max-height","8.25rem");
+            $(elem).parents(".more-card").css("height","18.3rem");
             $(elem).parents(".more-card").find(".more-link").text("Lihat Selengkapnya");
+
             if($(elem).height() < $(elem)[0].scrollHeight){
                 $(elem).parents(".more-card").find(".more-link").removeClass("d-none");
                 $(elem).parents(".more-card").addClass("truncate");

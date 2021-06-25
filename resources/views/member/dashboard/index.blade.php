@@ -228,6 +228,8 @@
     // See More
     function see_more(){
         $(".more-text").each(function(key,elem){
+            $(elem).css("max-height","8.25rem");
+            $(elem).parents(".more-card").find(".more-link").text("Lihat Selengkapnya");
             if($(elem).height() < $(elem)[0].scrollHeight){
                 $(elem).parents(".more-card").find(".more-link").removeClass("d-none");
                 $(elem).parents(".more-card").addClass("truncate");
@@ -241,6 +243,7 @@
 
     // Click More Link
     $(document).on("click", ".more-link", function(e){
+        e.preventDefault();
         var textElement = $(this).parents(".more-card");
         $(textElement).css("height","auto");
         if($(textElement).hasClass("truncate")){

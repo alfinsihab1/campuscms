@@ -163,25 +163,25 @@
   #modal-quill-code .modal-dialog {max-width: 100%; margin-left: 1rem; margin-right: 1rem;}
   #modal-quill-code .modal-dialog .modal-content {height: calc(100vh - 56px); max-height: auto!important;}
 
-    /* Bootstrap Datepicker */
-    .datepicker table tr td.active:active, .datepicker table tr td.active.highlighted:active, .datepicker table tr td.active.active, .datepicker table tr td.active.highlighted.active, .open > .dropdown-toggle.datepicker table tr td.active, .open > .dropdown-toggle.datepicker table tr td.active.highlighted {background-color: var(--primary-dark)!important; border-color: var(--primary-dark)!important;}
+  /* Bootstrap Datepicker */
+  .datepicker table tr td.active:active, .datepicker table tr td.active.highlighted:active, .datepicker table tr td.active.active, .datepicker table tr td.active.highlighted.active, .open > .dropdown-toggle.datepicker table tr td.active, .open > .dropdown-toggle.datepicker table tr td.active.highlighted {background-color: var(--primary-dark)!important; border-color: var(--primary-dark)!important;}
 
-    /* Bootstrap Tagsinput */
-    .bootstrap-tagsinput {width: 100%!important;}
-    .bootstrap-tagsinput input {color: #333;}
-    .bootstrap-tagsinput .tag {padding: 1px 2px; border-radius: 4px; background-color: var(--primary-light)!important; color: var(--primary-dark)!important;}
-    .tt-menu {background-color: #fff!important; width: 100%; box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15)!important; -webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15)!important}
-    .tt-menu.tt-open {width: 200px;}
-    .tt-suggestion {padding: .5rem; cursor: pointer;}
-    .tt-suggestion:hover {background-color: #e5e5e5;}
+  /* Bootstrap Tagsinput */
+  .bootstrap-tagsinput {width: 100%!important;}
+  .bootstrap-tagsinput input {color: #333;}
+  .bootstrap-tagsinput .tag {padding: 1px 2px; border-radius: 4px; background-color: var(--primary-light)!important; color: var(--primary-dark)!important;}
+  .tt-menu {background-color: #fff!important; width: 100%; box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15)!important; -webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15)!important}
+  .tt-menu.tt-open {width: 200px;}
+  .tt-suggestion {padding: .5rem; cursor: pointer;}
+  .tt-suggestion:hover {background-color: #e5e5e5;}
 
-    /* Select2 */
-    .select2-container--default.select2-container--open.select2-container--below .select2-selection--single, .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {border-color: var(--primary-dark);}
-    .select2-container--default.select2-container--focus .select2-selection--multiple {border-color: var(--primary-dark);}
-    .select2-container--default .select2-selection--multiple .select2-selection__choice {background-color: var(--primary-light); color: var(--primary-dark);}
-    .select2-container--default .select2-search--inline .select2-search__field {color: #333;}
-    .select2-dropdown {border-color: var(--primary-dark);}
-    .select2-container--default .select2-results__option--highlighted[aria-selected] {background-color: var(--primary-dark);}
+  /* Select2 */
+  .select2-container--default.select2-container--open.select2-container--below .select2-selection--single, .select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {border-color: var(--primary-dark);}
+  .select2-container--default.select2-container--focus .select2-selection--multiple {border-color: var(--primary-dark);}
+  .select2-container--default .select2-selection--multiple .select2-selection__choice {background-color: var(--primary-light); color: var(--primary-dark);}
+  .select2-container--default .select2-search--inline .select2-search__field {color: #333;}
+  .select2-dropdown {border-color: var(--primary-dark);}
+  .select2-container--default .select2-results__option--highlighted[aria-selected] {background-color: var(--primary-dark);}
 
   /* Sortable */
   .sortable .sortable-item {cursor: move!important;}
@@ -192,7 +192,7 @@
 
   /* Others */
   .tile{transition: unset;}
-  .tile, .widget-small, .dropdown-menu, .tile-topik, .card, .app-title {box-shadow: var(--shadow)!important;}
+  .tile, .widget-small, .dropdown-menu, .card, .app-title {box-shadow: var(--shadow)!important;}
   .material-half-bg .cover {background-color: var(--primary-dark)!important;}
   .widget-small.primary.coloured-icon .icon {background-color: var(--primary-dark)!important;}
   .dropdown-item.active, .dropdown-item:active {background-color: var(--primary-dark)!important;}
@@ -202,6 +202,9 @@
   .tab-content {border-top: 1px solid var(--primary-dark);}
   .separator {width: 100%; margin: 1rem; border-top: 1px solid #ddd;}
   .cr-boundary {border: 3px dashed #bebebe;}
+  .text-loading {font-size: 1rem; font-style: italic;}
+  .card-deskripsi {border-top: .25rem solid var(--primary-dark)!important; border-left: unset!important;}
+  @media(min-width: 576px) { .card-deskripsi {border-top: unset!important; border-left: .25rem solid var(--primary-dark)!important;} }
 
   .rounded-1{border-radius: .5em!important}
   .rounded-2{border-radius: 1em!important}
@@ -213,19 +216,19 @@
   .tile, .dropdown-menu, .widget-small, .app-header, .card{border-radius: .5em}
   .app-sidebar__user{color: var(--gray)}
   .app-sidebar__user-avatar{transition: var(--transition)}
-  .card, .tile-topik{border: unset!important}
+  .card {border: unset;}
 
-    .app-header{padding: 30px 30px 0px 30px; position: static; background-color: transparent; box-shadow: none;}
-    .app-header.nav-sticky{padding: 0px 30px 0px 30px; position: fixed; top: 0; background-color: var(--white); box-shadow: var(--shadow); animation: topBottom var(--transition)}
-    .app-header.nav-sticky .dropdown{transform: translate();}
-    .app-sidebar{padding-top: 0px; box-shadow: var(--shadow)!important}
-    .app-content{min-height: unset; margin-top: unset; padding: 30px; background-color: unset; -webkit-transition: unset; -o-transition: unset; transition: unset;}
-    @media (min-width: 768px) {.app-content {margin-left: unset}}
-    @media (max-width: 768px) {.app-content {margin-top: unset;min-width: unset}}
-    @media (max-width: 480px) {.app-content {padding: unset}}
-    @media print {.app-content { margin: unset; padding: unset; background-color: unset}}
-    @media (min-width: 992px) {.app-header.nav-sticky{padding-left: 260px;}}
-    @media (min-width: 992px) {.sidenav-closed .app-header.nav-sticky{padding-left: 102px;}}
+  .app-header{padding: 30px 30px 0px 30px; position: static; background-color: transparent; box-shadow: none;}
+  .app-header.nav-sticky{padding: 0px 30px 0px 30px; position: fixed; top: 0; background-color: var(--white); box-shadow: var(--shadow); animation: topBottom var(--transition)}
+  .app-header.nav-sticky .dropdown{transform: translate();}
+  .app-sidebar{padding-top: 0px; box-shadow: var(--shadow)!important}
+  .app-content{min-height: unset; margin-top: unset; padding: 30px; background-color: unset; -webkit-transition: unset; -o-transition: unset; transition: unset;}
+  @media (min-width: 768px) {.app-content {margin-left: unset}}
+  @media (max-width: 768px) {.app-content {margin-top: unset;min-width: unset}}
+  @media (max-width: 480px) {.app-content {padding: unset}}
+  @media print {.app-content { margin: unset; padding: unset; background-color: unset}}
+  @media (min-width: 992px) {.app-header.nav-sticky{padding-left: 260px;}}
+  @media (min-width: 992px) {.sidenav-closed .app-header.nav-sticky{padding-left: 102px;}}
 
   /*.a-app-content{min-height: calc(100vh - 50px); margin-top: 50px; padding: 30px; -webkit-transition: margin-left 0.3s ease; -o-transition: margin-left 0.3s ease; transition: margin-left 0.3s ease; min-height: unset!important; padding-bottom: unset!important; margin-top: 0px; margin-left: 230px}*/
   .a-app-content{min-height: calc(100vh - 50px); margin-top: 50px; -webkit-transition: margin-left 0.3s ease; -o-transition: margin-left 0.3s ease; transition: margin-left 0.3s ease; min-height: unset!important; padding-bottom: unset!important; margin-top: 0px; margin-left: 230px}

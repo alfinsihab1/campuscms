@@ -119,4 +119,12 @@
 		html += '</ul>';
 		$(selector).parents(".tile").find(".tile-footer").html(html);
 	}
+    
+    function add_canvas_loading(selector){
+        $("#"+selector).before('<div class="text-center text-loading">Loading...</div>');
+    }
+    
+    function remove_canvas_loading(selector){
+        $("#"+selector).siblings(".text-loading").remove();
+    }
 </script>

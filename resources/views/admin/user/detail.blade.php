@@ -58,6 +58,9 @@
             <div class="tile">
                 <!-- Tile Body -->
                 <div class="tile-body">
+                    @if(has_access('LogController::activity', Auth::user()->role, false))
+                    <a class="btn btn-sm btn-primary mb-3" href="{{ route('admin.log.activity', ['id' => $user->id_user]) }}"><i class="fa fa-eye mr-1"></i>Lihat Aktivitas</a>
+                    @endif
                     <div class="list-group list-group-flush">
                         <div class="list-group-item d-sm-flex justify-content-between px-0 py-1">
                             <div class="font-weight-bold">Nama:</div>

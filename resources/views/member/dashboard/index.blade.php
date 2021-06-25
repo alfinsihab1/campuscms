@@ -17,42 +17,48 @@
     <!-- /Breadcrumb -->
 
     @if(Auth::user()->status == 1)
-    <div class="card mb-4">
-        <div class="card-body">{{ $deskripsi->deskripsi }}</div>
+    <div class="card card-deskripsi mb-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-auto align-self-center text-center">
+                    <img src="{{ asset('assets/images/logo/'.setting('site.logo')) }}" width="175">
+                </div>
+                <div class="col-sm mt-4 mt-sm-0 text-justify">
+                    {{ $deskripsi->deskripsi }}
+                </div>
+            </div>
+        </div>
     </div>
     @endif
 
     @if(Auth::user()->status == 1)
     <!-- User Aktif -->
-    <!-- Row -->
     <div class="row">
         @if(Auth::user()->role == role('trainer') && !$signature)
         <!-- Signature -->
-        <!-- Column -->
         <div class="col-lg-12">
             <div class="alert alert-danger text-center shadow">
                 Anda merupakan {{ role(role('trainer')) }} tetapi belum mempunyai Tanda Tangan Digital. <a href="{{ route('member.signature.input') }}">Buat disini</a>.
             </div>
         </div>
-        <!-- /Column -->
         <!-- /Signature -->
         @endif
-        <!-- Column -->
 
-        <!-- /Column -->
-        <!-- Column -->
         <div class="col-md-12">
             <div class="row">
                 @if(count($fitur)>0)
                     @foreach($fitur as $data)
-                        <div class="col-md-3 col-sm-6 mb-3">
-                            <div class="card">
+                        <div class="col-xl-3 col-md-4 col-sm-6 mb-3">
+                            <div class="card more-card">
                                 <div class="card-body text-center">
                                     <a href="{{ URL::to('member/'.$data->url_fitur) }}">
                                         <img src="{{ image('assets/images/fitur/'.$data->gambar_fitur, 'fitur') }}" height="100" style="max-width: 100%;">
                                     </a>
-                                    <p class="h6 mt-3 mb-0"><a href="{{ URL::to('member/'.$data->url_fitur) }}">{{ $data->nama_fitur }}</a></p>
-                                    <p class="mt-2 mb-0">{{ $data->deskripsi_fitur }}</p>
+                                    <div class="more-text">
+                                        <p class="h5 mt-3 mb-0"><a href="{{ URL::to('member/'.$data->url_fitur) }}">{{ $data->nama_fitur }}</a></p>
+                                        <p class="mt-2 mb-0 text-justify">{{ $data->deskripsi_fitur }}</p>
+                                    </div>
+                                    <div class="text-justify"><a href="#" class="more-link d-none">Lihat Selengkapnya</a></div>
                                 </div>
                             </div>
                         </div>
@@ -60,26 +66,20 @@
                 @endif
             </div>
         </div>
-        <!-- /Column -->
     </div>
-    <!-- /Row -->
     <!-- /User Aktif -->
     @endif
 
     @if(Auth::user()->status == 0 && Auth::user()->email_verified == 1)
     <!-- User Belum Aktif tapi Sudah Memverifikasi Email -->
-    <!-- Row -->
     <div class="row">
         <div class="col-lg-12">
             <div class="alert alert-warning text-center shadow">
                 Email Anda sudah terverifikasi. Tahap selanjutnya adalah melakukan pembayaran.
             </div>
         </div>
-        <!-- Column -->
         <div class="col-lg-6">
-            <!-- Tile -->
             <div class="tile">
-                <!-- Tile Body -->
                 <div class="tile-body">
                     <h4 class="card-title">Aktivasi Akun Anda</h4>
                     <div class="m-t-20 m-b-20">
@@ -97,16 +97,10 @@
                         </ol>
                     </div>
                 </div>
-                <!-- /Tile Body -->
             </div>
-            <!-- /Tile -->
         </div>
-        <!-- /Column -->
-        <!-- Column -->
         <div class="col-lg-6">
-            <!-- Tile -->
             <div class="tile">
-                <!-- Tile Body -->
                 <div class="tile-body">
                     <h4 class="card-title">Anda Sudah Membayar?</h4>
                     <div class="m-t-20 m-b-20">
@@ -117,28 +111,20 @@
                         @endif
                     </div>
                 </div>
-                <!-- /Tile Body -->
             </div>
-            <!-- /Tile -->
         </div>
-        <!-- /Column -->
     </div>
-    <!-- /Row -->
     @endif
 
     @if(Auth::user()->status == 0 && Auth::user()->email_verified == 0)
     <!-- User Belum Aktif dan Belum Memverifikasi Email -->
-    <!-- Row -->
     <div class="row">
-        <!-- Column -->
         <div class="col-lg-12">
             <div class="alert alert-warning text-center shadow">
                 <i class="fa fa-exclamation-triangle mr-2"></i> Verifikasi email Anda untuk dapat menuju ke tahap berikutnya. <strong>Cek inbox email Anda atau juga di folder spam untuk melakukan verifikasi email.</strong>
             </div>
         </div>
-        <!-- /Column -->
     </div>
-    <!-- /Row -->
     <!-- /User Belum Aktif dan Belum Memverifikasi Email -->
     @endif
 </main>
@@ -231,6 +217,44 @@
 
 <script type="text/javascript" src="{{ asset('assets/plugins/owlcarousel/owl.carousel.min.js') }}"></script>
 <script type="text/javascript">
+    $(window).on("load", function(){
+        see_more();
+    });
+
+    $(window).on("resize", function(){
+        see_more();
+    });
+
+    // See More
+    function see_more(){
+        $(".more-text").each(function(key,elem){
+            if($(elem).height() < $(elem)[0].scrollHeight){
+                $(elem).parents(".more-card").find(".more-link").removeClass("d-none");
+                $(elem).parents(".more-card").addClass("truncate");
+            }
+            else{
+                $(elem).parents(".more-card").find(".more-link").addClass("d-none");
+                $(elem).parents(".more-card").removeClass("truncate");
+            }
+        });
+    }
+
+    // Click More Link
+    $(document).on("click", ".more-link", function(e){
+        var textElement = $(this).parents(".more-card");
+        $(textElement).css("height","auto");
+        if($(textElement).hasClass("truncate")){
+            $(textElement).find(".more-text").css("max-height",$(textElement).find(".more-text")[0].scrollHeight);
+            $(this).text("Sembunyikan");
+            $(textElement).removeClass("truncate");
+        }
+        else{
+            $(textElement).find(".more-text").css("max-height","8.25rem");
+            $(this).text("Lihat Selengkapnya");
+            $(textElement).addClass("truncate");
+        }
+    });
+
     // Button Confirm
     $(document).on("click", ".btn-confirm", function(e){
         e.preventDefault();
@@ -242,6 +266,7 @@
         change_file(this, "image", 2);
     });
 </script>
+
 @if(Auth::user()->status == 1)
 <!-- <script type="text/javascript">
     $(window).on('load', function() {
@@ -249,6 +274,7 @@
     });
 </script> -->
 @endif
+
 @if(count($popup)>0 && Auth::user()->status == 1)
 <script type="text/javascript">
     var owl = $(".carousel-popup").owlCarousel({
@@ -274,23 +300,24 @@
     });
 </script>
 @endif
+
+<!--
 <script type="text/javascript">
-const span = document.getElementById('clicktocopy');
+    const span = document.getElementById('clicktocopy');
+    span.onclick = function() {
+        document.execCommand("copy");
+    }
 
-span.onclick = function() {
-  document.execCommand("copy");
-}
-
-span.addEventListener("copy", function(event) {
-  event.preventDefault();
-  if (event.clipboardData) {
-    event.clipboardData.setData("text/plain", span.textContent);
-    alert("Berhasil menyalin " + event.clipboardData.getData("text"))
-    // console.log(event.clipboardData.getData("text"))
-  }
-});
-
+    span.addEventListener("copy", function(event) {
+        event.preventDefault();
+        if (event.clipboardData) {
+            event.clipboardData.setData("text/plain", span.textContent);
+            alert("Berhasil menyalin " + event.clipboardData.getData("text"))
+            // console.log(event.clipboardData.getData("text"))
+        }
+    });
 </script>
+-->
 
 @endsection
 
@@ -299,6 +326,8 @@ span.addEventListener("copy", function(event) {
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/owlcarousel/owl.carousel.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/owlcarousel/owl.theme.default.min.css') }}">
 <style type="text/css">
+    .more-card {height: 18.3rem;}
+    .more-card .more-text {max-height: 8.25rem; overflow: hidden; text-overflow: ellipsis; white-space: normal;}
     #modal-intro .modal-body {max-height: 70vh; overflow-y: auto;}
     .owl-nav {position: absolute; width: 100%; top: 45%;}
     .owl-carousel .owl-nav button.owl-prev {position: absolute; font-size: 30px; top: 0; left: -10px; width: 20px; background-color: var(--primary-light); color: var(--primary-dark);}

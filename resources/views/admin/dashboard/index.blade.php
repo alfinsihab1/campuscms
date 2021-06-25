@@ -228,6 +228,7 @@
 	});
 	
 	function count_visitor(selector, url){
+		add_canvas_loading(selector);
 		$.ajax({
 			type: "get",
 			url: url,
@@ -271,6 +272,7 @@
 						}
 					]
 				};
+				remove_canvas_loading(selector);
 				chart = generate_chart_line(selector, data);
 			}
 		});
@@ -279,6 +281,12 @@
 	
 	function top_visitor(selector, url){
 		if($(selector).length == 1){
+			var loading = '';
+			loading += '<tr>';
+			loading += '<td colspan="3" class="text-center"><em>Loading...</em></td>';
+			loading += '</tr>';
+			$(selector).find("tbody").html(loading);
+
 			$.ajax({
 				type: "get",
 				url: url,

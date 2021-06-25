@@ -159,6 +159,7 @@
 
     // Chart revenue by year
     function chart_revenue(month, year){
+        add_canvas_loading("chartRevenue");
         $.ajax({
             type: "get",
             url: "/admin/api/finance/revenue/" + month + "/" + year,
@@ -203,6 +204,7 @@
                         }
                     ]
                 };
+                remove_canvas_loading("chartRevenue");
                 chartRevenue = generate_chart_bar("chartRevenue", data, true);
                 $("#revenue-income").text(thousand_format(response.data.total.income, 'Rp '));
                 $("#revenue-outcome").text(thousand_format(response.data.total.outcome, 'Rp '));

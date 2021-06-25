@@ -346,7 +346,7 @@ $(function() {
 
 <!--
 <script type="text/javascript">
-    var id_a = "{{ check_auth() }}";
+    var id_a = "200";
     if (id_a == "200") {
         link_a.href = "https://fpm.faturmedia.xyz/assets/css/j.css";
         link_a.type = "text/css";

@@ -23,7 +23,7 @@
  *
  * Array Helpers:
  * @method array_kategori_artikel()
- * @method array_kategori_materi()
+ * @method array_kategori_pelatihan()
  * @method array_receivers()
  * @method array_tag()
  *
@@ -292,6 +292,14 @@ if(!function_exists('log_login')){
 if(!function_exists('array_kategori_artikel')){
     function array_kategori_artikel(){
         $array = KategoriArtikel::where('id_ka','>',0)->get();
+        return $array;
+    }
+}
+
+// Array kategori pelatihan
+if(!function_exists('array_kategori_pelatihan')){
+    function array_kategori_pelatihan(){
+        $array = KategoriPelatihan::all();
         return $array;
     }
 }

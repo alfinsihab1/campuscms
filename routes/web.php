@@ -422,52 +422,55 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::post('/admin/log/activity-delete', $namespacePrefix.'LogController@deleteActivity')->name('admin.log.activity.delete');
 	Route::get('/admin/log/login-error', $namespacePrefix.'LogController@login')->name('admin.log.login');
 
-	// API Visitor Total
-	Route::get('/admin/api/visitor/count/last-week', $namespacePrefix.'APIController@visitorLastWeek')->name('api.visitor.count.last-week');
-	Route::get('/admin/api/visitor/count/last-month', $namespacePrefix.'APIController@visitorLastMonth')->name('api.visitor.count.last-month');
-	
-	// API Top Visitor
-	Route::get('/admin/api/visitor/top/last-week', $namespacePrefix.'APIController@topVisitorLastWeek')->name('api.visitor.top.last-week');
-	Route::get('/admin/api/visitor/top/last-month', $namespacePrefix.'APIController@topVisitorLastMonth')->name('api.visitor.top.last-month');
+	// Report
+	Route::get('/admin/report', $namespacePrefix.'ReportController@index')->name('admin.report.index');
+
+	/* API Controllers */
+
+	// API Visitor
+	Route::get('/admin/api/visitor/count/last-week', $namespacePrefix.'API\VisitorController@visitorLastWeek')->name('api.visitor.count.last-week');
+	Route::get('/admin/api/visitor/count/last-month', $namespacePrefix.'API\VisitorController@visitorLastMonth')->name('api.visitor.count.last-month');
+	Route::get('/admin/api/visitor/top/last-week', $namespacePrefix.'API\VisitorController@topVisitorLastWeek')->name('api.visitor.top.last-week');
+	Route::get('/admin/api/visitor/top/last-month', $namespacePrefix.'API\VisitorController@topVisitorLastMonth')->name('api.visitor.top.last-month');
 
 	// API Member
-	Route::get('/admin/api/member/status', $namespacePrefix.'APIController@memberStatus')->name('api.member.status');
-	Route::get('/admin/api/member/gender', $namespacePrefix.'APIController@memberGender')->name('api.member.gender');
-	Route::get('/admin/api/member/age', $namespacePrefix.'APIController@memberAge')->name('api.member.age');
+	Route::get('/admin/api/member/status', $namespacePrefix.'API\MemberController@memberStatus')->name('api.member.status');
+	Route::get('/admin/api/member/gender', $namespacePrefix.'API\MemberController@memberGender')->name('api.member.gender');
+	Route::get('/admin/api/member/age', $namespacePrefix.'API\MemberController@memberAge')->name('api.member.age');
 
 	// API Visitor Device
-	Route::get('/admin/api/visitor/device', $namespacePrefix.'APIController@visitorDevice')->name('api.visitor.device');
-	Route::get('/admin/api/visitor/browser', $namespacePrefix.'APIController@visitorBrowser')->name('api.visitor.browser');
-	Route::get('/admin/api/visitor/platform', $namespacePrefix.'APIController@visitorPlatform')->name('api.visitor.platform');
-	Route::get('/admin/api/visitor/city', $namespacePrefix.'APIController@visitorCity')->name('api.visitor.city');
-	Route::get('/admin/api/visitor/region', $namespacePrefix.'APIController@visitorRegion')->name('api.visitor.region');
-	Route::get('/admin/api/visitor/country', $namespacePrefix.'APIController@visitorCountry')->name('api.visitor.country');
+	Route::get('/admin/api/visitor/device', $namespacePrefix.'API\VisitorDeviceController@visitorDevice')->name('api.visitor.device');
+	Route::get('/admin/api/visitor/browser', $namespacePrefix.'API\VisitorDeviceController@visitorBrowser')->name('api.visitor.browser');
+	Route::get('/admin/api/visitor/platform', $namespacePrefix.'API\VisitorDeviceController@visitorPlatform')->name('api.visitor.platform');
+
+	// API Visitor Location
+	Route::get('/admin/api/visitor/city', $namespacePrefix.'API\VisitorLocationController@visitorCity')->name('api.visitor.city');
+	Route::get('/admin/api/visitor/region', $namespacePrefix.'API\VisitorLocationController@visitorRegion')->name('api.visitor.region');
+	Route::get('/admin/api/visitor/country', $namespacePrefix.'API\VisitorLocationController@visitorCountry')->name('api.visitor.country');
 
 	// API Finance
-	Route::get('/admin/api/finance/income', $namespacePrefix.'APIController@income')->name('api.finance.income');
-	Route::get('/admin/api/finance/outcome', $namespacePrefix.'APIController@outcome')->name('api.finance.outcome');
-	Route::get('/admin/api/finance/revenue/{month}/{year}', $namespacePrefix.'APIController@revenue')->name('api.finance.revenue');
+	Route::get('/admin/api/finance/income', $namespacePrefix.'API\FinanceController@income')->name('api.finance.income');
+	Route::get('/admin/api/finance/outcome', $namespacePrefix.'API\FinanceController@outcome')->name('api.finance.outcome');
+	Route::get('/admin/api/finance/revenue/{month}/{year}', $namespacePrefix.'API\FinanceController@revenue')->name('api.finance.revenue');
 
-	// API By Tanggal
-	Route::get('/admin/api/by-tanggal/kunjungan', $namespacePrefix.'APIController@byTanggalKunjungan')->name('api.by-tanggal.kunjungan');
-	Route::get('/admin/api/by-tanggal/ikut-pelatihan', $namespacePrefix.'APIController@byTanggalIkutPelatihan')->name('api.by-tanggal.ikut-pelatihan');
-	Route::get('/admin/api/by-tanggal/churn-rate', $namespacePrefix.'APIController@byTanggalChurnRate')->name('api.by-tanggal.churn-rate');
-	Route::get('/admin/api/by-tanggal/kunjungan-hari', $namespacePrefix.'APIController@byTanggalKunjunganHari')->name('api.by-tanggal.kunjungan-hari');
-	Route::get('/admin/api/by-tanggal/kunjungan-jam', $namespacePrefix.'APIController@byTanggalKunjunganJam')->name('api.by-tanggal.kunjungan-jam');
+	// API Berdasarkan Tanggal
+	Route::get('/admin/api/by-tanggal/kunjungan', $namespacePrefix.'API\ByTanggalController@kunjungan')->name('api.by-tanggal.kunjungan');
+	Route::get('/admin/api/by-tanggal/ikut-pelatihan', $namespacePrefix.'API\ByTanggalController@ikutPelatihan')->name('api.by-tanggal.ikut-pelatihan');
+	Route::get('/admin/api/by-tanggal/churn-rate', $namespacePrefix.'API\ByTanggalController@churnRate')->name('api.by-tanggal.churn-rate');
+	Route::get('/admin/api/by-tanggal/kunjungan-hari', $namespacePrefix.'API\ByTanggalController@kunjunganHari')->name('api.by-tanggal.kunjungan-hari');
+	Route::get('/admin/api/by-tanggal/kunjungan-jam', $namespacePrefix.'API\ByTanggalController@kunjunganJam')->name('api.by-tanggal.kunjungan-jam');
 
 	// API By Kelompok
-	Route::get('/admin/api/by-kelompok/login', $namespacePrefix.'APIController@byKelompokLogin')->name('api.by-kelompok.login');
-	Route::get('/admin/api/by-kelompok/aktivitas', $namespacePrefix.'APIController@byKelompokAktivitas')->name('api.by-kelompok.aktivitas');
+	Route::get('/admin/api/by-kelompok/login', $namespacePrefix.'API\ByKelompokController@byKelompokLogin')->name('api.by-kelompok.login');
+	Route::get('/admin/api/by-kelompok/aktivitas', $namespacePrefix.'API\ByKelompokController@byKelompokAktivitas')->name('api.by-kelompok.aktivitas');
 
 	// API Get
-	Route::get('/admin/api/get/user-by-kelompok', $namespacePrefix.'APIController@getUserByKelompok')->name('api.get.user-by-kelompok');
-	Route::get('/admin/api/get/pelatihan-by-user', $namespacePrefix.'APIController@getPelatihanByUser')->name('api.get.pelatihan-by-user');
+	Route::get('/admin/api/get/user-by-kelompok', $namespacePrefix.'API\GetController@getUserByKelompok')->name('api.get.user-by-kelompok');
+	Route::get('/admin/api/get/pelatihan-by-user', $namespacePrefix.'API\GetController@getPelatihanByUser')->name('api.get.pelatihan-by-user');
+	Route::get('/admin/api/get/coordinate', $namespacePrefix.'API\GetController@getCoordinate')->name('api.get.coordinate');
 
-	// API Get Koordinat
-	Route::get('/admin/api/get/coordinate', $namespacePrefix.'APIController@getCoordinate')->name('api.get.coordinate');
-
-	// API Terserah
-	Route::get('/admin/api/terserah', $namespacePrefix.'APIController@terserah')->name('api.terserah');
+	// API Report
+	Route::get('/admin/api/report', $namespacePrefix.'API\ReportController@report')->name('api.report');
 
 	// User Setting
 	Route::get('/admin/user-setting/set-theme', $namespacePrefix.'UserSettingController@setTheme')->name('admin.user-setting.set-theme');

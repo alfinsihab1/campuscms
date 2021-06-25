@@ -50,7 +50,7 @@ class DashboardController extends Controller
         // Data Artikel
         if(has_access('BlogController::index', Auth::user()->role, false)){
             // Data Artikel
-            $data_artikel = Blog::join('kategori_artikel','blog.blog_kategori','=','kategori_artikel.id_ka')->count();
+            $data_artikel = Blog::join('users','blog.author','=','users.id_user')->join('kategori_artikel','blog.blog_kategori','=','kategori_artikel.id_ka')->join('kontributor','blog.blog_kontributor','=','kontributor.id_kontributor')->count();
             // Array Push
             array_push($array, ['title' => 'Artikel', 'icon' => 'fa-pencil', 'total' => $data_artikel, 'url' => route('admin.blog.index')]);
         }

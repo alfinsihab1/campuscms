@@ -27,7 +27,7 @@
                 </div>
                 <div class="tile-body">
 					<canvas id="chartStatus" width="400" height="270"></canvas>
-                    <p class="text-center mt-2 mb-0">Total: <strong id="total-status">0</strong></p>
+                    <p class="text-center mt-2 mb-0">Total: <strong class="total">0</strong></p>
                 </div>
 				<div class="tile-footer p-0"></div>
             </div>
@@ -41,7 +41,7 @@
                 </div>
                 <div class="tile-body">
 					<canvas id="chartGender" width="400" height="270"></canvas>
-                    <p class="text-center mt-2 mb-0">Total: <strong id="total-gender">0</strong></p>
+                    <p class="text-center mt-2 mb-0">Total: <strong class="total">0</strong></p>
                 </div>
 				<div class="tile-footer p-0"></div>
             </div>
@@ -55,7 +55,7 @@
                 </div>
                 <div class="tile-body">
 					<canvas id="chartAge" width="400" height="270"></canvas>
-                    <p class="text-center mt-2 mb-0">Total: <strong id="total-age">0</strong></p>
+                    <p class="text-center mt-2 mb-0">Total: <strong class="total">0</strong></p>
                 </div>
 				<div class="tile-footer p-0"></div>
             </div>
@@ -75,65 +75,32 @@
 <script type="text/javascript">
     $(function(){
         // Load chart status
-        $.ajax({
-            type: "get",
-            url: "{{ route('api.member.status') }}",
-            success: function(response){
-				var colors = ["#28a745", "#dc3545"];
-                var data = {
-                    labels: response.data.labels,
-                    datasets: [{
-                        data: response.data.data,
-                        backgroundColor: colors,
-                        borderWidth: 0
-                    }]
-                };
-                generate_chart_doughnut("chartStatus", data);
-				generate_chart_legend(colors, response.data, "#chartStatus");
-                $("#total-status").text(thousand_format(response.data.total));
-            }
-        });
-
-        // Load chart jenis kelamin
-        $.ajax({
-            type: "get",
-            url: "{{ route('api.member.gender') }}",
-            success: function(response){
-				var colors = ["#007bff", "#e83e8c"];
-                var data = {
-                    labels: response.data.labels,
-                    datasets: [{
-                        data: response.data.data,
-                        backgroundColor: colors,
-                        borderWidth: 0
-                    }]
-                };
-                generate_chart_doughnut("chartGender", data);
-				generate_chart_legend(colors, response.data, "#chartGender");
-                $("#total-gender").text(thousand_format(response.data.total));
-            }
-        });
-
-        // Load chart usia
-        $.ajax({
-            type: "get",
-            url: "{{ route('api.member.age') }}",
-            success: function(response){
-				var colors = ["#20c997", "#28a745", "#ffc107", "#dc3545"];
-                var data = {
-                    labels: response.data.labels,
-                    datasets: [{
-                        data: response.data.data,
-                        backgroundColor: colors,
-                        borderWidth: 0
-                    }]
-                };
-                generate_chart_doughnut("chartAge", data);
-				generate_chart_legend(colors, response.data, "#chartAge");
-                $("#total-age").text(thousand_format(response.data.total));
-            }
-        });
+        generate_chart("chartStatus", "{{ route('api.member.status') }}");
+        // Load chart gender
+        generate_chart("chartGender", "{{ route('api.member.gender') }}");
+        // Load chart age
+        generate_chart("chartAge", "{{ route('api.member.age') }}");
     });
+
+    function generate_chart(selector, url){
+        $.ajax({
+            type: "get",
+            url: url,
+            success: function(response){
+                var data = {
+                    labels: response.data.labels,
+                    datasets: [{
+                        data: response.data.data,
+                        backgroundColor: response.data.colors,
+                        borderWidth: 0
+                    }]
+                };
+                generate_chart_doughnut(selector, data);
+                generate_chart_legend(response.data.colors, response.data, "#"+selector);
+                $("#"+selector).parents(".tile-body").find(".total").text(thousand_format(response.data.total));
+            }
+        });
+    }
 </script>
 
 @endsection

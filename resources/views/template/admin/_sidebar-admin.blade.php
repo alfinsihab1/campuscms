@@ -102,6 +102,10 @@
         @if(has_access('EmailController::index', Auth::user()->role, false))
         <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.email.index'))) ? 'active' : '' }}" href="{{ route('admin.email.index') }}"><i class="app-menu__icon fa fa-envelope"></i><span class="app-menu__label">Email</span></a></li>
         @endif
+
+        @if(has_access('ReportController::index', Auth::user()->role, false))
+        <li><a class="app-menu__item {{ is_int(strpos(Request::url(), route('admin.report.index'))) ? 'active' : '' }}" href="{{ route('admin.report.index') }}"><i class="app-menu__icon fa fa-book"></i><span class="app-menu__label">Report</span></a></li>
+        @endif
         
         @if(has_access('FileController::index', Auth::user()->role, false))
           <div class="app-menu-title"><span class="font-weight-bold" style="color: var(--primary)">Materi</span></div>

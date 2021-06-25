@@ -112,6 +112,9 @@ class PermissionSeeder extends Seeder
             ['key' => 'EmailController::detail', 'name' => 'Menampilkan Detail Email'],
             ['key' => 'EmailController::delete', 'name' => 'Menghapus Email'],
 
+            // Report
+            ['key' => 'ReportController::index', 'name' => 'Menampilkan Report'],
+
             // File Manager
             ['key' => 'FileController::index', 'name' => 'Menampilkan File Manager'],
             ['key' => 'FileController::create', 'name' => 'Menambah File'],

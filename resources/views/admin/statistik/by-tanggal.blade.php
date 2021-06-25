@@ -53,7 +53,7 @@
                 </div>
                 <div class="tile-body">
 					<canvas id="chartKunjungan" width="400" height="270"></canvas>
-                    <p class="text-center mt-2 mb-0">Total: <strong id="total-kunjungan">0</strong></p>
+                    <p class="text-center mt-2 mb-0">Total: <strong class="total">0</strong></p>
                 </div>
 				<div class="tile-footer p-0"></div>
             </div>
@@ -67,7 +67,7 @@
                 </div>
                 <div class="tile-body">
 					<canvas id="chartIkutPelatihan" width="400" height="270"></canvas>
-                    <p class="text-center mt-2 mb-0">Total: <strong id="total-ikut-pelatihan">0</strong></p>
+                    <p class="text-center mt-2 mb-0">Total: <strong class="total">0</strong></p>
                 </div>
 				<div class="tile-footer p-0"></div>
             </div>
@@ -81,7 +81,7 @@
                 </div>
                 <div class="tile-body">
 					<canvas id="chartChurnRate" width="400" height="270"></canvas>
-                    <p class="text-center mt-2 mb-0">Total: <strong id="total-churn-rate">0</strong></p>
+                    <p class="text-center mt-2 mb-0">Total: <strong class="total">0</strong></p>
                 </div>
 				<div class="tile-footer p-0"></div>
             </div>
@@ -95,7 +95,7 @@
                 </div>
                 <div class="tile-body">
                     <canvas id="chartHariKunjungan" width="400" height="270"></canvas>
-                    <p class="text-center mt-2 mb-0">Total: <strong id="total-hari-kunjungan">0</strong></p>
+                    <p class="text-center mt-2 mb-0">Total: <strong class="total">0</strong></p>
                 </div>
                 <div class="tile-footer p-0"></div>
             </div>
@@ -109,7 +109,7 @@
                 </div>
                 <div class="tile-body">
                     <canvas id="chartJamKunjungan" width="400" height="270"></canvas>
-                    <p class="text-center mt-2 mb-0">Total: <strong id="total-jam-kunjungan">0</strong></p>
+                    <p class="text-center mt-2 mb-0">Total: <strong class="total">0</strong></p>
                 </div>
                 <div class="tile-footer p-0"></div>
             </div>
@@ -138,115 +138,42 @@
     });
 </script>
 <script type="text/javascript">
+    var tanggal1 = "{{ $tanggal1 }}";
+    var tanggal2 = "{{ $tanggal2 }}";
+
     $(function(){
-        var tanggal1 = "{{ $tanggal1 }}";
-        var tanggal2 = "{{ $tanggal2 }}";
-
         // Load chart kunjungan
-        $.ajax({
-            type: "get",
-            url: "{{ route('api.by-tanggal.kunjungan') }}",
-            data: {tanggal1: tanggal1, tanggal2: tanggal2},
-            success: function(response){
-				var colors = ["#dc3545", "#fd7e14", "#ffc107", "#28a745"];
-                var data = {
-                    labels: response.data.labels,
-                    datasets: [{
-                        data: response.data.data,
-                        backgroundColor: colors,
-                        borderWidth: 0
-                    }]
-                };
-                generate_chart_doughnut("chartKunjungan", data);
-				generate_chart_legend(colors, response.data, "#chartKunjungan");
-                $("#total-kunjungan").text(thousand_format(response.data.total));
-            }
-        });
-
+        generate_chart("chartKunjungan", "{{ route('api.by-tanggal.kunjungan') }}");
         // Load chart ikut pelatihan
-        $.ajax({
-            type: "get",
-            url: "{{ route('api.by-tanggal.ikut-pelatihan') }}",
-            data: {tanggal1: tanggal1, tanggal2: tanggal2},
-            success: function(response){
-				var colors = ["#FF6384", "#63FF84", "#84FF63", "#8463FF", "#FDD100", "#F8B312"];
-                var data = {
-                    labels: response.data.labels,
-                    datasets: [{
-                        data: response.data.data,
-                        backgroundColor: colors,
-                        borderWidth: 0
-                    }]
-                };
-                generate_chart_doughnut("chartIkutPelatihan", data);
-				generate_chart_legend(colors, response.data, "#chartIkutPelatihan");
-                $("#total-ikut-pelatihan").text(thousand_format(response.data.total));
-            }
-        });
-
+        generate_chart("chartIkutPelatihan", "{{ route('api.by-tanggal.ikut-pelatihan') }}");
         // Load chart churn rate
-        $.ajax({
-            type: "get",
-            url: "{{ route('api.by-tanggal.churn-rate') }}",
-            data: {tanggal1: tanggal1, tanggal2: tanggal2},
-            success: function(response){
-				var colors = ["#007bff", "#28a745", "#ffc107"];
-                var data = {
-                    labels: response.data.labels,
-                    datasets: [{
-                        data: response.data.data,
-                        backgroundColor: colors,
-                        borderWidth: 0
-                    }]
-                };
-                generate_chart_doughnut("chartChurnRate", data);
-				generate_chart_legend(colors, response.data, "#chartChurnRate");
-                $("#total-churn-rate").text(thousand_format(response.data.total));
-            }
-        });
-
+        generate_chart("chartChurnRate", "{{ route('api.by-tanggal.churn-rate') }}");
         // Load chart hari kunjungan
-        $.ajax({
-            type: "get",
-            url: "{{ route('api.by-tanggal.kunjungan-hari') }}",
-            data: {tanggal1: tanggal1, tanggal2: tanggal2},
-            success: function(response){
-                var colors = ["#FF6384", "#63FF84", "#84FF63", "#8463FF", "#FDD100", "#F8B312", "#D4D4D4"];
-                var data = {
-                    labels: response.data.labels,
-                    datasets: [{
-                        data: response.data.data,
-                        backgroundColor: colors,
-                        borderWidth: 0
-                    }]
-                };
-                generate_chart_doughnut("chartHariKunjungan", data);
-                generate_chart_legend(colors, response.data, "#chartHariKunjungan");
-                $("#total-hari-kunjungan").text(thousand_format(response.data.total));
-            }
-        });
-
+        generate_chart("chartHariKunjungan", "{{ route('api.by-tanggal.kunjungan-hari') }}");
         // Load chart jam kunjungan
+        generate_chart("chartJamKunjungan", "{{ route('api.by-tanggal.kunjungan-jam') }}");
+    });
+
+    function generate_chart(selector, url){
         $.ajax({
             type: "get",
-            url: "{{ route('api.by-tanggal.kunjungan-jam') }}",
+            url: url,
             data: {tanggal1: tanggal1, tanggal2: tanggal2},
             success: function(response){
-                var colors = ["#63FF84", "#8463FF", "#FDD100", "#FF6384"];
                 var data = {
                     labels: response.data.labels,
                     datasets: [{
                         data: response.data.data,
-                        backgroundColor: colors,
+                        backgroundColor: response.data.colors,
                         borderWidth: 0
                     }]
                 };
-                generate_chart_doughnut("chartJamKunjungan", data);
-                generate_chart_legend(colors, response.data, "#chartJamKunjungan");
-                $("#total-jam-kunjungan").text(thousand_format(response.data.total));
+                generate_chart_doughnut(selector, data);
+                generate_chart_legend(response.data.colors, response.data, "#"+selector);
+                $("#"+selector).parents(".tile-body").find(".total").text(thousand_format(response.data.total));
             }
         });
-    });
+    }
 </script>
 
 @endsection

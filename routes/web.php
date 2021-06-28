@@ -442,6 +442,7 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::get('/admin/api/visitor/device', $namespacePrefix.'API\VisitorDeviceController@visitorDevice')->name('api.visitor.device');
 	Route::get('/admin/api/visitor/browser', $namespacePrefix.'API\VisitorDeviceController@visitorBrowser')->name('api.visitor.browser');
 	Route::get('/admin/api/visitor/platform', $namespacePrefix.'API\VisitorDeviceController@visitorPlatform')->name('api.visitor.platform');
+	Route::get('/admin/api/visitor/device-family', $namespacePrefix.'API\VisitorDeviceController@visitorDeviceFamily')->name('api.visitor.device-family');
 
 	// API Visitor Location
 	Route::get('/admin/api/visitor/city', $namespacePrefix.'API\VisitorLocationController@visitorCity')->name('api.visitor.city');

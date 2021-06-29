@@ -10,7 +10,7 @@
       --primary-light: {{ setting('site.color.primary_light') }};
       --secondary-dark: {{ setting('site.color.secondary_dark') }};
       --secondary-light: {{ setting('site.color.secondary_light') }};
-      --primary: {{ setting('site.color.primary_dark') }}ff;
+      --primary: {{ setting('site.color.primary_dark') }};
       --border-light: rgba(2555,255,255,.5); 
       --shadow: 0 .125rem .25rem rgba(0,0,0,.075);
       --transition: .25s ease;

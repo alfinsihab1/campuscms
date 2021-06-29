@@ -91,14 +91,19 @@
             data: {tanggal: "{{ $tanggal }}"},
             success: function(response){
                 var html = '';
-                if(response.data.length > 0){
-                    for(var i=0; i<response.data.length; i++){
-                        html += response.data[i].parent == true ? '<tr class="parent">' : '<tr class="child">';
-                        html += '<td>' + response.data[i].title + '</td>';
-                        html += '<td align="right">' + thousand_format(response.data[i].today) + '</td>';
-                        html += '<td align="right">' + thousand_format(response.data[i].total) + '</td>';
+                if(response.data.data.length > 0){
+                    for(var i=0; i<response.data.data.length; i++){
+                        html += response.data.data[i].parent == true ? '<tr class="parent">' : '<tr class="child">';
+                        html += '<td>' + response.data.data[i].title + '</td>';
+                        html += response.data.data[i].today != '-' ? '<td align="right">' + thousand_format(response.data.data[i].today) + '</td>' : '<td align="right">-</td>';
+                        html += '<td align="right">' + thousand_format(response.data.data[i].total) + '</td>';
                         html += '</tr>';
                     }
+                    html += '<tr class="total">';
+                    html += '<td>Total</td>';
+                    html += '<td align="right">' + thousand_format(response.data.today) + '</td>';
+                    html += '<td align="right">' + thousand_format(response.data.total) + '</td>';
+                    html += '</tr>';
                 }
                 else{
                     html += '<tr>';
@@ -119,6 +124,7 @@
     #table-report tr th {text-align: center;}
     #table-report tr.parent {font-weight: bold;}
     #table-report tr.child td:first-child {text-indent: 1.5rem;}
+    #table-report tr.total {font-weight: bold; background-color: var(--green-s);}
 </style>
 
 @endsection

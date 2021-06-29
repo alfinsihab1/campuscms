@@ -61,6 +61,20 @@
             </div>
         </div>
         <!-- /Column -->
+        <!-- Column -->
+        <div class="col-xl-4 col-md-6">
+            <div class="tile">
+                <div class="tile-title-w-btn">
+                    <h5>Perangkat Mobile</h5>
+                </div>
+                <div class="tile-body">
+                    <canvas id="chartDeviceFamily" width="400" height="270"></canvas>
+                    <p class="text-center mt-2 mb-0">Total: <strong class="total">0</strong></p>
+                </div>
+                <div class="tile-footer p-0"></div>
+            </div>
+        </div>
+        <!-- /Column -->
     </div>
     <!-- /Row -->
 </main>
@@ -80,6 +94,8 @@
         generate_chart("chartBrowser", "{{ route('api.visitor.browser') }}");
         // Load chart platform
         generate_chart("chartPlatform", "{{ route('api.visitor.platform') }}");
+        // Load chart device family
+        generate_chart("chartDeviceFamily", "{{ route('api.visitor.device-family') }}");
     });
 
     function generate_chart(selector, url){

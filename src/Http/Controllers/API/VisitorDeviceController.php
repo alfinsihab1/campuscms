@@ -97,8 +97,8 @@ class VisitorDeviceController extends Controller
     {
         if($request->ajax()){
             // Array
-            $arrayLabel = ['Windows', 'Linux', 'Mac', 'Android'];
-            $arrayColor = ['#00a8e8', '#f7c700', '#444', '#a4c639', '#a3acb3'];
+            $arrayLabel = ['Windows', 'Linux', 'Mac', 'Android', 'iOS'];
+            $arrayColor = ['#00a8e8', '#f7c700', '#c0e2f2', '#a4c639', '#070707', '#a3acb3'];
             $arrayData = [];
 
             // Data visitor
@@ -110,6 +110,46 @@ class VisitorDeviceController extends Controller
 
             // Push data other visitor
             $visitorAll = Visitor::join('users','visitor.id_user','=','users.id_user')->count();
+            $otherVisitor = $visitorAll - array_sum($arrayData);
+            array_push($arrayLabel, 'Lainnya');
+            array_push($arrayData, $otherVisitor);
+
+            // Response
+            return response()->json([
+                'status' => 200,
+                'message' => 'Success!',
+                'data' => [
+                    'labels' => $arrayLabel,
+                    'colors' => $arrayColor,
+                    'data' => $arrayData,
+                    'total' => number_format(array_sum($arrayData),0,'.','.'),
+                ]
+            ]);
+        }
+    }
+
+    /**
+     * Merek perangkat visitor
+     * 
+     * @return \Illuminate\Http\Request
+     * @return \Illuminate\Http\Response
+     */
+    public function visitorDeviceFamily(Request $request)
+    {
+        if($request->ajax()){
+            // Array
+            $arrayLabel = ['Xiaomi', 'Samsung', 'OPPO', 'Vivo', 'Apple', 'Realme', 'Google', 'Lenovo', 'M6', 'ZTE', 'Infinix', 'Wiko', 'Huawei', 'Asus'];
+            $arrayColor = ['#f76400', '#13279b', '#006831', '#3f5cf7', '#070707', '#f7c314', '#008fec', '#e00011', '#4285f4', '#004ea2', '#000', '#00b2a9', '#c90a2b', '#004f9a', '#a3acb3'];
+            $arrayData = [];
+
+            // Data visitor
+            foreach($arrayLabel as $data){
+                $count = Visitor::join('users','visitor.id_user','=','users.id_user')->where('device','like','%'.'"type":"Mobile","family":"'.$data.'"'.'%')->orWhere('device','like','%'.'"type":"Tablet","family":"'.$data.'"'.'%')->count();
+                array_push($arrayData, $count);
+            }
+
+            // Push data other visitor
+            $visitorAll = Visitor::join('users','visitor.id_user','=','users.id_user')->where('device','like','%'.'"type":"Mobile"'.'%')->orWhere('device','like','%'.'"type":"Tablet"'.'%')->count();
             $otherVisitor = $visitorAll - array_sum($arrayData);
             array_push($arrayLabel, 'Lainnya');
             array_push($arrayData, $otherVisitor);

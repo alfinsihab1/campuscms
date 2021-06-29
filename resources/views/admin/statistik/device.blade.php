@@ -40,10 +40,10 @@
                     <h5>Browser</h5>
                 </div>
                 <div class="tile-body">
-					<canvas id="chartBrowser" width="400" height="270"></canvas>
+                    <canvas id="chartBrowser" width="400" height="270"></canvas>
                     <p class="text-center mt-2 mb-0">Total: <strong class="total">0</strong></p>
                 </div>
-				<div class="tile-footer p-0"></div>
+                <div class="tile-footer p-0"></div>
             </div>
         </div>
         <!-- /Column -->
@@ -113,6 +113,7 @@
                 };
                 generate_chart_doughnut(selector, data);
                 generate_chart_legend(response.data.colors, response.data, "#"+selector);
+                chart_list_height(5);
                 $("#"+selector).parents(".tile-body").find(".total").text(thousand_format(response.data.total));
             }
         });

@@ -109,7 +109,7 @@
 	
 	function generate_chart_legend(colors, data, selector){
 		var html = '';
-		html += '<ul class="list-group list-group-flush">';
+		html += '<ul class="list-group list-group-flush px-2">';
 		for(i=0; i<colors.length; i++){
 			html += '<li class="list-group-item d-flex justify-content-between py-1 px-0">';
 			html += '<div><i class="fa fa-circle mr-2" style="color: ' + colors[i] + '"></i>' + data.labels[i] + '</div>';
@@ -127,4 +127,17 @@
     function remove_canvas_loading(selector){
         $("#"+selector).siblings(".text-loading").remove();
     }
+
+    function chart_list_height(rows = 1){
+        // Set height of list group
+        var height = (rows * 30) - 1;
+        $(".tile").each(function(key,elem){
+            $(elem).find(".list-group").css("height",height);
+        });
+    }
 </script>
+<style type="text/css">
+    .tile > .tile-footer > .list-group {overflow-y: auto;}
+    .tile > .tile-footer > .list-group::-webkit-scrollbar {width: 6px;}
+    .tile > .tile-footer > .list-group::-webkit-scrollbar-thumb {background: rgba(0, 0, 0, 0.2); border-radius: 10px;}
+</style>

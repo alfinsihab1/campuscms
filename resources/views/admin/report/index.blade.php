@@ -117,6 +117,7 @@
 
 <style type="text/css">
     #table-report tr th {text-align: center;}
+    #table-report tr.parent {font-weight: bold;}
     #table-report tr.child td:first-child {text-indent: 1.5rem;}
 </style>
 

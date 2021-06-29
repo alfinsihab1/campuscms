@@ -12,12 +12,15 @@ use Ajifatur\FaturCMS\Models\Email;
 use Ajifatur\FaturCMS\Models\Files;
 use Ajifatur\FaturCMS\Models\Halaman;
 use Ajifatur\FaturCMS\Models\Karir;
+use Ajifatur\FaturCMS\Models\Komisi;
 use Ajifatur\FaturCMS\Models\Pelatihan;
+use Ajifatur\FaturCMS\Models\PelatihanMember;
 use Ajifatur\FaturCMS\Models\Popup;
 use Ajifatur\FaturCMS\Models\Program;
 use Ajifatur\FaturCMS\Models\Psikolog;
 use Ajifatur\FaturCMS\Models\Signature;
 use Ajifatur\FaturCMS\Models\Visitor;
+use Ajifatur\FaturCMS\Models\Withdrawal;
 
 class ReportController extends Controller
 {
@@ -64,6 +67,70 @@ class ReportController extends Controller
                 $today = User::where('status','=',0)->where('email_verified','=',0)->where('is_admin','=',0)->whereDate('register_at','=',generate_date_format($request->query('tanggal'), 'y-m-d'))->count();
                 $total = User::where('status','=',0)->where('email_verified','=',0)->where('is_admin','=',0)->whereDate('register_at','<=',generate_date_format($request->query('tanggal'), 'y-m-d'))->count();
                 array_push($array, ['title' => 'Tidak Aktif', 'today' => $today, 'total' => $total, 'parent' => false]);
+            }
+
+            // Data Transaksi Komisi
+            if(has_access('KomisiController::index', Auth::user()->role, false)){
+                // Data Transaksi Komisi
+                $today = Komisi::join('users','komisi.id_user','=','users.id_user')->whereDate('komisi_at','=',generate_date_format($request->query('tanggal'), 'y-m-d'))->count();
+                $total = Komisi::join('users','komisi.id_user','=','users.id_user')->whereDate('komisi_at','<=',generate_date_format($request->query('tanggal'), 'y-m-d'))->count();
+                array_push($array, ['title' => 'Transaksi Komisi', 'today' => $today, 'total' => $total, 'parent' => true]);
+
+                // Data Komisi Diterima
+                $today = Komisi::join('users','komisi.id_user','=','users.id_user')->where('komisi_status','=',1)->whereDate('komisi_at','=',generate_date_format($request->query('tanggal'), 'y-m-d'))->count();
+                $total = Komisi::join('users','komisi.id_user','=','users.id_user')->where('komisi_status','=',1)->whereDate('komisi_at','<=',generate_date_format($request->query('tanggal'), 'y-m-d'))->count();
+                array_push($array, ['title' => 'Diterima', 'today' => $today, 'total' => $total, 'parent' => false]);
+
+                // Data Komisi Belum Diverifikasi
+                $today = Komisi::join('users','komisi.id_user','=','users.id_user')->where('komisi_status','=',0)->where('komisi_proof','!=','')->whereDate('komisi_at','=',generate_date_format($request->query('tanggal'), 'y-m-d'))->count();
+                $total = Komisi::join('users','komisi.id_user','=','users.id_user')->where('komisi_status','=',0)->where('komisi_proof','!=','')->whereDate('komisi_at','<=',generate_date_format($request->query('tanggal'), 'y-m-d'))->count();
+                array_push($array, ['title' => 'Belum Diverifikasi', 'today' => $today, 'total' => $total, 'parent' => false]);
+
+                // Data Komisi Belum Dibayar
+                $today = Komisi::join('users','komisi.id_user','=','users.id_user')->where('komisi_status','=',0)->where('komisi_proof','=','')->whereDate('komisi_at','=',generate_date_format($request->query('tanggal'), 'y-m-d'))->count();
+                $total = Komisi::join('users','komisi.id_user','=','users.id_user')->where('komisi_status','=',0)->where('komisi_proof','=','')->whereDate('komisi_at','<=',generate_date_format($request->query('tanggal'), 'y-m-d'))->count();
+                array_push($array, ['title' => 'Belum Dibayar', 'today' => $today, 'total' => $total, 'parent' => false]);
+            }
+
+            // Data Transaksi Withdrawal
+            if(has_access('WithdrawalController::index', Auth::user()->role, false)){
+                // Data Transaksi Withdrawal
+                $today = Withdrawal::join('users','withdrawal.id_user','=','users.id_user')->join('rekening','withdrawal.id_rekening','=','rekening.id_rekening')->join('platform','rekening.id_platform','=','platform.id_platform')->whereDate('withdrawal_at','=',generate_date_format($request->query('tanggal'), 'y-m-d'))->count();
+                $total = Withdrawal::join('users','withdrawal.id_user','=','users.id_user')->join('rekening','withdrawal.id_rekening','=','rekening.id_rekening')->join('platform','rekening.id_platform','=','platform.id_platform')->whereDate('withdrawal_at','<=',generate_date_format($request->query('tanggal'), 'y-m-d'))->count();
+                array_push($array, ['title' => 'Transaksi Withdrawal', 'today' => $today, 'total' => $total, 'parent' => true]);
+
+                // Data Withdrawal Diterima
+                $today = Withdrawal::join('users','withdrawal.id_user','=','users.id_user')->join('rekening','withdrawal.id_rekening','=','rekening.id_rekening')->join('platform','rekening.id_platform','=','platform.id_platform')->where('withdrawal_status','=',1)->whereDate('withdrawal_at','=',generate_date_format($request->query('tanggal'), 'y-m-d'))->count();
+                $total = Withdrawal::join('users','withdrawal.id_user','=','users.id_user')->join('rekening','withdrawal.id_rekening','=','rekening.id_rekening')->join('platform','rekening.id_platform','=','platform.id_platform')->where('withdrawal_status','=',1)->whereDate('withdrawal_at','<=',generate_date_format($request->query('tanggal'), 'y-m-d'))->count();
+                array_push($array, ['title' => 'Diterima', 'today' => $today, 'total' => $total, 'parent' => false]);
+
+                // Data Withdrawal Sedang Diproses
+                $today = Withdrawal::join('users','withdrawal.id_user','=','users.id_user')->join('rekening','withdrawal.id_rekening','=','rekening.id_rekening')->join('platform','rekening.id_platform','=','platform.id_platform')->where('withdrawal_status','=',0)->whereDate('withdrawal_at','=',generate_date_format($request->query('tanggal'), 'y-m-d'))->count();
+                $total = Withdrawal::join('users','withdrawal.id_user','=','users.id_user')->join('rekening','withdrawal.id_rekening','=','rekening.id_rekening')->join('platform','rekening.id_platform','=','platform.id_platform')->where('withdrawal_status','=',0)->whereDate('withdrawal_at','<=',generate_date_format($request->query('tanggal'), 'y-m-d'))->count();
+                array_push($array, ['title' => 'Sedang Diproses', 'today' => $today, 'total' => $total, 'parent' => false]);
+            }
+
+            // Data Transaksi Pelatihan
+            if(has_access('PelatihanController::transaction', Auth::user()->role, false)){
+                // Data Transaksi Pelatihan
+                $today = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->join('users','pelatihan_member.id_user','=','users.id_user')->whereDate('pm_at','=',generate_date_format($request->query('tanggal'), 'y-m-d'))->count();
+                $total = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->join('users','pelatihan_member.id_user','=','users.id_user')->whereDate('pm_at','<=',generate_date_format($request->query('tanggal'), 'y-m-d'))->count();
+                array_push($array, ['title' => 'Transaksi Pelatihan', 'today' => $today, 'total' => $total, 'parent' => true]);
+
+                // Data Transaksi Pelatihan Diterima
+                $today = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->join('users','pelatihan_member.id_user','=','users.id_user')->where('fee_status','=',1)->whereDate('pm_at','=',generate_date_format($request->query('tanggal'), 'y-m-d'))->count();
+                $total = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->join('users','pelatihan_member.id_user','=','users.id_user')->where('fee_status','=',1)->whereDate('pm_at','<=',generate_date_format($request->query('tanggal'), 'y-m-d'))->count();
+                array_push($array, ['title' => 'Diterima', 'today' => $today, 'total' => $total, 'parent' => false]);
+
+                // Data Transaksi Pelatihan Belum Diverifikasi
+                $today = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->join('users','pelatihan_member.id_user','=','users.id_user')->where('fee_status','=',0)->where('fee_bukti','!=','')->whereDate('pm_at','=',generate_date_format($request->query('tanggal'), 'y-m-d'))->count();
+                $total = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->join('users','pelatihan_member.id_user','=','users.id_user')->where('fee_status','=',0)->where('fee_bukti','!=','')->whereDate('pm_at','<=',generate_date_format($request->query('tanggal'), 'y-m-d'))->count();
+                array_push($array, ['title' => 'Belum Diverifikasi', 'today' => $today, 'total' => $total, 'parent' => false]);
+
+                // Data Transaksi Pelatihan Belum Dibayar
+                $today = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->join('users','pelatihan_member.id_user','=','users.id_user')->where('fee_status','=',0)->where('fee_bukti','=','')->whereDate('pm_at','=',generate_date_format($request->query('tanggal'), 'y-m-d'))->count();
+                $total = PelatihanMember::join('pelatihan','pelatihan_member.id_pelatihan','=','pelatihan.id_pelatihan')->join('users','pelatihan_member.id_user','=','users.id_user')->where('fee_status','=',0)->where('fee_bukti','=','')->whereDate('pm_at','<=',generate_date_format($request->query('tanggal'), 'y-m-d'))->count();
+                array_push($array, ['title' => 'Belum Dibayar', 'today' => $today, 'total' => $total, 'parent' => false]);
             }
 
             // Data File

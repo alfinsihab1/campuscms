@@ -170,6 +170,7 @@
                 };
                 generate_chart_doughnut(selector, data);
                 generate_chart_legend(response.data.colors, response.data, "#"+selector);
+                chart_list_height(4);
                 $("#"+selector).parents(".tile-body").find(".total").text(thousand_format(response.data.total));
             }
         });

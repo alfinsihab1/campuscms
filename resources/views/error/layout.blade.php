@@ -32,11 +32,11 @@
   .bg-theme-1{animation: changebg 7s infinite; height: 100vh}
   .btn-theme-1{background-color: rgba(0,0,0,.2); animation: animatebtn 7s infinite!important}
   @keyframes changebg {
-    0% {background-color: {{ setting('site.color.primary') }};}
-    25%{background-color: {{ setting('site.color.secondary') }};}
-    50% {background-color: {{ setting('site.color.primary') }};}
-    74% {background-color: {{ setting('site.color.secondary') }};}
-    100% {background-color: {{ setting('site.color.primary') }};}
+    0% {background-color: {{ setting('site.color.primary_dark') }};}
+    25%{background-color: {{ setting('site.color.secondary_dark') }};}
+    50% {background-color: {{ setting('site.color.primary_dark') }};}
+    74% {background-color: {{ setting('site.color.secondary_dark') }};}
+    100% {background-color: {{ setting('site.color.primary_dark') }};}
   }
   @keyframes animatebtn {
     0% {width: 150px}

@@ -197,8 +197,7 @@
 <script>
 	var chart;
 	
-	// Load page
-	$(window).on("load", function(){
+	$(function(){
 		count_visitor("chartVisitor", "{{ route('api.visitor.count.last-week') }}");
 		top_visitor("#table-top-visitor", "{{ route('api.visitor.top.last-week') }}");
 	});
@@ -228,55 +227,15 @@
 	});
 	
 	function count_visitor(selector, url){
-		add_canvas_loading(selector);
+		$("#"+selector).before('<div class="text-center text-loading">Loading...</div>'); // Add loading
 		$.ajax({
 			type: "get",
 			url: url,
 			success: function(response){
-				var dateString = [];
-				var visitorAll = [];
-				var visitorAdmin = [];
-				var visitorMember = [];
-				$(response.data).each(function(key,data){
-					dateString.push(data.dateString);
-					visitorAll.push(data.visitorAll);
-					visitorAdmin.push(data.visitorAdmin);
-					visitorMember.push(data.visitorMember);
-				});
-				var data = {
-					labels: dateString,
-					datasets: [
-						{
-							label: 'Semua',
-							data: visitorAll,
-							backgroundColor: '#28b779',
-							borderColor: '#28b779',
-							fill: false,
-							borderWidth: 1
-						},
-						{
-							label: 'Admin',
-							data: visitorAdmin,
-							backgroundColor: '#da542e',
-							borderColor: '#da542e',
-							fill: false,
-							borderWidth: 1
-						},
-						{
-							label: 'Member',
-							data: visitorMember,
-							backgroundColor: '#27a9e3',
-							borderColor: '#27a9e3',
-							fill: false,
-							borderWidth: 1
-						}
-					]
-				};
-				remove_canvas_loading(selector);
-				chart = generate_chart_line(selector, data);
+                var chartVisitor = new ChartLine(selector, response.data, false);
+                chart = chartVisitor.init();
 			}
 		});
-		return chart;
 	}
 	
 	function top_visitor(selector, url){
@@ -286,7 +245,6 @@
 			loading += '<td colspan="3" class="text-center"><em>Loading...</em></td>';
 			loading += '</tr>';
 			$(selector).find("tbody").html(loading);
-
 			$.ajax({
 				type: "get",
 				url: url,

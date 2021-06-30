@@ -31,6 +31,7 @@ class FinanceController extends Controller
                 'message' => 'Success!',
                 'data' => [
                     'labels' => ['Membership', 'Pelatihan'],
+                    'colors' => ['#4a8af5', '#fb9d35'],
                     'data' => [$komisi, $transaksi_pelatihan],
                     'total' => $komisi + $transaksi_pelatihan
                 ]
@@ -56,6 +57,7 @@ class FinanceController extends Controller
                 'message' => 'Success!',
                 'data' => [
                     'labels' => ['Withdrawal'],
+                    'colors' => ['#dc3545'],
                     'data' => [$withdrawal],
                     'total' => $withdrawal
                 ]
@@ -73,7 +75,10 @@ class FinanceController extends Controller
     {
         if($request->ajax()){
             // Variables
-            $data = array();
+            $labels = array();
+            $dataIncome = array();
+            $dataOutcome = array();
+            $dataSaldo = array();
             $totalIncome = 0;
             $totalOutcome = 0;
             $totalSaldo = 0;
@@ -96,13 +101,11 @@ class FinanceController extends Controller
                     $totalOutcome += $outcome;
                     $totalSaldo += $saldo;
 
-                    // Array Push
-                    array_push($data, array(
-                        'label' => $y,
-                        'income' => $income,
-                        'outcome' => $outcome,
-                        'saldo' => $saldo,
-                    ));
+                    // Array push
+                    array_push($labels, $y);
+                    array_push($dataIncome, $income);
+                    array_push($dataOutcome, $outcome);
+                    array_push($dataSaldo, $saldo);
                 }
             }
             // Jika menampilkan revenue per bulan
@@ -126,13 +129,11 @@ class FinanceController extends Controller
                     $totalOutcome += $outcome;
                     $totalSaldo += $saldo;
 
-                    // Array Push
-                    array_push($data, array(
-                        'label' => $arrayMonth,
-                        'income' => $income,
-                        'outcome' => $outcome,
-                        'saldo' => $saldo,
-                    ));
+                    // Array push
+                    array_push($labels, $arrayMonth);
+                    array_push($dataIncome, $income);
+                    array_push($dataOutcome, $outcome);
+                    array_push($dataSaldo, $saldo);
                 }
             }
             // Jika menampilkan revenue per hari
@@ -156,22 +157,30 @@ class FinanceController extends Controller
                     $totalOutcome += $outcome;
                     $totalSaldo += $saldo;
 
-                    // Array Push
-                    array_push($data, array(
-                        'label' => $d,
-                        'income' => $income,
-                        'outcome' => $outcome,
-                        'saldo' => $saldo,
-                    ));
+                    // Array push
+                    array_push($labels, $d);
+                    array_push($dataIncome, $income);
+                    array_push($dataOutcome, $outcome);
+                    array_push($dataSaldo, $saldo);
                 }
             }
+
+            // Datasets
+            $datasets = [
+                ['label' => 'Income', 'data' => $dataIncome, 'color' => '#17a2b8'],
+                ['label' => 'Outcome', 'data' => $dataOutcome, 'color' => '#dc3545'],
+                ['label' => 'Saldo', 'data' => $dataSaldo, 'color' => '#28b779'],
+            ];
 
             // Response
             return response()->json([
                 'status' => 200,
                 'message' => 'Success!',
                 'data' => [
-                    'data' => $data,
+                    'data' => [
+                        'labels' => $labels,
+                        'datasets' => $datasets
+                    ],
                     'total' => [
                         'income' => $totalIncome,
                         'outcome' => $totalOutcome,

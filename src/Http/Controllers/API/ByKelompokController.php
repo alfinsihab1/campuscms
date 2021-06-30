@@ -29,8 +29,8 @@ class ByKelompokController extends Controller
 
             if($member){
                 // Array data
-                $tanggal = [];
-                $visit = [];
+                $labels = [];
+                $dataVisit = [];
                 $tanggal_awal = $member->tanggal_pelatihan_from;
                 $tanggal_akhir = $member->tanggal_pelatihan_to;
                 while(strtotime($tanggal_awal) < strtotime($tanggal_akhir)){
@@ -38,20 +38,25 @@ class ByKelompokController extends Controller
                     $count_visit = Visitor::where('id_user','=',$member->id_user)->whereDate('visit_at','=',$tanggal_awal)->count();
 
                     // Push first
-                    array_push($tanggal, date('d/m/y', strtotime($tanggal_awal)));
-                    array_push($visit, $count_visit);
+                    array_push($labels, date('d/m/y', strtotime($tanggal_awal)));
+                    array_push($dataVisit, $count_visit);
 
                     // Replace then
                     $tanggal_awal = date("Y-m-d", strtotime("+1 day", strtotime($tanggal_awal)));
                 }
+
+                // Datasets
+                $datasets = [
+                    ['label' => 'Login', 'data' => $dataVisit, 'color' => '#17a2b8'],
+                ];
 
                 // Response
                 return response()->json([
                     'status' => 200,
                     'message' => 'Success!',
                     'data' => [
-                        'tanggal' => $tanggal,
-                        'visit' => $visit,
+                        'labels' => $labels,
+                        'datasets' => $datasets
                     ]
                 ]);
             }
@@ -85,7 +90,7 @@ class ByKelompokController extends Controller
                 $logs = $this->toObject('logs/user-activities/'.$member->id_user.'.log');
 
                 // Array data
-                $tanggal = [];
+                $labels = [];
                 $view_ebook = [];
                 $view_video = [];
 
@@ -144,7 +149,7 @@ class ByKelompokController extends Controller
                     }
 
                     // Push first
-                    array_push($tanggal, date('d/m/y', strtotime($tanggal_awal)));
+                    array_push($labels, date('d/m/y', strtotime($tanggal_awal)));
                     array_push($view_ebook, $count_view_ebook);
                     array_push($view_video, $count_view_video);
 
@@ -152,14 +157,19 @@ class ByKelompokController extends Controller
                     $tanggal_awal = date("Y-m-d", strtotime("+1 day", strtotime($tanggal_awal)));
                 }
 
+                // Datasets
+                $datasets = [
+                    ['label' => 'Belajar E-Book', 'data' => $view_ebook, 'color' => '#28a745'],
+                    ['label' => 'Belajar Video', 'data' => $view_video, 'color' => '#dc3545'],
+                ];
+
                 // Response
                 return response()->json([
                     'status' => 200,
                     'message' => 'Success!',
                     'data' => [
-                        'tanggal' => $tanggal,
-                        'view_ebook' => $view_ebook,
-                        'view_video' => $view_video,
+                        'labels' => $labels,
+                        'datasets' => $datasets
                     ]
                 ]);
             }

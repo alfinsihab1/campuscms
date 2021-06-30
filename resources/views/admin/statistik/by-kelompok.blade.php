@@ -163,20 +163,8 @@
             url: "{{ route('api.by-kelompok.login') }}",
             data: {id: id_pm},
             success: function(response){
-                var data = {
-                    labels: response.data.tanggal,
-                    datasets: [
-                        {
-                            label: 'Login',
-                            data: response.data.visit,
-                            backgroundColor: '#17a2b8',
-                            borderColor: '#17a2b8',
-                            fill: false,
-                            borderWidth: 1
-                        },
-                    ]
-                };
-                generate_chart_bar("chartLogin", data);
+                var chart = new ChartBar("chartLogin", response.data, false);
+                chart.init();
             }
         });
     }
@@ -188,28 +176,8 @@
             url: "{{ route('api.by-kelompok.aktivitas') }}",
             data: {user: user, pelatihan: pelatihan},
             success: function(response){
-                var data = {
-                    labels: response.data.tanggal,
-                    datasets: [
-                        {
-                            label: 'Belajar E-Book',
-                            data: response.data.view_ebook,
-                            backgroundColor: '#28a745',
-                            borderColor: '#28a745',
-                            fill: false,
-                            borderWidth: 1
-                        },
-                        {
-                            label: 'Belajar Video',
-                            data: response.data.view_video,
-                            backgroundColor: '#dc3545',
-                            borderColor: '#dc3545',
-                            fill: false,
-                            borderWidth: 1
-                        }
-                    ]
-                };
-                generate_chart_bar("chartAktivitas", data);
+                var chart = new ChartBar("chartAktivitas", response.data, false);
+                chart.init();
             }
         });
     }

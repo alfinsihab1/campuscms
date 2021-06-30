@@ -62,8 +62,9 @@
                         </div>
                         <div class="tile-body">
                             <canvas id="chartIncome" width="400" height="270"></canvas>
-                            <p class="text-center mt-2 mb-0">Total: <strong id="total-income">0</strong></p>
+                            <p class="text-center mt-2 mb-0">Total: <strong class="total">0</strong></p>
                         </div>
+                        <div class="tile-footer p-0"></div>
                     </div>
                 </div>
                 <!-- /Column -->
@@ -75,8 +76,9 @@
                         </div>
                         <div class="tile-body">
                             <canvas id="chartOutcome" width="400" height="270"></canvas>
-                            <p class="text-center mt-2 mb-0">Total: <strong id="total-outcome">0</strong></p>
+                            <p class="text-center mt-2 mb-0">Total: <strong class="total">0</strong></p>
                         </div>
+                        <div class="tile-footer p-0"></div>
                     </div>
                 </div>
                 <!-- /Column -->
@@ -101,41 +103,9 @@
 
     $(function(){
         // Load chart income
-        $.ajax({
-            type: "get",
-            url: "{{ route('api.finance.income') }}",
-            success: function(response){
-                var data = {
-                    labels: response.data.labels,
-                    datasets: [{
-                        data: response.data.data,
-                        backgroundColor: ["#4a8af5", "#fb9d35"],
-                        borderWidth: 0
-                    }]
-                };
-                generate_chart_doughnut("chartIncome", data, true);
-                $("#total-income").text(thousand_format(response.data.total, 'Rp '));
-            }
-        });
-
+        generate_chart("chartIncome", "{{ route('api.finance.income') }}");
         // Load chart outcome
-        $.ajax({
-            type: "get",
-            url: "{{ route('api.finance.outcome') }}",
-            success: function(response){
-                var data = {
-                    labels: response.data.labels,
-                    datasets: [{
-                        data: response.data.data,
-                        backgroundColor: ["#dc3545"],
-                        borderWidth: 0
-                    }]
-                };
-                generate_chart_doughnut("chartOutcome", data, true);
-                $("#total-outcome").text(thousand_format(response.data.total, 'Rp '));
-            }
-        });
-
+        generate_chart("chartOutcome", "{{ route('api.finance.outcome') }}");
         // Load chart income by year
         chart_revenue("{{ date('n')}}", "{{ date('Y')}}");
     });
@@ -149,63 +119,33 @@
             $("#revenue-month").val(0);
             $("#revenue-month").attr("disabled","disabled");
         }
-        else{
-            $("#revenue-month").removeAttr("disabled");
-        }
+        else $("#revenue-month").removeAttr("disabled");
 
         chartRevenue.destroy();
         chart_revenue(month, year);
     });
 
+    // Chart doughnut
+    function generate_chart(selector, url){
+        $.ajax({
+            type: "get",
+            url: url,
+            success: function(response){
+                var chart = new ChartDoughnut(selector, response.data, null, true);
+                chart.init();
+            }
+        });
+    }
+
     // Chart revenue by year
     function chart_revenue(month, year){
-        add_canvas_loading("chartRevenue");
+        $("#chartRevenue").before('<div class="text-center text-loading">Loading...</div>');
         $.ajax({
             type: "get",
             url: "/admin/api/finance/revenue/" + month + "/" + year,
             success: function(response){
-                console.log(response.data);
-                var label = [];
-                var income = [];
-                var outcome = [];
-                var saldo = [];
-                $(response.data.data).each(function(key,data){
-                    label.push(data.label);
-                    income.push(data.income);
-                    outcome.push(data.outcome);
-                    saldo.push(data.saldo);
-                });
-                var data = {
-                    labels: label,
-                    datasets: [
-                        {
-                            label: 'Income',
-                            data: income,
-                            backgroundColor: '#17a2b8',
-                            borderColor: '#17a2b8',
-                            fill: false,
-                            borderWidth: 1
-                        },
-                        {
-                            label: 'Outcome',
-                            data: outcome,
-                            backgroundColor: '#dc3545',
-                            borderColor: '#dc3545',
-                            fill: false,
-                            borderWidth: 1
-                        },
-                        {
-                            label: 'Saldo',
-                            data: saldo,
-                            backgroundColor: '#28b779',
-                            borderColor: '#28b779',
-                            fill: false,
-                            borderWidth: 1
-                        }
-                    ]
-                };
-                remove_canvas_loading("chartRevenue");
-                chartRevenue = generate_chart_bar("chartRevenue", data, true);
+                var chart = new ChartBar("chartRevenue", response.data.data, true);
+                chartRevenue = chart.init();
                 $("#revenue-income").text(thousand_format(response.data.total.income, 'Rp '));
                 $("#revenue-outcome").text(thousand_format(response.data.total.outcome, 'Rp '));
                 $("#revenue-saldo").text(thousand_format(response.data.total.saldo, 'Rp '));

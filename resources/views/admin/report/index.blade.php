@@ -43,7 +43,7 @@
                 <!-- Tile Body -->
                 <div class="tile-body">
                     <div class="table-responsive">
-                        <table class="table table-sm table-striped table-hover table-bordered" id="table-report">
+                        <table class="table table-sm table-hover table-bordered" id="table-report">
                             <thead>
                                 <tr>
                                     <th>Data</th>
@@ -122,7 +122,8 @@
 
 <style type="text/css">
     #table-report tr th {text-align: center;}
-    #table-report tr.parent {font-weight: bold;}
+    #table-report tr.parent {font-weight: bold; background-color: rgba(0, 0, 0, 0.05);}
+    #table-report tr.parent:hover {background-color: rgba(0, 0, 0, 0.075);}
     #table-report tr.child td:first-child {text-indent: 1.5rem;}
     #table-report tr.total {font-weight: bold; background-color: var(--green-s);}
 </style>

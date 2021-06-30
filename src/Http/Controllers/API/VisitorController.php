@@ -18,8 +18,11 @@ class VisitorController extends Controller
     public function visitorLastWeek(Request $request)
     {
         if($request->ajax()){
-            // New Array
-            $data = array();
+            // Array
+            $labels = array();
+            $visitorAll = array();
+            $visitorAdmin = array();
+            $visitorMember = array();
 
             // Get data last week
             for($i=7; $i>=0; $i--){
@@ -32,21 +35,28 @@ class VisitorController extends Controller
                 // Get visitor member
                 $visitor_member = Visitor::join('users','visitor.id_user','=','users.id_user')->where('is_admin','=',0)->whereDate('visit_at','=',$date)->groupBy('visitor.id_user')->get();
 
-                // Array Push
-                array_push($data, array(
-                    'date' => $date,
-                    'dateString' => date('d/m/y', strtotime($date)),
-                    'visitorAll' => count($visitor_admin) + count($visitor_member),
-                    'visitorAdmin' => count($visitor_admin),
-                    'visitorMember' => count($visitor_member),
-                ));
+                // Array push
+                array_push($labels, date('d/m/y', strtotime($date)));
+                array_push($visitorAll, count($visitor_admin) + count($visitor_member));
+                array_push($visitorAdmin, count($visitor_admin));
+                array_push($visitorMember, count($visitor_member));
             }
+
+            // Datasets
+            $datasets = [
+                ['label' => 'Semua', 'data' => $visitorAll, 'color' => '#28b779'],
+                ['label' => 'Admin', 'data' => $visitorAdmin, 'color' => '#da542e'],
+                ['label' => 'Member', 'data' => $visitorMember, 'color' => '#27a9e3'],
+            ];
 
             // Response
             return response()->json([
                 'status' => 200,
                 'message' => 'Success!',
-                'data' => $data
+                'data' => [
+                    'labels' => $labels,
+                    'datasets' => $datasets
+                ]
             ]);
         }
     }
@@ -60,8 +70,11 @@ class VisitorController extends Controller
     public function visitorLastMonth(Request $request)
     {
         if($request->ajax()){
-            // New Array
-            $data = array();
+            // Array
+            $labels = array();
+            $visitorAll = array();
+            $visitorAdmin = array();
+            $visitorMember = array();
 
             // Get data last month
             for($i=30; $i>=0; $i--){
@@ -74,21 +87,28 @@ class VisitorController extends Controller
                 // Get visitor member
                 $visitor_member = Visitor::join('users','visitor.id_user','=','users.id_user')->where('is_admin','=',0)->whereDate('visit_at','=',$date)->groupBy('visitor.id_user')->get();
 
-                // Array Push
-                array_push($data, array(
-                    'date' => $date,
-                    'dateString' => date('d/m/y', strtotime($date)),
-                    'visitorAll' => count($visitor_admin) + count($visitor_member),
-                    'visitorAdmin' => count($visitor_admin),
-                    'visitorMember' => count($visitor_member),
-                ));
+                // Array push
+                array_push($labels, date('d/m/y', strtotime($date)));
+                array_push($visitorAll, count($visitor_admin) + count($visitor_member));
+                array_push($visitorAdmin, count($visitor_admin));
+                array_push($visitorMember, count($visitor_member));
             }
+
+            // Datasets
+            $datasets = [
+                ['label' => 'Semua', 'data' => $visitorAll, 'color' => '#28b779'],
+                ['label' => 'Admin', 'data' => $visitorAdmin, 'color' => '#da542e'],
+                ['label' => 'Member', 'data' => $visitorMember, 'color' => '#27a9e3'],
+            ];
 
             // Response
             return response()->json([
                 'status' => 200,
                 'message' => 'Success!',
-                'data' => $data
+                'data' => [
+                    'labels' => $labels,
+                    'datasets' => $datasets
+                ]
             ]);
         }
     }

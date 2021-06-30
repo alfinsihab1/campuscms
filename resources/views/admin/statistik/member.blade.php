@@ -87,18 +87,8 @@
             type: "get",
             url: url,
             success: function(response){
-                var data = {
-                    labels: response.data.labels,
-                    datasets: [{
-                        data: response.data.data,
-                        backgroundColor: response.data.colors,
-                        borderWidth: 0
-                    }]
-                };
-                generate_chart_doughnut(selector, data);
-                generate_chart_legend(response.data.colors, response.data, "#"+selector);
-                chart_list_height(4);
-                $("#"+selector).parents(".tile-body").find(".total").text(thousand_format(response.data.total));
+                var chart = new ChartDoughnut(selector, response.data, 4);
+                chart.init();
             }
         });
     }

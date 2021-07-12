@@ -237,7 +237,7 @@
                                             <br>
                                             <small><i class="fa fa-tag mr-1"></i>{{ $data->nomor_pelatihan }}</small>
                                         </td>
-                                        <td><span class="badge {{ $data->status_pelatihan == 1 ? 'badge-success' : 'badge-danger' }}">{{ $data->status_pelatihan == 1 ? 'Lulus' : 'Belum Lulus' }}</span></td>
+                                        <td><span class="badge {{ $data->status_pelatihan == 0 ? 'badge-danger' : 'badge-success' }}">{{ $data->status_pelatihan == 0 ? 'Belum Lulus' : 'Lulus' }}</span></td>
                                         <td>
                                             @if($data->status_pelatihan != 0)
                                             <div class="btn-group">

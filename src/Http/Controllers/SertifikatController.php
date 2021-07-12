@@ -96,6 +96,7 @@ class SertifikatController extends Controller
                 return '
                     <div class="btn-group">
                     <a href="'.route('admin.sertifikat.peserta.detail', ['id' => $data->id_pm]).'" target="_blank" class="btn btn-sm btn-warning" data-toggle="tooltip" title="Cetak"><i class="fa fa-print"></i></a>
+                    <a href="#" class="btn btn-sm btn-danger btn-delete" data-id="'.$data->id_pm.'" data-toggle="tooltip" title="Hapus"><i class="fa fa-trash"></i></a>
                     </div>
                 ';
             })
@@ -252,6 +253,25 @@ class SertifikatController extends Controller
 		$pdf->setPaper('A4', 'landscape');
 		
         return $pdf->stream("Sertifikat Peserta Pelatihan.pdf");
+    }
+    
+    /**
+     * Menghapus sertifikat
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function delete(Request $request)
+    {
+        // Check Access
+        has_access(generate_method(__METHOD__), Auth::user()->role);
+
+        // Menghapus data
+        $pelatihan_member = PelatihanMember::find($request->id);
+        $pelatihan_member->delete();
+
+        // Redirect
+        return redirect()->route('admin.sertifikat.peserta.index')->with(['message' => 'Berhasil menghapus data.']);
     }
 	
     /**

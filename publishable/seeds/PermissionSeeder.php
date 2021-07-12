@@ -261,6 +261,7 @@ class PermissionSeeder extends Seeder
             ['key' => 'SertifikatController::indexParticipant', 'name' => 'Menampilkan Data Sertifikat Peserta'],
             ['key' => 'SertifikatController::detailTrainer', 'name' => 'Menampilkan Detail Sertifikat Trainer'],
             ['key' => 'SertifikatController::detailParticipant', 'name' => 'Menampilkan Detail Sertifikat Peserta'],
+            ['key' => 'SertifikatController::delete', 'name' => 'Menghapus Sertifikat Peserta'],
 
             // Tandatangan Digital
             ['key' => 'SignatureController::index', 'name' => 'Menampilkan Data Tandatangan Digital'],

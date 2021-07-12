@@ -38,6 +38,10 @@
                                 </tr>
                             </thead>
                         </table>
+                        <form id="form-delete" class="d-none" method="post" action="{{ route('admin.sertifikat.peserta.delete') }}">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="id">
+                        </form>
                     </div>
                 </div>
                 <!-- /Tile Body -->

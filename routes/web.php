@@ -295,6 +295,7 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::get('/admin/e-sertifikat/peserta', $namespacePrefix.'SertifikatController@indexParticipant')->name('admin.sertifikat.peserta.index');
 	Route::get('/admin/e-sertifikat/peserta/data', $namespacePrefix.'SertifikatController@dataParticipant')->name('admin.sertifikat.peserta.data');
 	Route::get('/admin/e-sertifikat/peserta/detail/{id}', $namespacePrefix.'SertifikatController@detailParticipant')->name('admin.sertifikat.peserta.detail');
+	Route::post('/admin/e-sertifikat/peserta/delete', $namespacePrefix.'SertifikatController@delete')->name('admin.sertifikat.peserta.delete');
 
 	// Slider
 	Route::get('/admin/slider', $namespacePrefix.'SliderController@index')->name('admin.slider.index');

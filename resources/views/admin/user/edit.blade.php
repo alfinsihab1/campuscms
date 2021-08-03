@@ -96,6 +96,20 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="col-md-2 col-form-label">Kategori <span class="text-danger">*</span></label>
+                            <div class="col-md-10">
+                                <select name="user_kategori" class="form-control {{ $errors->has('user_kategori') ? 'is-invalid' : '' }}">
+                                    <option value="" disabled selected>--Pilih--</option>
+                                    @foreach($kategori as $data)
+                                    <option value="{{ $data->id_ku }}" {{ $data->id_ku === $user->user_kategori ? 'selected' : '' }}>{{ $data->kategori }}</option>
+                                    @endforeach
+                                </select>
+                                @if($errors->has('user_kategori'))
+                                <div class="small text-danger mt-1">{{ ucfirst($errors->first('user_kategori')) }}</div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-md-2 col-form-label">Role <span class="text-danger">*</span></label>
                             <div class="col-md-10">
                                 <select name="role" class="form-control {{ $errors->has('role') ? 'is-invalid' : '' }}">

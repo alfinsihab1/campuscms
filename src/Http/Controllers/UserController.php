@@ -10,6 +10,7 @@ use Yajra\DataTables\Facades\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
 use Ajifatur\FaturCMS\Exports\UserExport;
 use App\User;
+use Ajifatur\FaturCMS\Models\KategoriUser;
 use Ajifatur\FaturCMS\Models\Komisi;
 use Ajifatur\FaturCMS\Models\PelatihanMember;
 use Ajifatur\FaturCMS\Models\ProfilePhoto;
@@ -158,9 +159,13 @@ class UserController extends Controller
         // Get data role
         $role = Role::orderBy('is_admin','desc')->get();
 
+        // Get data kategori user
+        $kategori = KategoriUser::orderBy('id_ku','desc')->get();
+
         // View
         return view('faturcms::admin.user.create', [
             'role' => $role,
+            'kategori' => $kategori,
         ]);
     }
 
@@ -178,6 +183,7 @@ class UserController extends Controller
             'tanggal_lahir' => 'required',
             'jenis_kelamin' => 'required',
             'nomor_hp' => 'required',
+            'user_kategori' => 'required',
             'username' => 'required|string|min:6|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
@@ -204,6 +210,7 @@ class UserController extends Controller
             $user->tanggal_lahir = generate_date_format($request->tanggal_lahir, 'y-m-d');
             $user->jenis_kelamin = $request->jenis_kelamin;
             $user->nomor_hp = $request->nomor_hp;
+            $user->user_kategori = $request->user_kategori;
             $user->reference = '';
             $user->foto = '';
             $user->role = $request->role;
@@ -232,7 +239,7 @@ class UserController extends Controller
         has_access(generate_method(__METHOD__), Auth::user()->role);
 
         // Get data user
-        $user = User::join('role','users.role','=','role.id_role')->findOrFail($id);
+        $user = User::join('role','users.role','=','role.id_role')->join('kategori_user','users.user_kategori','=','kategori_user.id_ku')->findOrFail($id);
 
         // Sponsor
         $sponsor = User::where('username','=',$user->reference)->first();
@@ -270,9 +277,13 @@ class UserController extends Controller
         // Get data role
         $role = Role::orderBy('is_admin','desc')->get();
 
+        // Get data kategori user
+        $kategori = KategoriUser::orderBy('id_ku','desc')->get();
+
         // View
         return view('faturcms::admin.user.edit', [
             'role' => $role,
+            'kategori' => $kategori,
             'user' => $user,
         ]);
     }
@@ -291,6 +302,7 @@ class UserController extends Controller
             'tanggal_lahir' => 'required',
             'jenis_kelamin' => 'required',
             'nomor_hp' => 'required',
+            'user_kategori' => 'required',
             'username' => $request->username != '' ? ['required', 'string', 'min:6', 'max:255', Rule::unique('users')->ignore($request->id, 'id_user')] : '',
             'email' => [
                 'required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($request->id, 'id_user')
@@ -316,6 +328,7 @@ class UserController extends Controller
             $user->tanggal_lahir = generate_date_format($request->tanggal_lahir, 'y-m-d');
             $user->jenis_kelamin = $request->jenis_kelamin;
             $user->nomor_hp = $request->nomor_hp;
+            $user->user_kategori = $request->user_kategori;
             $user->email = $request->email;
             $user->username = $request->username != '' ? $request->username : $user->username;
             $user->password = $request->password != '' ? bcrypt($request->password) : $user->password;
@@ -423,7 +436,7 @@ class UserController extends Controller
         has_access(generate_method(__METHOD__), Auth::user()->role);
 
         // Get data user
-        $user = User::join('role','users.role','=','role.id_role')->findOrFail(Auth::user()->id_user);
+        $user = User::join('role','users.role','=','role.id_role')->join('kategori_user','users.user_kategori','=','kategori_user.id_ku')->findOrFail(Auth::user()->id_user);
 
         // Sponsor
         $sponsor = User::where('username','=',$user->reference)->first();
@@ -569,21 +582,21 @@ class UserController extends Controller
 
         // Get data user
         if($request->query('filter') == null){
-            $users = User::join('role','users.role','=','role.id_role')->get();
+            $users = User::join('role','users.role','=','role.id_role')->join('kategori_user','users.user_kategori','=','kategori_user.id_ku')->get();
         }
         else{
             if($request->query('filter') == 'all')
-                $users = User::join('role','users.role','=','role.id_role')->get();
+                $users = User::join('role','users.role','=','role.id_role')->join('kategori_user','users.user_kategori','=','kategori_user.id_ku')->get();
             elseif($request->query('filter') == 'admin')
-                $users = User::join('role','users.role','=','role.id_role')->where('role.is_admin','=',1)->get();
+                $users = User::join('role','users.role','=','role.id_role')->join('kategori_user','users.user_kategori','=','kategori_user.id_ku')->where('role.is_admin','=',1)->get();
             elseif($request->query('filter') == 'member')
-                $users = User::join('role','users.role','=','role.id_role')->where('role.is_admin','=',0)->get();
+                $users = User::join('role','users.role','=','role.id_role')->join('kategori_user','users.user_kategori','=','kategori_user.id_ku')->where('role.is_admin','=',0)->get();
             elseif($request->query('filter') == 'aktif')
-                $users = User::join('role','users.role','=','role.id_role')->where('role.is_admin','=',0)->where('status','=',1)->get();
+                $users = User::join('role','users.role','=','role.id_role')->join('kategori_user','users.user_kategori','=','kategori_user.id_ku')->where('role.is_admin','=',0)->where('status','=',1)->get();
             elseif($request->query('filter') == 'belum-aktif')
-                $users = User::join('role','users.role','=','role.id_role')->where('role.is_admin','=',0)->where('status','=',0)->get();
+                $users = User::join('role','users.role','=','role.id_role')->join('kategori_user','users.user_kategori','=','kategori_user.id_ku')->where('role.is_admin','=',0)->where('status','=',0)->get();
             else
-                $users = User::join('role','users.role','=','role.id_role')->get();
+                $users = User::join('role','users.role','=','role.id_role')->join('kategori_user','users.user_kategori','=','kategori_user.id_ku')->get();
         }
 
         return Excel::download(new UserExport($users), 'Data User.xlsx');

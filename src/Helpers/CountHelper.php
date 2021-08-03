@@ -19,6 +19,7 @@
  * @method int count_churn_rate(int $month)
  * @method int count_pelatihan_member(int $user, array $tanggal)
  * @method int count_anggota_kelompok(int $id)
+ * @method int count_user_by_kategori(int $id)
  * @method int count_penerima_email(array $receivers)
  */
 
@@ -207,6 +208,14 @@ if(!function_exists('count_anggota_kelompok')){
             }
             else return 0;
         }
+    }
+}
+
+// Menghitung jumlah user berdasarkan kategori
+if(!function_exists('count_user_by_kategori')){
+    function count_user_by_kategori($id){
+        $user = User::where('is_admin','=',0)->where('status','=',1)->where('user_kategori','=',$id)->count();
+        return $user;
     }
 }
 

@@ -52,6 +52,13 @@ class PermissionSeeder extends Seeder
             ['key' => 'UserController::editProfile', 'name' => 'Mengupdate Profil User'],
             ['key' => 'UserController::export', 'name' => 'Mengekspor Data User'],
 
+            // Kategori User
+            ['key' => 'KategoriUserController::index', 'name' => 'Menampilkan Data Kategori User'],
+            ['key' => 'KategoriUserController::create', 'name' => 'Menambah Kategori User'],
+            ['key' => 'KategoriUserController::detail', 'name' => 'Menampilkan Detail Kategori User'],
+            ['key' => 'KategoriUserController::edit', 'name' => 'Mengupdate Kategori User'],
+            ['key' => 'KategoriUserController::delete', 'name' => 'Menghapus Kategori User'],
+
             // Kelompok User
             ['key' => 'KelompokController::index', 'name' => 'Menampilkan Data Kelompok User'],
             ['key' => 'KelompokController::create', 'name' => 'Menambah Kelompok User'],

@@ -71,6 +71,7 @@ class RegisterController extends Controller
             'tanggal_lahir' => ['required'],
             'jenis_kelamin' => ['required'],
             'nomor_hp' => ['required', 'numeric'],
+            'user_kategori' => ['required'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'username' => ['required', 'string', 'min:6', 'max:255', 'unique:users', 'alpha_dash'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
@@ -94,6 +95,7 @@ class RegisterController extends Controller
 		$user->tanggal_lahir = generate_date_format($data['tanggal_lahir'], 'y-m-d');
 		$user->jenis_kelamin = $data['jenis_kelamin'];
 		$user->nomor_hp = $data['nomor_hp'];
+		$user->user_kategori = $data['user_kategori'];
 		$user->reference = $data['ref'];
 		$user->foto = '';
 		$user->role = role('student');

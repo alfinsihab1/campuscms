@@ -73,6 +73,15 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	Route::post('/admin/user/update-photo', $namespacePrefix.'UserController@updatePhoto')->name('admin.user.updatephoto');
 	Route::get('/admin/user/images', $namespacePrefix.'UserController@showImages')->name('admin.user.images');
 
+	// Kategori User
+	Route::get('/admin/user/kategori', $namespacePrefix.'KategoriUserController@index')->name('admin.user.kategori.index');
+	Route::get('/admin/user/kategori/create', $namespacePrefix.'KategoriUserController@create')->name('admin.user.kategori.create');
+	Route::post('/admin/user/kategori/store', $namespacePrefix.'KategoriUserController@store')->name('admin.user.kategori.store');
+	Route::get('/admin/user/kategori/detail/{id}', $namespacePrefix.'KategoriUserController@detail')->name('admin.user.kategori.detail');
+	Route::get('/admin/user/kategori/edit/{id}', $namespacePrefix.'KategoriUserController@edit')->name('admin.user.kategori.edit');
+	Route::post('/admin/user/kategori/update', $namespacePrefix.'KategoriUserController@update')->name('admin.user.kategori.update');
+	Route::post('/admin/user/kategori/delete', $namespacePrefix.'KategoriUserController@delete')->name('admin.user.kategori.delete');
+
 	// Kelompok User
 	Route::get('/admin/user/kelompok', $namespacePrefix.'KelompokController@index')->name('admin.user.kelompok.index');
 	Route::get('/admin/user/kelompok/create', $namespacePrefix.'KelompokController@create')->name('admin.user.kelompok.create');

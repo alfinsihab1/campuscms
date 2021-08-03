@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Ajifatur\FaturCMS\Mails\EmailVerificationMail;
 use App\User;
+use Ajifatur\FaturCMS\Models\KategoriUser;
 use Ajifatur\FaturCMS\Models\Komisi;
 use Ajifatur\FaturCMS\Models\Setting;
 
@@ -37,8 +38,13 @@ class RegisterController extends Controller
         // Referal
         referral($request->query('ref'), 'auth.register');
 
+        // Data kategori user
+        $kategori = KategoriUser::orderBy('id_ku','desc')->get();
+
         // View
-        return view('auth.'.setting('site.view.register'));
+        return view('auth.'.setting('site.view.register'), [
+            'kategori' => $kategori
+        ]);
     }
 
     /**

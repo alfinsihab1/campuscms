@@ -1,0 +1,41 @@
+{
+    "name": "ajifatur/faturcms",
+    "description": "Solusi CMS dengan Fitur Referral Terbaik",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ajifatur",
+            "email": "ajifatur2@gmail.com"
+        },
+        {
+            "name": "praseetyaa",
+            "email": "praseetyaa@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Ajifatur\\FaturCMS\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ajifatur\\FaturCMS\\FaturCMSServiceProvider"
+            ]
+        }
+    },
+    "require": {
+        "php": "^7.2",
+        "ajifatur/faturhelper": "^1.0",
+        "barryvdh/laravel-dompdf": "^0.8.5",
+        "hisorange/browser-detect": "^4.4",
+        "jorenvanhocht/laravel-share": "^4.0",
+        "laravel/ui": "^3.0",
+        "maatwebsite/excel": "^3.1",
+        "simplesoftwareio/simple-qrcode": "^4.2",
+        "stevebauman/location": "^6.1",
+        "yajra/laravel-datatables-oracle": "~9.0"
+    }
+}

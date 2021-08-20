@@ -4,7 +4,7 @@ namespace Ajifatur\FaturCMS\Http\Controllers\API;
 
 use Ajifatur\FaturCMS\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\User;
+use App\Models\User;
 use Ajifatur\FaturCMS\Models\PelatihanMember;
 use Ajifatur\FaturCMS\Models\Visitor;
 

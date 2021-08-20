@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Ajifatur\FaturCMS\Mails\ForgotPasswordMail;
-use App\User;
+use App\Models\User;
 
 class ForgotPasswordController extends Controller
 {

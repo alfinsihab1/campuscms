@@ -39,7 +39,7 @@ use GuzzleHttp\Psr7;
 use GuzzleHttp\Exception\ClientException;
 use hisorange\BrowserDetect\Parser as Browser;
 use Stevebauman\Location\Facades\Location;
-use App\User;
+use App\Models\User;
 use Ajifatur\FaturCMS\Models\KategoriArtikel;
 use Ajifatur\FaturCMS\Models\KategoriPelatihan;
 use Ajifatur\FaturCMS\Models\KategoriSetting;

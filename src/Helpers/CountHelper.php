@@ -23,7 +23,7 @@
  * @method int count_penerima_email(array $receivers)
  */
 
-use App\User;
+use App\Models\User;
 use Ajifatur\FaturCMS\Models\Blog;
 use Ajifatur\FaturCMS\Models\Files;
 use Ajifatur\FaturCMS\Models\Kelompok;

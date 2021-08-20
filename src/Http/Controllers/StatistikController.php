@@ -4,7 +4,7 @@ namespace Ajifatur\FaturCMS\Http\Controllers;
 
 use Auth;
 use Illuminate\Http\Request;
-use App\User;
+use App\Models\User;
 use Ajifatur\FaturCMS\Models\Kelompok;
 use Ajifatur\FaturCMS\Models\Pelatihan;
 use Ajifatur\FaturCMS\Models\PelatihanMember;

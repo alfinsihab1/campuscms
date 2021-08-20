@@ -11,7 +11,7 @@ use Yajra\DataTables\Facades\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
 use Ajifatur\FaturCMS\Imports\EmailImport;
 use Ajifatur\FaturCMS\Mails\MessageMail;
-use App\User;
+use App\Models\User;
 use Ajifatur\FaturCMS\Models\Email;
 
 class EmailController extends Controller

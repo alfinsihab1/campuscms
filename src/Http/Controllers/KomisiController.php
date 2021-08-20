@@ -11,7 +11,7 @@ use Yajra\DataTables\Facades\DataTables;
 use Ajifatur\FaturCMS\Mails\ConfirmationMail;
 use Ajifatur\FaturCMS\Mails\VerificationMail;
 use Ajifatur\FaturCMS\Mails\WithdrawalMail;
-use App\User;
+use App\Models\User;
 use Ajifatur\FaturCMS\Models\Komisi;
 use Ajifatur\FaturCMS\Models\Rekening;
 use Ajifatur\FaturCMS\Models\Withdrawal;

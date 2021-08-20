@@ -5,7 +5,7 @@ namespace Ajifatur\FaturCMS\Http\Controllers\API;
 use Ajifatur\FaturCMS\Http\Controllers\Controller;
 use Auth;
 use Illuminate\Http\Request;
-use App\User;
+use App\Models\User;
 use Ajifatur\FaturCMS\Models\Kelompok;
 use Ajifatur\FaturCMS\Models\PelatihanMember;
 use Ajifatur\FaturCMS\Models\Visitor;

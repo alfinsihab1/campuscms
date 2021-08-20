@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Ajifatur\FaturCMS\Mails\MessageMail;
 use Ajifatur\FaturCMS\Models\Email;
-use App\User;
+use App\Models\User;
 
 class Kernel extends ConsoleKernel
 {

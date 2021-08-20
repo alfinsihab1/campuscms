@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Ajifatur\FaturCMS\Mails\RegisterMail;
-use App\User;
+use App\Models\User;
 use Ajifatur\FaturCMS\Models\Komisi;
 
 class VerificationController extends Controller

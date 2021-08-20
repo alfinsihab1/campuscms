@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Support\Str;
 use Illuminate\Queue\SerializesModels;
-use App\User;
+use App\Models\User;
 
 class ForgotPasswordMail extends Mailable
 {

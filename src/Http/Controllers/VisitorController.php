@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Stevebauman\Location\Facades\Location;
 use Yajra\DataTables\Facades\DataTables;
-use App\User;
+use App\Models\User;
 use Ajifatur\FaturCMS\Models\Visitor;
 
 class VisitorController extends Controller

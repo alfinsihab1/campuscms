@@ -4,7 +4,7 @@ namespace Ajifatur\FaturCMS\Http\Controllers\API;
 
 use Ajifatur\FaturCMS\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\User;
+use App\Models\User;
 
 class MemberController extends Controller
 {

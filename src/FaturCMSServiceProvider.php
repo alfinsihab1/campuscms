@@ -99,16 +99,16 @@ class FaturCMSServiceProvider extends ServiceProvider
                 "{$publishablePath}/templates" => public_path('templates'),
             ],
             'seeds' => [
-                "{$publishablePath}/seeds" => database_path('seeds'),
+                "{$publishablePath}/seeds" => database_path('seeders'),
             ],
             'config' => [
                 "{$publishablePath}/config/faturcms.php" => config_path('faturcms.php'),
             ],
-            'exception' => [
-                "{$publishablePath}/exceptions/Handler.php" => app_path('Exceptions/Handler.php'),
-            ],
+            // 'exception' => [
+            //     "{$publishablePath}/exceptions/Handler.php" => app_path('Exceptions/Handler.php'),
+            // ],
             'userModel' => [
-                "{$publishablePath}/models/User.php" => app_path('User.php'),
+                "{$publishablePath}/models/User.php" => app_path('Models/User.php'),
             ],
         ];
 

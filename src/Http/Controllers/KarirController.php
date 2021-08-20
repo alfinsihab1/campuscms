@@ -6,7 +6,7 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use App\User;
+use App\Models\User;
 use Ajifatur\FaturCMS\Models\Karir;
 
 class KarirController extends Controller

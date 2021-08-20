@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
-use App\User;
+use App\Models\User;
 use Ajifatur\FaturCMS\Models\Visitor;
 
 class LoginController extends Controller

@@ -6,7 +6,7 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
-use App\User;
+use App\Models\User;
 use Ajifatur\FaturCMS\Models\Blog;
 use Ajifatur\FaturCMS\Models\KategoriArtikel;
 use Ajifatur\FaturCMS\Models\Komentar;

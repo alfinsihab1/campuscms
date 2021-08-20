@@ -55,11 +55,11 @@ class UpdateCommand extends Command
 
         // Copy seeds
         $this->info('Copying Seeds');
-        File::copyDirectory(package_path('publishable/seeds'), database_path('seeds'));
+        File::copyDirectory(package_path('publishable/seeds'), database_path('seeders'));
         $seed_files = generate_file(package_path('publishable/seeds'));
         if(count($seed_files)>0){
             foreach($seed_files as $seed_file){
-                file_replace_contents(package_path('publishable/seeds/'.$seed_file), database_path('seeds/'.$seed_file));
+                file_replace_contents(package_path('publishable/seeds/'.$seed_file), database_path('seeders/'.$seed_file));
             }
         }
 

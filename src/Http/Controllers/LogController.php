@@ -5,7 +5,7 @@ namespace Ajifatur\FaturCMS\Http\Controllers;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use App\User;
+use App\Models\User;
 
 class LogController extends Controller
 {

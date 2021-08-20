@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Yajra\DataTables\Facades\DataTables;
 use Ajifatur\FaturCMS\Mails\TrainingPaymentMail;
-use App\User;
+use App\Models\User;
 use Ajifatur\FaturCMS\Models\DefaultRekening;
 use Ajifatur\FaturCMS\Models\KategoriPelatihan;
 use Ajifatur\FaturCMS\Models\Pelatihan;

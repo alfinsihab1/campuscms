@@ -3,7 +3,7 @@
 namespace Ajifatur\FaturCMS\DummySeeder;
 
 use Illuminate\Database\Seeder;
-use App\User;
+use App\Models\User;
 use Ajifatur\FaturCMS\Models\Setting;
 
 class DummyUserSeeder extends Seeder

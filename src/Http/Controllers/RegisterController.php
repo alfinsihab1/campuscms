@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Ajifatur\FaturCMS\Mails\EmailVerificationMail;
-use App\User;
+use App\Models\User;
 use Ajifatur\FaturCMS\Models\KategoriUser;
 use Ajifatur\FaturCMS\Models\Komisi;
 use Ajifatur\FaturCMS\Models\Setting;

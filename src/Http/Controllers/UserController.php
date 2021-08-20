@@ -9,7 +9,7 @@ use Illuminate\Validation\Rule;
 use Yajra\DataTables\Facades\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
 use Ajifatur\FaturCMS\Exports\UserExport;
-use App\User;
+use App\Models\User;
 use Ajifatur\FaturCMS\Models\KategoriUser;
 use Ajifatur\FaturCMS\Models\Komisi;
 use Ajifatur\FaturCMS\Models\PelatihanMember;

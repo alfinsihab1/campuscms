@@ -6,7 +6,6 @@ use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use App\User;
 use Ajifatur\FaturCMS\Models\Setting;
 use Ajifatur\FaturCMS\Models\UserSetting;
 

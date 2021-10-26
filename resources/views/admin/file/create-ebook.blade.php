@@ -67,7 +67,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-2 col-form-label">File PDF <span class="text-danger">*</span></label>
+                            <label class="col-md-2 col-form-label">File PDF</label>
                             <div class="col-md-10">
                                 <input type="file" id="file-pdf" class="d-none" accept="application/pdf">
                                 <input type="hidden" name="pdf">
@@ -78,6 +78,16 @@
                                         <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label">Kode Embed Google Slide / PDF</label>
+                            <div class="col-md-10">
+                                <textarea name="file_keterangan" class="form-control {{ $errors->has('file_keterangan') ? 'is-invalid' : '' }}" rows="3">{{ old('file_keterangan') }}</textarea>
+                                <div class="small text-muted mt-1">Jika tidak ada file PDF, wajib memasukkan kode disini.</div>
+                                @if($errors->has('file_keterangan'))
+                                <div class="small text-danger mt-1">{{ ucfirst($errors->first('file_keterangan')) }}</div>
+                                @endif
                             </div>
                         </div>
                         <div class="form-group row">

@@ -38,6 +38,26 @@
                 <!-- /Tile Title -->
                 <!-- Tile Body -->
                 <div class="tile-body">
+                    @if($file->file_keterangan != '')
+                        @php
+                            $html = html_entity_decode($file->file_keterangan);
+                            $explode = explode(' ', $html);
+                            $src = '';
+                            if(is_int(strpos($html, 'src='))) {
+                                foreach($explode as $data){
+                                    if(is_int(strpos($data, 'src='))){
+                                        $src = str_replace('src=', '', $data);
+                                    }
+                                }
+                            }
+                            else $src = $html;
+                        @endphp
+                        <div class="embedded">
+                            <iframe class="embed-responsive-item" src={!! html_entity_decode($src) !!} height="360" frameborder="0" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+                        </div>
+                    @endif
+
+                    @if($file->file_konten != '')
                     <div class="row">
                         <div class="col-12 mx-auto text-center" id="image-wrapper">
                             @foreach($file_list as $key=>$data)
@@ -54,6 +74,7 @@
                             @endforeach
                         </div>
                     </div>
+                    @endif
                 </div>
                 <!-- /Tile Body -->
             </div>
@@ -66,6 +87,8 @@
 <!-- /Main -->
 
 @endsection
+
+@if($file->file_konten != '')
 
 @section('js-extra')
 
@@ -132,12 +155,15 @@
 
 @endsection
 
+@endif
+
 @section('css-extra')
 
 <style type="text/css">
     body {overflow-y: hidden;}
     #image-wrapper {height: calc(100vh - 175px); overflow-y: scroll;}
     #image-wrapper img {background: #f1f1fa;}
+    .embedded iframe {width: 100%; height: 600px;}
 </style>
 
 @endsection

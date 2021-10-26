@@ -134,7 +134,7 @@ class FileController extends Controller
         // Validasi
         $validator = Validator::make($request->all(), [
             'nama_file' => 'required|max:255',
-            'file_konten' => 'required',
+            'file_konten' => tipe_file($request->file_kategori) == 'ebook' && $request->file_keterangan != '' ? '' : 'required',
         ], array_validation_messages());
         
         // Mengecek jika ada error
@@ -153,8 +153,8 @@ class FileController extends Controller
             $file->file_nama = generate_file_name($request->nama_file, 'file', 'file_nama', 'file_kategori', $request->file_kategori, 'id_folder', $request->id_folder, 'id_file', null);
             $file->file_kategori = $request->file_kategori;
             $file->file_deskripsi = $request->file_deskripsi != '' ? $request->file_deskripsi : '';
-            $file->file_konten = $request->file_konten;
-            $file->file_keterangan = tipe_file($request->file_kategori) == 'video' ? htmlentities($request->file_keterangan) : '';
+            $file->file_konten = tipe_file($request->file_kategori) == 'ebook' && $request->file_keterangan != '' ? '' : $request->file_konten;
+            $file->file_keterangan = tipe_file($request->file_kategori) == 'video' || tipe_file($request->file_kategori) == 'ebook' ? htmlentities($request->file_keterangan) : '';
             $file->file_thumbnail = generate_image_name("assets/images/file/", $request->gambar, $request->gambar_url);
             $file->file_at = date('Y-m-d H:i:s');
             $file->file_up = date('Y-m-d H:i:s');
@@ -290,7 +290,7 @@ class FileController extends Controller
             $file->file_nama = generate_file_name($request->nama_file, 'file', 'file_nama', 'file_kategori', $request->file_kategori, 'id_folder', $request->id_folder, 'id_file', $request->id);
             $file->file_deskripsi = $request->file_deskripsi != '' ? $request->file_deskripsi : '';
             $file->file_konten = tipe_file($request->file_kategori) == 'video' ? $request->file_konten : $file->file_konten;
-            $file->file_keterangan = tipe_file($request->file_kategori) == 'video' ? htmlentities($request->file_keterangan) : '';
+            $file->file_keterangan = tipe_file($request->file_kategori) == 'video' || tipe_file($request->file_kategori) == 'ebook' ? htmlentities($request->file_keterangan) : '';
             $file->file_thumbnail = generate_image_name("assets/images/file/", $request->gambar, $request->gambar_url) != '' ? generate_image_name("assets/images/file/", $request->gambar, $request->gambar_url) : $file->file_thumbnail;
             $file->file_up = date('Y-m-d H:i:s');
             $file->save();

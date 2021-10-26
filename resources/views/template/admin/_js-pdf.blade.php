@@ -25,6 +25,13 @@
 		$("button[type=submit]").attr("disabled","disabled");
 	});
 
+    // Enable button when file_keterangan is changing
+    $(document).on("keyup", "textarea[name=file_keterangan]", function() {
+        var value = $(this).val();
+        if(value != '') $("button[type=submit]").removeAttr("disabled");
+        else $("button[type=submit]").attr("disabled","disabled");
+    });
+
     // Function show loader
     function show_loader(loading_text){
         $("#modal-loader .modal-body h5").text(loading_text);
@@ -143,40 +150,44 @@
 	// Submit Form
     $(document).on("click", "#form button[type=submit]", function(e){
         e.preventDefault();
-		if($("input[name=nama_file]").val() == null || $("input[name=nama_file]").val() == ''){
+		if($("input[name=nama_file]").val() == null || $("input[name=nama_file]").val() == '') {
 			alert("Nama file harus diisi!");
 		}
-		else{
-            show_loader("Mengupload file PDF");
-            var array = [];
-            var d = new Date();
-            var n = d.getTime();
-            var i = 1;
-            var total = $(".progress-pdf .total-page").text();
-            // total = total.parseInt();
+		else {
             canvases = $(".result-pdf canvas");
-            canvases.each(function(key,elem){
-                var code = $(elem).get(0).toDataURL();
-                $.ajax({
-                    type: 'post',
-                    url: "{{ route('admin.file.uploadpdf', ['kategori' => $kategori]) }}",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        code: code,
-                        key: key,
-                        name: n,
-                    },
-                    success: function(){
-                        if(i == canvases.length){
-                            $("input[name=file_konten]").val(n);
-                            $("#form").submit();
+            if(canvases.length > 0) {
+                show_loader("Mengupload file PDF");
+                var array = [];
+                var d = new Date();
+                var n = d.getTime();
+                var i = 1;
+                var total = $(".progress-pdf .total-page").text();
+                canvases.each(function(key,elem){
+                    var code = $(elem).get(0).toDataURL();
+                    $.ajax({
+                        type: 'post',
+                        url: "{{ route('admin.file.uploadpdf', ['kategori' => $kategori]) }}",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            code: code,
+                            key: key,
+                            name: n,
+                        },
+                        success: function(){
+                            if(i == canvases.length){
+                                $("input[name=file_konten]").val(n);
+                                $("#form").submit();
+                            }
+                            var percentage = Math.round((i / total) * 100);
+                            $("#modal-loader .progress-bar").text(percentage + "%").css("width", percentage + "%");
+                            i++;
                         }
-                        var percentage = Math.round((i / total) * 100);
-                        $("#modal-loader .progress-bar").text(percentage + "%").css("width", percentage + "%");
-                        i++;
-                    }
+                    });
                 });
-            });
+            }
+            else {
+                $("#form").submit();
+            }
         }
 	});
 </script>

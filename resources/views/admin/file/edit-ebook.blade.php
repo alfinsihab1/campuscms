@@ -68,6 +68,16 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="col-md-2 col-form-label">Kode Embed Google Slide / PDF</label>
+                            <div class="col-md-10">
+                                <textarea name="file_keterangan" class="form-control {{ $errors->has('file_keterangan') ? 'is-invalid' : '' }}" rows="3">{!! html_entity_decode($file->file_keterangan) !!}</textarea>
+                                <div class="small text-muted mt-1">Jika tidak ada file PDF, wajib memasukkan kode disini.</div>
+                                @if($errors->has('file_keterangan'))
+                                <div class="small text-danger mt-1">{{ ucfirst($errors->first('file_keterangan')) }}</div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-md-2 col-form-label"></label>
                             <div class="col-md-10">
                                 <button type="submit" class="btn btn-theme-1"><i class="fa fa-save mr-2"></i>Simpan</button>

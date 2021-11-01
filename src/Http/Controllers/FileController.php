@@ -294,6 +294,21 @@ class FileController extends Controller
             $file->file_thumbnail = generate_image_name("assets/images/file/", $request->gambar, $request->gambar_url) != '' ? generate_image_name("assets/images/file/", $request->gambar, $request->gambar_url) : $file->file_thumbnail;
             $file->file_up = date('Y-m-d H:i:s');
             $file->save();
+
+            // Delete images
+            if($request->file_keterangan != '' && tipe_file($request->file_kategori) == 'ebook') {
+                $file_detail = FileDetail::where('id_file','=',$file->file_konten)->get();
+                if(count($file_detail) > 0){
+                    foreach($file_detail as $data){
+                        $fd = FileDetail::find($data->id_fd);
+                        if(File::exists('assets/uploads/'.$fd->nama_fd)) File::delete('assets/uploads/'.$fd->nama_fd);
+                        $fd->delete();
+                    }
+                }
+                else{
+                    if(File::exists('assets/uploads/'.$file->file_konten)) File::delete('assets/uploads/'.$file->file_konten);
+                }
+            }
             
             // Get data folder
             $current_folder = Folder::find($request->id_folder);

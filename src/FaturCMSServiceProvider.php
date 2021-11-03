@@ -3,6 +3,7 @@
 namespace Ajifatur\FaturCMS;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\File;
 use Ajifatur\FaturCMS\Http\Middleware\AdminMiddleware;
@@ -28,6 +29,9 @@ class FaturCMSServiceProvider extends ServiceProvider
         $router->aliasMiddleware('faturcms.admin', AdminMiddleware::class);
         $router->aliasMiddleware('faturcms.member', MemberMiddleware::class);
         $router->aliasMiddleware('faturcms.guest', GuestMiddleware::class);
+		
+		// Use Bootstrap on paginator
+		Paginator::useBootstrap();
 	}
 
     /**

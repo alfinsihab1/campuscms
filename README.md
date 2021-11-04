@@ -12,9 +12,9 @@
 FaturCMS adalah **Content Management System (CMS)** yang menyediakan fitur referral. Referral yaitu sistem dimana kita mengajak orang lain untuk mendaftar menjadi member, dan kita mendapatkan keuntungan darinya. FaturCMS juga dilengkapi produk-produk digital seperti e-book, video, tools, dan lain sebagainya yang bisa dipromosikan beserta dengan referral tadi. FaturCMS  dibangun di atas framework [Laravel](https://laravel.com).
 
 ## Persyaratan
-- PHP >= 7.2
+- PHP >= 7.4
 - DBMS MySQL >= 6.0
-- Laravel >= 7.0
+- Laravel >= 8.0
 
 ## Instalasi
 

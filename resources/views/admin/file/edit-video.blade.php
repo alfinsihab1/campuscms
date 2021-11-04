@@ -61,7 +61,7 @@
                                 <input type="file" id="file" class="d-none" accept="image/*">
                                 <a class="btn btn-sm btn-secondary btn-image" href="#"><i class="fa fa-image mr-2"></i>Pilih Gambar...</a>
                                 <br>
-                                <img src="{{ image('assets/images/file/'.$file->file_thumbnail, 'file') }}" id="img-file" class="mt-2 img-thumbnail {{ $file->file_thumbnail != '' ? '' : 'd-none' }}" style="max-height: 150px">
+                                <img src="{{ image('assets/images/file/'.$file->file_thumbnail, 'video') }}" id="img-file" class="mt-2 img-thumbnail {{ $file->file_thumbnail != '' ? '' : 'd-none' }}" style="max-height: 150px">
                                 <input type="hidden" name="gambar">
                                 <input type="hidden" name="gambar_url">
                             </div>

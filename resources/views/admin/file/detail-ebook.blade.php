@@ -55,25 +55,25 @@
                         <div class="embedded">
                             <iframe class="embed-responsive-item" src={!! html_entity_decode($src) !!} height="360" frameborder="0" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
                         </div>
-                    @endif
-
-                    @if($file->file_konten != '')
-                    <div class="row">
-                        <div class="col-12 mx-auto text-center" id="image-wrapper">
-                            @foreach($file_list as $key=>$data)
-                                @php
-                                    $explode_dot = explode('.', $data->nama_fd);
-                                    $explode_strip = explode('-', $explode_dot[0]);
-                                @endphp
-                                <p class="font-weight-bold mb-1">{{ remove_zero($explode_strip[1]) }} / {{ count($file_list) }}</p>
-                                @if($key == 0)
-                                <img class="border border-secondary mb-2 first-image" style="max-width: 100%;" src="{{ asset('assets/uploads/'.$data->nama_fd) }}">
-                                @else
-                                <img class="border border-secondary mb-2 lazy" style="max-width: 100%;" data-src="{{ asset('assets/uploads/'.$data->nama_fd) }}">
-                                @endif
-                            @endforeach
+                    @else
+                        @if($file->file_konten != '')
+                        <div class="row">
+                            <div class="col-12 mx-auto text-center" id="image-wrapper">
+                                @foreach($file_list as $key=>$data)
+                                    @php
+                                        $explode_dot = explode('.', $data->nama_fd);
+                                        $explode_strip = explode('-', $explode_dot[0]);
+                                    @endphp
+                                    <p class="font-weight-bold mb-1">{{ remove_zero($explode_strip[1]) }} / {{ count($file_list) }}</p>
+                                    @if($key == 0)
+                                    <img class="border border-secondary mb-2 first-image" style="max-width: 100%;" src="{{ asset('assets/uploads/'.$data->nama_fd) }}">
+                                    @else
+                                    <img class="border border-secondary mb-2 lazy" style="max-width: 100%;" data-src="{{ asset('assets/uploads/'.$data->nama_fd) }}">
+                                    @endif
+                                @endforeach
+                            </div>
                         </div>
-                    </div>
+                        @endif
                     @endif
                 </div>
                 <!-- /Tile Body -->

@@ -3,7 +3,7 @@
   <ul class="app-nav d-block">
     <li class="app-nav__item" style="line-height: 15px">
       <h5 class="d-inline-block text-truncate m-0" style="color: var(--primary)">@yield('title')</h5>
-      <div class="m-0 text-muted small">
+      <div class="m-0 text-muted small d-none d-md-block">
         <ul class="breadcrumb breadcrumb-nav mb-0 p-0 bg-transparent"></ul>
       </div>
     </li>

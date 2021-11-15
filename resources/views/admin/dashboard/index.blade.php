@@ -63,7 +63,7 @@
 		    		<div class="card-body">
 		    			<div class="media d-block d-md-flex align-items-center">
 							<div class="text-center text-md-left">
-								<img class="mr-0 mr-md-3 mb-3 mb-md-0 " width="100" src="https://image.flaticon.com/icons/svg/3731/3731790.svg">
+								<img class="mr-0 mr-md-3 mb-3 mb-md-0 " width="100" src="https://image.flaticon.com/icons/svg/3731/3731790.svg" alt="img">
 							</div>
 			    			<div class="media-body">
 			    				<div class="d-block d-md-flex align-items-center mb-1">
@@ -277,13 +277,13 @@ function waktu(){
 	var curHr = today.getHours()
 
 	if (curHr >= 0 && curHr < 6) {
-	    document.getElementById("greetings").innerHTML = '<img class="weather" src="https://image.flaticon.com/icons/svg/3731/3731938.svg">';
+	    document.getElementById("greetings").innerHTML = '<img class="weather" src="{{ asset('assets/images/icon/bed.png') }}">';
 	} else if (curHr >= 6 && curHr < 12) {
-	    document.getElementById("greetings").innerHTML = '<img class="weather" src="https://image.flaticon.com/icons/svg/3731/3731715.svg">';
+	    document.getElementById("greetings").innerHTML = '<img class="weather" src="{{ asset('assets/images/icon/clouds-and-sun.png') }}">';
 	} else if (curHr >= 12 && curHr < 17) {
-	    document.getElementById("greetings").innerHTML = '<img class="weather" src="https://image.flaticon.com/icons/svg/3731/3731894.svg">';
+	    document.getElementById("greetings").innerHTML = '<img class="weather" src="{{ asset('assets/images/icon/sun.png') }}">';
 	} else {
-	    document.getElementById("greetings").innerHTML = '<img class="weather" src="https://image.flaticon.com/icons/svg/3731/3731916.svg">';
+	    document.getElementById("greetings").innerHTML = '<img class="weather" src="{{ asset('assets/images/icon/half-moon.png') }}">';
 	}
 }
 window.setInterval(waktu, 1000);

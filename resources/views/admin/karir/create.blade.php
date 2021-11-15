@@ -84,13 +84,13 @@
 </main>
 <!-- /Main -->
 
-@include('faturcms::template.admin._modal-image', ['croppieWidth' => 640, 'croppieHeight' => 360])
+@include('faturcms::template.admin._modal-image', ['noCroppie' => true, 'croppieWidth' => 640, 'croppieHeight' => 360])
 
 @endsection
 
 @section('js-extra')
 
-@include('faturcms::template.admin._js-image', ['imageType' => 'karir', 'croppieWidth' => 640, 'croppieHeight' => 360])
+@include('faturcms::template.admin._js-image', ['imageType' => 'karir', 'noCroppie' => true, 'croppieWidth' => 640, 'croppieHeight' => 360])
 
 @include('faturcms::template.admin._js-editor')
 

@@ -87,7 +87,7 @@
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label">Kode Embed Google Slide</label>
                             <div class="col-md-10">
-                                <textarea name="file_keterangan" class="form-control {{ $errors->has('file_keterangan') ? 'is-invalid' : '' }}" rows="3">{{ $file->file_keterangan }}</textarea>
+                                <textarea name="file_keterangan" class="form-control {{ $errors->has('file_keterangan') ? 'is-invalid' : '' }}" rows="3">{!! html_entity_decode($file->file_keterangan) !!}</textarea>
                                 @if($errors->has('file_keterangan'))
                                 <div class="small text-danger mt-1">{{ ucfirst($errors->first('file_keterangan')) }}</div>
                                 @endif

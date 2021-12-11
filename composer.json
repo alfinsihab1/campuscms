@@ -27,14 +27,16 @@
         }
     },
     "require": {
-        "php": "^7.2",
+        "php": "^7.3",
         "ajifatur/faturhelper": "^1.0",
         "barryvdh/laravel-dompdf": "^0.8.5",
         "hisorange/browser-detect": "^4.4",
         "jorenvanhocht/laravel-share": "^4.0",
         "laravel/ui": "^3.0",
         "maatwebsite/excel": "^3.1",
+        "nao-pon/flysystem-google-drive": "~1.1",
         "simplesoftwareio/simple-qrcode": "^4.2",
+        "spatie/laravel-backup": "^7.0",
         "stevebauman/location": "^6.1",
         "yajra/laravel-datatables-oracle": "~9.0"
     }

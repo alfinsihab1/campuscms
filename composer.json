@@ -36,7 +36,7 @@
         "maatwebsite/excel": "^3.1",
         "nao-pon/flysystem-google-drive": "~1.1",
         "simplesoftwareio/simple-qrcode": "^4.2",
-        "spatie/laravel-backup": "^7.0",
+        "spatie/laravel-backup": "^6.0",
         "stevebauman/location": "^6.1",
         "yajra/laravel-datatables-oracle": "~9.0"
     }

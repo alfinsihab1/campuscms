@@ -28,7 +28,7 @@
     },
     "require": {
         "php": "^7.3",
-        "ajifatur/faturhelper": "^1.0",
+        "ajifatur/faturhelper": "^2.0",
         "barryvdh/laravel-dompdf": "^0.8.5",
         "hisorange/browser-detect": "^4.4",
         "jorenvanhocht/laravel-share": "^4.0",

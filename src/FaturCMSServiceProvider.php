@@ -79,8 +79,8 @@ class FaturCMSServiceProvider extends ServiceProvider
         }
 
         // Load helpers from FaturHelper
-        if(File::exists(base_path('vendor/ajifatur/faturhelper/src'))){
-            foreach(glob(base_path('vendor/ajifatur/faturhelper/src').'/Helpers/*.php') as $filename){
+        if(File::exists(base_path('vendor/campusdatamedia/faturhelper/src'))){
+            foreach(glob(base_path('vendor/campusdatamedia/faturhelper/src').'/Helpers/*.php') as $filename){
                 require_once $filename;
             }
         }

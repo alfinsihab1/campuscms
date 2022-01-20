@@ -8,7 +8,7 @@ return [
     |
     */
 
-    'name' => 'ajifatur/faturcms',
+    'name' => 'campusdatamedia/faturcms',
 
     /*
     |--------------------------------------------------------------------------

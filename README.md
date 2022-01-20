@@ -1,9 +1,9 @@
 <p align="center"><img src="https://fpm.faturmedia.xyz/assets/images/others/faturcms.jpg" width="400"></p>
 <br>
 <p align="center">
-  <a href="https://packagist.org/packages/ajifatur/faturcms"><img src="https://poser.pugx.org/ajifatur/faturcms/d/total.svg" alt="Total Downloads"></a>
-  <a href="https://packagist.org/packages/ajifatur/faturcms"><img src="https://poser.pugx.org/ajifatur/faturcms/v/stable.svg" alt="Latest Stable Version"></a>
-  <a href="https://packagist.org/packages/ajifatur/faturcms"><img src="https://poser.pugx.org/ajifatur/faturcms/license.svg" alt="License"></a>
+  <a href="https://packagist.org/packages/ajifatur/faturcms"><img src="https://poser.pugx.org/campusdatamedia/faturcms/d/total.svg" alt="Total Downloads"></a>
+  <a href="https://packagist.org/packages/ajifatur/faturcms"><img src="https://poser.pugx.org/campusdatamedia/faturcms/v/stable.svg" alt="Latest Stable Version"></a>
+  <a href="https://packagist.org/packages/ajifatur/faturcms"><img src="https://poser.pugx.org/campusdatamedia/faturcms/license.svg" alt="License"></a>
 </p>
 
 
@@ -23,7 +23,7 @@ FaturCMS adalah **Content Management System (CMS)** yang menyediakan fitur refer
 Untuk menginstal FaturCMS, jalankan perintah composer di bawah ini dan kamu akan mendapatkan versi terbaru:
 
 ```sh
-composer require ajifatur/faturcms
+composer require campusdatamedia/faturcms
 ```
 
 ### Konfigurasi File .env:

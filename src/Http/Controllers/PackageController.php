@@ -137,7 +137,7 @@ class PackageController extends Controller
     }
     
     // Update from packagist
-    $process = new Process([setting('site.server.php'), setting('site.server.composer'), 'update', 'ajifatur/faturcms'], base_path());
+    $process = new Process([setting('site.server.php'), setting('site.server.composer'), 'update', config('faturcms.name')], base_path());
     $process->setTimeout(null);
     $process->run();
   

@@ -118,7 +118,7 @@ class PackageController extends Controller
   {
     // Mengecek autentikasi subscriber
     try {
-      $client = new Client(['base_uri' => 'https://fpm.faturmedia.xyz/api/']);
+      $client = new Client(['base_uri' => 'https://fpm.campusdigital.id/api/']);
       $faturcms_request = $client->request('PUT', 'subscriber/auth', [
         'query' => [
           'url' => url()->to('/'),

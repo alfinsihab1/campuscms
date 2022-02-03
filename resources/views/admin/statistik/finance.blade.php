@@ -34,7 +34,7 @@
                             </select>
                             <select id="revenue-year" class="form-control form-control-sm ml-2">
                                 <option value="0">Semua</option>
-                                @for($i=2021; $i>=2020; $i--)
+                                @for($i=date('Y'); $i>=2020; $i--)
                                 <option value="{{ $i }}" {{ date('Y') == $i ? 'selected' : '' }}>{{ $i }}</option>
                                 @endfor
                             </select>

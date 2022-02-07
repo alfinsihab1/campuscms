@@ -28,7 +28,9 @@
                     <h5>Log: {{ $user->nama_user }}</h5>
                     <div class="btn-group">
                         <a href="{{ route('admin.user.detail', ['id' => $user->id_user]) }}" class="btn btn-sm btn-success"><i class="fa fa-user mr-2"></i> Kunjungi Profil</a>
+                        @if(\File::exists(storage_path('logs/user-activities/'.$user->id_user.'.log')))
                         <a href="#" class="btn btn-sm btn-danger btn-delete-log"><i class="fa fa-trash mr-2"></i> Hapus Log ({{ generate_size(\File::size(storage_path('logs/user-activities/'.$user->id_user.'.log'))) }})</a>
+                        @endif
                     </div>
                     <form id="form-delete-log" class="d-none" method="post" action="{{ route('admin.log.activity.delete') }}">
                         {{ csrf_field() }}
@@ -50,27 +52,20 @@
                     <div class="mb-4">
                         <p class="mb-1"><i class="fa fa-envelope mr-2"></i>{{ $user->email }}</p>
                         <p class="mb-1"><i class="fa fa-globe mr-2"></i>{{ number_format(count_kunjungan($user->id_user, 'all'),0,',',',') }}x Kunjungan</p>
-                        <p class="mb-1"><i class="fa fa-refresh mr-2"></i>{{ number_format(count($logs),0,',',',') }}x Request</p>
+                        <p class="mb-1"><i class="fa fa-refresh mr-2"></i><span id="request-total">...</td></p>
                         <p class="mb-1"><i class="fa fa-clock-o mr-2"></i>Terakhir Kunjungan pada {{ generate_date_time($user->last_visit) }}</p>
                     </div>
                     <!-- /Identitas -->
                     <!-- Logs -->
-                    @if($logs != false)
-                        @if(count($logs) > 0)
-                        <div class="table-responsive">
-                            <table class="table table-hover table-striped table-borderless table-stretch">
-                                @foreach($logs as $log)
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped table-borderless table-stretch" id="table-log">
+                            <tbody>
                                 <tr>
-                                    <td><a href="{{ URL::to($log->url) }}" target="_blank">{{ strlen($log->url) <= 100 ? URL::to($log->url) : URL::to(substr($log->url,0,100)).'....' }}</a></td>
-                                    <td width="150">{{ date('d/m/Y', $log->time).', '.date('H:i:s', $log->time) }}</td>
+                                    <td>Memuat...</td>
                                 </tr>
-                                @endforeach
-                            </table>
-                        </div>
-                        @endif
-                    @else
-                    <div class="alert alert-danger text-center mb-0">Belum ada aktivitas yang tercatat.</div>
-                    @endif
+                            </tbody>
+                        </table>
+                    </div>
                     <!-- /Logs -->
                 </div>
                 <!-- /Tile Body -->
@@ -90,7 +85,27 @@
 <script type="text/javascript">
     // Scroll to down
     $(window).on("load", function(){
-       $("html, body").animate({scrollTop: $(document).height()}, 1000); 
+        $.ajax({
+            type: "get",
+            url: "{{ route('admin.log.activity.get', ['id' => $user->id_user]) }}",
+            success: function(response) {
+                var html = '';
+                if(response.length > 0) {
+                    for(i=0; i<response.length; i++) {
+                        html += '<tr>';
+                        html += '<td><a href="' + response[i].url + '" target="_blank">' + response[i].urlText + '</a></td>';
+                        html += '<td width="150">' + response[i].time + '</td>';
+                        html += '</tr>';
+                    }
+                }
+                else {
+                    html += '<td align="center" class="text-danger">Belum ada aktivitas yang tercatat.</td>';
+                }
+                $("#request-total").text(response.length + 'x Request');
+                $("#table-log tbody").html(html);
+                $("html, body").animate({scrollTop: $(document).height()}, 1000);
+            }
+        });
     });
 
     // Button Delete Log

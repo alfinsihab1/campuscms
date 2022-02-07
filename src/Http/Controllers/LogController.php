@@ -3,6 +3,7 @@
 namespace Ajifatur\FaturCMS\Http\Controllers;
 
 use Auth;
+use URL;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use App\Models\User;
@@ -44,15 +45,36 @@ class LogController extends Controller
 
 		// Get data user
         $user = User::findOrFail($id);
-
-        // Get data aktivitas
-        $logs = $this->toObject('logs/user-activities/'.$id.'.log');
         
         // View
         return view('faturcms::admin.log.activity', [
-            'user' => $user,
-            'logs' => $logs,
+            'user' => $user
         ]);
+    }
+
+    /**
+     * Get activity
+     *
+     * string $path
+     * @return \Illuminate\Http\Response
+     */
+    public function getActivity($id)
+    {
+		// Get data user
+        $user = User::findOrFail($id);
+
+        // Get data aktivitas
+        $logs = $this->toObject('logs/user-activities/'.$id.'.log');
+        if(count($logs) > 0) {
+            foreach($logs as $key=>$log) {
+                $logs[$key]->url = URL::to($log->url);
+                $logs[$key]->urlText = strlen($log->url) > 100 ? substr($log->url,0,100).'...' : $log->url;
+                $logs[$key]->time = date('d/m/Y, H:i:s', $log->time);
+            }
+        }
+        
+        // Response
+        return response()->json($logs);
     }
 
     /**
@@ -107,6 +129,6 @@ class LogController extends Controller
             $logs = json_decode($logs);
             return $logs;
         }
-        else return false;
+        else return [];
     }
 }

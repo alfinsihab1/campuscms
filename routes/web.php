@@ -429,6 +429,7 @@ Route::group(['middleware' => ['faturcms.admin']], function() use ($namespacePre
 	// Log Aktivitas
 	Route::get('/admin/log', $namespacePrefix.'LogController@index')->name('admin.log.index');
 	Route::get('/admin/log/activity/{id}', $namespacePrefix.'LogController@activity')->name('admin.log.activity');
+	Route::get('/admin/log/activity-get/{id}', $namespacePrefix.'LogController@getActivity')->name('admin.log.activity.get');
 	Route::post('/admin/log/activity-delete', $namespacePrefix.'LogController@deleteActivity')->name('admin.log.activity.delete');
 	Route::get('/admin/log/login-error', $namespacePrefix.'LogController@login')->name('admin.log.login');
 
